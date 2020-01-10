@@ -1,0 +1,2187 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+	<!ENTITY % local.common.attrib "xmlns:xi  CDATA  #FIXED 'http://www.w3.org/2003/XInclude'">
+	<!ENTITY version SYSTEM "version.xml">
+	<!ENTITY slash "/">
+]>
+<refentry id="BaconVideoWidget">
+<refmeta>
+<refentrytitle role="top_of_page" id="BaconVideoWidget.top_of_page">BaconVideoWidget</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>TOTEM Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>BaconVideoWidget</refname>
+<refpurpose>video playing widget and abstraction</refpurpose>
+</refnamediv>
+<refsect1 id="BaconVideoWidget.stability-level">
+<title>Stability Level</title>
+Unstable, unless otherwise indicated
+</refsect1>
+
+<refsynopsisdiv id="BaconVideoWidget.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+
+#include &lt;bacon-video-widget.h&gt;
+
+                    <link linkend="BaconVideoWidget-struct">BaconVideoWidget</link>;
+                    <link linkend="BaconVideoWidgetClass">BaconVideoWidgetClass</link>;
+enum                <link linkend="BvwAspectRatio">BvwAspectRatio</link>;
+enum                <link linkend="BvwAudioOutType">BvwAudioOutType</link>;
+enum                <link linkend="BvwDVDEvent">BvwDVDEvent</link>;
+enum                <link linkend="BvwMetadataType">BvwMetadataType</link>;
+enum                <link linkend="BvwVisualsQuality">BvwVisualsQuality</link>;
+enum                <link linkend="BvwVideoProperty">BvwVideoProperty</link>;
+enum                <link linkend="BvwError">BvwError</link>;
+enum                <link linkend="BvwUseType">BvwUseType</link>;
+<link linkend="GtkWidget">GtkWidget</link> *         <link linkend="bacon-video-widget-new">bacon_video_widget_new</link>              (<link linkend="int">int</link> width,
+                                                         <link linkend="int">int</link> height,
+                                                         <link linkend="BvwUseType">BvwUseType</link> type,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="void">void</link>                <link linkend="bacon-video-widget-init-backend">bacon_video_widget_init_backend</link>     (<link linkend="int">int</link> *argc,
+                                                         <link linkend="char">char</link> ***argv);
+<link linkend="gboolean">gboolean</link>            <link linkend="bacon-video-widget-open">bacon_video_widget_open</link>             (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         const <link linkend="char">char</link> *mrl,
+                                                         const <link linkend="char">char</link> *subtitle_uri,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="gboolean">gboolean</link>            <link linkend="bacon-video-widget-play">bacon_video_widget_play</link>             (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="void">void</link>                <link linkend="bacon-video-widget-pause">bacon_video_widget_pause</link>            (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);
+<link linkend="gboolean">gboolean</link>            <link linkend="bacon-video-widget-seek">bacon_video_widget_seek</link>             (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="double">double</link> position,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="gboolean">gboolean</link>            <link linkend="bacon-video-widget-seek-time">bacon_video_widget_seek_time</link>        (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="gint64">gint64</link> time,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="void">void</link>                <link linkend="bacon-video-widget-stop">bacon_video_widget_stop</link>             (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);
+<link linkend="void">void</link>                <link linkend="bacon-video-widget-close">bacon_video_widget_close</link>            (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);
+<link linkend="gboolean">gboolean</link>            <link linkend="bacon-video-widget-can-deinterlace">bacon_video_widget_can_deinterlace</link>  (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);
+<link linkend="gboolean">gboolean</link>            <link linkend="bacon-video-widget-can-direct-seek">bacon_video_widget_can_direct_seek</link>  (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);
+<link linkend="gboolean">gboolean</link>            <link linkend="bacon-video-widget-can-get-frames">bacon_video_widget_can_get_frames</link>   (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="gboolean">gboolean</link>            <link linkend="bacon-video-widget-can-set-volume">bacon_video_widget_can_set_volume</link>   (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);
+<link linkend="void">void</link>                <link linkend="bacon-video-widget-dvd-event">bacon_video_widget_dvd_event</link>        (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="BvwDVDEvent">BvwDVDEvent</link> type);
+<link linkend="gboolean">gboolean</link>            <link linkend="bacon-video-widget-has-menus">bacon_video_widget_has_menus</link>        (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);
+<link linkend="BvwAspectRatio">BvwAspectRatio</link>      <link linkend="bacon-video-widget-get-aspect-ratio">bacon_video_widget_get_aspect_ratio</link> (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);
+<link linkend="void">void</link>                <link linkend="bacon-video-widget-set-aspect-ratio">bacon_video_widget_set_aspect_ratio</link> (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="BvwAspectRatio">BvwAspectRatio</link> ratio);
+<link linkend="BvwAudioOutType">BvwAudioOutType</link>     <link linkend="bacon-video-widget-get-audio-out-type">bacon_video_widget_get_audio_out_type</link>
+                                                        (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);
+<link linkend="gboolean">gboolean</link>            <link linkend="bacon-video-widget-set-audio-out-type">bacon_video_widget_set_audio_out_type</link>
+                                                        (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="BvwAudioOutType">BvwAudioOutType</link> type);
+<link linkend="gboolean">gboolean</link>            <link linkend="bacon-video-widget-get-auto-resize">bacon_video_widget_get_auto_resize</link>  (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);
+<link linkend="void">void</link>                <link linkend="bacon-video-widget-set-auto-resize">bacon_video_widget_set_auto_resize</link>  (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="gboolean">gboolean</link> auto_resize);
+<link linkend="char">char</link> *              <link linkend="bacon-video-widget-get-backend-name">bacon_video_widget_get_backend_name</link> (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);
+<link linkend="int">int</link>                 <link linkend="bacon-video-widget-get-connection-speed">bacon_video_widget_get_connection_speed</link>
+                                                        (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);
+<link linkend="void">void</link>                <link linkend="bacon-video-widget-set-connection-speed">bacon_video_widget_set_connection_speed</link>
+                                                        (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="int">int</link> speed);
+<link linkend="GdkPixbuf">GdkPixbuf</link> *         <link linkend="bacon-video-widget-get-current-frame">bacon_video_widget_get_current_frame</link>
+                                                        (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);
+<link linkend="gint64">gint64</link>              <link linkend="bacon-video-widget-get-current-time">bacon_video_widget_get_current_time</link> (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);
+<link linkend="gboolean">gboolean</link>            <link linkend="bacon-video-widget-get-deinterlacing">bacon_video_widget_get_deinterlacing</link>
+                                                        (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);
+<link linkend="void">void</link>                <link linkend="bacon-video-widget-set-deinterlacing">bacon_video_widget_set_deinterlacing</link>
+                                                        (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="gboolean">gboolean</link> deinterlace);
+<link linkend="void">void</link>                <link linkend="bacon-video-widget-set-fullscreen">bacon_video_widget_set_fullscreen</link>   (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="gboolean">gboolean</link> fullscreen);
+<link linkend="GList">GList</link> *             <link linkend="bacon-video-widget-get-languages">bacon_video_widget_get_languages</link>    (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);
+<link linkend="int">int</link>                 <link linkend="bacon-video-widget-get-language">bacon_video_widget_get_language</link>     (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);
+<link linkend="void">void</link>                <link linkend="bacon-video-widget-set-language">bacon_video_widget_set_language</link>     (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="int">int</link> language);
+<link linkend="void">void</link>                <link linkend="bacon-video-widget-set-logo">bacon_video_widget_set_logo</link>         (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         const <link linkend="char">char</link> *name);
+<link linkend="gboolean">gboolean</link>            <link linkend="bacon-video-widget-get-logo-mode">bacon_video_widget_get_logo_mode</link>    (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);
+<link linkend="void">void</link>                <link linkend="bacon-video-widget-set-logo-mode">bacon_video_widget_set_logo_mode</link>    (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="gboolean">gboolean</link> logo_mode);
+<link linkend="void">void</link>                <link linkend="bacon-video-widget-get-metadata">bacon_video_widget_get_metadata</link>     (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="BvwMetadataType">BvwMetadataType</link> type,
+                                                         <link linkend="GValue">GValue</link> *value);
+<link linkend="gchar">gchar</link> **            <link linkend="bacon-video-widget-get-mrls">bacon_video_widget_get_mrls</link>         (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="TotemDiscMediaType">TotemDiscMediaType</link> type,
+                                                         const <link linkend="char">char</link> *device,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="GOptionGroup">GOptionGroup</link>*       <link linkend="bacon-video-widget-get-option-group">bacon_video_widget_get_option_group</link> (void);
+<link linkend="double">double</link>              <link linkend="bacon-video-widget-get-position">bacon_video_widget_get_position</link>     (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);
+<link linkend="void">void</link>                <link linkend="bacon-video-widget-set-referrer">bacon_video_widget_set_referrer</link>     (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         const <link linkend="char">char</link> *referrer);
+<link linkend="void">void</link>                <link linkend="bacon-video-widget-set-scale-ratio">bacon_video_widget_set_scale_ratio</link>  (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="float">float</link> ratio);
+<link linkend="gboolean">gboolean</link>            <link linkend="bacon-video-widget-get-show-cursor">bacon_video_widget_get_show_cursor</link>  (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);
+<link linkend="void">void</link>                <link linkend="bacon-video-widget-set-show-cursor">bacon_video_widget_set_show_cursor</link>  (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="gboolean">gboolean</link> show_cursor);
+<link linkend="void">void</link>                <link linkend="bacon-video-widget-set-show-visuals">bacon_video_widget_set_show_visuals</link> (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="gboolean">gboolean</link> show_visuals);
+<link linkend="gint64">gint64</link>              <link linkend="bacon-video-widget-get-stream-length">bacon_video_widget_get_stream_length</link>
+                                                        (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);
+<link linkend="GList">GList</link> *             <link linkend="bacon-video-widget-get-subtitles">bacon_video_widget_get_subtitles</link>    (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);
+<link linkend="int">int</link>                 <link linkend="bacon-video-widget-get-subtitle">bacon_video_widget_get_subtitle</link>     (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);
+<link linkend="void">void</link>                <link linkend="bacon-video-widget-set-subtitle">bacon_video_widget_set_subtitle</link>     (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="int">int</link> subtitle);
+<link linkend="void">void</link>                <link linkend="bacon-video-widget-set-subtitle-encoding">bacon_video_widget_set_subtitle_encoding</link>
+                                                        (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         const <link linkend="char">char</link> *encoding);
+<link linkend="void">void</link>                <link linkend="bacon-video-widget-set-subtitle-font">bacon_video_widget_set_subtitle_font</link>
+                                                        (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         const <link linkend="char">char</link> *font);
+<link linkend="void">void</link>                <link linkend="bacon-video-widget-set-user-agent">bacon_video_widget_set_user_agent</link>   (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         const <link linkend="char">char</link> *user_agent);
+<link linkend="int">int</link>                 <link linkend="bacon-video-widget-get-video-property">bacon_video_widget_get_video_property</link>
+                                                        (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="BvwVideoProperty">BvwVideoProperty</link> type);
+<link linkend="void">void</link>                <link linkend="bacon-video-widget-set-video-property">bacon_video_widget_set_video_property</link>
+                                                        (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="BvwVideoProperty">BvwVideoProperty</link> type,
+                                                         <link linkend="int">int</link> value);
+<link linkend="GList">GList</link> *             <link linkend="bacon-video-widget-get-visuals-list">bacon_video_widget_get_visuals_list</link> (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);
+<link linkend="gboolean">gboolean</link>            <link linkend="bacon-video-widget-set-visuals">bacon_video_widget_set_visuals</link>      (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         const <link linkend="char">char</link> *name);
+<link linkend="void">void</link>                <link linkend="bacon-video-widget-set-visuals-quality">bacon_video_widget_set_visuals_quality</link>
+                                                        (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="BvwVisualsQuality">BvwVisualsQuality</link> quality);
+<link linkend="double">double</link>              <link linkend="bacon-video-widget-get-volume">bacon_video_widget_get_volume</link>       (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);
+<link linkend="void">void</link>                <link linkend="bacon-video-widget-set-volume">bacon_video_widget_set_volume</link>       (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="double">double</link> volume);
+<link linkend="double">double</link>              <link linkend="bacon-video-widget-get-zoom">bacon_video_widget_get_zoom</link>         (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);
+<link linkend="void">void</link>                <link linkend="bacon-video-widget-set-zoom">bacon_video_widget_set_zoom</link>         (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="double">double</link> zoom);
+<link linkend="gboolean">gboolean</link>            <link linkend="bacon-video-widget-has-next-track">bacon_video_widget_has_next_track</link>   (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);
+<link linkend="gboolean">gboolean</link>            <link linkend="bacon-video-widget-has-previous-track">bacon_video_widget_has_previous_track</link>
+                                                        (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);
+<link linkend="gboolean">gboolean</link>            <link linkend="bacon-video-widget-is-playing">bacon_video_widget_is_playing</link>       (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);
+<link linkend="gboolean">gboolean</link>            <link linkend="bacon-video-widget-is-seekable">bacon_video_widget_is_seekable</link>      (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);
+<link linkend="gboolean">gboolean</link>            <link linkend="bacon-video-widget-step">bacon_video_widget_step</link>             (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="GError">GError</link> **error);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="BaconVideoWidget.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----<link linkend="GInitiallyUnowned">GInitiallyUnowned</link>
+         +----<link linkend="GtkObject">GtkObject</link>
+               +----<link linkend="GtkWidget">GtkWidget</link>
+                     +----<link linkend="GtkContainer">GtkContainer</link>
+                           +----<link linkend="GtkBin">GtkBin</link>
+                                 +----<link linkend="GtkEventBox">GtkEventBox</link>
+                                       +----BaconVideoWidget
+</synopsis>
+</refsect1>
+
+
+
+<refsect1 id="BaconVideoWidget.implemented-interfaces" role="impl_interfaces">
+<title role="impl_interfaces.title">Implemented Interfaces</title>
+<para>
+BaconVideoWidget implements
+ <link linkend="AtkImplementorIface">AtkImplementorIface</link> and  <link linkend="GtkBuildable">GtkBuildable</link>.</para>
+</refsect1>
+
+
+<refsect1 id="BaconVideoWidget.properties" role="properties">
+<title role="properties.title">Properties</title>
+<synopsis>
+  &quot;<link linkend="BaconVideoWidget--logo-mode">logo-mode</link>&quot;                <link linkend="gboolean">gboolean</link>              : Read / Write
+  &quot;<link linkend="BaconVideoWidget--playing">playing</link>&quot;                  <link linkend="gboolean">gboolean</link>              : Read
+  &quot;<link linkend="BaconVideoWidget--position">position</link>&quot;                 <link linkend="gdouble">gdouble</link>               : Read
+  &quot;<link linkend="BaconVideoWidget--referrer">referrer</link>&quot;                 <link linkend="gchar">gchar</link>*                : Read / Write
+  &quot;<link linkend="BaconVideoWidget--seekable">seekable</link>&quot;                 <link linkend="gboolean">gboolean</link>              : Read
+  &quot;<link linkend="BaconVideoWidget--show-cursor">show-cursor</link>&quot;              <link linkend="gboolean">gboolean</link>              : Read / Write
+  &quot;<link linkend="BaconVideoWidget--show-visuals">show-visuals</link>&quot;             <link linkend="gboolean">gboolean</link>              : Write
+  &quot;<link linkend="BaconVideoWidget--stream-length">stream-length</link>&quot;            <link linkend="gint64">gint64</link>                : Read
+  &quot;<link linkend="BaconVideoWidget--user-agent">user-agent</link>&quot;               <link linkend="gchar">gchar</link>*                : Read / Write
+  &quot;<link linkend="BaconVideoWidget--volume">volume</link>&quot;                   <link linkend="gdouble">gdouble</link>               : Read / Write
+</synopsis>
+</refsect1>
+
+<refsect1 id="BaconVideoWidget.signals" role="signal_proto">
+<title role="signal_proto.title">Signals</title>
+<synopsis>
+  &quot;<link linkend="BaconVideoWidget-buffering">buffering</link>&quot;                                      : Run Last
+  &quot;<link linkend="BaconVideoWidget-channels-change">channels-change</link>&quot;                                : Run Last
+  &quot;<link linkend="BaconVideoWidget-eos">eos</link>&quot;                                            : Run Last
+  &quot;<link linkend="BaconVideoWidget-error">error</link>&quot;                                          : Run Last
+  &quot;<link linkend="BaconVideoWidget-got-metadata">got-metadata</link>&quot;                                   : Run Last
+  &quot;<link linkend="BaconVideoWidget-got-redirect">got-redirect</link>&quot;                                   : Run Last
+  &quot;<link linkend="BaconVideoWidget-missing-plugins">missing-plugins</link>&quot;                                : Run Last
+  &quot;<link linkend="BaconVideoWidget-tick">tick</link>&quot;                                           : Run Last
+</synopsis>
+</refsect1>
+
+
+<refsect1 id="BaconVideoWidget.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+<link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link> is a widget to play audio or video streams, with support for visualisations for audio-only streams. It has a GStreamer
+backend, and abstracts away the differences to provide a simple interface to the functionality required by Totem. It handles all the low-level
+audio and video work for Totem (or passes the work off to the backend).</para>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="BaconVideoWidget.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="BaconVideoWidget-struct" role="struct">
+<title>BaconVideoWidget</title>
+<indexterm zone="BaconVideoWidget-struct"><primary>BaconVideoWidget</primary></indexterm><programlisting>typedef struct _BaconVideoWidget BaconVideoWidget;</programlisting>
+<para>
+All the fields in the <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link> structure are private and should never be accessed directly.</para>
+<para>
+</para></refsect2>
+<refsect2 id="BaconVideoWidgetClass" role="struct">
+<title>BaconVideoWidgetClass</title>
+<indexterm zone="BaconVideoWidgetClass"><primary>BaconVideoWidgetClass</primary></indexterm><programlisting>typedef struct {
+} BaconVideoWidgetClass;
+</programlisting>
+<para>
+All the fields in the <link linkend="BaconVideoWidgetClass"><type>BaconVideoWidgetClass</type></link> structure are private and should never be accessed directly.</para>
+<para>
+</para></refsect2>
+<refsect2 id="BvwAspectRatio" role="enum">
+<title>enum BvwAspectRatio</title>
+<indexterm zone="BvwAspectRatio"><primary>BvwAspectRatio</primary></indexterm><programlisting>typedef enum {
+	BVW_RATIO_AUTO = 0,
+	BVW_RATIO_SQUARE = 1,
+	BVW_RATIO_FOURBYTHREE = 2,
+	BVW_RATIO_ANAMORPHIC = 3,
+	BVW_RATIO_DVB = 4
+} BvwAspectRatio;
+</programlisting>
+<para>
+The pixel aspect ratios available in which to display videos using
+@<link linkend="bacon-video-widget-set-aspect-ratio"><function>bacon_video_widget_set_aspect_ratio()</function></link>.</para>
+<para>
+</para><variablelist role="enum">
+<varlistentry id="BVW-RATIO-AUTO--CAPS" role="constant">
+<term><literal>BVW_RATIO_AUTO</literal></term>
+<listitem><simpara> automatic
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-RATIO-SQUARE--CAPS" role="constant">
+<term><literal>BVW_RATIO_SQUARE</literal></term>
+<listitem><simpara> square (1:1)
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-RATIO-FOURBYTHREE--CAPS" role="constant">
+<term><literal>BVW_RATIO_FOURBYTHREE</literal></term>
+<listitem><simpara> four-by-three (4:3)
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-RATIO-ANAMORPHIC--CAPS" role="constant">
+<term><literal>BVW_RATIO_ANAMORPHIC</literal></term>
+<listitem><simpara> anamorphic (16:9)
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-RATIO-DVB--CAPS" role="constant">
+<term><literal>BVW_RATIO_DVB</literal></term>
+<listitem><simpara> DVB (20:9)
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="BvwAudioOutType" role="enum">
+<title>enum BvwAudioOutType</title>
+<indexterm zone="BvwAudioOutType"><primary>BvwAudioOutType</primary></indexterm><programlisting>typedef enum {
+	BVW_AUDIO_SOUND_STEREO,
+	BVW_AUDIO_SOUND_4CHANNEL,
+	BVW_AUDIO_SOUND_41CHANNEL,
+	BVW_AUDIO_SOUND_5CHANNEL,
+	BVW_AUDIO_SOUND_51CHANNEL,
+	BVW_AUDIO_SOUND_AC3PASSTHRU
+} BvwAudioOutType;
+</programlisting>
+<para>
+The audio output types available for use with <link linkend="bacon-video-widget-set-audio-out-type"><function>bacon_video_widget_set_audio_out_type()</function></link>.</para>
+<para>
+</para><variablelist role="enum">
+<varlistentry id="BVW-AUDIO-SOUND-STEREO--CAPS" role="constant">
+<term><literal>BVW_AUDIO_SOUND_STEREO</literal></term>
+<listitem><simpara> stereo output
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-AUDIO-SOUND-4CHANNEL--CAPS" role="constant">
+<term><literal>BVW_AUDIO_SOUND_4CHANNEL</literal></term>
+<listitem><simpara> 4-channel output
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-AUDIO-SOUND-41CHANNEL--CAPS" role="constant">
+<term><literal>BVW_AUDIO_SOUND_41CHANNEL</literal></term>
+<listitem><simpara> 4.1-channel output
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-AUDIO-SOUND-5CHANNEL--CAPS" role="constant">
+<term><literal>BVW_AUDIO_SOUND_5CHANNEL</literal></term>
+<listitem><simpara> 5-channel output
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-AUDIO-SOUND-51CHANNEL--CAPS" role="constant">
+<term><literal>BVW_AUDIO_SOUND_51CHANNEL</literal></term>
+<listitem><simpara> 5.1-channel output
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-AUDIO-SOUND-AC3PASSTHRU--CAPS" role="constant">
+<term><literal>BVW_AUDIO_SOUND_AC3PASSTHRU</literal></term>
+<listitem><simpara> AC3 passthrough output
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="BvwDVDEvent" role="enum">
+<title>enum BvwDVDEvent</title>
+<indexterm zone="BvwDVDEvent"><primary>BvwDVDEvent</primary></indexterm><programlisting>typedef enum {
+	BVW_DVD_ROOT_MENU,
+	BVW_DVD_TITLE_MENU,
+	BVW_DVD_SUBPICTURE_MENU,
+	BVW_DVD_AUDIO_MENU,
+	BVW_DVD_ANGLE_MENU,
+	BVW_DVD_CHAPTER_MENU,
+	BVW_DVD_NEXT_CHAPTER,
+	BVW_DVD_PREV_CHAPTER,
+	BVW_DVD_NEXT_TITLE,
+	BVW_DVD_PREV_TITLE,
+	BVW_DVD_NEXT_ANGLE,
+	BVW_DVD_PREV_ANGLE,
+	BVW_DVD_ROOT_MENU_UP,
+	BVW_DVD_ROOT_MENU_DOWN,
+	BVW_DVD_ROOT_MENU_LEFT,
+	BVW_DVD_ROOT_MENU_RIGHT,
+	BVW_DVD_ROOT_MENU_SELECT
+} BvwDVDEvent;
+</programlisting>
+<para>
+The DVD navigation actions available to fire as DVD events to
+the <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>.</para>
+<para>
+</para><variablelist role="enum">
+<varlistentry id="BVW-DVD-ROOT-MENU--CAPS" role="constant">
+<term><literal>BVW_DVD_ROOT_MENU</literal></term>
+<listitem><simpara> root menu
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-DVD-TITLE-MENU--CAPS" role="constant">
+<term><literal>BVW_DVD_TITLE_MENU</literal></term>
+<listitem><simpara> title menu
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-DVD-SUBPICTURE-MENU--CAPS" role="constant">
+<term><literal>BVW_DVD_SUBPICTURE_MENU</literal></term>
+<listitem><simpara> subpicture menu (if available)
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-DVD-AUDIO-MENU--CAPS" role="constant">
+<term><literal>BVW_DVD_AUDIO_MENU</literal></term>
+<listitem><simpara> audio menu (if available)
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-DVD-ANGLE-MENU--CAPS" role="constant">
+<term><literal>BVW_DVD_ANGLE_MENU</literal></term>
+<listitem><simpara> angle menu (if available)
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-DVD-CHAPTER-MENU--CAPS" role="constant">
+<term><literal>BVW_DVD_CHAPTER_MENU</literal></term>
+<listitem><simpara> chapter menu
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-DVD-NEXT-CHAPTER--CAPS" role="constant">
+<term><literal>BVW_DVD_NEXT_CHAPTER</literal></term>
+<listitem><simpara> the next chapter
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-DVD-PREV-CHAPTER--CAPS" role="constant">
+<term><literal>BVW_DVD_PREV_CHAPTER</literal></term>
+<listitem><simpara> the previous chapter
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-DVD-NEXT-TITLE--CAPS" role="constant">
+<term><literal>BVW_DVD_NEXT_TITLE</literal></term>
+<listitem><simpara> the next title in the current chapter
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-DVD-PREV-TITLE--CAPS" role="constant">
+<term><literal>BVW_DVD_PREV_TITLE</literal></term>
+<listitem><simpara> the previous title in the current chapter
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-DVD-NEXT-ANGLE--CAPS" role="constant">
+<term><literal>BVW_DVD_NEXT_ANGLE</literal></term>
+<listitem><simpara> the next angle
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-DVD-PREV-ANGLE--CAPS" role="constant">
+<term><literal>BVW_DVD_PREV_ANGLE</literal></term>
+<listitem><simpara> the previous angle
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-DVD-ROOT-MENU-UP--CAPS" role="constant">
+<term><literal>BVW_DVD_ROOT_MENU_UP</literal></term>
+<listitem><simpara> go up in the menu
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-DVD-ROOT-MENU-DOWN--CAPS" role="constant">
+<term><literal>BVW_DVD_ROOT_MENU_DOWN</literal></term>
+<listitem><simpara> go down in the menu
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-DVD-ROOT-MENU-LEFT--CAPS" role="constant">
+<term><literal>BVW_DVD_ROOT_MENU_LEFT</literal></term>
+<listitem><simpara> go left in the menu
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-DVD-ROOT-MENU-RIGHT--CAPS" role="constant">
+<term><literal>BVW_DVD_ROOT_MENU_RIGHT</literal></term>
+<listitem><simpara> go right in the menu
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-DVD-ROOT-MENU-SELECT--CAPS" role="constant">
+<term><literal>BVW_DVD_ROOT_MENU_SELECT</literal></term>
+<listitem><simpara> select the current menu entry
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="BvwMetadataType" role="enum">
+<title>enum BvwMetadataType</title>
+<indexterm zone="BvwMetadataType"><primary>BvwMetadataType</primary></indexterm><programlisting>typedef enum {
+	BVW_INFO_TITLE,
+	BVW_INFO_ARTIST,
+	BVW_INFO_YEAR,
+	BVW_INFO_COMMENT,
+	BVW_INFO_ALBUM,
+	BVW_INFO_DURATION,
+	BVW_INFO_TRACK_NUMBER,
+	BVW_INFO_COVER,
+	/* Video */
+	BVW_INFO_HAS_VIDEO,
+	BVW_INFO_DIMENSION_X,
+	BVW_INFO_DIMENSION_Y,
+	BVW_INFO_VIDEO_BITRATE,
+	BVW_INFO_VIDEO_CODEC,
+	BVW_INFO_FPS,
+	/* Audio */
+	BVW_INFO_HAS_AUDIO,
+	BVW_INFO_AUDIO_BITRATE,
+	BVW_INFO_AUDIO_CODEC,
+	BVW_INFO_AUDIO_SAMPLE_RATE,
+	BVW_INFO_AUDIO_CHANNELS
+} BvwMetadataType;
+</programlisting>
+<para>
+The different metadata available for querying from a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+stream with <link linkend="bacon-video-widget-get-metadata"><function>bacon_video_widget_get_metadata()</function></link>.</para>
+<para>
+</para><variablelist role="enum">
+<varlistentry id="BVW-INFO-TITLE--CAPS" role="constant">
+<term><literal>BVW_INFO_TITLE</literal></term>
+<listitem><simpara> the stream's title
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-INFO-ARTIST--CAPS" role="constant">
+<term><literal>BVW_INFO_ARTIST</literal></term>
+<listitem><simpara> the artist who created the work
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-INFO-YEAR--CAPS" role="constant">
+<term><literal>BVW_INFO_YEAR</literal></term>
+<listitem><simpara> the year in which the work was created
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-INFO-COMMENT--CAPS" role="constant">
+<term><literal>BVW_INFO_COMMENT</literal></term>
+<listitem><simpara> a comment attached to the stream
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-INFO-ALBUM--CAPS" role="constant">
+<term><literal>BVW_INFO_ALBUM</literal></term>
+<listitem><simpara> the album in which the work was released
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-INFO-DURATION--CAPS" role="constant">
+<term><literal>BVW_INFO_DURATION</literal></term>
+<listitem><simpara> the stream's duration, in seconds
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-INFO-TRACK-NUMBER--CAPS" role="constant">
+<term><literal>BVW_INFO_TRACK_NUMBER</literal></term>
+<listitem><simpara> the track number of the work on the album
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-INFO-COVER--CAPS" role="constant">
+<term><literal>BVW_INFO_COVER</literal></term>
+<listitem><simpara> a <link linkend="GdkPixbuf"><type>GdkPixbuf</type></link> of the cover artwork
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-INFO-HAS-VIDEO--CAPS" role="constant">
+<term><literal>BVW_INFO_HAS_VIDEO</literal></term>
+<listitem><simpara> whether the stream has video
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-INFO-DIMENSION-X--CAPS" role="constant">
+<term><literal>BVW_INFO_DIMENSION_X</literal></term>
+<listitem><simpara> the video's width, in pixels
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-INFO-DIMENSION-Y--CAPS" role="constant">
+<term><literal>BVW_INFO_DIMENSION_Y</literal></term>
+<listitem><simpara> the video's height, in pixels
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-INFO-VIDEO-BITRATE--CAPS" role="constant">
+<term><literal>BVW_INFO_VIDEO_BITRATE</literal></term>
+<listitem><simpara> the video's bitrate, in kilobits per second
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-INFO-VIDEO-CODEC--CAPS" role="constant">
+<term><literal>BVW_INFO_VIDEO_CODEC</literal></term>
+<listitem><simpara> the video's codec
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-INFO-FPS--CAPS" role="constant">
+<term><literal>BVW_INFO_FPS</literal></term>
+<listitem><simpara> the number of frames per second in the video
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-INFO-HAS-AUDIO--CAPS" role="constant">
+<term><literal>BVW_INFO_HAS_AUDIO</literal></term>
+<listitem><simpara> whether the stream has audio
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-INFO-AUDIO-BITRATE--CAPS" role="constant">
+<term><literal>BVW_INFO_AUDIO_BITRATE</literal></term>
+<listitem><simpara> the audio's bitrate, in kilobits per second
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-INFO-AUDIO-CODEC--CAPS" role="constant">
+<term><literal>BVW_INFO_AUDIO_CODEC</literal></term>
+<listitem><simpara> the audio's codec
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-INFO-AUDIO-SAMPLE-RATE--CAPS" role="constant">
+<term><literal>BVW_INFO_AUDIO_SAMPLE_RATE</literal></term>
+<listitem><simpara> the audio sample rate, in bits per second
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-INFO-AUDIO-CHANNELS--CAPS" role="constant">
+<term><literal>BVW_INFO_AUDIO_CHANNELS</literal></term>
+<listitem><simpara> a string describing the number of audio channels in the stream
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="BvwVisualsQuality" role="enum">
+<title>enum BvwVisualsQuality</title>
+<indexterm zone="BvwVisualsQuality"><primary>BvwVisualsQuality</primary></indexterm><programlisting>typedef enum {
+	VISUAL_SMALL = 0,
+	VISUAL_NORMAL,
+	VISUAL_LARGE,
+	VISUAL_EXTRA_LARGE,
+	NUM_VISUAL_QUALITIES
+} BvwVisualsQuality;
+</programlisting>
+<para>
+The different visualisation sizes or qualities available for use
+with <link linkend="bacon-video-widget-set-visuals-quality"><function>bacon_video_widget_set_visuals_quality()</function></link>.</para>
+<para>
+</para><variablelist role="enum">
+<varlistentry id="VISUAL-SMALL--CAPS" role="constant">
+<term><literal>VISUAL_SMALL</literal></term>
+<listitem><simpara> small size (240×15)
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="VISUAL-NORMAL--CAPS" role="constant">
+<term><literal>VISUAL_NORMAL</literal></term>
+<listitem><simpara> normal size (320×25)
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="VISUAL-LARGE--CAPS" role="constant">
+<term><literal>VISUAL_LARGE</literal></term>
+<listitem><simpara> large size (480×25)
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="VISUAL-EXTRA-LARGE--CAPS" role="constant">
+<term><literal>VISUAL_EXTRA_LARGE</literal></term>
+<listitem><simpara> extra large size (600×30)
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="NUM-VISUAL-QUALITIES--CAPS" role="constant">
+<term><literal>NUM_VISUAL_QUALITIES</literal></term>
+<listitem><simpara> the number of visual qualities available
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="BvwVideoProperty" role="enum">
+<title>enum BvwVideoProperty</title>
+<indexterm zone="BvwVideoProperty"><primary>BvwVideoProperty</primary></indexterm><programlisting>typedef enum {
+	BVW_VIDEO_BRIGHTNESS,
+	BVW_VIDEO_CONTRAST,
+	BVW_VIDEO_SATURATION,
+	BVW_VIDEO_HUE
+} BvwVideoProperty;
+</programlisting>
+<para>
+The video properties queryable with <link linkend="bacon-video-widget-get-video-property"><function>bacon_video_widget_get_video_property()</function></link>,
+and settable with <link linkend="bacon-video-widget-set-video-property"><function>bacon_video_widget_set_video_property()</function></link>.</para>
+<para>
+</para><variablelist role="enum">
+<varlistentry id="BVW-VIDEO-BRIGHTNESS--CAPS" role="constant">
+<term><literal>BVW_VIDEO_BRIGHTNESS</literal></term>
+<listitem><simpara> the video brightness
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-VIDEO-CONTRAST--CAPS" role="constant">
+<term><literal>BVW_VIDEO_CONTRAST</literal></term>
+<listitem><simpara> the video contrast
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-VIDEO-SATURATION--CAPS" role="constant">
+<term><literal>BVW_VIDEO_SATURATION</literal></term>
+<listitem><simpara> the video saturation
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-VIDEO-HUE--CAPS" role="constant">
+<term><literal>BVW_VIDEO_HUE</literal></term>
+<listitem><simpara> the video hue
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="BvwError" role="enum">
+<title>enum BvwError</title>
+<indexterm zone="BvwError"><primary>BvwError</primary></indexterm><programlisting>typedef enum {
+	/* Plugins */
+	BVW_ERROR_AUDIO_PLUGIN,
+	BVW_ERROR_NO_PLUGIN_FOR_FILE,
+	BVW_ERROR_VIDEO_PLUGIN,
+	BVW_ERROR_AUDIO_BUSY,
+	/* File */
+	BVW_ERROR_BROKEN_FILE,
+	BVW_ERROR_FILE_GENERIC,
+	BVW_ERROR_FILE_PERMISSION,
+	BVW_ERROR_FILE_ENCRYPTED,
+	BVW_ERROR_FILE_NOT_FOUND,
+	/* Devices */
+	BVW_ERROR_DVD_ENCRYPTED,
+	BVW_ERROR_INVALID_DEVICE,
+	BVW_ERROR_DEVICE_BUSY,
+	/* Network */
+	BVW_ERROR_UNKNOWN_HOST,
+	BVW_ERROR_NETWORK_UNREACHABLE,
+	BVW_ERROR_CONNECTION_REFUSED,
+	/* Generic */
+	BVW_ERROR_INVALID_LOCATION,
+	BVW_ERROR_GENERIC,
+	BVW_ERROR_CODEC_NOT_HANDLED,
+	BVW_ERROR_AUDIO_ONLY,
+	BVW_ERROR_CANNOT_CAPTURE,
+	BVW_ERROR_READ_ERROR,
+	BVW_ERROR_PLUGIN_LOAD,
+	BVW_ERROR_EMPTY_FILE
+} BvwError;
+</programlisting>
+<para>
+Error codes for <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link> operations.</para>
+<para>
+</para><variablelist role="enum">
+<varlistentry id="BVW-ERROR-AUDIO-PLUGIN--CAPS" role="constant">
+<term><literal>BVW_ERROR_AUDIO_PLUGIN</literal></term>
+<listitem><simpara> Error loading audio output plugin or device.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-ERROR-NO-PLUGIN-FOR-FILE--CAPS" role="constant">
+<term><literal>BVW_ERROR_NO_PLUGIN_FOR_FILE</literal></term>
+<listitem><simpara> A required GStreamer plugin or xine feature is missing.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-ERROR-VIDEO-PLUGIN--CAPS" role="constant">
+<term><literal>BVW_ERROR_VIDEO_PLUGIN</literal></term>
+<listitem><simpara> Error loading video output plugin or device.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-ERROR-AUDIO-BUSY--CAPS" role="constant">
+<term><literal>BVW_ERROR_AUDIO_BUSY</literal></term>
+<listitem><simpara> Audio output device is busy.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-ERROR-BROKEN-FILE--CAPS" role="constant">
+<term><literal>BVW_ERROR_BROKEN_FILE</literal></term>
+<listitem><simpara> The movie file is broken and cannot be decoded.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-ERROR-FILE-GENERIC--CAPS" role="constant">
+<term><literal>BVW_ERROR_FILE_GENERIC</literal></term>
+<listitem><simpara> A generic error for problems with movie files.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-ERROR-FILE-PERMISSION--CAPS" role="constant">
+<term><literal>BVW_ERROR_FILE_PERMISSION</literal></term>
+<listitem><simpara> Permission was refused to access the stream, or authentication was required.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-ERROR-FILE-ENCRYPTED--CAPS" role="constant">
+<term><literal>BVW_ERROR_FILE_ENCRYPTED</literal></term>
+<listitem><simpara> The stream is encrypted and cannot be played.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-ERROR-FILE-NOT-FOUND--CAPS" role="constant">
+<term><literal>BVW_ERROR_FILE_NOT_FOUND</literal></term>
+<listitem><simpara> The stream cannot be found.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-ERROR-DVD-ENCRYPTED--CAPS" role="constant">
+<term><literal>BVW_ERROR_DVD_ENCRYPTED</literal></term>
+<listitem><simpara> The DVD is encrypted and libdvdcss is not installed.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-ERROR-INVALID-DEVICE--CAPS" role="constant">
+<term><literal>BVW_ERROR_INVALID_DEVICE</literal></term>
+<listitem><simpara> The device given in an MRL (e.g. DVD drive or DVB tuner) did not exist.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-ERROR-DEVICE-BUSY--CAPS" role="constant">
+<term><literal>BVW_ERROR_DEVICE_BUSY</literal></term>
+<listitem><simpara> The device was busy.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-ERROR-UNKNOWN-HOST--CAPS" role="constant">
+<term><literal>BVW_ERROR_UNKNOWN_HOST</literal></term>
+<listitem><simpara> The host for a given stream could not be resolved.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-ERROR-NETWORK-UNREACHABLE--CAPS" role="constant">
+<term><literal>BVW_ERROR_NETWORK_UNREACHABLE</literal></term>
+<listitem><simpara> The host for a given stream could not be reached.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-ERROR-CONNECTION-REFUSED--CAPS" role="constant">
+<term><literal>BVW_ERROR_CONNECTION_REFUSED</literal></term>
+<listitem><simpara> The server for a given stream refused the connection.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-ERROR-INVALID-LOCATION--CAPS" role="constant">
+<term><literal>BVW_ERROR_INVALID_LOCATION</literal></term>
+<listitem><simpara> An MRL was malformed, or CDDB playback was attempted (which is now unsupported).
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-ERROR-GENERIC--CAPS" role="constant">
+<term><literal>BVW_ERROR_GENERIC</literal></term>
+<listitem><simpara> A generic error occurred.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-ERROR-CODEC-NOT-HANDLED--CAPS" role="constant">
+<term><literal>BVW_ERROR_CODEC_NOT_HANDLED</literal></term>
+<listitem><simpara> The audio or video codec required by the stream is not supported.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-ERROR-AUDIO-ONLY--CAPS" role="constant">
+<term><literal>BVW_ERROR_AUDIO_ONLY</literal></term>
+<listitem><simpara> An audio-only stream could not be played due to missing audio output support.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-ERROR-CANNOT-CAPTURE--CAPS" role="constant">
+<term><literal>BVW_ERROR_CANNOT_CAPTURE</literal></term>
+<listitem><simpara> Error determining frame capture support for a video with <link linkend="bacon-video-widget-can-get-frames"><function>bacon_video_widget_can_get_frames()</function></link>.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-ERROR-READ-ERROR--CAPS" role="constant">
+<term><literal>BVW_ERROR_READ_ERROR</literal></term>
+<listitem><simpara> A generic error for problems reading streams.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-ERROR-PLUGIN-LOAD--CAPS" role="constant">
+<term><literal>BVW_ERROR_PLUGIN_LOAD</literal></term>
+<listitem><simpara> A library or plugin could not be loaded.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-ERROR-EMPTY-FILE--CAPS" role="constant">
+<term><literal>BVW_ERROR_EMPTY_FILE</literal></term>
+<listitem><simpara> A movie file was empty.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="BvwUseType" role="enum">
+<title>enum BvwUseType</title>
+<indexterm zone="BvwUseType"><primary>BvwUseType</primary></indexterm><programlisting>typedef enum {
+	BVW_USE_TYPE_VIDEO,
+	BVW_USE_TYPE_AUDIO,
+	BVW_USE_TYPE_CAPTURE,
+	BVW_USE_TYPE_METADATA
+} BvwUseType;
+</programlisting>
+<para>
+The purpose for which a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link> will be used, as specified to
+<link linkend="bacon-video-widget-new"><function>bacon_video_widget_new()</function></link>. This determines which features will be enabled
+in the created widget.</para>
+<para>
+</para><variablelist role="enum">
+<varlistentry id="BVW-USE-TYPE-VIDEO--CAPS" role="constant">
+<term><literal>BVW_USE_TYPE_VIDEO</literal></term>
+<listitem><simpara> fully-featured with video, audio, capture and metadata support
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-USE-TYPE-AUDIO--CAPS" role="constant">
+<term><literal>BVW_USE_TYPE_AUDIO</literal></term>
+<listitem><simpara> audio and metadata support
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-USE-TYPE-CAPTURE--CAPS" role="constant">
+<term><literal>BVW_USE_TYPE_CAPTURE</literal></term>
+<listitem><simpara> capture support only
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="BVW-USE-TYPE-METADATA--CAPS" role="constant">
+<term><literal>BVW_USE_TYPE_METADATA</literal></term>
+<listitem><simpara> metadata support only
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-new" role="function">
+<title>bacon_video_widget_new ()</title>
+<indexterm zone="bacon-video-widget-new"><primary>bacon_video_widget_new</primary></indexterm><programlisting><link linkend="GtkWidget">GtkWidget</link> *         bacon_video_widget_new              (<link linkend="int">int</link> width,
+                                                         <link linkend="int">int</link> height,
+                                                         <link linkend="BvwUseType">BvwUseType</link> type,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Creates a new <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link> for the purpose specified in <parameter>type</parameter>.
+</para>
+<para>
+If <parameter>type</parameter> is <link linkend="BVW-USE-TYPE-VIDEO--CAPS"><literal>BVW_USE_TYPE_VIDEO</literal></link>, the <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link> will be fully-featured; other
+values of <parameter>type</parameter> will enable less functionality on the widget, which will come with
+corresponding decreases in the size of its memory footprint.
+</para>
+<para>
+<parameter>width</parameter> and <parameter>height</parameter> give the initial or expected video height. Set them to <link linkend="1--CAPS"><literal>-1</literal></link> if the
+video size is unknown. For small videos, <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link> will be configured differently.
+</para>
+<para>
+A <link linkend="BvwError"><type>BvwError</type></link> will be returned on error.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>width</parameter>&#160;:</term>
+<listitem><simpara> initial or expected video width, in pixels, or <link linkend="1--CAPS"><literal>-1</literal></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>height</parameter>&#160;:</term>
+<listitem><simpara> initial or expected video height, in pixels, or <link linkend="1--CAPS"><literal>-1</literal></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>type</parameter>&#160;:</term>
+<listitem><simpara> the widget's use type
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="GError"><type>GError</type></link>, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a new <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>; destroy with <link linkend="gtk-widget-destroy"><function>gtk_widget_destroy()</function></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-init-backend" role="function">
+<title>bacon_video_widget_init_backend ()</title>
+<indexterm zone="bacon-video-widget-init-backend"><primary>bacon_video_widget_init_backend</primary></indexterm><programlisting><link linkend="void">void</link>                bacon_video_widget_init_backend     (<link linkend="int">int</link> *argc,
+                                                         <link linkend="char">char</link> ***argv);</programlisting>
+<para>
+Initialises <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>'s GStreamer backend. If this fails
+for the GStreamer backend, your application will be terminated.
+</para>
+<para>
+Applications must call either this or <link linkend="bacon-video-widget-get-option-group"><function>bacon_video_widget_get_option_group()</function></link> exactly
+once; but not both.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>argc</parameter>&#160;:</term>
+<listitem><simpara> pointer to application's argc
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>argv</parameter>&#160;:</term>
+<listitem><simpara> pointer to application's argv
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-open" role="function">
+<title>bacon_video_widget_open ()</title>
+<indexterm zone="bacon-video-widget-open"><primary>bacon_video_widget_open</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            bacon_video_widget_open             (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         const <link linkend="char">char</link> *mrl,
+                                                         const <link linkend="char">char</link> *subtitle_uri,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Opens the given <parameter>mrl</parameter> in <parameter>bvw</parameter> for playing. If <parameter>subtitle_uri</parameter> is not <link linkend="NULL--CAPS"><literal>NULL</literal></link>, the given
+subtitle file is also loaded. Alternatively, the subtitle URI can be passed in <parameter>mrl</parameter>
+by adding it after <literal><link linkend="subtitle--"><type>""</type></link></literal>. For example:
+<literal>http://example.com/video.mpg<link linkend="subtitle--"><type>""</type></link>/home/user/subtitle.ass</literal>.
+</para>
+<para>
+If there was a filesystem error, a <link linkend="BVW-ERROR-GENERIC--CAPS"><literal>BVW_ERROR_GENERIC</literal></link> error will be returned. Otherwise,
+more specific <link linkend="BvwError"><type>BvwError</type></link> errors will be returned.
+</para>
+<para>
+On success, the MRL is loaded and waiting to be played with <link linkend="bacon-video-widget-play"><function>bacon_video_widget_play()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>mrl</parameter>&#160;:</term>
+<listitem><simpara> an MRL
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>subtitle_uri</parameter>&#160;:</term>
+<listitem><simpara> the URI of a subtitle file, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="GError"><type>GError</type></link>, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> on success, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-play" role="function">
+<title>bacon_video_widget_play ()</title>
+<indexterm zone="bacon-video-widget-play"><primary>bacon_video_widget_play</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            bacon_video_widget_play             (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Plays the currently-loaded video in <parameter>bvw</parameter>.
+</para>
+<para>
+Errors from the GStreamer backend will be returned asynchronously via the
+<link linkend="BaconVideoWidget-error"><type>"error"</type></link> signal, even if this function returns <link linkend="TRUE--CAPS"><literal>TRUE</literal></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="GError"><type>GError</type></link>, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> on success, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-pause" role="function">
+<title>bacon_video_widget_pause ()</title>
+<indexterm zone="bacon-video-widget-pause"><primary>bacon_video_widget_pause</primary></indexterm><programlisting><link linkend="void">void</link>                bacon_video_widget_pause            (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);</programlisting>
+<para>
+Pauses the current stream in the video widget.
+</para>
+<para>
+If a live stream is being played, playback is stopped entirely.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-seek" role="function">
+<title>bacon_video_widget_seek ()</title>
+<indexterm zone="bacon-video-widget-seek"><primary>bacon_video_widget_seek</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            bacon_video_widget_seek             (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="double">double</link> position,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Seeks the currently-playing stream to <parameter>position</parameter> as a percentage of the total
+stream length.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>position</parameter>&#160;:</term>
+<listitem><simpara> the percentage of the way through the stream to which to seek
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="GError"><type>GError</type></link>, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> on success, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-seek-time" role="function">
+<title>bacon_video_widget_seek_time ()</title>
+<indexterm zone="bacon-video-widget-seek-time"><primary>bacon_video_widget_seek_time</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            bacon_video_widget_seek_time        (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="gint64">gint64</link> time,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Seeks the currently-playing stream to the absolute position <parameter>time</parameter>, in milliseconds.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>time</parameter>&#160;:</term>
+<listitem><simpara> the time to which to seek, in milliseconds
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="GError"><type>GError</type></link>, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> on success, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-stop" role="function">
+<title>bacon_video_widget_stop ()</title>
+<indexterm zone="bacon-video-widget-stop"><primary>bacon_video_widget_stop</primary></indexterm><programlisting><link linkend="void">void</link>                bacon_video_widget_stop             (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);</programlisting>
+<para>
+Stops playing the current stream and resets to the first position in the stream.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-close" role="function">
+<title>bacon_video_widget_close ()</title>
+<indexterm zone="bacon-video-widget-close"><primary>bacon_video_widget_close</primary></indexterm><programlisting><link linkend="void">void</link>                bacon_video_widget_close            (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);</programlisting>
+<para>
+Closes the current stream and frees the resources associated with it.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-can-deinterlace" role="function">
+<title>bacon_video_widget_can_deinterlace ()</title>
+<indexterm zone="bacon-video-widget-can-deinterlace"><primary>bacon_video_widget_can_deinterlace</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            bacon_video_widget_can_deinterlace  (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);</programlisting>
+<para>
+Returns whether the widget can deinterlace videos.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if deinterlacing is supported, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-can-direct-seek" role="function">
+<title>bacon_video_widget_can_direct_seek ()</title>
+<indexterm zone="bacon-video-widget-can-direct-seek"><primary>bacon_video_widget_can_direct_seek</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            bacon_video_widget_can_direct_seek  (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);</programlisting>
+<para>
+Determines whether direct seeking is possible for the current stream.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if direct seeking is possible, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-can-get-frames" role="function">
+<title>bacon_video_widget_can_get_frames ()</title>
+<indexterm zone="bacon-video-widget-can-get-frames"><primary>bacon_video_widget_can_get_frames</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            bacon_video_widget_can_get_frames   (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Determines whether individual frames from the current stream can
+be returned using <link linkend="bacon-video-widget-get-current-frame"><function>bacon_video_widget_get_current_frame()</function></link>.
+</para>
+<para>
+Frames cannot be returned for audio-only streams, unless visualisations
+are enabled.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="GError"><type>GError</type></link>, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if frames can be captured, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-can-set-volume" role="function">
+<title>bacon_video_widget_can_set_volume ()</title>
+<indexterm zone="bacon-video-widget-can-set-volume"><primary>bacon_video_widget_can_set_volume</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            bacon_video_widget_can_set_volume   (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);</programlisting>
+<para>
+Returns whether the volume level can be set, given the current settings.
+</para>
+<para>
+The volume cannot be set if the audio output type is set to
+<link linkend="BVW-AUDIO-SOUND-AC3PASSTHRU--CAPS"><literal>BVW_AUDIO_SOUND_AC3PASSTHRU</literal></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if the volume can be set, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-dvd-event" role="function">
+<title>bacon_video_widget_dvd_event ()</title>
+<indexterm zone="bacon-video-widget-dvd-event"><primary>bacon_video_widget_dvd_event</primary></indexterm><programlisting><link linkend="void">void</link>                bacon_video_widget_dvd_event        (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="BvwDVDEvent">BvwDVDEvent</link> type);</programlisting>
+<para>
+Issues a DVD navigation event to the video widget, such as one to skip to the
+next chapter, or navigate to the DVD title menu.
+</para>
+<para>
+This is a no-op if the current stream is not navigable.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>type</parameter>&#160;:</term>
+<listitem><simpara> the type of DVD event to issue
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-has-menus" role="function">
+<title>bacon_video_widget_has_menus ()</title>
+<indexterm zone="bacon-video-widget-has-menus"><primary>bacon_video_widget_has_menus</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            bacon_video_widget_has_menus        (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);</programlisting>
+<para>
+Returns whether the widget is currently displaying a menu,
+such as a DVD menu.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if a menu is displyed, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-get-aspect-ratio" role="function">
+<title>bacon_video_widget_get_aspect_ratio ()</title>
+<indexterm zone="bacon-video-widget-get-aspect-ratio"><primary>bacon_video_widget_get_aspect_ratio</primary></indexterm><programlisting><link linkend="BvwAspectRatio">BvwAspectRatio</link>      bacon_video_widget_get_aspect_ratio (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);</programlisting>
+<para>
+Returns the current aspect ratio used by the widget, from
+<link linkend="BaconVideoWidgetAspectRatio"><type>BaconVideoWidgetAspectRatio</type></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the aspect ratio
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-set-aspect-ratio" role="function">
+<title>bacon_video_widget_set_aspect_ratio ()</title>
+<indexterm zone="bacon-video-widget-set-aspect-ratio"><primary>bacon_video_widget_set_aspect_ratio</primary></indexterm><programlisting><link linkend="void">void</link>                bacon_video_widget_set_aspect_ratio (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="BvwAspectRatio">BvwAspectRatio</link> ratio);</programlisting>
+<para>
+Sets the aspect ratio used by the widget, from <link linkend="BaconVideoWidgetAspectRatio"><type>BaconVideoWidgetAspectRatio</type></link>.
+</para>
+<para>
+Changes to this take effect immediately.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ratio</parameter>&#160;:</term>
+<listitem><simpara> the new aspect ratio
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-get-audio-out-type" role="function">
+<title>bacon_video_widget_get_audio_out_type ()</title>
+<indexterm zone="bacon-video-widget-get-audio-out-type"><primary>bacon_video_widget_get_audio_out_type</primary></indexterm><programlisting><link linkend="BvwAudioOutType">BvwAudioOutType</link>     bacon_video_widget_get_audio_out_type
+                                                        (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);</programlisting>
+<para>
+Returns the current audio output type (e.g. how many speaker channels)
+from <link linkend="BaconVideoWidgetAudioOutType"><type>BaconVideoWidgetAudioOutType</type></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the audio output type, or <link linkend="1--CAPS"><literal>-1</literal></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-set-audio-out-type" role="function">
+<title>bacon_video_widget_set_audio_out_type ()</title>
+<indexterm zone="bacon-video-widget-set-audio-out-type"><primary>bacon_video_widget_set_audio_out_type</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            bacon_video_widget_set_audio_out_type
+                                                        (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="BvwAudioOutType">BvwAudioOutType</link> type);</programlisting>
+<para>
+Sets the audio output type (number of speaker channels) in the video widget,
+and stores it in GConf.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>type</parameter>&#160;:</term>
+<listitem><simpara> the new audio output type
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> on success, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-get-auto-resize" role="function">
+<title>bacon_video_widget_get_auto_resize ()</title>
+<indexterm zone="bacon-video-widget-get-auto-resize"><primary>bacon_video_widget_get_auto_resize</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            bacon_video_widget_get_auto_resize  (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);</programlisting>
+<para>
+Returns whether the widget will automatically resize to fit videos.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if the widget will resize, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-set-auto-resize" role="function">
+<title>bacon_video_widget_set_auto_resize ()</title>
+<indexterm zone="bacon-video-widget-set-auto-resize"><primary>bacon_video_widget_set_auto_resize</primary></indexterm><programlisting><link linkend="void">void</link>                bacon_video_widget_set_auto_resize  (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="gboolean">gboolean</link> auto_resize);</programlisting>
+<para>
+Sets whether the widget should automatically resize to fit to new videos when
+they are loaded. Changes to this will take effect when the next media file is
+loaded.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>auto_resize</parameter>&#160;:</term>
+<listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> to automatically resize for new videos, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-get-backend-name" role="function">
+<title>bacon_video_widget_get_backend_name ()</title>
+<indexterm zone="bacon-video-widget-get-backend-name"><primary>bacon_video_widget_get_backend_name</primary></indexterm><programlisting><link linkend="char">char</link> *              bacon_video_widget_get_backend_name (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);</programlisting>
+<para>
+Returns the name string for <parameter>bvw</parameter>. For the GStreamer backend, it is the output
+of <link linkend="gst-version-string"><function>gst_version_string()</function></link>. *</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the backend's name; free with <link linkend="g-free"><function>g_free()</function></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-get-connection-speed" role="function">
+<title>bacon_video_widget_get_connection_speed ()</title>
+<indexterm zone="bacon-video-widget-get-connection-speed"><primary>bacon_video_widget_get_connection_speed</primary></indexterm><programlisting><link linkend="int">int</link>                 bacon_video_widget_get_connection_speed
+                                                        (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);</programlisting>
+<para>
+Returns the current connection speed, where <link linkend="0--CAPS"><literal>0</literal></link> is the lowest speed
+and <link linkend="11--CAPS"><literal>11</literal></link> is the highest.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the connection speed index
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-set-connection-speed" role="function">
+<title>bacon_video_widget_set_connection_speed ()</title>
+<indexterm zone="bacon-video-widget-set-connection-speed"><primary>bacon_video_widget_set_connection_speed</primary></indexterm><programlisting><link linkend="void">void</link>                bacon_video_widget_set_connection_speed
+                                                        (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="int">int</link> speed);</programlisting>
+<para>
+Sets the connection speed from the given <parameter>speed</parameter> index, where <link linkend="0--CAPS"><literal>0</literal></link> is the lowest speed
+and <link linkend="11--CAPS"><literal>11</literal></link> is the highest.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>speed</parameter>&#160;:</term>
+<listitem><simpara> the connection speed index
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-get-current-frame" role="function">
+<title>bacon_video_widget_get_current_frame ()</title>
+<indexterm zone="bacon-video-widget-get-current-frame"><primary>bacon_video_widget_get_current_frame</primary></indexterm><programlisting><link linkend="GdkPixbuf">GdkPixbuf</link> *         bacon_video_widget_get_current_frame
+                                                        (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);</programlisting>
+<para>
+Returns a <link linkend="GdkPixbuf"><type>GdkPixbuf</type></link> containing the current frame from the playing
+stream. This will wait for any pending seeks to complete before
+capturing the frame.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the current frame, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>; unref with <link linkend="g-object-unref"><function>g_object_unref()</function></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-get-current-time" role="function">
+<title>bacon_video_widget_get_current_time ()</title>
+<indexterm zone="bacon-video-widget-get-current-time"><primary>bacon_video_widget_get_current_time</primary></indexterm><programlisting><link linkend="gint64">gint64</link>              bacon_video_widget_get_current_time (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);</programlisting>
+<para>
+Returns the current position in the stream, as the time (in milliseconds)
+since the beginning of the stream.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> time since the beginning of the stream, in milliseconds, or <link linkend="1--CAPS"><literal>-1</literal></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-get-deinterlacing" role="function">
+<title>bacon_video_widget_get_deinterlacing ()</title>
+<indexterm zone="bacon-video-widget-get-deinterlacing"><primary>bacon_video_widget_get_deinterlacing</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            bacon_video_widget_get_deinterlacing
+                                                        (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);</programlisting>
+<para>
+Returns whether deinterlacing of videos is enabled for this widget.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if deinterlacing is enabled, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-set-deinterlacing" role="function">
+<title>bacon_video_widget_set_deinterlacing ()</title>
+<indexterm zone="bacon-video-widget-set-deinterlacing"><primary>bacon_video_widget_set_deinterlacing</primary></indexterm><programlisting><link linkend="void">void</link>                bacon_video_widget_set_deinterlacing
+                                                        (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="gboolean">gboolean</link> deinterlace);</programlisting>
+<para>
+Sets whether the widget should deinterlace videos. This is a no-op if
+<link linkend="bacon-video-widget-can-deinterlace"><function>bacon_video_widget_can_deinterlace()</function></link> returns <link linkend="FALSE--CAPS"><literal>FALSE</literal></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>deinterlace</parameter>&#160;:</term>
+<listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if videos should be deinterlaced, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-set-fullscreen" role="function">
+<title>bacon_video_widget_set_fullscreen ()</title>
+<indexterm zone="bacon-video-widget-set-fullscreen"><primary>bacon_video_widget_set_fullscreen</primary></indexterm><programlisting><link linkend="void">void</link>                bacon_video_widget_set_fullscreen   (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="gboolean">gboolean</link> fullscreen);</programlisting>
+<para>
+Sets whether the widget renders the stream in fullscreen mode.
+</para>
+<para>
+Fullscreen rendering is done only when possible, as xvidmode is required.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>fullscreen</parameter>&#160;:</term>
+<listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> to go fullscreen, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-get-languages" role="function">
+<title>bacon_video_widget_get_languages ()</title>
+<indexterm zone="bacon-video-widget-get-languages"><primary>bacon_video_widget_get_languages</primary></indexterm><programlisting><link linkend="GList">GList</link> *             bacon_video_widget_get_languages    (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);</programlisting>
+<para>
+Returns a list of audio language tags, each in the form <literal>AUDIO <replaceable>x</replaceable></literal>,
+where <replaceable>x</replaceable> is the language index.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a <link linkend="GList"><type>GList</type></link> of audio language tags, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>; free each element with <link linkend="g-free"><function>g_free()</function></link> and the list with <link linkend="g-list-free"><function>g_list_free()</function></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-get-language" role="function">
+<title>bacon_video_widget_get_language ()</title>
+<indexterm zone="bacon-video-widget-get-language"><primary>bacon_video_widget_get_language</primary></indexterm><programlisting><link linkend="int">int</link>                 bacon_video_widget_get_language     (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);</programlisting>
+<para>
+Returns the index of the current audio language.
+</para>
+<para>
+If the widget is not playing, or the default language is in use, <link linkend="1--CAPS"><literal>-1</literal></link> will be returned.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the audio language index
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-set-language" role="function">
+<title>bacon_video_widget_set_language ()</title>
+<indexterm zone="bacon-video-widget-set-language"><primary>bacon_video_widget_set_language</primary></indexterm><programlisting><link linkend="void">void</link>                bacon_video_widget_set_language     (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="int">int</link> language);</programlisting>
+<para>
+Sets the audio language index for <parameter>bvw</parameter>. If <parameter>language</parameter> is <link linkend="1--CAPS"><literal>-1</literal></link>, the default language will
+be used.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>language</parameter>&#160;:</term>
+<listitem><simpara> an audio language index
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-set-logo" role="function">
+<title>bacon_video_widget_set_logo ()</title>
+<indexterm zone="bacon-video-widget-set-logo"><primary>bacon_video_widget_set_logo</primary></indexterm><programlisting><link linkend="void">void</link>                bacon_video_widget_set_logo         (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         const <link linkend="char">char</link> *name);</programlisting>
+<para>
+Sets the logo displayed on the video widget when no stream is loaded.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>name</parameter>&#160;:</term>
+<listitem><simpara> the icon name of the logo
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-get-logo-mode" role="function">
+<title>bacon_video_widget_get_logo_mode ()</title>
+<indexterm zone="bacon-video-widget-get-logo-mode"><primary>bacon_video_widget_get_logo_mode</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            bacon_video_widget_get_logo_mode    (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);</programlisting>
+<para>
+Gets whether the logo is displayed when no stream is loaded.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if the logo is displayed, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-set-logo-mode" role="function">
+<title>bacon_video_widget_set_logo_mode ()</title>
+<indexterm zone="bacon-video-widget-set-logo-mode"><primary>bacon_video_widget_set_logo_mode</primary></indexterm><programlisting><link linkend="void">void</link>                bacon_video_widget_set_logo_mode    (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="gboolean">gboolean</link> logo_mode);</programlisting>
+<para>
+Sets whether to display a logo set with <parameter>bacon_video_widget_set_logo</parameter> when
+no stream is loaded. If <parameter>logo_mode</parameter> is <link linkend="FALSE--CAPS"><literal>FALSE</literal></link>, nothing will be displayed
+and the video widget will take up no space. Otherwise, the logo will be
+displayed and will requisition a corresponding amount of space.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>logo_mode</parameter>&#160;:</term>
+<listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> to display the logo, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-get-metadata" role="function">
+<title>bacon_video_widget_get_metadata ()</title>
+<indexterm zone="bacon-video-widget-get-metadata"><primary>bacon_video_widget_get_metadata</primary></indexterm><programlisting><link linkend="void">void</link>                bacon_video_widget_get_metadata     (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="BvwMetadataType">BvwMetadataType</link> type,
+                                                         <link linkend="GValue">GValue</link> *value);</programlisting>
+<para>
+Provides metadata of the given <parameter>type</parameter> about the current stream in <parameter>value</parameter>.
+</para>
+<para>
+Free the <link linkend="GValue"><type>GValue</type></link> with <link linkend="g-value-unset"><function>g_value_unset()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>type</parameter>&#160;:</term>
+<listitem><simpara> the type of metadata to return
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="GValue"><type>GValue</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-get-mrls" role="function">
+<title>bacon_video_widget_get_mrls ()</title>
+<indexterm zone="bacon-video-widget-get-mrls"><primary>bacon_video_widget_get_mrls</primary></indexterm><programlisting><link linkend="gchar">gchar</link> **            bacon_video_widget_get_mrls         (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="TotemDiscMediaType">TotemDiscMediaType</link> type,
+                                                         const <link linkend="char">char</link> *device,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Returns an array of MRLs available for the given <parameter>device</parameter> and media <parameter>type</parameter>.
+</para>
+<para>
+<parameter>device</parameter> should typically be the number of the device (e.g. <link linkend="0--CAPS"><literal>0</literal></link> for the first
+DVD drive, or the number of the DVB adapter).
+</para>
+<para>
+<parameter>type</parameter> can be any value from <link linkend="TotemDiscMediaType"><type>TotemDiscMediaType</type></link>, but a <link linkend="BVW-ERROR-INVALID-LOCATION--CAPS"><literal>BVW_ERROR_INVALID_LOCATION</literal></link> error
+will be returned if <parameter>type</parameter> is <link linkend="MEDIA-TYPE-CDDA--CAPS"><literal>MEDIA_TYPE_CDDA</literal></link>, as CDDA support has been removed from
+Totem (and hence <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>).
+</para>
+<para>
+A <link linkend="BVW-ERROR-NO-PLUGIN-FOR-FILE--CAPS"><literal>BVW_ERROR_NO_PLUGIN_FOR_FILE</literal></link> error will be returned if the required GStreamer elements do
+not exist for the given <parameter>type</parameter> (for the GStreamer backend). *
+If <parameter>device</parameter> does not exist, a <link linkend="BVW-ERROR-INVALID-DEVICE--CAPS"><literal>BVW_ERROR_INVALID_DEVICE</literal></link> error will be returned.
+</para>
+<para>
+If <parameter>type</parameter> is <link linkend="MEDIA-TYPE-DVB--CAPS"><literal>MEDIA_TYPE_DVB</literal></link> and the DVB channels file (as given by
+<link linkend="bacon-video-widget-get-channels-file"><function>bacon_video_widget_get_channels_file()</function></link> for the GStreamer backend)
+does not exist, a <link linkend="BVW-ERROR-FILE-NOT-FOUND--CAPS"><literal>BVW_ERROR_FILE_NOT_FOUND</literal></link> error will be returned.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>type</parameter>&#160;:</term>
+<listitem><simpara> the media type
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>device</parameter>&#160;:</term>
+<listitem><simpara> the device name
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="GError"><type>GError</type></link>, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a <link linkend="NULL--CAPS"><literal>NULL</literal></link>-terminated array of MRLs, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>; free with <link linkend="g-strfreev"><function>g_strfreev()</function></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-get-option-group" role="function">
+<title>bacon_video_widget_get_option_group ()</title>
+<indexterm zone="bacon-video-widget-get-option-group"><primary>bacon_video_widget_get_option_group</primary></indexterm><programlisting><link linkend="GOptionGroup">GOptionGroup</link>*       bacon_video_widget_get_option_group (void);</programlisting>
+<para>
+Returns the <link linkend="GOptionGroup"><type>GOptionGroup</type></link> containing command-line options for
+<link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>.
+</para>
+<para>
+Applications must call either this or <link linkend="bacon-video-widget-init-backend"><function>bacon_video_widget_init_backend()</function></link> exactly
+once; but not both.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a <link linkend="GOptionGroup"><type>GOptionGroup</type></link> giving command-line options for <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-get-position" role="function">
+<title>bacon_video_widget_get_position ()</title>
+<indexterm zone="bacon-video-widget-get-position"><primary>bacon_video_widget_get_position</primary></indexterm><programlisting><link linkend="double">double</link>              bacon_video_widget_get_position     (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);</programlisting>
+<para>
+Returns the current position in the stream, as a value between
+<link linkend="0--CAPS"><literal>0</literal></link> and <link linkend="1--CAPS"><literal>1</literal></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the current position, or <link linkend="1--CAPS"><literal>-1</literal></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-set-referrer" role="function">
+<title>bacon_video_widget_set_referrer ()</title>
+<indexterm zone="bacon-video-widget-set-referrer"><primary>bacon_video_widget_set_referrer</primary></indexterm><programlisting><link linkend="void">void</link>                bacon_video_widget_set_referrer     (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         const <link linkend="char">char</link> *referrer);</programlisting>
+<para>
+Sets the HTTP referrer URI to use when fetching HTTP ressources.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>referrer</parameter>&#160;:</term>
+<listitem><simpara> a HTTP referrer URI, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-set-scale-ratio" role="function">
+<title>bacon_video_widget_set_scale_ratio ()</title>
+<indexterm zone="bacon-video-widget-set-scale-ratio"><primary>bacon_video_widget_set_scale_ratio</primary></indexterm><programlisting><link linkend="void">void</link>                bacon_video_widget_set_scale_ratio  (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="float">float</link> ratio);</programlisting>
+<para>
+Sets the ratio by which the widget will scale videos when they are
+displayed. If <parameter>ratio</parameter> is set to <link linkend="0--CAPS"><literal>0</literal></link>, the highest ratio possible will
+be chosen.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ratio</parameter>&#160;:</term>
+<listitem><simpara> the new scale ratio
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-get-show-cursor" role="function">
+<title>bacon_video_widget_get_show_cursor ()</title>
+<indexterm zone="bacon-video-widget-get-show-cursor"><primary>bacon_video_widget_get_show_cursor</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            bacon_video_widget_get_show_cursor  (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);</programlisting>
+<para>
+Returns whether the cursor is shown when it is over the video widget.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if the cursor is shown, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-set-show-cursor" role="function">
+<title>bacon_video_widget_set_show_cursor ()</title>
+<indexterm zone="bacon-video-widget-set-show-cursor"><primary>bacon_video_widget_set_show_cursor</primary></indexterm><programlisting><link linkend="void">void</link>                bacon_video_widget_set_show_cursor  (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="gboolean">gboolean</link> show_cursor);</programlisting>
+<para>
+Sets whether the cursor should be shown when it is over the video
+widget. If <parameter>show_cursor</parameter> is <link linkend="FALSE--CAPS"><literal>FALSE</literal></link>, the cursor will be invisible
+when it is moved over the video widget.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>show_cursor</parameter>&#160;:</term>
+<listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> to show the cursor, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-set-show-visuals" role="function">
+<title>bacon_video_widget_set_show_visuals ()</title>
+<indexterm zone="bacon-video-widget-set-show-visuals"><primary>bacon_video_widget_set_show_visuals</primary></indexterm><programlisting><link linkend="void">void</link>                bacon_video_widget_set_show_visuals (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="gboolean">gboolean</link> show_visuals);</programlisting>
+<para>
+Sets whether to show visualisations when playing audio-only streams.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>show_visuals</parameter>&#160;:</term>
+<listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> to show visualisations, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-get-stream-length" role="function">
+<title>bacon_video_widget_get_stream_length ()</title>
+<indexterm zone="bacon-video-widget-get-stream-length"><primary>bacon_video_widget_get_stream_length</primary></indexterm><programlisting><link linkend="gint64">gint64</link>              bacon_video_widget_get_stream_length
+                                                        (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);</programlisting>
+<para>
+Returns the total length of the stream, in milliseconds.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the stream length, in milliseconds, or <link linkend="1--CAPS"><literal>-1</literal></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-get-subtitles" role="function">
+<title>bacon_video_widget_get_subtitles ()</title>
+<indexterm zone="bacon-video-widget-get-subtitles"><primary>bacon_video_widget_get_subtitles</primary></indexterm><programlisting><link linkend="GList">GList</link> *             bacon_video_widget_get_subtitles    (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);</programlisting>
+<para>
+Returns a list of subtitle tags, each in the form <literal>TEXT <replaceable>x</replaceable></literal>,
+where <replaceable>x</replaceable> is the subtitle index.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a <link linkend="GList"><type>GList</type></link> of subtitle tags, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>; free each element with <link linkend="g-free"><function>g_free()</function></link> and the list with <link linkend="g-list-free"><function>g_list_free()</function></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-get-subtitle" role="function">
+<title>bacon_video_widget_get_subtitle ()</title>
+<indexterm zone="bacon-video-widget-get-subtitle"><primary>bacon_video_widget_get_subtitle</primary></indexterm><programlisting><link linkend="int">int</link>                 bacon_video_widget_get_subtitle     (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);</programlisting>
+<para>
+Returns the index of the current subtitles.
+</para>
+<para>
+If the widget is not playing, <link linkend="2--CAPS"><literal>-2</literal></link> will be returned. If no subtitles are
+being used, <link linkend="1--CAPS"><literal>-1</literal></link> is returned.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the subtitle index
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-set-subtitle" role="function">
+<title>bacon_video_widget_set_subtitle ()</title>
+<indexterm zone="bacon-video-widget-set-subtitle"><primary>bacon_video_widget_set_subtitle</primary></indexterm><programlisting><link linkend="void">void</link>                bacon_video_widget_set_subtitle     (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="int">int</link> subtitle);</programlisting>
+<para>
+Sets the subtitle index for <parameter>bvw</parameter>. If <parameter>subtitle</parameter> is <link linkend="1--CAPS"><literal>-1</literal></link>, no subtitles will
+be used.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>subtitle</parameter>&#160;:</term>
+<listitem><simpara> a subtitle index
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-set-subtitle-encoding" role="function">
+<title>bacon_video_widget_set_subtitle_encoding ()</title>
+<indexterm zone="bacon-video-widget-set-subtitle-encoding"><primary>bacon_video_widget_set_subtitle_encoding</primary></indexterm><programlisting><link linkend="void">void</link>                bacon_video_widget_set_subtitle_encoding
+                                                        (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         const <link linkend="char">char</link> *encoding);</programlisting>
+<para>
+Sets the encoding system for the subtitles, so that they can be decoded
+properly.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>encoding</parameter>&#160;:</term>
+<listitem><simpara> an encoding system
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-set-subtitle-font" role="function">
+<title>bacon_video_widget_set_subtitle_font ()</title>
+<indexterm zone="bacon-video-widget-set-subtitle-font"><primary>bacon_video_widget_set_subtitle_font</primary></indexterm><programlisting><link linkend="void">void</link>                bacon_video_widget_set_subtitle_font
+                                                        (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         const <link linkend="char">char</link> *font);</programlisting>
+<para>
+Sets the font size and style in which to display subtitles.
+</para>
+<para>
+<parameter>font</parameter> is a Pango font description string, as understood by
+<link linkend="pango-font-description-from-string"><function>pango_font_description_from_string()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>font</parameter>&#160;:</term>
+<listitem><simpara> a font description string
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-set-user-agent" role="function">
+<title>bacon_video_widget_set_user_agent ()</title>
+<indexterm zone="bacon-video-widget-set-user-agent"><primary>bacon_video_widget_set_user_agent</primary></indexterm><programlisting><link linkend="void">void</link>                bacon_video_widget_set_user_agent   (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         const <link linkend="char">char</link> *user_agent);</programlisting>
+<para>
+Sets the HTTP user agent string to use when fetching HTTP ressources.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_agent</parameter>&#160;:</term>
+<listitem><simpara> a HTTP user agent string, or <link linkend="NULL--CAPS"><literal>NULL</literal></link> to use the default
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-get-video-property" role="function">
+<title>bacon_video_widget_get_video_property ()</title>
+<indexterm zone="bacon-video-widget-get-video-property"><primary>bacon_video_widget_get_video_property</primary></indexterm><programlisting><link linkend="int">int</link>                 bacon_video_widget_get_video_property
+                                                        (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="BvwVideoProperty">BvwVideoProperty</link> type);</programlisting>
+<para>
+Returns the given property of the video, such as its brightness or saturation.
+</para>
+<para>
+It is returned as a percentage in the full range of integer values; from <link linkend="0--CAPS"><literal>0</literal></link>
+to <link linkend="G-MAXINT--CAPS"><literal>G_MAXINT</literal></link>, where <link linkend="G-MAXINT--CAPS"><literal>G_MAXINT</literal></link>/2 is the default.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>type</parameter>&#160;:</term>
+<listitem><simpara> the type of property
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the property's value, in the range <link linkend="0--CAPS"><literal>0</literal></link> to <link linkend="G-MAXINT--CAPS"><literal>G_MAXINT</literal></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-set-video-property" role="function">
+<title>bacon_video_widget_set_video_property ()</title>
+<indexterm zone="bacon-video-widget-set-video-property"><primary>bacon_video_widget_set_video_property</primary></indexterm><programlisting><link linkend="void">void</link>                bacon_video_widget_set_video_property
+                                                        (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="BvwVideoProperty">BvwVideoProperty</link> type,
+                                                         <link linkend="int">int</link> value);</programlisting>
+<para>
+Sets the given property of the video, such as its brightness or saturation.
+</para>
+<para>
+It should be given as a percentage in the full range of integer values; from <link linkend="0--CAPS"><literal>0</literal></link>
+to <link linkend="G-MAXINT--CAPS"><literal>G_MAXINT</literal></link>, where <link linkend="G-MAXINT--CAPS"><literal>G_MAXINT</literal></link>/2 is the default.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>type</parameter>&#160;:</term>
+<listitem><simpara> the type of property
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara> the property's value, in the range <link linkend="0--CAPS"><literal>0</literal></link> to <link linkend="G-MAXINT--CAPS"><literal>G_MAXINT</literal></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-get-visuals-list" role="function">
+<title>bacon_video_widget_get_visuals_list ()</title>
+<indexterm zone="bacon-video-widget-get-visuals-list"><primary>bacon_video_widget_get_visuals_list</primary></indexterm><programlisting><link linkend="GList">GList</link> *             bacon_video_widget_get_visuals_list (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);</programlisting>
+<para>
+Returns a list of the visualisations available when playing audio-only streams.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a <link linkend="GList"><type>GList</type></link> of visualisation names; owned by <parameter>bvw</parameter>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-set-visuals" role="function">
+<title>bacon_video_widget_set_visuals ()</title>
+<indexterm zone="bacon-video-widget-set-visuals"><primary>bacon_video_widget_set_visuals</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            bacon_video_widget_set_visuals      (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         const <link linkend="char">char</link> *name);</programlisting>
+<para>
+Sets the visualisation to display when playing audio-only streams.
+</para>
+<para>
+If <parameter>name</parameter> is <link linkend="NULL--CAPS"><literal>NULL</literal></link>, visualisations will be disabled. Otherwise, <parameter>name</parameter>
+should be from the list returned by <link linkend="bacon-video-widget-get-visuals-list"><function>bacon_video_widget_get_visuals_list()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>name</parameter>&#160;:</term>
+<listitem><simpara> the visualisation's name, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> on success, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-set-visuals-quality" role="function">
+<title>bacon_video_widget_set_visuals_quality ()</title>
+<indexterm zone="bacon-video-widget-set-visuals-quality"><primary>bacon_video_widget_set_visuals_quality</primary></indexterm><programlisting><link linkend="void">void</link>                bacon_video_widget_set_visuals_quality
+                                                        (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="BvwVisualsQuality">BvwVisualsQuality</link> quality);</programlisting>
+<para>
+Sets the quality/size of displayed visualisations.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>quality</parameter>&#160;:</term>
+<listitem><simpara> the visualisation quality
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-get-volume" role="function">
+<title>bacon_video_widget_get_volume ()</title>
+<indexterm zone="bacon-video-widget-get-volume"><primary>bacon_video_widget_get_volume</primary></indexterm><programlisting><link linkend="double">double</link>              bacon_video_widget_get_volume       (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);</programlisting>
+<para>
+Returns the current volume level, as a percentage between <link linkend="0--CAPS"><literal>0</literal></link> and <link linkend="1--CAPS"><literal>1</literal></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the volume as a percentage between <link linkend="0--CAPS"><literal>0</literal></link> and <link linkend="1--CAPS"><literal>1</literal></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-set-volume" role="function">
+<title>bacon_video_widget_set_volume ()</title>
+<indexterm zone="bacon-video-widget-set-volume"><primary>bacon_video_widget_set_volume</primary></indexterm><programlisting><link linkend="void">void</link>                bacon_video_widget_set_volume       (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="double">double</link> volume);</programlisting>
+<para>
+Sets the volume level of the stream as a percentage between <link linkend="0--CAPS"><literal>0</literal></link> and <link linkend="1--CAPS"><literal>1</literal></link>.
+</para>
+<para>
+If <link linkend="bacon-video-widget-can-set-volume"><function>bacon_video_widget_can_set_volume()</function></link> returns <link linkend="FALSE--CAPS"><literal>FALSE</literal></link>, this is a no-op.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>volume</parameter>&#160;:</term>
+<listitem><simpara> the new volume level, as a percentage between <link linkend="0--CAPS"><literal>0</literal></link> and <link linkend="1--CAPS"><literal>1</literal></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-get-zoom" role="function">
+<title>bacon_video_widget_get_zoom ()</title>
+<indexterm zone="bacon-video-widget-get-zoom"><primary>bacon_video_widget_get_zoom</primary></indexterm><programlisting><link linkend="double">double</link>              bacon_video_widget_get_zoom         (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);</programlisting>
+<para>
+Returns the zoom factor applied to videos displayed by the widget,
+as an integeric percentage between <link linkend="0--CAPS"><literal>0</literal></link> and <link linkend="1--CAPS"><literal>1</literal></link>
+(e.g. <link linkend="1--CAPS"><literal>1</literal></link> means no zooming at all).</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the zoom factor
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-set-zoom" role="function">
+<title>bacon_video_widget_set_zoom ()</title>
+<indexterm zone="bacon-video-widget-set-zoom"><primary>bacon_video_widget_set_zoom</primary></indexterm><programlisting><link linkend="void">void</link>                bacon_video_widget_set_zoom         (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="double">double</link> zoom);</programlisting>
+<para>
+Sets the zoom factor applied to the video when it is displayed,
+as an integeric percentage between <link linkend="0--CAPS"><literal>0</literal></link> and <link linkend="1--CAPS"><literal>1</literal></link>
+(e.g. set <parameter>zoom</parameter> to <link linkend="1--CAPS"><literal>1</literal></link> to not zoom at all).</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>zoom</parameter>&#160;:</term>
+<listitem><simpara> a percentage zoom factor
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-has-next-track" role="function">
+<title>bacon_video_widget_has_next_track ()</title>
+<indexterm zone="bacon-video-widget-has-next-track"><primary>bacon_video_widget_has_next_track</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            bacon_video_widget_has_next_track   (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);</programlisting>
+<para>
+Determines whether there is another track after the current one, typically
+as a chapter on a DVD.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if there is another track, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-has-previous-track" role="function">
+<title>bacon_video_widget_has_previous_track ()</title>
+<indexterm zone="bacon-video-widget-has-previous-track"><primary>bacon_video_widget_has_previous_track</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            bacon_video_widget_has_previous_track
+                                                        (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);</programlisting>
+<para>
+Determines whether there is another track before the current one, typically
+as a chapter on a DVD.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if there is another track, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-is-playing" role="function">
+<title>bacon_video_widget_is_playing ()</title>
+<indexterm zone="bacon-video-widget-is-playing"><primary>bacon_video_widget_is_playing</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            bacon_video_widget_is_playing       (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);</programlisting>
+<para>
+Returns whether the widget is currently playing a stream.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if a stream is playing, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-is-seekable" role="function">
+<title>bacon_video_widget_is_seekable ()</title>
+<indexterm zone="bacon-video-widget-is-seekable"><primary>bacon_video_widget_is_seekable</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            bacon_video_widget_is_seekable      (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw);</programlisting>
+<para>
+Returns whether seeking is possible in the current stream.
+</para>
+<para>
+If no stream is loaded, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> is returned.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if the stream is seekable, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="bacon-video-widget-step" role="function">
+<title>bacon_video_widget_step ()</title>
+<indexterm zone="bacon-video-widget-step"><primary>bacon_video_widget_step</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            bacon_video_widget_step             (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *bvw,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Step one frame forward.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>bvw</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="BaconVideoWidget"><type>BaconVideoWidget</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="GError"><type>GError</type></link>, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> on success, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1 id="BaconVideoWidget.property-details" role="property_details">
+<title role="property_details.title">Property Details</title>
+<refsect2 id="BaconVideoWidget--logo-mode" role="property"><title>The <literal>&quot;logo-mode&quot;</literal> property</title>
+<indexterm zone="BaconVideoWidget--logo-mode"><primary>BaconVideoWidget:logo-mode</primary></indexterm><programlisting>  &quot;logo-mode&quot;                <link linkend="gboolean">gboolean</link>              : Read / Write</programlisting>
+<para>
+Whether the logo should be displayed when no stream is loaded, or the widget
+should take up no space.</para>
+<para>
+</para><para>Default value: FALSE</para>
+</refsect2>
+<refsect2 id="BaconVideoWidget--playing" role="property"><title>The <literal>&quot;playing&quot;</literal> property</title>
+<indexterm zone="BaconVideoWidget--playing"><primary>BaconVideoWidget:playing</primary></indexterm><programlisting>  &quot;playing&quot;                  <link linkend="gboolean">gboolean</link>              : Read</programlisting>
+<para>
+Whether a stream is currently playing.</para>
+<para>
+</para><para>Default value: FALSE</para>
+</refsect2>
+<refsect2 id="BaconVideoWidget--position" role="property"><title>The <literal>&quot;position&quot;</literal> property</title>
+<indexterm zone="BaconVideoWidget--position"><primary>BaconVideoWidget:position</primary></indexterm><programlisting>  &quot;position&quot;                 <link linkend="gdouble">gdouble</link>               : Read</programlisting>
+<para>
+The current position in the stream, as a percentage between <link linkend="0--CAPS"><literal>0</literal></link> and <link linkend="1--CAPS"><literal>1</literal></link>.</para>
+<para>
+</para><para>Allowed values: [0,1]</para>
+<para>Default value: 0</para>
+</refsect2>
+<refsect2 id="BaconVideoWidget--referrer" role="property"><title>The <literal>&quot;referrer&quot;</literal> property</title>
+<indexterm zone="BaconVideoWidget--referrer"><primary>BaconVideoWidget:referrer</primary></indexterm><programlisting>  &quot;referrer&quot;                 <link linkend="gchar">gchar</link>*                : Read / Write</programlisting>
+<para>
+The HTTP referrer URI.</para>
+<para>
+</para><para>Default value: NULL</para>
+</refsect2>
+<refsect2 id="BaconVideoWidget--seekable" role="property"><title>The <literal>&quot;seekable&quot;</literal> property</title>
+<indexterm zone="BaconVideoWidget--seekable"><primary>BaconVideoWidget:seekable</primary></indexterm><programlisting>  &quot;seekable&quot;                 <link linkend="gboolean">gboolean</link>              : Read</programlisting>
+<para>
+Whether the current stream can be seeked.</para>
+<para>
+</para><para>Default value: FALSE</para>
+</refsect2>
+<refsect2 id="BaconVideoWidget--show-cursor" role="property"><title>The <literal>&quot;show-cursor&quot;</literal> property</title>
+<indexterm zone="BaconVideoWidget--show-cursor"><primary>BaconVideoWidget:show-cursor</primary></indexterm><programlisting>  &quot;show-cursor&quot;              <link linkend="gboolean">gboolean</link>              : Read / Write</programlisting>
+<para>
+Whether the cursor should be shown, or should be invisible, when it is over
+the video widget.</para>
+<para>
+</para><para>Default value: FALSE</para>
+</refsect2>
+<refsect2 id="BaconVideoWidget--show-visuals" role="property"><title>The <literal>&quot;show-visuals&quot;</literal> property</title>
+<indexterm zone="BaconVideoWidget--show-visuals"><primary>BaconVideoWidget:show-visuals</primary></indexterm><programlisting>  &quot;show-visuals&quot;             <link linkend="gboolean">gboolean</link>              : Write</programlisting>
+<para>
+Whether visualisations should be shown for audio-only streams.</para>
+<para>
+</para><para>Default value: FALSE</para>
+</refsect2>
+<refsect2 id="BaconVideoWidget--stream-length" role="property"><title>The <literal>&quot;stream-length&quot;</literal> property</title>
+<indexterm zone="BaconVideoWidget--stream-length"><primary>BaconVideoWidget:stream-length</primary></indexterm><programlisting>  &quot;stream-length&quot;            <link linkend="gint64">gint64</link>                : Read</programlisting>
+<para>
+The length of the current stream, in milliseconds.</para>
+<para>
+</para><para>Allowed values: &gt;= 0</para>
+<para>Default value: 0</para>
+</refsect2>
+<refsect2 id="BaconVideoWidget--user-agent" role="property"><title>The <literal>&quot;user-agent&quot;</literal> property</title>
+<indexterm zone="BaconVideoWidget--user-agent"><primary>BaconVideoWidget:user-agent</primary></indexterm><programlisting>  &quot;user-agent&quot;               <link linkend="gchar">gchar</link>*                : Read / Write</programlisting>
+<para>
+The HTTP user agent string to use.</para>
+<para>
+</para><para>Default value: NULL</para>
+</refsect2>
+<refsect2 id="BaconVideoWidget--volume" role="property"><title>The <literal>&quot;volume&quot;</literal> property</title>
+<indexterm zone="BaconVideoWidget--volume"><primary>BaconVideoWidget:volume</primary></indexterm><programlisting>  &quot;volume&quot;                   <link linkend="gdouble">gdouble</link>               : Read / Write</programlisting>
+<para>
+The current volume level, as a percentage between <link linkend="0--CAPS"><literal>0</literal></link> and <link linkend="1--CAPS"><literal>1</literal></link>.</para>
+<para>
+</para><para>Allowed values: [0,1]</para>
+<para>Default value: 0</para>
+</refsect2>
+</refsect1>
+
+<refsect1 id="BaconVideoWidget.signal-details" role="signals">
+<title role="signals.title">Signal Details</title>
+<refsect2 id="BaconVideoWidget-buffering" role="signal"><title>The <literal>&quot;buffering&quot;</literal> signal</title>
+<indexterm zone="BaconVideoWidget-buffering"><primary>BaconVideoWidget::buffering</primary></indexterm><programlisting><link linkend="void">void</link>                user_function                      (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *percentage,
+                                                        <link linkend="gint">gint</link>              arg1,
+                                                        <link linkend="gpointer">gpointer</link>          user_data)       : Run Last</programlisting>
+<para>
+Emitted regularly when a network stream is being buffered, to provide status updates on the buffering
+progress.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>percentage</parameter>&#160;:</term>
+<listitem><simpara> the percentage of buffering completed, between <link linkend="0--CAPS"><literal>0</literal></link> and <link linkend="1--CAPS"><literal>1</literal></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="BaconVideoWidget-channels-change" role="signal"><title>The <literal>&quot;channels-change&quot;</literal> signal</title>
+<indexterm zone="BaconVideoWidget-channels-change"><primary>BaconVideoWidget::channels-change</primary></indexterm><programlisting><link linkend="void">void</link>                user_function                      (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *arg0,
+                                                        <link linkend="gpointer">gpointer</link>          user_data)      : Run Last</programlisting>
+<para>
+Emitted when the number of audio languages available changes, or when the
+selected audio language is changed.
+</para>
+<para>
+Query the new list of audio languages with <link linkend="bacon-video-widget-get-languages"><function>bacon_video_widget_get_languages()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="BaconVideoWidget-eos" role="signal"><title>The <literal>&quot;eos&quot;</literal> signal</title>
+<indexterm zone="BaconVideoWidget-eos"><primary>BaconVideoWidget::eos</primary></indexterm><programlisting><link linkend="void">void</link>                user_function                      (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *arg0,
+                                                        <link linkend="gpointer">gpointer</link>          user_data)      : Run Last</programlisting>
+<para>
+Emitted when the end of the current stream is reached.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="BaconVideoWidget-error" role="signal"><title>The <literal>&quot;error&quot;</literal> signal</title>
+<indexterm zone="BaconVideoWidget-error"><primary>BaconVideoWidget::error</primary></indexterm><programlisting><link linkend="void">void</link>                user_function                      (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *message,
+                                                        <link linkend="gchar">gchar</link>            *playback_stopped,
+                                                        <link linkend="gboolean">gboolean</link>          fatal,
+                                                        <link linkend="gboolean">gboolean</link>          arg3,
+                                                        <link linkend="gpointer">gpointer</link>          user_data)             : Run Last</programlisting>
+<para>
+Emitted when the backend wishes to asynchronously report an error. If <parameter>fatal</parameter> is <link linkend="TRUE--CAPS"><literal>TRUE</literal></link>,
+playback of this stream cannot be restarted.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>message</parameter>&#160;:</term>
+<listitem><simpara> the error message
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>playback_stopped</parameter>&#160;:</term>
+<listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if playback has stopped due to the error, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> otherwise
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>fatal</parameter>&#160;:</term>
+<listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if the error was fatal to playback, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> otherwise
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="BaconVideoWidget-got-metadata" role="signal"><title>The <literal>&quot;got-metadata&quot;</literal> signal</title>
+<indexterm zone="BaconVideoWidget-got-metadata"><primary>BaconVideoWidget::got-metadata</primary></indexterm><programlisting><link linkend="void">void</link>                user_function                      (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *arg0,
+                                                        <link linkend="gpointer">gpointer</link>          user_data)      : Run Last</programlisting>
+<para>
+Emitted when the widget has updated the metadata of the current stream. This
+will typically happen just after opening a stream.
+</para>
+<para>
+Call <link linkend="bacon-video-widget-get-metadata"><function>bacon_video_widget_get_metadata()</function></link> to query the updated metadata.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="BaconVideoWidget-got-redirect" role="signal"><title>The <literal>&quot;got-redirect&quot;</literal> signal</title>
+<indexterm zone="BaconVideoWidget-got-redirect"><primary>BaconVideoWidget::got-redirect</primary></indexterm><programlisting><link linkend="void">void</link>                user_function                      (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *new_mrl,
+                                                        <link linkend="gchar">gchar</link>            *arg1,
+                                                        <link linkend="gpointer">gpointer</link>          user_data)      : Run Last</programlisting>
+<para>
+Emitted when a redirect response is received from a stream's server.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>new_mrl</parameter>&#160;:</term>
+<listitem><simpara> the new MRL
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="BaconVideoWidget-missing-plugins" role="signal"><title>The <literal>&quot;missing-plugins&quot;</literal> signal</title>
+<indexterm zone="BaconVideoWidget-missing-plugins"><primary>BaconVideoWidget::missing-plugins</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            user_function                      (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *details,
+                                                        <link linkend="GStrv">GStrv</link>            *descriptions,
+                                                        <link linkend="GStrv">GStrv</link>            *playing,
+                                                        <link linkend="gboolean">gboolean</link>          Returns,
+                                                        <link linkend="gpointer">gpointer</link>          user_data)         : Run Last</programlisting>
+<para>
+Emitted when plugins required to play the current stream are not found. This allows the application
+to request the user install them before proceeding to try and play the stream again.
+</para>
+<para>
+Note that this signal is only available for the GStreamer backend.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>details</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="NULL--CAPS"><literal>NULL</literal></link>-terminated array of missing plugin details for use when installing the plugins with libgimme-codec
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>descriptions</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="NULL--CAPS"><literal>NULL</literal></link>-terminated array of missing plugin descriptions for display to the user
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>playing</parameter>&#160;:</term>
+<listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if the stream could be played even without these plugins, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> otherwise
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if the signal was handled and some action was taken, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="BaconVideoWidget-tick" role="signal"><title>The <literal>&quot;tick&quot;</literal> signal</title>
+<indexterm zone="BaconVideoWidget-tick"><primary>BaconVideoWidget::tick</primary></indexterm><programlisting><link linkend="void">void</link>                user_function                      (<link linkend="BaconVideoWidget">BaconVideoWidget</link> *current_time,
+                                                        <link linkend="gint64">gint64</link>            stream_length,
+                                                        <link linkend="gint64">gint64</link>            current_position,
+                                                        <link linkend="gdouble">gdouble</link>           seekable,
+                                                        <link linkend="gboolean">gboolean</link>          arg4,
+                                                        <link linkend="gpointer">gpointer</link>          user_data)             : Run Last</programlisting>
+<para>
+Emitted every time an important time event happens, or at regular intervals when playing a stream.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>current_time</parameter>&#160;:</term>
+<listitem><simpara> the current position in the stream, in milliseconds since the beginning of the stream
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>stream_length</parameter>&#160;:</term>
+<listitem><simpara> the length of the stream, in milliseconds
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>current_position</parameter>&#160;:</term>
+<listitem><simpara> the current position in the stream, as a percentage between <link linkend="0--CAPS"><literal>0</literal></link> and <link linkend="1--CAPS"><literal>1</literal></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>seekable</parameter>&#160;:</term>
+<listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if the stream can be seeked, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> otherwise
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+</refsect1>
+
+
+
+</refentry>

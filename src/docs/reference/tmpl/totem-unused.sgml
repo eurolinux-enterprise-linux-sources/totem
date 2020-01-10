@@ -1,0 +1,61 @@
+<!-- ##### SIGNAL BaconVideoWidget::download-buffering ##### -->
+<para>
+
+</para>
+
+@baconvideowidget: the object which received the signal.
+@arg1: 
+
+<!-- ##### SIGNAL BaconVideoWidget::title-change ##### -->
+<para>
+
+</para>
+
+@baconvideowidget: the object which received the signal.
+@arg1: 
+
+<!-- ##### ARG BaconVideoWidget:download-filename ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION totem_action_volume ##### -->
+<para>
+
+</para>
+
+@totem: 
+@volume: 
+
+<!-- ##### FUNCTION totem_get_version ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION totem_get_volume ##### -->
+<para>
+
+</para>
+
+@totem: 
+@Returns: 
+
+<!-- ##### FUNCTION totem_interface_boldify_label ##### -->
+<para>
+
+</para>
+
+@builder: 
+@name: 
+
+<!-- ##### FUNCTION totem_interface_italicise_label ##### -->
+<para>
+
+</para>
+
+@builder: 
+@name: 
+

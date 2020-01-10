@@ -1,0 +1,154 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+	<!ENTITY % local.common.attrib "xmlns:xi  CDATA  #FIXED 'http://www.w3.org/2003/XInclude'">
+	<!ENTITY version SYSTEM "version.xml">
+	<!ENTITY slash "/">
+]>
+<refentry id="TotemCellRendererVideo">
+<refmeta>
+<refentrytitle role="top_of_page" id="TotemCellRendererVideo.top_of_page">TotemCellRendererVideo</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>TOTEM Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>TotemCellRendererVideo</refname>
+<refpurpose>a <link linkend="GtkCellRenderer"><type>GtkCellRenderer</type></link> widget for listing videos</refpurpose>
+</refnamediv>
+<refsect1 id="TotemCellRendererVideo.stability-level">
+<title>Stability Level</title>
+Unstable, unless otherwise indicated
+</refsect1>
+
+<refsynopsisdiv id="TotemCellRendererVideo.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+
+#include &lt;totem-cell-renderer-video.h&gt;
+
+                    <link linkend="TotemCellRendererVideo-struct">TotemCellRendererVideo</link>;
+                    <link linkend="TotemCellRendererVideoClass">TotemCellRendererVideoClass</link>;
+<link linkend="TotemCellRendererVideo">TotemCellRendererVideo</link> * <link linkend="totem-cell-renderer-video-new">totem_cell_renderer_video_new</link>  (<link linkend="gboolean">gboolean</link> use_placeholder);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="TotemCellRendererVideo.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----<link linkend="GInitiallyUnowned">GInitiallyUnowned</link>
+         +----<link linkend="GtkObject">GtkObject</link>
+               +----<link linkend="GtkCellRenderer">GtkCellRenderer</link>
+                     +----TotemCellRendererVideo
+</synopsis>
+</refsect1>
+
+
+
+
+
+<refsect1 id="TotemCellRendererVideo.properties" role="properties">
+<title role="properties.title">Properties</title>
+<synopsis>
+  &quot;<link linkend="TotemCellRendererVideo--alignment">alignment</link>&quot;                <link linkend="PangoAlignment">PangoAlignment</link>        : Read / Write
+  &quot;<link linkend="TotemCellRendererVideo--thumbnail">thumbnail</link>&quot;                <link linkend="GdkPixbuf">GdkPixbuf</link>*            : Read / Write
+  &quot;<link linkend="TotemCellRendererVideo--title">title</link>&quot;                    <link linkend="gchar">gchar</link>*                : Read / Write
+  &quot;<link linkend="TotemCellRendererVideo--use-placeholder">use-placeholder</link>&quot;          <link linkend="gboolean">gboolean</link>              : Read / Write
+</synopsis>
+</refsect1>
+
+
+
+<refsect1 id="TotemCellRendererVideo.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+<link linkend="TotemCellRendererVideo"><type>TotemCellRendererVideo</type></link> is a <link linkend="GtkCellRenderer"><type>GtkCellRenderer</type></link> for rendering video thumbnails, typically in a <link linkend="TotemVideoList"><type>TotemVideoList</type></link>.
+It supports drawing a video thumbnail, and the video's title underneath.</para>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="TotemCellRendererVideo.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="TotemCellRendererVideo-struct" role="struct">
+<title>TotemCellRendererVideo</title>
+<indexterm zone="TotemCellRendererVideo-struct"><primary sortas="CellRendererVideo">TotemCellRendererVideo</primary></indexterm><programlisting>typedef struct _TotemCellRendererVideo TotemCellRendererVideo;</programlisting>
+<para>
+All the fields in the <link linkend="TotemCellRendererVideo"><type>TotemCellRendererVideo</type></link> structure are private and should never be accessed directly.</para>
+<para>
+</para></refsect2>
+<refsect2 id="TotemCellRendererVideoClass" role="struct">
+<title>TotemCellRendererVideoClass</title>
+<indexterm zone="TotemCellRendererVideoClass"><primary sortas="CellRendererVideoClass">TotemCellRendererVideoClass</primary></indexterm><programlisting>typedef struct {
+	GtkCellRendererClass parent;
+} TotemCellRendererVideoClass;
+</programlisting>
+<para>
+The class structure for the <link linkend="TotemCellRendererVideo"><type>TotemCellRendererVideo</type></link> type.</para>
+<para>
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="GtkCellRendererClass">GtkCellRendererClass</link>&#160;<structfield>parent</structfield>;</term>
+<listitem><simpara> the parent class
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-cell-renderer-video-new" role="function">
+<title>totem_cell_renderer_video_new ()</title>
+<indexterm zone="totem-cell-renderer-video-new"><primary sortas="cell_renderer_video_new">totem_cell_renderer_video_new</primary></indexterm><programlisting><link linkend="TotemCellRendererVideo">TotemCellRendererVideo</link> * totem_cell_renderer_video_new  (<link linkend="gboolean">gboolean</link> use_placeholder);</programlisting>
+<para>
+Creates a new <link linkend="TotemCellRendererVideo"><type>TotemCellRendererVideo</type></link> with its <link linkend="TotemCellRendererVideo--use-placeholder"><type>"use-placeholder"</type></link>
+property set to <parameter>use_placeholder</parameter>. If <parameter>use_placeholder</parameter> is <link linkend="TRUE--CAPS"><literal>TRUE</literal></link>,
+the renderer will display a generic placeholder thumbnail if a
+proper one is not available.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>use_placeholder</parameter>&#160;:</term>
+<listitem><simpara> if <link linkend="TRUE--CAPS"><literal>TRUE</literal></link>, use a placeholder thumbnail
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a new <link linkend="TotemCellRendererVideo"><type>TotemCellRendererVideo</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1 id="TotemCellRendererVideo.property-details" role="property_details">
+<title role="property_details.title">Property Details</title>
+<refsect2 id="TotemCellRendererVideo--alignment" role="property"><title>The <literal>&quot;alignment&quot;</literal> property</title>
+<indexterm zone="TotemCellRendererVideo--alignment"><primary sortas="CellRendererVideo:alignment">TotemCellRendererVideo:alignment</primary></indexterm><programlisting>  &quot;alignment&quot;                <link linkend="PangoAlignment">PangoAlignment</link>        : Read / Write</programlisting>
+<para>
+A <link linkend="PangoAlignment"><type>PangoAlignment</type></link> giving the text alignment for the video title.</para>
+<para>
+</para><para>Default value: PANGO_ALIGN_CENTER</para>
+</refsect2>
+<refsect2 id="TotemCellRendererVideo--thumbnail" role="property"><title>The <literal>&quot;thumbnail&quot;</literal> property</title>
+<indexterm zone="TotemCellRendererVideo--thumbnail"><primary sortas="CellRendererVideo:thumbnail">TotemCellRendererVideo:thumbnail</primary></indexterm><programlisting>  &quot;thumbnail&quot;                <link linkend="GdkPixbuf">GdkPixbuf</link>*            : Read / Write</programlisting>
+<para>
+A <link linkend="GdkPixbuf"><type>GdkPixbuf</type></link> of a thumbnail of the video to display. When rendered, it will scale to the width of the parent <link linkend="GtkTreeView"><type>GtkTreeView</type></link>,
+so can be as large as reasonable.</para>
+<para>
+</para></refsect2>
+<refsect2 id="TotemCellRendererVideo--title" role="property"><title>The <literal>&quot;title&quot;</literal> property</title>
+<indexterm zone="TotemCellRendererVideo--title"><primary sortas="CellRendererVideo:title">TotemCellRendererVideo:title</primary></indexterm><programlisting>  &quot;title&quot;                    <link linkend="gchar">gchar</link>*                : Read / Write</programlisting>
+<para>
+The title of the video, as it should be displayed.</para>
+<para>
+</para><para>Default value: "Unknown video"</para>
+</refsect2>
+<refsect2 id="TotemCellRendererVideo--use-placeholder" role="property"><title>The <literal>&quot;use-placeholder&quot;</literal> property</title>
+<indexterm zone="TotemCellRendererVideo--use-placeholder"><primary sortas="CellRendererVideo:use-placeholder">TotemCellRendererVideo:use-placeholder</primary></indexterm><programlisting>  &quot;use-placeholder&quot;          <link linkend="gboolean">gboolean</link>              : Read / Write</programlisting>
+<para>
+If <link linkend="TRUE--CAPS"><literal>TRUE</literal></link>, a placeholder image should be used for the video thumbnail if a <link linkend="TotemCellRendererVideo--thumbnail"><type>"thumbnail"</type></link> isn't provided.</para>
+<para>
+</para><para>Default value: FALSE</para>
+</refsect2>
+</refsect1>
+
+
+
+<refsect1 id="TotemCellRendererVideo.see-also">
+<title>See Also</title>
+#TotemVideoList
+</refsect1>
+
+</refentry>

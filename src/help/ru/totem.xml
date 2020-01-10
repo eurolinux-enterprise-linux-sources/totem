@@ -1,0 +1,743 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY legal SYSTEM "legal.xml">
+<!ENTITY appversion "2.26">
+<!ENTITY manrevision "3.0">
+<!ENTITY date "February 2009">
+<!ENTITY app "Totem Movie Player">
+<!-- Information about the entities
+       The legal.xml file contains legal information, there is no need to edit the file. 
+       Use the appversion entity to specify the version of the application.
+       Use the manrevision entity to specify the revision number of this manual.
+       Use the date entity to specify the release date of this manual.
+       Use the app entity to specify the name of the application. -->]>
+<!-- 
+      (Do not remove this comment block.)
+  Maintained by the GNOME Documentation Project
+  http://developer.gnome.org/projects/gdp
+  Template version: 2.0 beta
+  Template last modified Apr 11, 2002
+-->
+<!-- =============Document Header ============================= -->
+<article id="index" lang="ru">
+<!-- please do not change the id; for translations, change lang to -->
+<!-- appropriate code -->
+  <articleinfo> 
+    <title>Руководство по <application>видеопроигрывателю Totem</application></title>       
+    <copyright> 
+      <year>2003</year> 
+      <holder>Chee Bin HOH</holder>
+    </copyright>
+    <copyright>
+      <year>2009</year>
+      <holder>Philip Withnall</holder>
+    </copyright><copyright><year>2008</year><holder>Василий Фаронов (qvvx@yandex.ru)</holder></copyright><copyright><year>2009</year><holder>Вадим Великодный (vadim.velikodniy@gmail.com)</holder></copyright><copyright><year>2009</year><holder>Александр Сапрыкин (xelfium@gmail.com)</holder></copyright>
+    <releaseinfo revision="2.26" role="final">
+    	<ulink type="peerreview" url="http://bugzilla.gnome.org/show_bug.cgi?id=574524"/>
+    </releaseinfo>
+
+    <abstract role="description">
+      <para><application>Видеопроигрыватель Totem</application> — это проигрыватель мультимедиа-файлов для GNOME. Обычно он использует GStreamer, но также может использоваться xine. Он поддерживает большинство кодеков для звука и видео, в том числе DVD и цифровые CD. Среди его возможностей — вывод изображения на ТВ, полноэкранный режим, субтитры и многое другое.</para>
+    </abstract>
+
+    <publisher> 
+      <publishername>Проект документирования GNOME</publishername> 
+    </publisher> 
+
+      <legalnotice id="legalnotice">
+	<para>Разрешается копировать, распространять и/или изменять этот документ на условиях лицензии GNU Free Documentation License (GFDL), версии 1.1 или любой более поздней версии, опубликованной Фондом свободного программного обеспечения (Free Software Foundation), без неизменяемых частей и без текстов на обложках. Вы можете найти копию лицензии GFDL по  <ulink type="help" url="ghelp:fdl">этой ссылке</ulink> или в файле COPYING-DOCS, распространяемом с этим документом.</para>
+         <para>Это руководство — часть документации GNOME, которая распространяется на условиях лицензии GNU FDL. Если вы хотите распространять это руководство отдельно от остальной документации, вам следует приложить к руководству копию лицензии, как описано в разделе 6 лицензии.</para>
+
+	<para>Некоторые имена и марки используются компаниями для обозначения их продуктов и услуг и являются торговыми марками. Там, где эти имена присутствуют в документации, и где участники проекта документирования GNOME знают об этом, имена выделяются заглавными буквами или начальной заглавной буквой.</para>
+
+	<para>ДОКУМЕНТ И ИЗМЕНЁННЫЕ ВЕРСИИ ДОКУМЕНТА ПРЕДОСТАВЛЯЮТСЯ ПОЛЬЗОВАТЕЛЮ НА УСЛОВИЯХ ЛИЦЕНЗИИ GNU FREE DOCUMENTATION LICENSE С УВЕДОМЛЕНИЕМ О ТОМ, ЧТО: <orderedlist>
+		<listitem>
+		  <para>ДОКУМЕНТ РАСПРОСТРАНЯЕТСЯ «КАК ЕСТЬ», БЕЗ ВСЯКИХ ГАРАНТИЙ, ЯВНЫХ ИЛИ НЕЯВНЫХ, ВКЛЮЧАЯ, БЕЗ ОГРАНИЧЕНИЙ, ГАРАНТИИ ТОГО, ЧТО ДОКУМЕНТ ИЛИ ИЗМЕНЁННАЯ ВЕРСИЯ ДОКУМЕНТА СВОБОДНА ОТ ДЕФЕКТОВ, ПРИГОДНА К ПРОДАЖЕ, ПРИГОДНА К ИСПОЛЬЗОВАНИЮ В ОПРЕДЕЛЁННЫХ ЦЕЛЯХ ИЛИ НЕ НАРУШАЕТ ЗАКОНЫ. ВЕСЬ РИСК, КАСАЮЩИЙСЯ КАЧЕСТВА, ТОЧНОСТИ ИЛИ ПРАВИЛЬНОСТИ ДОКУМЕНТА ИЛИ ИЗМЕНЁННЫХ ВЕРСИЙ ДОКУМЕНТА, ЛЕЖИТ НА ВАС. ЕСЛИ ДОКУМЕНТ ИЛИ ИЗМЕНЁННАЯ ВЕРСИЯ ДОКУМЕНТА ИМЕЕТ НЕДОСТАТКИ, ВЫ (А НЕ АВТОР ДОКУМЕНТА ИЛИ ЕГО ПОМОЩНИК) БЕРЁТЕ НА СЕБЯ СТОИМОСТЬ ЛЮБОЙ НЕОБХОДИМОЙ ДОРАБОТКИ, КОРРЕКЦИИ ИЛИ ВОССТАНОВЛЕНИЯ. ЭТОТ ОТКАЗ ОТ ГАРАНТИЙ СОСТАВЛЯЕТ ВАЖНУЮ ЧАСТЬ ЛИЦЕНЗИИ. НИКАКОЕ ИСПОЛЬЗОВАНИЕ ДОКУМЕНТА ИЛИ ИЗМЕНЁННОЙ ВЕРСИИ ДОКУМЕНТА НЕ ДОПУСКАЕТСЯ БЕЗ ДАННОГО ПРЕДУПРЕЖДЕНИЯ И</para>
+		</listitem>
+		<listitem>
+		  <para>НИ ПРИ КАКИХ ОБСТОЯТЕЛЬСТВАХ И НИ ПРИ КАКОМ ЗАКОННОМ СПОСОБЕ, НИ ПО КАКОМУ СОГЛАШЕНИЮ ИЛИ ДРУГОЙ ПРИЧИНЕ, АВТОР, СОЗДАТЕЛЬ, ПОМОЩНИКИ ИЛИ РАСПРОСТРАНИТЕЛИ ДОКУМЕНТА НЕ НЕСУТ ОТВЕТСТВЕННОСТЬ ЗА ПРЯМОЙ, КОСВЕННЫЙ, СПЕЦИАЛЬНЫЙ, СЛУЧАЙНЫЙ ИЛИ ПРЕДНАМЕРЕННЫЙ УЩЕРБ ЛЮБОГО СВОЙСТВА, ВКЛЮЧАЯ, БЕЗ ОГРАНИЧЕНИЯ, ПОТЕРЮ ЖЕЛАНИЯ, РАБОТОСПОСОБНОСТИ, КОМПЬЮТЕРНЫЕ СБОИ ИЛИ ПОЛОМКИ, ИЛИ ЛЮБОЙ ДРУГОЙ УЩЕРБ ИЛИ ПОТЕРИ, ВОЗНИКАЮЩИЕ ВСЛЕДСТВИЕ ИЛИ СВЯЗАННЫЕ С ИСПОЛЬЗОВАНИЕМ ДОКУМЕНТА ИЛИ ИЗМЕНЁННЫХ ВЕРСИЙ ДОКУМЕНТА, ДАЖЕ ЕСЛИ СТОРОНА БЫЛА УВЕДОМЛЕНА О ВОЗМОЖНОСТИ ТАКОГО УЩЕРБА.</para>
+		</listitem>
+	  </orderedlist></para>
+  </legalnotice>
+
+
+    <!-- This file  contains link to license for the documentation (GNU FDL), and 
+         other legal stuff such as "NO WARRANTY" statement. Please do not change 
+	 any of this. -->
+
+    <authorgroup> 
+      <author role="maintainer"> 
+	<firstname>Chee Bin</firstname> 
+	<surname>HOH</surname> 
+	<affiliation> 
+  	  <orgname>Проект документирования GNOME</orgname> 
+	</affiliation>
+	<email>cbhoh@gnome.org</email>
+      </author>
+      <author>
+	<firstname>Baptiste</firstname> 
+	<surname>Mille-Mathias</surname> 
+	<affiliation> 
+          <orgname>Проект документирования GNOME</orgname>
+        </affiliation>
+        <contrib>Дополнение документации</contrib>
+        <email>baptiste.millemathias@gmail.org</email>
+      </author>
+       <author>
+	<firstname>Philip</firstname> 
+	<surname>Withnall</surname>
+        <contrib>Дополнение документации</contrib>
+	<email>philip@tecnocode.co.uk</email>
+      </author>   
+
+<!-- This is appropriate place for other contributors: translators,
+     maintainers,  etc. Commented out by default.
+      <othercredit role="translator">
+	<firstname>Latin</firstname> 
+	<surname>Translator 1</surname> 
+	<affiliation> 
+          <orgname>Latin Translation Team</orgname> 
+  	  <address> <email>translator@gnome.org</email> </address> 
+        </affiliation>
+        <contrib>Latin translation</contrib>
+      </othercredit>
+-->
+    </authorgroup>
+<!-- According to GNU FDL, revision history is mandatory if you are -->
+<!-- modifying/reusing someone else's document.  If not, you can omit it. -->
+<!-- Remember to remove the &manrevision; entity from the revision entries other -->
+<!-- than the current revision. -->
+<!-- The revision numbering system for GNOME manuals is as follows: -->
+<!-- * the revision number consists of two components -->
+<!-- * the first component of the revision number reflects the release version of the GNOME desktop. -->
+<!-- * the second component of the revision number is a decimal unit that is incremented with each revision of the manual. -->
+<!-- For example, if the GNOME desktop release is V2.x, the first version of the manual that -->
+<!-- is written in that desktop timeframe is V2.0, the second version of the manual is V2.1, etc. -->
+<!-- When the desktop release version changes to V3.x, the revision number of the manual changes -->
+<!-- to V3.0, and so on. -->  
+    <revhistory>
+      <revision> 
+        <revnumber>Руководство версии 2.0 по видеопроигрывателю Totem</revnumber> 
+	<date>август 2006</date> 
+	<revdescription> 
+	  <para role="author">Chee Bin HOH <email>cbhoh@gnome.org</email></para>
+	  <para role="publisher">Проект документирования GNOME</para>
+        </revdescription> 
+      </revision>
+      <revision> 
+        <revnumber>Руководство версии 3.0 по видеопроигрывателю Totem</revnumber> 
+	<date>февраль 2009</date> 
+	<revdescription> 
+	  <para role="author">Philip Withnall <email>philip@tecnocode.co.uk</email></para>
+	  <para role="publisher">Проект документирования GNOME</para>
+        </revdescription> 
+      </revision>
+    </revhistory> 
+
+    <releaseinfo>Данное руководство описывает версию Totem 2.28.</releaseinfo> 
+    <legalnotice> 
+      <title>Обратная связь</title> 
+      <para>Чтобы сообщить об ошибке или сделать предложение по <application>видеопроигрывателю Totem</application> или этому руководству, следуйте указаниям в документе <ulink url="ghelp:gnome-feedback" type="help">Обратная связь с GNOME</ulink>.</para>
+    </legalnotice> 
+  </articleinfo> 
+
+  <indexterm zone="index"> 
+    <primary>Видеопроигрыватель Totem</primary> 
+  </indexterm> 
+  <indexterm zone="index"> 
+    <primary>totem</primary> 
+  </indexterm>
+
+
+<!-- ============= Document Body ============================= -->
+<!-- ============= Introduction ============================== -->
+<!-- Use the Introduction section to give a brief overview of what
+     the application is and what it does. -->
+  <sect1 id="totem-introduction"> 
+    <title>Введение</title> 
+    <para><application>Видеопроигрыватель Totem</application> ― это приложение для среды GNOME, которое может проигрывать фильмы и музыку средствами GStreamer или библиотеки xine.</para>
+    <para>Возможности, предоставляемые <application>видеопроигрывателем Totem</application>:</para>
+    <itemizedlist> 
+      <listitem> 
+	<para>поддержка большого количества форматов видео и звука;</para>
+      </listitem>
+      <listitem>
+	<para>выбор из нескольких масштабов и пропорций изображения, а также полноэкранный просмотр;</para> 
+      </listitem>
+      <listitem>
+        <para>управление уровнем громкости и перемотка;</para>
+      </listitem>
+      <listitem>
+        <para>списки воспроизведения;</para>
+      </listitem>
+      <listitem>
+        <para>поддержка субтитров;</para>
+      </listitem>
+      <listitem>
+	<para>управление с клавиатуры;</para>
+      </listitem>
+      <listitem>
+	<para>обширный набор модулей, позволяющий загружать субтитры, просматривать видео с YouTube и записывать диски.</para>
+      </listitem>
+    </itemizedlist> 
+    <note>
+      <para><application>Видеопроигрыватель Totem</application> также имеет дополнительные возможности, например:</para>
+      <itemizedlist>
+	<listitem>
+	  <para>создание миниатюр из кадров фильмов в GNOME;</para>
+        </listitem>
+        <listitem>
+	  <para>приложение для предварительного прослушивания в GNOME;</para>
+        </listitem>
+	<listitem>
+	  <para>вкладка с метаданными в свойствах медиафайлов в Nautilus.</para>
+        </listitem>
+      </itemizedlist>
+    </note>
+  </sect1>
+<!-- =========== End of Introduction ========================= -->
+
+<!-- =========== Getting Started ============================= -->
+<!-- Use the Getting Started section to describe the steps required
+     to start the application and to describe the user interface components
+     of the application. If there is other information that it is important
+     for readers to know before they start using the application, you should
+     also include this information here. 
+     If the information about how to get started is very short, you can 
+     include it in the Introduction and omit this section. -->
+
+  <sect1 id="totem-getting-started"> 
+    <title>Начало работы</title> 
+
+    <sect2 id="totem-start">
+      <title>Запуск <application>видеопроигрывателя Totem</application></title>
+      <para>Вы можете запустить <application>видеопроигрыватель Totem</application> следующими способами:</para> 
+      <variablelist>
+	<varlistentry>
+	  <term>Меню <guimenu>Приложения</guimenu></term>
+	  <listitem>
+	    <para>Выберите <menuchoice><guisubmenu>Аудио и видео</guisubmenu><guimenuitem>Видеопроигрыватель</guimenuitem></menuchoice>.</para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>Командная строка</term>
+	  <listitem>
+	    <para>Чтобы запустить <application>Видеопроигрыватель Totem</application> из командной строки, наберите следующую команду и нажмите <keycap>Enter</keycap>:</para>
+	    <para> 
+            <command>totem</command> 
+            </para> 
+	    <tip>
+	      <para>Чтобы увидеть перечень доступных параметров командной строки, введите <command>totem --help</command> и нажмите <keycap>Enter</keycap>.</para>
+	    </tip>
+	  </listitem>
+	</varlistentry>
+      </variablelist>
+    </sect2>
+
+    <sect2 id="totem-when-start">
+      <title>После запуска <application>видеопроигрывателя Totem</application></title>
+      <para>Когда вы запустите <application>видеопроигрыватель Totem</application>, появится следующее окно.</para>
+
+      <!-- ==== Figure ==== -->
+      <figure id="totem-start-fig"> 
+	<title>Главное окно <application>видеопроигрывателя Totem</application></title> 
+	<screenshot> 
+	  <mediaobject> 
+	    <imageobject>
+	      <imagedata fileref="figures/totem_start_window.png" format="PNG"/> 
+	    </imageobject>
+	    <textobject> 
+	      <phrase>Показывает главное окно <application>Видеопроигрыватель Totem</application> с открытым в боковой панели списком воспроизведения. Видны также строка меню, область вывода видео, полоса прокрутки, кнопки управления, регулятор громкости и строка состояния.</phrase>
+	    </textobject> 
+	  </mediaobject> 
+	</screenshot> 
+      </figure>
+      <!-- ==== End of Figure ==== -->
+
+      <!-- Include any descriptions of the GUI immediately after the screenshot of the main UI, -->
+      <!-- for example, the items on the menubar and on the toolbar. This section is optional. -->
+      <para>Окно <application>видеопроигрывателя Totem</application> состоит из следующих частей:</para>
+      <variablelist>
+	<varlistentry>
+	  <term>Строка меню</term>
+  	  <listitem>
+  	    <para>Меню содержат все команды, которые используются в <application>видеопроигрывателе Totem</application>.</para>
+ 	  </listitem>
+   	</varlistentry>
+	<varlistentry>
+	  <term>Область просмотра</term>
+	  <listitem>
+	    <para>Область просмотра показывает фильм или визуализацию песни.</para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>Боковая панель</term>
+	  <listitem>
+	    <para>В боковой панели показываются свойства воспроизводимого файла, а также список воспроизведения. Кроме того, боковую панель могут использовать разные модули, например, MythTV, браузер YouTube и модуль поиска видео. Они могут быть выбраны щелчком по выпадающему списку в верхней части боковой панели.</para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>Полоса перемотки</term>
+	  <listitem>
+	    <para>Полоса перемотки показывает, сколько времени прошло с начала воспроизведения. Также с её помощью можно перемещаться по фильму или песне вперёд или назад. Для этого нужно перетащить ползунок или щёлкнуть в нужном месте полосы перемотки.</para>
+	  </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Кнопки управления</term>
+          <listitem>
+            <para>Кнопки управления позволяют переходить на следующий или предыдущий файл, а также приостанавливать и возобновлять воспроизведение.</para>
+	  </listitem>
+        </varlistentry>
+	<varlistentry>
+	  <term>Регулятор громкости</term>
+          <listitem>
+	    <para>С помощью регулятора громкости можно изменять громкость.</para>
+          </listitem>
+        </varlistentry>
+	<varlistentry>
+	  <term>Строка состояния</term>
+	  <listitem>
+	    <para>Строка состояния показывает сведения о фильме или песне, которые в настоящий момент воспроизводятся.</para>
+	  </listitem>
+	</varlistentry>
+      </variablelist>
+    </sect2>
+  </sect1>
+<!-- =========== End of Getting Started ====================== -->
+
+<!-- =========== Usage ======================================= -->
+<!-- Use this section to describe how to use the application to perform the tasks for 
+  which the application is designed. -->
+  <sect1 id="totem-usage"> 
+    <title>Использование</title> 
+
+    <!-- ================ Usage Subsection ================================ -->
+    <sect2 id="totem-open-file"> 
+      <title>Открытие файла</title> 
+      <para>Чтобы открыть файл с видео или звуком, выберите <menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>O</keycap></keycombo></shortcut><guimenu>Фильм</guimenu><guisubmenu>Открыть</guisubmenu></menuchoice>. Появится диалог <guilabel>Выбор фильмов или списков воспроизведения</guilabel>. Выберите один или несколько файлов, которые хотите открыть, и нажмите <guibutton>OK</guibutton>.</para>
+      <para>Можно перетаскивать файлы из других приложений — например, из файлового менеджера — в окно <application>видеопроигрывателя Totem</application>. Если перетащить файл на область воспроизведения, он заменит текущий список воспроизведения и начнёт проигрываться. Если перетащить на боковую панель, то файл будет добавлен к текущему списку воспроизведения. Название воспроизводимого фильма или песни отображается в заголовке окна и в списке воспроизведения в боковой панели.</para>
+      <para>При попытке открыть файл, формат которого непонятен <application>видеопроигрывателю Totem</application>, появится сообщение об ошибке. Чаще всего это бывает, когда не установлены нужные кодеки. Информация о кодеках есть на <ulink linkend="http://www.gnome.org/projects/totem/#codecs">веб-сайте видеопроигрывателя Totem</ulink>.</para>
+      <tip>
+	<para>Можно дважды щёлкнуть по файлу со звуком или видео в файловом менеджере <application>Nautilus</application>, чтобы открыть его в окне <application>видеопроигрывателя Totem</application>.</para>
+      </tip>
+    </sect2> 
+
+    <sect2 id="totem-usage-open-location">
+      <title>Открытие файла по адресу</title>
+      <para>Чтобы открыть файл по его URI (адресу), выберите <menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>L</keycap></keycombo></shortcut><guimenu>Фильм</guimenu><guimenuitem>Открыть адрес</guimenuitem></menuchoice>. Появится диалоговое окно <guilabel>Открыть адрес</guilabel>. Выберите URI, который нужно открыть, из списка (в нём показываются URI, открытые раньше), либо введите URI вручную, а затем нажмите кнопку <guibutton>Открыть</guibutton>.</para>
+      <para>Если у вас уже есть URI в буфере обмена, он будет автоматически вставлен в поле ввода.</para>
+    </sect2>
+
+    <sect2 id="totem-usage-play">
+      <title>Воспроизведение фильма (DVD или VCD)</title>
+	      <para>Вставьте диск в оптический привод вашего компьютера и выберите <menuchoice><guimenu>Фильм</guimenu><guimenuitem>Воспроизвести диск</guimenuitem></menuchoice>.</para>
+             <para>Чтобы извлечь DVD или VCD из привода, выберите <menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo></shortcut><guimenu>Фильм</guimenu><guimenuitem>Извлечь</guimenuitem></menuchoice>.</para>
+       </sect2>
+
+    <sect2 id="totem-usage-pause">
+      <title>Приостановка фильма или песни</title>
+      <para>Чтобы приостановить воспроизведение фильма или песни, нажмите кнопку <inlinemediaobject>
+	  <imageobject><imagedata fileref="figures/totem_pause_button.png" format="PNG"/></imageobject>
+          <textobject><phrase>Кнопка паузы</phrase></textobject>
+        </inlinemediaobject> или выберите <menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>Пробел</keycap></keycombo></shortcut><guimenu>Фильм</guimenu><guimenuitem>Воспроизведение / Пауза</guimenuitem></menuchoice>. Также можно использовать клавишу <keycap>P</keycap>.</para>
+      <para>Чтобы возобновить воспроизведение фильма или песни, нажмите кнопку <inlinemediaobject>
+	  <imageobject><imagedata fileref="figures/totem_play_button.png" format="PNG"/></imageobject>
+          <textobject><phrase>Кнопка воспроизведения</phrase></textobject>
+        </inlinemediaobject>, или выберите <menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>Пробел</keycap></keycombo></shortcut><guimenu>Фильм</guimenu><guimenuitem>Воспроизведение / Пауза</guimenuitem></menuchoice>.</para>
+    </sect2>
+
+    <sect2 id="totem-usage-view-properties">
+      <title>Просмотр свойств фильма или песни</title>
+      <para>Чтобы просмотреть свойства фильма или песни, выберите <menuchoice><guimenu>Вид</guimenu><guimenuitem>Боковая панель</guimenuitem></menuchoice>, чтобы увидеть боковую панель, затем в выпадающем списке выберите пункт <guimenu>Свойства</guimenu>.</para>
+    </sect2>
+
+    <sect2 id="totem-usage-seek">
+      <title>Перемотка</title>
+      <para>Перемотать фильм или песню можно несколькими способами:</para>
+      <variablelist>
+	<varlistentry>
+	  <term>Перемотка вперёд</term>
+	  <listitem>
+	    <para>Чтобы перемотать вперёд часть фильма или музыкальной композиции, выберите <menuchoice><shortcut><keycap>Вправо</keycap></shortcut><guimenu>Переход</guimenu><guimenuitem>Пропустить вперёд</guimenuitem></menuchoice>.</para>
+          </listitem>
+        </varlistentry>
+	<varlistentry>
+	  <term>Перемотка назад</term>
+	  <listitem>
+	    <para>Чтобы перемотать фильм или песню назад, выберите <menuchoice><shortcut><keycap>Влево</keycap></shortcut><guimenu>Переход</guimenu><guimenuitem>Пропустить назад</guimenuitem></menuchoice>.</para>
+          </listitem>
+        </varlistentry>
+	<varlistentry>
+	  <term>Переход к определённому моменту</term>
+	  <listitem>
+	    <para>Чтобы перейти к определённому моменту в фильме или песне, выберите <menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>K</keycap></keycombo></shortcut><guimenu>Переход</guimenu><guimenuitem>Перейти к</guimenuitem></menuchoice>. Появится диалоговое окно <guilabel>Перейти к</guilabel>. С помощью числового поля укажите время (в секундах), к которому нужно перейти, затем нажмите <guibutton>OK</guibutton>.</para>
+            <para>Поле ввода позволяет также использовать более естественную форму записи. Момент времени, к которому нужно перейти, можно вводить в формате «чч:мм:сс», «мм:сс» или «сс», где «чч» — часы, «мм» — минуты, а «сс» — секунды.</para>
+          </listitem>
+        </varlistentry>
+	<varlistentry>
+	  <term>Переход к следующему фильму или песне</term>
+	  <listitem>
+	    <para>Чтобы перейти к следующему фильму или песне, выберите <menuchoice><shortcut><keycombo><keycap>Alt</keycap><keycap>Вправо</keycap></keycombo></shortcut><guimenu>Переход</guimenu><guimenuitem>Следующий фрагмент/фильм</guimenuitem></menuchoice>, либо нажмите кнопку <inlinemediaobject> 
+	        <imageobject><imagedata fileref="figures/totem_next_button.png" format="PNG"/></imageobject>
+	        <textobject><phrase>Кнопка перехода к следующей композиции</phrase></textobject>
+              </inlinemediaobject>.</para>
+          </listitem>
+        </varlistentry>
+	<varlistentry>
+	  <term>Переход к предыдущему фильму или песне</term>
+	  <listitem>
+	    <para>Чтобы перейти к предыдущему фильму или песне, выберите <menuchoice><shortcut><keycombo><keycap>Alt</keycap><keycap>Влево</keycap></keycombo></shortcut><guimenu>Переход</guimenu><guimenuitem>Предыдущий фрагмент/фильм</guimenuitem></menuchoice>, либо нажмите кнопку <inlinemediaobject> 
+	        <imageobject><imagedata fileref="figures/totem_previous_button.png" format="PNG"/></imageobject>
+	        <textobject><phrase>Кнопка перехода к предыдущей композиции</phrase></textobject>
+              </inlinemediaobject>.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </sect2>
+
+    <sect2 id="totem-usage-change-zoom">
+      <title>Изменение масштаба</title>
+	  <sect3 id="totem-usage-change-size">
+		<title>Изменение размера видео</title>
+      <para>Изменить масштаб области просмотра можно следующими способами:</para>
+      <itemizedlist>
+	<listitem>
+	  <para>Чтобы перейти в полноэкранный режим, выберите <menuchoice><shortcut><keycap>F11</keycap></shortcut><guimenu>Вид</guimenu><guimenuitem>Во весь экран</guimenuitem></menuchoice>. Также для переключения полноэкранного режима можно нажимать клавишу <keycap>F</keycap>. Чтобы выйти из полноэкранного режима, нажмите кнопку <guibutton>Выйти из полноэкранного режима</guibutton> или нажмите <keycap>Esc</keycap>, <keycap>F11</keycap> или <keycap>F</keycap>.</para>
+    </listitem>
+	<listitem>
+	  <para>Чтобы изменить отображаемый размер видео или визуализации, выберите <menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>0</keycap></keycombo></shortcut><guimenu>Вид</guimenu><guimenuitem>Окно по размеру фильма</guimenuitem></menuchoice> и выберите коэффициент масштабирования.</para>
+    </listitem>
+	</itemizedlist>
+	</sect3>
+	 <sect3 id="totem-usage-change-ratio">
+		<title>Изменение пропорций изображения</title>
+	      <para>Чтобы переключиться между параметрами пропорций изображения, выберите <menuchoice><shortcut><keycap>A</keycap></shortcut><guimenu>Вид</guimenu><guisubmenu>Пропорции</guisubmenu></menuchoice>.</para>
+	  </sect3>
+    </sect2>
+
+    <sect2 id="totem-usage-adjust-volume">
+      <title>Изменение громкости</title>
+      <para>Чтобы увеличить громкость, выберите <menuchoice><shortcut><keycap>Вверх</keycap></shortcut><guimenu>Звук</guimenu><guimenuitem>Увеличить громкость</guimenuitem></menuchoice>. А чтобы уменьшить громкость — <menuchoice><shortcut><keycap>Вниз</keycap></shortcut><guimenu>Звук</guimenu><guimenuitem>Уменьшить громкость</guimenuitem></menuchoice>.</para>
+      <para>Кроме того, громкость можно регулировать с помощью соответствующей кнопки. Нажмите кнопку громкости и выберите необходимый уровень с помощью ползунка.</para>
+    </sect2>
+
+    <sect2 id="totem-usage-on-top">
+      <title>Закрепление окна поверх остальных окон</title>
+      <para>Чтобы окно <application>видеопроигрывателя Totem</application> располагалось всегда поверх остальных окон, выберите <menuchoice><guimenu>Правка</guimenu><guimenuitem>Модули</guimenuitem></menuchoice>. Выберите модуль <guilabel>Всегда наверху</guilabel>, чтобы включить его. Теперь Totem будет оставаться поверх других окон, когда воспроизводится фильм (но не песня или визуализация).</para>
+       <para>Чтобы окно больше не удерживалось поверх всех окон, выключите модуль <guilabel>Всегда поверх всех окон</guilabel>. Смотрите <xref linkend="totem-plugins-always-on-top"/> для дополнительной информации.</para>
+    </sect2>
+
+    <sect2 id="totem-usage-show-control">
+      <title>Отображение средств управления</title>
+      <para>Чтобы показать или скрыть средства управления в окне <application>видеопроигрывателя Totem</application>, выберите <menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>H</keycap></keycombo></shortcut><guimenu>Вид</guimenu><guimenuitem>Показывать средства управления</guimenuitem></menuchoice>, или нажмите клавишу <keycap>H</keycap>. Также вы можете щёлкнуть правой кнопкой мыши на окне <application>видеопроигрывателя Totem</application> и во всплывающем меню выбрать <menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>H</keycap></keycombo></shortcut><guimenuitem>Показывать средства управления</guimenuitem></menuchoice>.</para>
+      <para>Если выбран параметр <guilabel>Показывать средства управления</guilabel>, то в окне <application>видеопроигрывателя Totem</application> будут показаны строка меню, полоса прокрутки, кнопки перехода, ползунок громкости и строка состояния. Если же данный параметр не выбран, то эти средства управления будут скрыты, а видна будет только область просмотра.</para>
+    </sect2>
+
+    <sect2 id="totem-usage-playlist">
+      <title>Управление списком воспроизведения</title>
+
+      <sect3 id="totem-usage-playlist-show-hide">
+	<title>Отображение списка воспроизведения</title>
+	<para>Чтобы показать список воспроизведения, выберите <menuchoice><guimenu>Вид</guimenu><guimenuitem>Боковая панель</guimenuitem></menuchoice>, или нажмите кнопку <guilabel>Боковая панель</guilabel>, затем выберите <guimenu>Список воспроизведения</guimenu> в выпадающем списке вверху панели.</para>
+      </sect3>
+
+      <sect3 id="totem-usage-playlist-manage">
+	<title>Управление списком воспроизведения</title>
+	<para>Диалог <guilabel>Список воспроизведения</guilabel> можно использовать для следующих действий: <variablelist>
+	    <varlistentry>
+	      <term>Добавление музыкальной композиции или фильма</term>
+	      <listitem>
+		<para>Чтобы добавить музыкальную композицию или фильм в список воспроизведения, нажмите кнопку <guibutton>Добавить</guibutton>. Появится диалог <guilabel>Выбор фильмов или списков воспроизведения</guilabel>. Выберите нужный файл и нажмите кнопку <guibutton>Добавить</guibutton>.</para>
+              </listitem>
+            </varlistentry>
+	    <varlistentry>
+	      <term>Удаление музыкальной композиции или фильма</term>
+	      <listitem>
+		<para>Чтобы удалить запись или фильм из списка воспроизведения, выделите ненужные пункты в списке, затем нажмите кнопку <guibutton>Удалить</guibutton>.</para>
+              </listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term>Сохранение списка воспроизведения в файл</term>
+	      <listitem>
+		<para>Чтобы сохранить список воспроизведения в файл, нажмите кнопку <guibutton>Сохранить</guibutton>. Появится диалог <guilabel>Сохранить список воспроизведения</guilabel>. Укажите в нём имя файла, в котором хотите сохранить список, и нажмите <guibutton>Сохранить</guibutton>.</para>
+              </listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term>Перемещение музыкальной композиции или фильма вверх по списку воспроизведения</term>
+	      <listitem>
+		<para>Чтобы переместить музыкальную композицию или фильм вверх по списку воспроизведения, выделите её в списке воспроизведения и нажмите кнопку <guibutton>Переместить вверх</guibutton>.</para>
+              </listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term>Перемещение музыкальной композиции или фильма вниз по списку воспроизведения</term>
+	      <listitem>
+		<para>Чтобы переместить музыкальную композицию или фильм вниз по списку воспроизведения, выделите её в списке и нажмите кнопку <guibutton>Переместить вниз</guibutton>.</para>
+              </listitem>
+	    </varlistentry>
+          </variablelist></para>
+      </sect3>
+      <sect3 id="totem-usage-playlist-repeat">
+	<title>Включение и выключение режима повтора</title>
+	<para>Чтобы включить или выключить режим повтора, выберите <menuchoice><guimenu>Правка</guimenu><guimenuitem>Режим повтора</guimenuitem></menuchoice>.</para>
+      </sect3>
+      <sect3 id="totem-usage-playlist-shuffle">
+	<title>Включение и выключение случайного порядка воспроизведения</title>
+	<para>Чтобы включить или выключить случайный порядок воспроизведения, выберите <menuchoice><guimenu>Правка</guimenu><guimenuitem>В случайном порядке</guimenuitem></menuchoice>.</para>
+      </sect3>
+    </sect2>
+
+    <sect2 id="totem-usage-subtitle">
+	  <title>Выбор субтитров</title>
+	  <para>Чтобы выбрать язык субтитров, выберите нужный язык в <menuchoice><guimenu>Вид</guimenu><guisubmenu>Субтитры</guisubmenu></menuchoice>.</para>
+	  <para>Чтобы отключить субтитры, выберите <menuchoice><guimenu>Вид</guimenu><guisubmenu>Субтитры</guisubmenu><guimenuitem>Нет</guimenuitem></menuchoice>.</para>
+	  <note><para>По умолчанию <application>видеопроигрыватель Totem</application> будет использовать для субтитров тот язык, который используется на компьютере.</para></note>
+	  <para>Видеопроигрыватель Totem автоматически загружает и отображает субтитры для видео, если их файл имеет то же имя, что и проигрываемое видео, а расширение одно из: <filename class="extension">asc</filename>, <filename class="extension">txt</filename>, <filename class="extension">sub</filename>, <filename class="extension">srt</filename>, <filename class="extension">smi</filename>, <filename class="extension">ssa</filename> или <filename class="extension">ass</filename>.</para>
+	  <para>Если я файла с субтитрами отличается от имени файла, содержащего видео, можно щёлкнуть правой кнопкой мыши по проигрываемому видео в списке воспроизведения и выбрать в появившемся меню <menuchoice><guimenuitem>Выбрать текстовые субтитры</guimenuitem></menuchoice>, чтобы загрузить нужный файл. Также можно указать файл с субтитрами, выбрав <menuchoice><guimenu>Вид</guimenu><guisubmenu>Субтитры</guisubmenu><guimenuitem>Выбрать текстовые субтитры</guimenuitem></menuchoice>.</para>
+	  <para>Используя модуль <guilabel>Загрузка субтитров</guilabel>, можно также загружать субтитры при помощи службы OpenSubtitles. Смотрите <xref linkend="totem-plugins-opensubtitles"/> для дополнительной информации.</para>
+	</sect2>
+
+    <sect2 id="totem-usage-take-screenshot">
+      <title>Сохранение кадра</title>
+      <para>Чтобы получить снимок кадра воспроизводимого видео или визуализации, выберите <menuchoice><guimenu>Правка</guimenu><guimenuitem>Сохранить кадр</guimenuitem></menuchoice>. Появится диалог <guilabel>Сохранить кадр</guilabel>. Укажите в нём место, в котором хотите сохранить кадр, и имя файла, затем нажмите кнопку <guibutton>Сохранить</guibutton>.</para>
+      <tip><para><application>Видеопроигрыватель Totem</application> покажет миниатюру того снимка, который будет сохранён, в левой части диалогового окна <guilabel>Сохранить снимок экрана</guilabel>.</para></tip>
+    </sect2>
+
+    <sect2 id="totem-usage-create-screenshot-gallery">
+      <title>Сохранение серии кадров</title>
+      <para>Чтобы получить серию снимков кадров видео или визуализации, выберите <menuchoice><guimenu>Правка</guimenu><guimenuitem>Создать серию кадров...</guimenuitem></menuchoice>. Появится диалог <guilabel>Сохранить серию кадров</guilabel>. Укажите в нём место, в котором хотите сохранить изображение с серией снимков, затем нажмите кнопку <guibutton>Сохранить</guibutton>.</para>
+      <tip><para>Можно указать ширину отдельных снимков экрана в серии при помощи поля <guilabel>Ширина кадра (в точках растра)</guilabel>. Ширина по умолчанию — 128 пикселей.</para>
+      <para>Также можно указать количество снимков экрана в серии. По умолчанию оно рассчитывается по продолжительности видео, но может быть указано явно после отключения флажка <guilabel>Рассчитать количество кадров</guilabel> и ввода требуемого количества в поле <guilabel>Количество снимков экрана</guilabel>.</para></tip>
+    </sect2>
+  </sect1>
+
+<!-- =========== Plugins ======================================= -->
+  <sect1 id="totem-plugins">
+    <title>Модули</title>
+    <para>Многие возможности <application>видеопроигрывателя Totem</application> представлены в виде модулей — небольших частей приложения, которые загружаются только при необходимости.</para>
+    <sect2 id="totem-plugins-load">
+      <title>Включение модуля</title>
+      <para>Чтобы просмотреть список установленных модулей, выберите <menuchoice><guimenu>Правка</guimenu><guimenuitem>Модули</guimenuitem></menuchoice>. Появится диалог <application>Настройка модулей</application>. В левой его части расположен список установленных модулей, а справа — описание выбранного модуля. Если у модуля есть настройки, будет активна кнопка <guibutton>Параметры</guibutton> справа.</para>
+      <para>Чтобы включить модуль, просто отметьте флажок слева от его имени в списке модулей, и он сразу будет загружен. Если при загрузке произойдёт какая-либо ошибка, появится соответствующее сообщение.</para>
+      <para>Чтобы отключить модуль, уберите флажок. Выбор, включён модуль или выключен, сохранится и после того, как <application>видеопроигрыватель Totem</application> будет закрыт.</para>
+    </sect2>
+    <sect2 id="totem-plugins-always-on-top">
+      <title>Всегда поверх всех окон</title>
+      <para>При включении модуль <guilabel>Всегда поверх всех окон</guilabel> поместит окно <application>видеопроигрывателя Totem</application> поверх остальных окон пока воспроизводится видео (но не музыка или визуализация). Чтобы отключить расположение окна поверх остальных, отключите модуль.</para>
+    </sect2>
+    <sect2 id="totem-plugins-coherence">
+      <title>DLNA/UPnP клиент, основанный на Coherence</title>
+      <para>Модуль <guilabel>DLNA/UPnP клиент, основанный на Coherence</guilabel> позволяет <application>видеопроигрывателю Totem</application> воспроизводить мультимедийные данные, получаемые от медиаслужб UPnP (например, Coherence) в локальной сети.</para>
+      <para>При включённом модуле <guilabel>DLNA/UPnP клиент, основанный на Coherence</guilabel>, выберите <menuchoice><shortcut><keycap>F9</keycap></shortcut><guimenu>Вид</guimenu><guimenuitem>Боковая панель</guimenuitem></menuchoice> или щёлкните по кнопке <guibutton>Боковая панель</guibutton> для отображения боковой панели. Выберите <guilabel>DLNA/UPnP клиент, основанный на Coherence</guilabel> из выпадающего списка вверху боковой панели для отображения соответствующей панели.</para>
+      <para>Список в боковой панели отображает перечень доступных серверов. Щелчок по одному из них покажет список типов мультимедиа, которые он может обслуживать, а щелчок по папке покажет список доступных файлов. Двойной щелчок по файлу добавит его в список воспроизведения <application>видеопроигрывателя Totem</application> и начнёт воспроизведение. Также можно щёлкнуть правой кнопкой по файлу и выбрать <menuchoice><guimenuitem>Воспроизвести</guimenuitem></menuchoice> или <menuchoice><guimenuitem>Поставить в очередь</guimenuitem></menuchoice>, чтобы сразу начать воспроизведение или добавить файл в список воспроизведения соответственно.</para>
+      <para>Если медиа-сервер позволяет, выбор <menuchoice><guimenuitem>Удалить</guimenuitem></menuchoice> в контекстном меню файла позволит удалить файл с медиа-сервера.</para>
+    </sect2>
+    <sect2 id="totem-plugins-gromit">
+      <title>Аннотации средствами Gromit</title>
+      <para>Модуль <guilabel>Аннотации средствами Gromit</guilabel> позволяет рисовать поверх фильмов во время их воспроизведения при помощи <ulink type="http" url="http://www.home.unix-ag.org/simon/gromit/"><application>Gromit</application></ulink>. У вас должен быть установлен <application>Gromit</application> для того, чтобы можно было включить модуль. Сверьтесь с документацией к операционной системе для информации об установке.</para>
+      <para>При включённом модуле нажатие <keycombo><keycap>Ctrl</keycap><keycap>D</keycap></keycombo> включает и выключает <application>Gromit</application>. Когда <application>Gromit</application> включён, указатель мыши изменяется на перекрестие. Для того, чтобы рисовать на экране, перемещайте указатель удерживая клавишу мыши. Затем снова нажмите <keycombo><keycap>Ctrl</keycap><keycap>D</keycap></keycombo>, чтобы выключить <application>Gromit</application>.</para>
+      <para>Для очистки экрана от аннотаций, нажмите <keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo> или закройте <application>видеопроигрыватель Totem</application>.</para>
+    </sect2>
+    <sect2 id="totem-plugins-jamendo">
+      <title>Jamendo</title>
+      <para>Модуль <guilabel>Jamendo</guilabel> позволяет прослушивать музыку, распространяемую по лицензии Creative Commons, с сайта <ulink type="http" url="http://www.jamendo.com/en/">Jamendo</ulink>.</para>
+      <sect3 id="totem-plugins-jamendo-configuration">
+        <title>Настройка модуля</title>
+        <para>Модуль <guilabel>Jamendo</guilabel> может настраиваться. Щёлкните по кнопке <guibutton>Параметры</guibutton> после включения модуля, и появится диалог <application>Конфигурация модуля Jamendo</application>. В нём можно выбрать, в загружать музыку в формате Ogg или MP3 (Ogg предпочтительнее, так как является свободным форматом) и указать количество запрашиваемых альбомов при поиске (увеличьте значение, если соединение с Интернет достаточно быстрое).</para>
+        <para>Для завершения щёлкните по кнопке <guibutton>OK</guibutton>.</para>
+      </sect3>
+      <sect3 id="totem-plugins-jamendo-setup">
+        <title>Боковая панель Jamendo</title>
+        <para>Когда модуль <guilabel>Jamendo</guilabel> включён, выберите <menuchoice><shortcut><keycap>F9</keycap></shortcut><guimenu>Вид</guimenu><guimenuitem>Боковая панель</guimenuitem></menuchoice> или щёлкните по кнопке <guibutton>Боковая панель</guibutton>, чтобы отобразить боковую панель. Выберите <guilabel>Jamendo</guilabel> из выпадающего списка вверху боковой панели для отображения панели <guilabel>Jamendo</guilabel>.</para>
+      </sect3>
+      <sect3 id="totem-plugins-jamendo-search">
+        <title>Поиск музыки</title>
+        <para>Введите запрос в поле поиска вверху панели <guilabel>Jamendo</guilabel>. Можно искать как по исполнителю, так и по меткам. Щелкните по кнопке <guilabel>Поиск</guilabel> для начала поиска.</para>
+        <para>Результаты поиска отображаются в виде списка на вкладке <guilabel>Результаты поиска</guilabel> на боковой панели могут быть просмотрены при помощи кнопок со стрелками внизу боковой панели. В списке представлены альбомы. Содержимое альбома можно просмотреть, щелкнув по нему. Второй щелчок по альбому скроет список композиций, входящих в альбом.</para>
+        <para>При выбранном исполнителе можно щёлкнуть по кнопке <guibutton>Страница альбома Jamendo</guibutton>, чтобы открыть страницу альбома на веб-сайте Jamendo. Двойной щелчок по альбому или выбор пункта <menuchoice><guimenuitem>Добавить в список воспроизведения</guimenuitem></menuchoice> в контекстном меню альбома заменит список воспроизведения композициями выбранного альбома и начнёт потоковое воспроизведение первой композиции. Двойной щелчок по отдельной композиции заменит список воспроизведения только этой композицией.</para>
+      </sect3>
+      <sect3 id="totem-plugins-jamendo-popular">
+        <title>Популярные альбомы и последние выпуски</title>
+        <para>На вкладке <guilabel>Популярные</guilabel> на панели <guilabel>Jamendo</guilabel> отображается список самых популярных альбомов в Jamendo на текущий момент, которые могут быть загружены так же, как и результаты поиска. На вкладке <guilabel>Последние выпуски</guilabel> перечислены последние загруженные на Jamendo альбомы.</para>
+      </sect3>
+    </sect2>
+    <sect2 id="totem-plugins-tracker">
+      <title>Локальный поиск</title>
+      <para>Модуль <guilabel>Локальный поиск</guilabel> позволяет искать видео- и аудиофайлы на компьютере при помощи <application>видеопроигрывателя Totem</application>. При включённом модуле выберите <menuchoice><shortcut><keycap>F9</keycap></shortcut><guimenu>Вид</guimenu><guimenuitem>Боковая панель</guimenuitem></menuchoice> или щёлкните по кнопке <guibutton>Боковая панель</guibutton> для отображения боковой панели. Выберите <guilabel>Локальный поиск</guilabel> из выпадающего списка вверху боковой панели для отображения панели <guilabel>Локальный поиск</guilabel>.</para>
+      <para>Для поиска введите запрос в поле ввода вверху боковой панели и щёлкните <guibutton>Найти</guibutton>. Запрос может включать шаблоны, такие как <literal>*</literal>, который соответствует любой последовательности символов. Например, запрос <userinput>*.mpg</userinput> найдёт все файлы с расширением <filename class="extension">.mpg</filename>.</para>
+      <para>Можно перемещаться по результатам поиска при помощи кнопок <guibutton>Назад</guibutton> и <guibutton>Вперёд</guibutton> внизу боковой панели. Можно также сразу перейти на нужную страницу, введя её номер.</para>
+    </sect2>
+    <sect2 id="totem-plugins-publish">
+      <title>Опубликовать список воспроизведения</title>
+      <para>Модуль <guilabel>Опубликовать список воспроизведения</guilabel> позволяет публиковать списки воспроизведения в локальной сети, чтобы позволить другим компьютерам получать доступ к ним и воспроизводить их.</para>
+      <sect3 id="totem-plugins-publish-configuration">
+        <title>Настройка модуля</title>
+        <para>Модуль <guilabel>Опубликовать список воспроизведения</guilabel> может быть настроен. Щёлкните по кнопке <guibutton>Параметры</guibutton> при включении модуля, и появится диалоговое окно с параметрами. В нём можно изменить имя, которое отображается при открытии доступа по сети к списку воспроизведения. Следующие строки будут заменены при публикации списка воспроизведения:</para>
+	<para>Также можно выбрать флажок <guilabel>Использовать защищённый транспортный протокол (https)</guilabel>, если необходимо шифровать публикуемый список воспроизведения при передаче по сети.</para>
+        <para>Для завершения щёлкните по кнопке <guibutton>Закрыть</guibutton>.</para>
+      </sect3>
+      <sect3 id="totem-plugins-publish-publishing">
+        <title>Публикация списков воспроизведения</title>
+        <para>При включённом модуле нет необходимости в явной публикации списков воспроизведения — они автоматически будут доступны по сети как веб-сайт Zeroconf.</para>
+      </sect3>
+      <sect3 id="totem-plugins-publish-neighborhood">
+        <title>Просмотр сетевого окружения</title>
+        <para>Для просмотра опубликованных списков воспроизведения выберите <guilabel>Окружение</guilabel> из выпадающего списка вверху боковой панели. Если какой-то список был опубликован в сети, он будет показан на панели. Двойной щелчок по списку загрузит его и начнёт воспроизведение.</para>
+      </sect3>
+    </sect2>
+    <sect2 id="totem-plugins-opensubtitles">
+      <title>Загрузка субтитров</title>
+      <para>Модуль <guilabel>Загрузка субтитров</guilabel> позволяет искать и загружать субтитры с сайта <ulink type="http" url="http://www.opensubtitles.org/en">OpenSubtitles</ulink>.</para>
+      <para>Субтитры могут быть загружены только для локальных фильмов, не для аудиофайлов, DVD, потоков DVB, VCD или потоков HTTP. Для поиска субтитров к текущему фильму выберите <menuchoice><guimenu>Вид</guimenu><guimenuitem>Загрузить субтитры для фильма...</guimenuitem></menuchoice>, после этого появится диалог <application>Загрузка субтитров к фильму</application>.</para>
+      <para>Выберите нужный язык субтитров в выпадающем списке вверху диалога, затем щёлкните по кнопке <guibutton>Найти</guibutton>, чтобы найти субтитры для текущего фильма. Критерием поиска субтитров в большей степени является содержимое фильма, чем название файла или метки.</para>
+      <para>Результаты поиска отображаются в списке в середине диалога. В настоящий момент субтитры могут быть просмотрены только после <emphasis>повторного открытия</emphasis> фильма с субтитрами. </para>
+      <note><para>Загруженные субтитры кэшируются, поэтому при повторном просмотре фильма их не придётся загружать снова. При загрузке новых субтитров для фильма, ранее загруженные субтитры для него удаляются.</para></note>
+    </sect2>
+    <sect2 id="totem-plugins-thumbnail">
+      <title>Миниатюра</title>
+      <para>Модуль <guilabel>Миниатюра</guilabel> заменяет значок главного окна <application>видеопроигрывателя Totem</application> миниатюрой текущего фильма и обновляет значок при открытии нового видео.</para>
+      <note><para>Если миниатюры для текущего видео нет (или воспроизводится аудиозапись), значок главного окна изменится на эмблему <application>видеопроигрывателя Totem</application>.</para></note>
+    </sect2>
+    <sect2 id="totem-plugins-brasero">
+      <title>Запись видеодисков</title>
+      <para>Модуль <guilabel>Запись видеодисков</guilabel> позволяет записывать текущий список воспроизведения на DVD или VCD при помощи <application>Brasero</application>.</para>
+      <para>Чтобы записать текущий список воспроизведения, выберите <menuchoice><guimenu>Фильм</guimenu><guimenuitem>Создать видеодиск</guimenuitem></menuchoice>. Появится диалог <application>Brasero</application> с параметрами преобразования видео в соответствующий формат для дальнейшей записи. Для дополнительной информации смотрите <ulink type="help" url="ghelp:brasero?brasero-new-project-video">документацию к Brasero</ulink>.</para>
+    </sect2>
+    <sect2 id="totem-plugins-youtube">
+      <title>Браузер YouTube</title>
+      <para>Модуль <guilabel>Браузер YouTube</guilabel> позволяет искать видео на <ulink type="http" url="http://www.youtube.com/">YouTube</ulink> и воспроизводить его непосредственно в  <application>видеопроигрывателе Totem</application>. При включённом модуле выберите <menuchoice><shortcut><keycap>F9</keycap></shortcut><guimenu>Вид</guimenu><guimenuitem>Боковая панель</guimenuitem></menuchoice> или щёлкните по кнопке <guibutton>Боковая панель</guibutton>, чтобы отобразить боковую панель. Выберите <guilabel>YouTube</guilabel> из выпадающего списка вверху панели, чтобы открыть панель <guilabel>YouTube</guilabel>.</para>
+      <para>Для поиска видео на YouTube введите запрос в поле вверху боковой панели, затем щёлкните по кнопке <guibutton>Найти</guibutton>. Результаты поиска отображаются в списке ниже. При прокрутке списка автоматически загружаются новые результаты.</para>
+      <para>Для воспроизведения видео щёлкните дважды по нему в списке с результатами или выберите пункт <menuchoice><guimenuitem>Добавить в список воспроизведения</guimenuitem></menuchoice> в его контекстном меню. Во время воспроизведения видео автоматически будет показан список похожих видеозаписей на вкладке <guilabel>Похожие видео</guilabel> панели <guilabel>YouTube</guilabel>.</para>
+      <para>Видео с YouTube можно открыть в веб-браузере, выбрав пункт <menuchoice><guimenuitem>Открыть в браузере</guimenuitem></menuchoice> в его контекстном меню.</para>
+    </sect2>
+    <sect2 id="totem-plugins-dbus-service">
+      <title>Служба D-Bus</title>
+      <para>Модуль <guilabel>Служба D-Bus</guilabel> предназначен для широковещательных уведомлений о воспроизводимой в настоящий момент композиции через шину D-Bus <application>видеопроигрывателя Totem</application>. Приложения (например, <application>Gajim</application>) могут получать подобные уведомления и реагировать соответствующим образом. Например, обновлять информацию в системе обмена мгновенными сообщениями о проигрываемом в настоящий момент видео.</para>
+    </sect2>
+  </sect1>
+
+<!-- =========== Usage ======================================= -->
+<!-- Use this section to describe how to customize the 
+     application. -->
+  <sect1 id="totem-prefs">
+    <title>Параметры</title>
+    <para>Чтобы изменить параметры <application>видеопроигрывателя Totem</application>, выберите <menuchoice><guimenu>Правка</guimenu><guimenuitem>Параметры</guimenuitem></menuchoice>.</para>
+
+    <sect2 id="totem-prefs-general">
+      <title>Общие</title>
+      <variablelist>
+	<varlistentry>
+	  <term>Сеть</term>
+	  <listitem>
+	    <para>Выберите скорость соединения с сетью из выпадающего списка <guilabel>Скорость соединения</guilabel>.</para>
+          </listitem>
+        </varlistentry>	
+	<varlistentry>
+	  <term>Текстовые субтитры</term>
+	  <listitem>
+	    <itemizedlist>
+	      <listitem>
+	      	<para><guilabel>Автоматически загружать файлы субтитров после загрузки фильма</guilabel>: выберите этот пункт для автоматической загрузки субтитров с тем же именем файла, что и у фильма, в начале воспроизведения.</para>
+	      </listitem>
+	      <listitem>
+                <para><guilabel>Шрифт</guilabel>: выберите этот параметр, чтобы изменить шрифт, которым показываются субтитры.</para>
+              </listitem>
+	          <listitem>
+				<para><guilabel>Кодировка</guilabel>: выберите этот параметр, чтобы изменить кодировку, в которой показываются субтитры.</para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+        </varlistentry>	
+      </variablelist>
+    </sect2>
+    <sect2 id="totem-prefs-display">
+      <title>Показ</title>
+      <variablelist>
+	<varlistentry>
+	  <term>Показ</term>
+	  <listitem>
+	    <itemizedlist>
+	      <listitem>
+	        <para>Выберите параметр <guilabel>Автоматически изменять размер окна для нового видео</guilabel>, если хотите, чтобы при открытии фильма <application>видеопроигрыватель Totem</application> автоматически подстраивал размер своего окна под размер фильма.</para>
+              </listitem>
+              <listitem>
+                <para>Выберите параметр <guilabel>Также выключать хранитель экрана при воспроизведении аудио</guilabel> для того, чтобы запретить запуск хранителя экрана при воспроизведении звуковых файлов. Некоторые мониторы со встроенными динамиками могут прекращать воспроизведение, когда запущен хранитель экрана.</para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+        </varlistentry>
+	<varlistentry>
+	  <term>Визуальные эффекты</term>
+	  <listitem>
+	    <itemizedlist>
+	      <listitem>
+                <para><guilabel>Показывать визуальные эффекты</guilabel>: выберите этот параметр, чтобы при воспроизведении звуковых файлов показывались визуальные эффекты.</para>
+              </listitem>
+	      <listitem>
+		<para><guilabel>Тип визуализации</guilabel>: выберите тип визуализации из выпадающего списка.</para>
+              </listitem>
+	      <listitem>
+		<para><guilabel>Размер визуализации</guilabel>: выберите размер визуализации из выпадающего списка.</para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+        </varlistentry>
+	<varlistentry>
+	  <term>Баланс цвета</term>
+	  <listitem>
+	    <itemizedlist>
+	      <listitem>
+		    <para><guilabel>Яркость</guilabel>: используйте ползунок, чтобы выбрать уровень яркости.</para>
+          </listitem>
+	      <listitem>
+		     <para><guilabel>Контраст</guilabel>: используйте ползунок, чтобы выбрать уровень контраста.</para>
+          </listitem>
+	      <listitem>
+		    <para><guilabel>Насыщенность</guilabel>: используйте ползунок, чтобы выбрать уровень насыщенности.</para>
+          </listitem>
+	      <listitem>
+		     <para><guilabel>Оттенок</guilabel>: используйте ползунок, чтобы выбрать уровень оттенка.</para>
+          </listitem>
+	    </itemizedlist>
+	    <tip><para>Можно использовать кнопку <guilabel>Восстановить параметры по умолчанию</guilabel> для сброса параметров цветового баланса в начальные значения.</para></tip>
+      </listitem>
+	</varlistentry>
+      </variablelist>
+    </sect2>
+    <sect2 id="totem-prefs-audio">
+      <title>Аудио</title>
+      <variablelist>
+	<varlistentry>
+	  <term>Аудиовыход</term>
+	  <listitem>
+	    <para>Выберите тип аудиовыхода из выпадающего списка <guilabel>Тип аудиовыхода</guilabel>.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </sect2>
+  </sect1>
+
+<!-- ============= Bugs ================================== -->
+<!-- This section is optional and is commented out by default. 
+     You can use it to describe known bugs and limitations of the 
+	  program if there are any - please be frank and list all
+     problems you know of. 
+  
+  <sect1 id="mayapp-bugs">
+  <title>Known Bugs and Limitations</title>
+  <para> </para>
+ </sect1>
+-->
+
+<!-- ============= About ================================== -->
+<!-- This section contains info about the program (not docs), such as
+      author's name(s), web page, license, feedback address. This
+      section is optional: primary place for this info is "About.." box of
+      the program. However, if you do wish to include this info in the
+      manual, this is the place to put it. Alternatively, you can put this information in the title page.-->
+  <sect1 id="totem-about"> 
+    <title>О <application>видеопроигрывателе Totem</application></title> 
+    <para><application>Видеопроигрыватель Totem</application> написали Bastien Nocera (<email>hadess@hadess.net</email>), Julien Moutte (<email>julien@moutte.net</email>), который добавил поддержку GStreamer, и Guenter Bartsch (<email>guenter@users.sourceforge.net</email>). Чтобы узнать больше о <application>видеопроигрывателе Totem</application>, посетите <ulink url="http://www.gnome.org/projects/totem/" type="http">его домашнюю веб-страницу</ulink>.</para>
+    <para>Чтобы сообщить об ошибке или сделать предложение по <application>видеопроигрывателю Totem</application> или этому руководству, следуйте указаниям в документе <ulink url="ghelp:gnome-feedback" type="help">Обратная связь с GNOME</ulink>.</para>
+    <para>Эта программа распространяется на условиях лицензии GNU General Public License, опубликованной Фондом свободного программного обеспечения; либо версии 2 этой лицензии, либо (по вашему выбору) любой более поздней версии. Копию лицензии можно найти по этой <ulink url="ghelp:gpl" type="help">ссылке</ulink>, или в файле COPYING, который прилагается к исходным текстам программы.</para>
+  </sect1> 
+</article>

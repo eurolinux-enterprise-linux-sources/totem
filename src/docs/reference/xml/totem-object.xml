@@ -1,0 +1,1287 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+	<!ENTITY % local.common.attrib "xmlns:xi  CDATA  #FIXED 'http://www.w3.org/2003/XInclude'">
+	<!ENTITY version SYSTEM "version.xml">
+	<!ENTITY slash "/">
+]>
+<refentry id="TotemObject">
+<refmeta>
+<refentrytitle role="top_of_page" id="TotemObject.top_of_page">TotemObject</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>TOTEM Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>TotemObject</refname>
+<refpurpose>main Totem object</refpurpose>
+</refnamediv>
+<refsect1 id="TotemObject.stability-level">
+<title>Stability Level</title>
+Unstable, unless otherwise indicated
+</refsect1>
+
+<refsynopsisdiv id="TotemObject.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+
+#include &lt;totem.h&gt;
+
+typedef             <link linkend="Totem">Totem</link>;
+typedef             <link linkend="TotemObject">TotemObject</link>;
+                    <link linkend="TotemObjectClass">TotemObjectClass</link>;
+enum                <link linkend="TotemRemoteCommand">TotemRemoteCommand</link>;
+enum                <link linkend="TotemRemoteSetting">TotemRemoteSetting</link>;
+#define             <link linkend="TOTEM-GCONF-PREFIX--CAPS">TOTEM_GCONF_PREFIX</link>
+<link linkend="void">void</link>                <link linkend="totem-object-plugins-init">totem_object_plugins_init</link>           (<link linkend="TotemObject">TotemObject</link> *totem);
+<link linkend="void">void</link>                <link linkend="totem-object-plugins-shutdown">totem_object_plugins_shutdown</link>       (void);
+<link linkend="void">void</link>                <link linkend="totem-file-opened">totem_file_opened</link>                   (<link linkend="TotemObject">TotemObject</link> *totem,
+                                                         const <link linkend="char">char</link> *mrl);
+<link linkend="void">void</link>                <link linkend="totem-file-closed">totem_file_closed</link>                   (<link linkend="TotemObject">TotemObject</link> *totem);
+<link linkend="void">void</link>                <link linkend="totem-metadata-updated">totem_metadata_updated</link>              (<link linkend="TotemObject">TotemObject</link> *totem,
+                                                         const <link linkend="char">char</link> *artist,
+                                                         const <link linkend="char">char</link> *title,
+                                                         const <link linkend="char">char</link> *album,
+                                                         <link linkend="guint">guint</link> track_num);
+<link linkend="void">void</link>                <link linkend="totem-action-error">totem_action_error</link>                  (const <link linkend="char">char</link> *title,
+                                                         const <link linkend="char">char</link> *reason,
+                                                         <link linkend="Totem">Totem</link> *totem);
+<link linkend="void">void</link>                <link linkend="totem-action-exit">totem_action_exit</link>                   (<link linkend="Totem">Totem</link> *totem);
+<link linkend="void">void</link>                <link linkend="totem-add-to-playlist-and-play">totem_add_to_playlist_and_play</link>      (<link linkend="Totem">Totem</link> *totem,
+                                                         const <link linkend="char">char</link> *uri,
+                                                         const <link linkend="char">char</link> *display_name,
+                                                         <link linkend="gboolean">gboolean</link> add_to_recent);
+<link linkend="void">void</link>                <link linkend="totem-action-play">totem_action_play</link>                   (<link linkend="Totem">Totem</link> *totem);
+<link linkend="void">void</link>                <link linkend="totem-action-play-media">totem_action_play_media</link>             (<link linkend="Totem">Totem</link> *totem,
+                                                         <link linkend="TotemDiscMediaType">TotemDiscMediaType</link> type,
+                                                         const <link linkend="char">char</link> *device);
+<link linkend="void">void</link>                <link linkend="totem-action-play-media-device">totem_action_play_media_device</link>      (<link linkend="Totem">Totem</link> *totem,
+                                                         const <link linkend="char">char</link> *device);
+<link linkend="void">void</link>                <link linkend="totem-action-play-pause">totem_action_play_pause</link>             (<link linkend="Totem">Totem</link> *totem);
+<link linkend="void">void</link>                <link linkend="totem-action-pause">totem_action_pause</link>                  (<link linkend="Totem">Totem</link> *totem);
+<link linkend="void">void</link>                <link linkend="totem-action-stop">totem_action_stop</link>                   (<link linkend="Totem">Totem</link> *totem);
+<link linkend="void">void</link>                <link linkend="totem-action-fullscreen">totem_action_fullscreen</link>             (<link linkend="Totem">Totem</link> *totem,
+                                                         <link linkend="gboolean">gboolean</link> state);
+<link linkend="void">void</link>                <link linkend="totem-action-fullscreen-toggle">totem_action_fullscreen_toggle</link>      (<link linkend="Totem">Totem</link> *totem);
+<link linkend="void">void</link>                <link linkend="totem-action-next">totem_action_next</link>                   (<link linkend="Totem">Totem</link> *totem);
+<link linkend="void">void</link>                <link linkend="totem-action-previous">totem_action_previous</link>               (<link linkend="Totem">Totem</link> *totem);
+<link linkend="void">void</link>                <link linkend="totem-action-next-angle">totem_action_next_angle</link>             (<link linkend="Totem">Totem</link> *totem);
+<link linkend="gboolean">gboolean</link>            <link linkend="totem-action-remote-get-setting">totem_action_remote_get_setting</link>     (<link linkend="Totem">Totem</link> *totem,
+                                                         <link linkend="TotemRemoteSetting">TotemRemoteSetting</link> setting);
+<link linkend="void">void</link>                <link linkend="totem-action-remote-set-setting">totem_action_remote_set_setting</link>     (<link linkend="Totem">Totem</link> *totem,
+                                                         <link linkend="TotemRemoteSetting">TotemRemoteSetting</link> setting,
+                                                         <link linkend="gboolean">gboolean</link> value);
+<link linkend="void">void</link>                <link linkend="totem-action-seek-time">totem_action_seek_time</link>              (<link linkend="Totem">Totem</link> *totem,
+                                                         <link linkend="gint64">gint64</link> sec);
+<link linkend="void">void</link>                <link linkend="totem-action-seek-relative">totem_action_seek_relative</link>          (<link linkend="Totem">Totem</link> *totem,
+                                                         <link linkend="gint64">gint64</link> offset);
+<link linkend="void">void</link>                <link linkend="totem-action-volume-relative">totem_action_volume_relative</link>        (<link linkend="Totem">Totem</link> *totem,
+                                                         <link linkend="double">double</link> off_pct);
+<link linkend="void">void</link>                <link linkend="totem-action-volume-toggle-mute">totem_action_volume_toggle_mute</link>     (<link linkend="Totem">Totem</link> *totem);
+<link linkend="void">void</link>                <link linkend="totem-action-toggle-aspect-ratio">totem_action_toggle_aspect_ratio</link>    (<link linkend="Totem">Totem</link> *totem);
+<link linkend="int">int</link>                 <link linkend="totem-action-get-aspect-ratio">totem_action_get_aspect_ratio</link>       (<link linkend="Totem">Totem</link> *totem);
+<link linkend="void">void</link>                <link linkend="totem-action-set-aspect-ratio">totem_action_set_aspect_ratio</link>       (<link linkend="Totem">Totem</link> *totem,
+                                                         <link linkend="int">int</link> ratio);
+<link linkend="void">void</link>                <link linkend="totem-action-toggle-controls">totem_action_toggle_controls</link>        (<link linkend="Totem">Totem</link> *totem);
+<link linkend="void">void</link>                <link linkend="totem-action-set-scale-ratio">totem_action_set_scale_ratio</link>        (<link linkend="Totem">Totem</link> *totem,
+                                                         <link linkend="gfloat">gfloat</link> ratio);
+<link linkend="void">void</link>                <link linkend="totem-action-set-playlist-index">totem_action_set_playlist_index</link>     (<link linkend="Totem">Totem</link> *totem,
+                                                         <link linkend="guint">guint</link> index);
+<link linkend="void">void</link>                <link linkend="totem-action-remote">totem_action_remote</link>                 (<link linkend="Totem">Totem</link> *totem,
+                                                         <link linkend="TotemRemoteCommand">TotemRemoteCommand</link> cmd,
+                                                         const <link linkend="char">char</link> *url);
+<link linkend="gboolean">gboolean</link>            <link linkend="totem-is-fullscreen">totem_is_fullscreen</link>                 (<link linkend="Totem">Totem</link> *totem);
+<link linkend="gboolean">gboolean</link>            <link linkend="totem-is-playing">totem_is_playing</link>                    (<link linkend="Totem">Totem</link> *totem);
+<link linkend="gboolean">gboolean</link>            <link linkend="totem-is-paused">totem_is_paused</link>                     (<link linkend="Totem">Totem</link> *totem);
+<link linkend="gboolean">gboolean</link>            <link linkend="totem-is-seekable">totem_is_seekable</link>                   (<link linkend="Totem">Totem</link> *totem);
+<link linkend="GtkWindow">GtkWindow</link> *         <link linkend="totem-get-main-window">totem_get_main_window</link>               (<link linkend="Totem">Totem</link> *totem);
+<link linkend="GtkUIManager">GtkUIManager</link> *      <link linkend="totem-get-ui-manager">totem_get_ui_manager</link>                (<link linkend="Totem">Totem</link> *totem);
+<link linkend="GtkWidget">GtkWidget</link> *         <link linkend="totem-get-video-widget">totem_get_video_widget</link>              (<link linkend="Totem">Totem</link> *totem);
+<link linkend="char">char</link> *              <link linkend="totem-get-video-widget-backend-name">totem_get_video_widget_backend_name</link> (<link linkend="Totem">Totem</link> *totem);
+<link linkend="char">char</link> *              <link linkend="totem-get-current-mrl">totem_get_current_mrl</link>               (<link linkend="Totem">Totem</link> *totem);
+<link linkend="gint64">gint64</link>              <link linkend="totem-get-current-time">totem_get_current_time</link>              (<link linkend="Totem">Totem</link> *totem);
+<link linkend="void">void</link>                <link linkend="totem-set-current-subtitle">totem_set_current_subtitle</link>          (<link linkend="Totem">Totem</link> *totem,
+                                                         const <link linkend="char">char</link> *subtitle_uri);
+<link linkend="guint">guint</link>               <link linkend="totem-get-playlist-length">totem_get_playlist_length</link>           (<link linkend="Totem">Totem</link> *totem);
+<link linkend="int">int</link>                 <link linkend="totem-get-playlist-pos">totem_get_playlist_pos</link>              (<link linkend="Totem">Totem</link> *totem);
+<link linkend="char">char</link> *              <link linkend="totem-get-title-at-playlist-pos">totem_get_title_at_playlist_pos</link>     (<link linkend="Totem">Totem</link> *totem,
+                                                         <link linkend="guint">guint</link> playlist_index);
+<link linkend="char">char</link> *              <link linkend="totem-get-short-title">totem_get_short_title</link>               (<link linkend="Totem">Totem</link> *totem);
+<link linkend="void">void</link>                <link linkend="totem-add-sidebar-page">totem_add_sidebar_page</link>              (<link linkend="Totem">Totem</link> *totem,
+                                                         const <link linkend="char">char</link> *page_id,
+                                                         const <link linkend="char">char</link> *title,
+                                                         <link linkend="GtkWidget">GtkWidget</link> *main_widget);
+<link linkend="void">void</link>                <link linkend="totem-remove-sidebar-page">totem_remove_sidebar_page</link>           (<link linkend="Totem">Totem</link> *totem,
+                                                         const <link linkend="char">char</link> *page_id);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="TotemObject.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----TotemObject
+</synopsis>
+</refsect1>
+
+
+
+
+
+<refsect1 id="TotemObject.properties" role="properties">
+<title role="properties.title">Properties</title>
+<synopsis>
+  &quot;<link linkend="TotemObject--current-mrl">current-mrl</link>&quot;              <link linkend="gchar">gchar</link>*                : Read
+  &quot;<link linkend="TotemObject--current-time">current-time</link>&quot;             <link linkend="gint64">gint64</link>                : Read
+  &quot;<link linkend="TotemObject--fullscreen">fullscreen</link>&quot;               <link linkend="gboolean">gboolean</link>              : Read
+  &quot;<link linkend="TotemObject--playing">playing</link>&quot;                  <link linkend="gboolean">gboolean</link>              : Read
+  &quot;<link linkend="TotemObject--seekable">seekable</link>&quot;                 <link linkend="gboolean">gboolean</link>              : Read
+  &quot;<link linkend="TotemObject--stream-length">stream-length</link>&quot;            <link linkend="gint64">gint64</link>                : Read
+</synopsis>
+</refsect1>
+
+<refsect1 id="TotemObject.signals" role="signal_proto">
+<title role="signal_proto.title">Signals</title>
+<synopsis>
+  &quot;<link linkend="TotemObject-file-closed">file-closed</link>&quot;                                    : Run Last
+  &quot;<link linkend="TotemObject-file-opened">file-opened</link>&quot;                                    : Run Last
+  &quot;<link linkend="TotemObject-metadata-updated">metadata-updated</link>&quot;                               : Run Last
+</synopsis>
+</refsect1>
+
+
+<refsect1 id="TotemObject.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+<link linkend="TotemObject"><type>TotemObject</type></link> is the core object of Totem; a singleton which controls all Totem's main functions.</para>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="TotemObject.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="Totem" role="typedef">
+<title>Totem</title>
+<indexterm zone="Totem"><primary sortas="">Totem</primary></indexterm><programlisting>typedef struct TotemObject Totem;
+</programlisting>
+<para>
+The <link linkend="Totem"><type>Totem</type></link> object is a handy synonym for <link linkend="TotemObject"><type>TotemObject</type></link>, and the two can be used interchangably.</para>
+<para>
+</para></refsect2>
+<refsect2 id="TotemObject" role="typedef">
+<title>TotemObject</title>
+<indexterm zone="TotemObject"><primary sortas="Object">TotemObject</primary></indexterm><programlisting>typedef struct TotemObject TotemObject;
+</programlisting>
+<para>
+All the fields in the <link linkend="TotemObject"><type>TotemObject</type></link> structure are private and should never be accessed directly.</para>
+<para>
+</para></refsect2>
+<refsect2 id="TotemObjectClass" role="struct">
+<title>TotemObjectClass</title>
+<indexterm zone="TotemObjectClass"><primary sortas="ObjectClass">TotemObjectClass</primary></indexterm><programlisting>typedef struct {
+	GObjectClass parent_class;
+
+	void (*file_opened)			(Totem *totem, const char *mrl);
+	void (*file_closed)			(Totem *totem);
+	void (*metadata_updated)		(Totem *totem,
+						 const char *artist,
+						 const char *title,
+						 const char *album,
+						 guint track_num);
+} TotemObjectClass;
+</programlisting>
+<para>
+The class structure for the <link linkend="TotemPlParser"><type>TotemPlParser</type></link> type.</para>
+<para>
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="GObjectClass">GObjectClass</link>&#160;<structfield>parent_class</structfield>;</term>
+<listitem><simpara> the parent class
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>file_opened</structfield>&#160;()</term>
+<listitem><simpara> the generic signal handler for the <link linkend="TotemObject-file-opened"><type>"file-opened"</type></link> signal,
+which can be overridden by inheriting classes
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>file_closed</structfield>&#160;()</term>
+<listitem><simpara> the generic signal handler for the <link linkend="TotemObject-file-closed"><type>"file-closed"</type></link> signal,
+which can be overridden by inheriting classes
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>metadata_updated</structfield>&#160;()</term>
+<listitem><simpara> the generic signal handler for the <link linkend="TotemObject-metadata-updated"><type>"metadata-updated"</type></link> signal,
+which can be overridden by inheriting classes
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="TotemRemoteCommand" role="enum">
+<title>enum TotemRemoteCommand</title>
+<indexterm zone="TotemRemoteCommand"><primary sortas="RemoteCommand">TotemRemoteCommand</primary></indexterm><programlisting>typedef enum {
+	TOTEM_REMOTE_COMMAND_UNKNOWN = 0,
+	TOTEM_REMOTE_COMMAND_PLAY,
+	TOTEM_REMOTE_COMMAND_PAUSE,
+	TOTEM_REMOTE_COMMAND_STOP,
+	TOTEM_REMOTE_COMMAND_PLAYPAUSE,
+	TOTEM_REMOTE_COMMAND_NEXT,
+	TOTEM_REMOTE_COMMAND_PREVIOUS,
+	TOTEM_REMOTE_COMMAND_SEEK_FORWARD,
+	TOTEM_REMOTE_COMMAND_SEEK_BACKWARD,
+	TOTEM_REMOTE_COMMAND_VOLUME_UP,
+	TOTEM_REMOTE_COMMAND_VOLUME_DOWN,
+	TOTEM_REMOTE_COMMAND_FULLSCREEN,
+	TOTEM_REMOTE_COMMAND_QUIT,
+	TOTEM_REMOTE_COMMAND_ENQUEUE,
+	TOTEM_REMOTE_COMMAND_REPLACE,
+	TOTEM_REMOTE_COMMAND_SHOW,
+	TOTEM_REMOTE_COMMAND_TOGGLE_CONTROLS,
+	TOTEM_REMOTE_COMMAND_UP,
+	TOTEM_REMOTE_COMMAND_DOWN,
+	TOTEM_REMOTE_COMMAND_LEFT,
+	TOTEM_REMOTE_COMMAND_RIGHT,
+	TOTEM_REMOTE_COMMAND_SELECT,
+	TOTEM_REMOTE_COMMAND_DVD_MENU,
+	TOTEM_REMOTE_COMMAND_ZOOM_UP,
+	TOTEM_REMOTE_COMMAND_ZOOM_DOWN,
+	TOTEM_REMOTE_COMMAND_EJECT,
+	TOTEM_REMOTE_COMMAND_PLAY_DVD,
+	TOTEM_REMOTE_COMMAND_MUTE,
+	TOTEM_REMOTE_COMMAND_TOGGLE_ASPECT
+} TotemRemoteCommand;
+</programlisting>
+<para>
+Represents a command which can be sent to a running Totem instance remotely.</para>
+<para>
+</para><variablelist role="enum">
+<varlistentry id="TOTEM-REMOTE-COMMAND-UNKNOWN--CAPS" role="constant">
+<term><literal>TOTEM_REMOTE_COMMAND_UNKNOWN</literal></term>
+<listitem><simpara> unknown command
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-REMOTE-COMMAND-PLAY--CAPS" role="constant">
+<term><literal>TOTEM_REMOTE_COMMAND_PLAY</literal></term>
+<listitem><simpara> play the current stream
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-REMOTE-COMMAND-PAUSE--CAPS" role="constant">
+<term><literal>TOTEM_REMOTE_COMMAND_PAUSE</literal></term>
+<listitem><simpara> pause the current stream
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-REMOTE-COMMAND-STOP--CAPS" role="constant">
+<term><literal>TOTEM_REMOTE_COMMAND_STOP</literal></term>
+<listitem><simpara> stop playing the current stream
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-REMOTE-COMMAND-PLAYPAUSE--CAPS" role="constant">
+<term><literal>TOTEM_REMOTE_COMMAND_PLAYPAUSE</literal></term>
+<listitem><simpara> toggle play/pause on the current stream
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-REMOTE-COMMAND-NEXT--CAPS" role="constant">
+<term><literal>TOTEM_REMOTE_COMMAND_NEXT</literal></term>
+<listitem><simpara> play the next playlist item
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-REMOTE-COMMAND-PREVIOUS--CAPS" role="constant">
+<term><literal>TOTEM_REMOTE_COMMAND_PREVIOUS</literal></term>
+<listitem><simpara> play the previous playlist item
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-REMOTE-COMMAND-SEEK-FORWARD--CAPS" role="constant">
+<term><literal>TOTEM_REMOTE_COMMAND_SEEK_FORWARD</literal></term>
+<listitem><simpara> seek forwards in the current stream
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-REMOTE-COMMAND-SEEK-BACKWARD--CAPS" role="constant">
+<term><literal>TOTEM_REMOTE_COMMAND_SEEK_BACKWARD</literal></term>
+<listitem><simpara> seek backwards in the current stream
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-REMOTE-COMMAND-VOLUME-UP--CAPS" role="constant">
+<term><literal>TOTEM_REMOTE_COMMAND_VOLUME_UP</literal></term>
+<listitem><simpara> increase the volume
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-REMOTE-COMMAND-VOLUME-DOWN--CAPS" role="constant">
+<term><literal>TOTEM_REMOTE_COMMAND_VOLUME_DOWN</literal></term>
+<listitem><simpara> decrease the volume
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-REMOTE-COMMAND-FULLSCREEN--CAPS" role="constant">
+<term><literal>TOTEM_REMOTE_COMMAND_FULLSCREEN</literal></term>
+<listitem><simpara> toggle fullscreen mode
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-REMOTE-COMMAND-QUIT--CAPS" role="constant">
+<term><literal>TOTEM_REMOTE_COMMAND_QUIT</literal></term>
+<listitem><simpara> quit the instance of Totem
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-REMOTE-COMMAND-ENQUEUE--CAPS" role="constant">
+<term><literal>TOTEM_REMOTE_COMMAND_ENQUEUE</literal></term>
+<listitem><simpara> enqueue a new playlist item
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-REMOTE-COMMAND-REPLACE--CAPS" role="constant">
+<term><literal>TOTEM_REMOTE_COMMAND_REPLACE</literal></term>
+<listitem><simpara> replace an item in the playlist
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-REMOTE-COMMAND-SHOW--CAPS" role="constant">
+<term><literal>TOTEM_REMOTE_COMMAND_SHOW</literal></term>
+<listitem><simpara> show the Totem instance
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-REMOTE-COMMAND-TOGGLE-CONTROLS--CAPS" role="constant">
+<term><literal>TOTEM_REMOTE_COMMAND_TOGGLE_CONTROLS</literal></term>
+<listitem><simpara> toggle the control visibility
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-REMOTE-COMMAND-UP--CAPS" role="constant">
+<term><literal>TOTEM_REMOTE_COMMAND_UP</literal></term>
+<listitem><simpara> go up (DVD controls)
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-REMOTE-COMMAND-DOWN--CAPS" role="constant">
+<term><literal>TOTEM_REMOTE_COMMAND_DOWN</literal></term>
+<listitem><simpara> go down (DVD controls)
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-REMOTE-COMMAND-LEFT--CAPS" role="constant">
+<term><literal>TOTEM_REMOTE_COMMAND_LEFT</literal></term>
+<listitem><simpara> go left (DVD controls)
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-REMOTE-COMMAND-RIGHT--CAPS" role="constant">
+<term><literal>TOTEM_REMOTE_COMMAND_RIGHT</literal></term>
+<listitem><simpara> go right (DVD controls)
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-REMOTE-COMMAND-SELECT--CAPS" role="constant">
+<term><literal>TOTEM_REMOTE_COMMAND_SELECT</literal></term>
+<listitem><simpara> select the current item (DVD controls)
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-REMOTE-COMMAND-DVD-MENU--CAPS" role="constant">
+<term><literal>TOTEM_REMOTE_COMMAND_DVD_MENU</literal></term>
+<listitem><simpara> go to the DVD menu
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-REMOTE-COMMAND-ZOOM-UP--CAPS" role="constant">
+<term><literal>TOTEM_REMOTE_COMMAND_ZOOM_UP</literal></term>
+<listitem><simpara> increase the zoom level
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-REMOTE-COMMAND-ZOOM-DOWN--CAPS" role="constant">
+<term><literal>TOTEM_REMOTE_COMMAND_ZOOM_DOWN</literal></term>
+<listitem><simpara> decrease the zoom level
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-REMOTE-COMMAND-EJECT--CAPS" role="constant">
+<term><literal>TOTEM_REMOTE_COMMAND_EJECT</literal></term>
+<listitem><simpara> eject the current disc
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-REMOTE-COMMAND-PLAY-DVD--CAPS" role="constant">
+<term><literal>TOTEM_REMOTE_COMMAND_PLAY_DVD</literal></term>
+<listitem><simpara> play a DVD in a drive
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-REMOTE-COMMAND-MUTE--CAPS" role="constant">
+<term><literal>TOTEM_REMOTE_COMMAND_MUTE</literal></term>
+<listitem><simpara> toggle mute
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-REMOTE-COMMAND-TOGGLE-ASPECT--CAPS" role="constant">
+<term><literal>TOTEM_REMOTE_COMMAND_TOGGLE_ASPECT</literal></term>
+<listitem><simpara> toggle the aspect ratio
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="TotemRemoteSetting" role="enum">
+<title>enum TotemRemoteSetting</title>
+<indexterm zone="TotemRemoteSetting"><primary sortas="RemoteSetting">TotemRemoteSetting</primary></indexterm><programlisting>typedef enum {
+	TOTEM_REMOTE_SETTING_SHUFFLE,
+	TOTEM_REMOTE_SETTING_REPEAT
+} TotemRemoteSetting;
+</programlisting>
+<para>
+Represents a boolean setting or preference on a remote Totem instance.</para>
+<para>
+</para><variablelist role="enum">
+<varlistentry id="TOTEM-REMOTE-SETTING-SHUFFLE--CAPS" role="constant">
+<term><literal>TOTEM_REMOTE_SETTING_SHUFFLE</literal></term>
+<listitem><simpara> whether shuffle is enabled
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-REMOTE-SETTING-REPEAT--CAPS" role="constant">
+<term><literal>TOTEM_REMOTE_SETTING_REPEAT</literal></term>
+<listitem><simpara> whether repeat is enabled
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="TOTEM-GCONF-PREFIX--CAPS" role="macro">
+<title>TOTEM_GCONF_PREFIX</title>
+<indexterm zone="TOTEM-GCONF-PREFIX--CAPS"><primary sortas="GCONF_PREFIX">TOTEM_GCONF_PREFIX</primary></indexterm><programlisting>#define TOTEM_GCONF_PREFIX "/apps/totem"
+</programlisting>
+<para>
+The GConf prefix under which all Totem GConf keys are stored.</para>
+<para>
+</para></refsect2>
+<refsect2 id="totem-object-plugins-init" role="function">
+<title>totem_object_plugins_init ()</title>
+<indexterm zone="totem-object-plugins-init"><primary sortas="object_plugins_init">totem_object_plugins_init</primary></indexterm><programlisting><link linkend="void">void</link>                totem_object_plugins_init           (<link linkend="TotemObject">TotemObject</link> *totem);</programlisting>
+<para>
+Initialises the plugin engine and activates all the
+enabled plugins.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-object-plugins-shutdown" role="function">
+<title>totem_object_plugins_shutdown ()</title>
+<indexterm zone="totem-object-plugins-shutdown"><primary sortas="object_plugins_shutdown">totem_object_plugins_shutdown</primary></indexterm><programlisting><link linkend="void">void</link>                totem_object_plugins_shutdown       (void);</programlisting>
+<para>
+Shuts down the plugin engine and deactivates all the
+plugins.</para>
+<para>
+</para></refsect2>
+<refsect2 id="totem-file-opened" role="function">
+<title>totem_file_opened ()</title>
+<indexterm zone="totem-file-opened"><primary sortas="file_opened">totem_file_opened</primary></indexterm><programlisting><link linkend="void">void</link>                totem_file_opened                   (<link linkend="TotemObject">TotemObject</link> *totem,
+                                                         const <link linkend="char">char</link> *mrl);</programlisting>
+<para>
+Emits the <link linkend="TotemObject-file-opened"><type>"file-opened"</type></link> signal on <parameter>totem</parameter>, with the
+specified <parameter>mrl</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>mrl</parameter>&#160;:</term>
+<listitem><simpara> the MRL opened
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-file-closed" role="function">
+<title>totem_file_closed ()</title>
+<indexterm zone="totem-file-closed"><primary sortas="file_closed">totem_file_closed</primary></indexterm><programlisting><link linkend="void">void</link>                totem_file_closed                   (<link linkend="TotemObject">TotemObject</link> *totem);</programlisting>
+<para>
+Emits the <link linkend="TotemObject-file-closed"><type>"file-closed"</type></link> signal on <parameter>totem</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-metadata-updated" role="function">
+<title>totem_metadata_updated ()</title>
+<indexterm zone="totem-metadata-updated"><primary sortas="metadata_updated">totem_metadata_updated</primary></indexterm><programlisting><link linkend="void">void</link>                totem_metadata_updated              (<link linkend="TotemObject">TotemObject</link> *totem,
+                                                         const <link linkend="char">char</link> *artist,
+                                                         const <link linkend="char">char</link> *title,
+                                                         const <link linkend="char">char</link> *album,
+                                                         <link linkend="guint">guint</link> track_num);</programlisting>
+<para>
+Emits the <link linkend="TotemObject-metadata-updated"><type>"metadata-updated"</type></link> signal on <parameter>totem</parameter>,
+with the specified stream data.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>artist</parameter>&#160;:</term>
+<listitem><simpara> the stream's artist, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>title</parameter>&#160;:</term>
+<listitem><simpara> the stream's title, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>album</parameter>&#160;:</term>
+<listitem><simpara> the stream's album, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>track_num</parameter>&#160;:</term>
+<listitem><simpara> the track number of the stream
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-action-error" role="function">
+<title>totem_action_error ()</title>
+<indexterm zone="totem-action-error"><primary sortas="action_error">totem_action_error</primary></indexterm><programlisting><link linkend="void">void</link>                totem_action_error                  (const <link linkend="char">char</link> *title,
+                                                         const <link linkend="char">char</link> *reason,
+                                                         <link linkend="Totem">Totem</link> *totem);</programlisting>
+<para>
+Displays a non-blocking error dialog with the
+given <parameter>title</parameter> and <parameter>reason</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>title</parameter>&#160;:</term>
+<listitem><simpara> the error dialog title
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>reason</parameter>&#160;:</term>
+<listitem><simpara> the error dialog text
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-action-exit" role="function">
+<title>totem_action_exit ()</title>
+<indexterm zone="totem-action-exit"><primary sortas="action_exit">totem_action_exit</primary></indexterm><programlisting><link linkend="void">void</link>                totem_action_exit                   (<link linkend="Totem">Totem</link> *totem);</programlisting>
+<para>
+Closes Totem.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-add-to-playlist-and-play" role="function">
+<title>totem_add_to_playlist_and_play ()</title>
+<indexterm zone="totem-add-to-playlist-and-play"><primary sortas="add_to_playlist_and_play">totem_add_to_playlist_and_play</primary></indexterm><programlisting><link linkend="void">void</link>                totem_add_to_playlist_and_play      (<link linkend="Totem">Totem</link> *totem,
+                                                         const <link linkend="char">char</link> *uri,
+                                                         const <link linkend="char">char</link> *display_name,
+                                                         <link linkend="gboolean">gboolean</link> add_to_recent);</programlisting>
+<para>
+Add <parameter>uri</parameter> to the playlist and play it immediately.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>uri</parameter>&#160;:</term>
+<listitem><simpara> the URI to add to the playlist
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>display_name</parameter>&#160;:</term>
+<listitem><simpara> the display name of the URI
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>add_to_recent</parameter>&#160;:</term>
+<listitem><simpara> if <link linkend="TRUE--CAPS"><literal>TRUE</literal></link>, add the URI to the recent items list
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-action-play" role="function">
+<title>totem_action_play ()</title>
+<indexterm zone="totem-action-play"><primary sortas="action_play">totem_action_play</primary></indexterm><programlisting><link linkend="void">void</link>                totem_action_play                   (<link linkend="Totem">Totem</link> *totem);</programlisting>
+<para>
+Plays the current stream. If Totem is already playing, it continues
+to play. If the stream cannot be played, and error dialog is displayed.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-action-play-media" role="function">
+<title>totem_action_play_media ()</title>
+<indexterm zone="totem-action-play-media"><primary sortas="action_play_media">totem_action_play_media</primary></indexterm><programlisting><link linkend="void">void</link>                totem_action_play_media             (<link linkend="Totem">Totem</link> *totem,
+                                                         <link linkend="TotemDiscMediaType">TotemDiscMediaType</link> type,
+                                                         const <link linkend="char">char</link> *device);</programlisting>
+<para>
+Attempts to play the media found on <parameter>device</parameter> (for example, a DVD in a drive or a DVB
+tuner) by first adding it to the playlist, then playing it.
+</para>
+<para>
+An error dialog will be displayed if Totem cannot support media of <parameter>type</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>type</parameter>&#160;:</term>
+<listitem><simpara> the type of disc media
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>device</parameter>&#160;:</term>
+<listitem><simpara> the media's device path
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-action-play-media-device" role="function">
+<title>totem_action_play_media_device ()</title>
+<indexterm zone="totem-action-play-media-device"><primary sortas="action_play_media_device">totem_action_play_media_device</primary></indexterm><programlisting><link linkend="void">void</link>                totem_action_play_media_device      (<link linkend="Totem">Totem</link> *totem,
+                                                         const <link linkend="char">char</link> *device);</programlisting>
+<para>
+Attempts to play the media device (for example, a DVD drive or CD drive)
+with the given <parameter>device</parameter> path by first adding it to the playlist, then
+playing it.
+</para>
+<para>
+An error dialog will be displayed if Totem cannot read or play what's on
+the media device.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>device</parameter>&#160;:</term>
+<listitem><simpara> the media device's path
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-action-play-pause" role="function">
+<title>totem_action_play_pause ()</title>
+<indexterm zone="totem-action-play-pause"><primary sortas="action_play_pause">totem_action_play_pause</primary></indexterm><programlisting><link linkend="void">void</link>                totem_action_play_pause             (<link linkend="Totem">Totem</link> *totem);</programlisting>
+<para>
+Gets the current MRL from the playlist and attempts to play it.
+If the stream is already playing, playback is paused.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-action-pause" role="function">
+<title>totem_action_pause ()</title>
+<indexterm zone="totem-action-pause"><primary sortas="action_pause">totem_action_pause</primary></indexterm><programlisting><link linkend="void">void</link>                totem_action_pause                  (<link linkend="Totem">Totem</link> *totem);</programlisting>
+<para>
+Pauses the current stream. If Totem is already paused, it continues
+to be paused.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-action-stop" role="function">
+<title>totem_action_stop ()</title>
+<indexterm zone="totem-action-stop"><primary sortas="action_stop">totem_action_stop</primary></indexterm><programlisting><link linkend="void">void</link>                totem_action_stop                   (<link linkend="Totem">Totem</link> *totem);</programlisting>
+<para>
+Stops the current stream.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-action-fullscreen" role="function">
+<title>totem_action_fullscreen ()</title>
+<indexterm zone="totem-action-fullscreen"><primary sortas="action_fullscreen">totem_action_fullscreen</primary></indexterm><programlisting><link linkend="void">void</link>                totem_action_fullscreen             (<link linkend="Totem">Totem</link> *totem,
+                                                         <link linkend="gboolean">gboolean</link> state);</programlisting>
+<para>
+Sets Totem's fullscreen state according to <parameter>state</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>state</parameter>&#160;:</term>
+<listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if Totem should be fullscreened
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-action-fullscreen-toggle" role="function">
+<title>totem_action_fullscreen_toggle ()</title>
+<indexterm zone="totem-action-fullscreen-toggle"><primary sortas="action_fullscreen_toggle">totem_action_fullscreen_toggle</primary></indexterm><programlisting><link linkend="void">void</link>                totem_action_fullscreen_toggle      (<link linkend="Totem">Totem</link> *totem);</programlisting>
+<para>
+Toggles Totem's fullscreen state; if Totem is fullscreened, calling
+this makes it unfullscreened and vice-versa.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-action-next" role="function">
+<title>totem_action_next ()</title>
+<indexterm zone="totem-action-next"><primary sortas="action_next">totem_action_next</primary></indexterm><programlisting><link linkend="void">void</link>                totem_action_next                   (<link linkend="Totem">Totem</link> *totem);</programlisting>
+<para>
+If a DVD is being played, goes to the next chapter. If a normal stream
+is being played, plays the next entry in the playlist.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-action-previous" role="function">
+<title>totem_action_previous ()</title>
+<indexterm zone="totem-action-previous"><primary sortas="action_previous">totem_action_previous</primary></indexterm><programlisting><link linkend="void">void</link>                totem_action_previous               (<link linkend="Totem">Totem</link> *totem);</programlisting>
+<para>
+If a DVD is being played, goes to the previous chapter. If a normal stream
+is being played, goes to the start of the stream if possible. If seeking is
+not possible, plays the previous entry in the playlist.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-action-next-angle" role="function">
+<title>totem_action_next_angle ()</title>
+<indexterm zone="totem-action-next-angle"><primary sortas="action_next_angle">totem_action_next_angle</primary></indexterm><programlisting><link linkend="void">void</link>                totem_action_next_angle             (<link linkend="Totem">Totem</link> *totem);</programlisting>
+<para>
+Switches to the next angle, if watching a DVD. If not watching a DVD, this is a
+no-op.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-action-remote-get-setting" role="function">
+<title>totem_action_remote_get_setting ()</title>
+<indexterm zone="totem-action-remote-get-setting"><primary sortas="action_remote_get_setting">totem_action_remote_get_setting</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            totem_action_remote_get_setting     (<link linkend="Totem">Totem</link> *totem,
+                                                         <link linkend="TotemRemoteSetting">TotemRemoteSetting</link> setting);</programlisting>
+<para>
+Returns the value of <parameter>setting</parameter> for this instance of Totem.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>setting</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemRemoteSetting"><type>TotemRemoteSetting</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if the setting is enabled, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-action-remote-set-setting" role="function">
+<title>totem_action_remote_set_setting ()</title>
+<indexterm zone="totem-action-remote-set-setting"><primary sortas="action_remote_set_setting">totem_action_remote_set_setting</primary></indexterm><programlisting><link linkend="void">void</link>                totem_action_remote_set_setting     (<link linkend="Totem">Totem</link> *totem,
+                                                         <link linkend="TotemRemoteSetting">TotemRemoteSetting</link> setting,
+                                                         <link linkend="gboolean">gboolean</link> value);</programlisting>
+<para>
+Sets <parameter>setting</parameter> to <parameter>value</parameter> on this instance of Totem.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>setting</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemRemoteSetting"><type>TotemRemoteSetting</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara> the new value for the setting
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-action-seek-time" role="function">
+<title>totem_action_seek_time ()</title>
+<indexterm zone="totem-action-seek-time"><primary sortas="action_seek_time">totem_action_seek_time</primary></indexterm><programlisting><link linkend="void">void</link>                totem_action_seek_time              (<link linkend="Totem">Totem</link> *totem,
+                                                         <link linkend="gint64">gint64</link> sec);</programlisting>
+<para>
+Seeks to an absolute time in the stream, or displays an
+error dialog if that's not possible.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>sec</parameter>&#160;:</term>
+<listitem><simpara> the time to seek to
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-action-seek-relative" role="function">
+<title>totem_action_seek_relative ()</title>
+<indexterm zone="totem-action-seek-relative"><primary sortas="action_seek_relative">totem_action_seek_relative</primary></indexterm><programlisting><link linkend="void">void</link>                totem_action_seek_relative          (<link linkend="Totem">Totem</link> *totem,
+                                                         <link linkend="gint64">gint64</link> offset);</programlisting>
+<para>
+Seeks to an <parameter>offset</parameter> from the current position in the stream,
+or displays an error dialog if that's not possible.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>offset</parameter>&#160;:</term>
+<listitem><simpara> the time offset to seek to
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-action-volume-relative" role="function">
+<title>totem_action_volume_relative ()</title>
+<indexterm zone="totem-action-volume-relative"><primary sortas="action_volume_relative">totem_action_volume_relative</primary></indexterm><programlisting><link linkend="void">void</link>                totem_action_volume_relative        (<link linkend="Totem">Totem</link> *totem,
+                                                         <link linkend="double">double</link> off_pct);</programlisting>
+<para>
+Sets the volume relative to its current level, with 1.0 being the
+maximum, and 0.0 being the minimum level.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>off_pct</parameter>&#160;:</term>
+<listitem><simpara> the value by which to increase or decrease the volume
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-action-volume-toggle-mute" role="function">
+<title>totem_action_volume_toggle_mute ()</title>
+<indexterm zone="totem-action-volume-toggle-mute"><primary sortas="action_volume_toggle_mute">totem_action_volume_toggle_mute</primary></indexterm><programlisting><link linkend="void">void</link>                totem_action_volume_toggle_mute     (<link linkend="Totem">Totem</link> *totem);</programlisting>
+<para>
+Toggles the mute status.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-action-toggle-aspect-ratio" role="function">
+<title>totem_action_toggle_aspect_ratio ()</title>
+<indexterm zone="totem-action-toggle-aspect-ratio"><primary sortas="action_toggle_aspect_ratio">totem_action_toggle_aspect_ratio</primary></indexterm><programlisting><link linkend="void">void</link>                totem_action_toggle_aspect_ratio    (<link linkend="Totem">Totem</link> *totem);</programlisting>
+<para>
+Toggles the aspect ratio selected in the menu to the
+next one in the list.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-action-get-aspect-ratio" role="function">
+<title>totem_action_get_aspect_ratio ()</title>
+<indexterm zone="totem-action-get-aspect-ratio"><primary sortas="action_get_aspect_ratio">totem_action_get_aspect_ratio</primary></indexterm><programlisting><link linkend="int">int</link>                 totem_action_get_aspect_ratio       (<link linkend="Totem">Totem</link> *totem);</programlisting>
+<para>
+Gets the current aspect ratio as defined in <link linkend="BvwAspectRatio"><type>BvwAspectRatio</type></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the current aspect ratio
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-action-set-aspect-ratio" role="function">
+<title>totem_action_set_aspect_ratio ()</title>
+<indexterm zone="totem-action-set-aspect-ratio"><primary sortas="action_set_aspect_ratio">totem_action_set_aspect_ratio</primary></indexterm><programlisting><link linkend="void">void</link>                totem_action_set_aspect_ratio       (<link linkend="Totem">Totem</link> *totem,
+                                                         <link linkend="int">int</link> ratio);</programlisting>
+<para>
+Sets the aspect ratio selected in the menu to <parameter>ratio</parameter>,
+as defined in <link linkend="BvwAspectRatio"><type>BvwAspectRatio</type></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ratio</parameter>&#160;:</term>
+<listitem><simpara> the aspect ratio to use
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-action-toggle-controls" role="function">
+<title>totem_action_toggle_controls ()</title>
+<indexterm zone="totem-action-toggle-controls"><primary sortas="action_toggle_controls">totem_action_toggle_controls</primary></indexterm><programlisting><link linkend="void">void</link>                totem_action_toggle_controls        (<link linkend="Totem">Totem</link> *totem);</programlisting>
+<para>
+If Totem's not fullscreened, this toggles the state of the "Show Controls"
+menu entry, and consequently shows or hides the controls in the UI.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-action-set-scale-ratio" role="function">
+<title>totem_action_set_scale_ratio ()</title>
+<indexterm zone="totem-action-set-scale-ratio"><primary sortas="action_set_scale_ratio">totem_action_set_scale_ratio</primary></indexterm><programlisting><link linkend="void">void</link>                totem_action_set_scale_ratio        (<link linkend="Totem">Totem</link> *totem,
+                                                         <link linkend="gfloat">gfloat</link> ratio);</programlisting>
+<para>
+Sets the video scale ratio, as a float where, for example,
+1.0 is 1:1 and 2.0 is 2:1.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>ratio</parameter>&#160;:</term>
+<listitem><simpara> the scale ratio to use
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-action-set-playlist-index" role="function">
+<title>totem_action_set_playlist_index ()</title>
+<indexterm zone="totem-action-set-playlist-index"><primary sortas="action_set_playlist_index">totem_action_set_playlist_index</primary></indexterm><programlisting><link linkend="void">void</link>                totem_action_set_playlist_index     (<link linkend="Totem">Totem</link> *totem,
+                                                         <link linkend="guint">guint</link> index);</programlisting>
+<para>
+Sets the <link linkend="0--CAPS"><literal>0</literal></link>-based playlist index to <parameter>index</parameter>, causing Totem to load and
+start playing that playlist entry.
+</para>
+<para>
+If <parameter>index</parameter> is higher than the current length of the playlist, this
+has the effect of restarting the current playlist entry.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>index</parameter>&#160;:</term>
+<listitem><simpara> the new playlist index
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-action-remote" role="function">
+<title>totem_action_remote ()</title>
+<indexterm zone="totem-action-remote"><primary sortas="action_remote">totem_action_remote</primary></indexterm><programlisting><link linkend="void">void</link>                totem_action_remote                 (<link linkend="Totem">Totem</link> *totem,
+                                                         <link linkend="TotemRemoteCommand">TotemRemoteCommand</link> cmd,
+                                                         const <link linkend="char">char</link> *url);</programlisting>
+<para>
+Executes the specified <parameter>cmd</parameter> on this instance of Totem. If <parameter>cmd</parameter>
+is an operation requiring an MRL, <parameter>url</parameter> is required; it can be <link linkend="NULL--CAPS"><literal>NULL</literal></link>
+otherwise.
+</para>
+<para>
+If Totem's fullscreened and the operation is executed correctly,
+the controls will appear as if the user had moved the mouse.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>cmd</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemRemoteCommand"><type>TotemRemoteCommand</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>url</parameter>&#160;:</term>
+<listitem><simpara> an MRL to play, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-is-fullscreen" role="function">
+<title>totem_is_fullscreen ()</title>
+<indexterm zone="totem-is-fullscreen"><primary sortas="is_fullscreen">totem_is_fullscreen</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            totem_is_fullscreen                 (<link linkend="Totem">Totem</link> *totem);</programlisting>
+<para>
+Returns <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if Totem is fullscreened.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if Totem is fullscreened
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-is-playing" role="function">
+<title>totem_is_playing ()</title>
+<indexterm zone="totem-is-playing"><primary sortas="is_playing">totem_is_playing</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            totem_is_playing                    (<link linkend="Totem">Totem</link> *totem);</programlisting>
+<para>
+Returns <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if Totem is playing a stream.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if Totem is playing a stream
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-is-paused" role="function">
+<title>totem_is_paused ()</title>
+<indexterm zone="totem-is-paused"><primary sortas="is_paused">totem_is_paused</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            totem_is_paused                     (<link linkend="Totem">Totem</link> *totem);</programlisting>
+<para>
+Returns <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if playback is paused.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if playback is paused, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-is-seekable" role="function">
+<title>totem_is_seekable ()</title>
+<indexterm zone="totem-is-seekable"><primary sortas="is_seekable">totem_is_seekable</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            totem_is_seekable                   (<link linkend="Totem">Totem</link> *totem);</programlisting>
+<para>
+Returns <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if the current stream is seekable.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if the current stream is seekable
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-get-main-window" role="function">
+<title>totem_get_main_window ()</title>
+<indexterm zone="totem-get-main-window"><primary sortas="get_main_window">totem_get_main_window</primary></indexterm><programlisting><link linkend="GtkWindow">GtkWindow</link> *         totem_get_main_window               (<link linkend="Totem">Totem</link> *totem);</programlisting>
+<para>
+Gets Totem's main window and increments its reference count.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> Totem's main window
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-get-ui-manager" role="function">
+<title>totem_get_ui_manager ()</title>
+<indexterm zone="totem-get-ui-manager"><primary sortas="get_ui_manager">totem_get_ui_manager</primary></indexterm><programlisting><link linkend="GtkUIManager">GtkUIManager</link> *      totem_get_ui_manager                (<link linkend="Totem">Totem</link> *totem);</programlisting>
+<para>
+Gets Totem's UI manager, but does not change its reference count.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> Totem's UI manager
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-get-video-widget" role="function">
+<title>totem_get_video_widget ()</title>
+<indexterm zone="totem-get-video-widget"><primary sortas="get_video_widget">totem_get_video_widget</primary></indexterm><programlisting><link linkend="GtkWidget">GtkWidget</link> *         totem_get_video_widget              (<link linkend="Totem">Totem</link> *totem);</programlisting>
+<para>
+Gets Totem's video widget and increments its reference count.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> Totem's video widget
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-get-video-widget-backend-name" role="function">
+<title>totem_get_video_widget_backend_name ()</title>
+<indexterm zone="totem-get-video-widget-backend-name"><primary sortas="get_video_widget_backend_name">totem_get_video_widget_backend_name</primary></indexterm><programlisting><link linkend="char">char</link> *              totem_get_video_widget_backend_name (<link linkend="Totem">Totem</link> *totem);</programlisting>
+<para>
+Gets the name string of the backend video widget, typically the video library's
+version string (e.g. what's returned by <link linkend="gst-version-string"><function>gst_version_string()</function></link>). Free with <link linkend="g-free"><function>g_free()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a newly-allocated string of the name of the backend video widget
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-get-current-mrl" role="function">
+<title>totem_get_current_mrl ()</title>
+<indexterm zone="totem-get-current-mrl"><primary sortas="get_current_mrl">totem_get_current_mrl</primary></indexterm><programlisting><link linkend="char">char</link> *              totem_get_current_mrl               (<link linkend="Totem">Totem</link> *totem);</programlisting>
+<para>
+Get the MRL of the current stream, or <link linkend="NULL--CAPS"><literal>NULL</literal></link> if nothing's playing.
+Free with <link linkend="g-free"><function>g_free()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a newly-allocated string containing the MRL of the current stream
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-get-current-time" role="function">
+<title>totem_get_current_time ()</title>
+<indexterm zone="totem-get-current-time"><primary sortas="get_current_time">totem_get_current_time</primary></indexterm><programlisting><link linkend="gint64">gint64</link>              totem_get_current_time              (<link linkend="Totem">Totem</link> *totem);</programlisting>
+<para>
+Gets the current position's time in the stream as a gint64.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the current position in the stream
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-set-current-subtitle" role="function">
+<title>totem_set_current_subtitle ()</title>
+<indexterm zone="totem-set-current-subtitle"><primary sortas="set_current_subtitle">totem_set_current_subtitle</primary></indexterm><programlisting><link linkend="void">void</link>                totem_set_current_subtitle          (<link linkend="Totem">Totem</link> *totem,
+                                                         const <link linkend="char">char</link> *subtitle_uri);</programlisting>
+<para>
+Add the <parameter>subtitle_uri</parameter> subtitle file to the playlist, setting it as the subtitle for the current
+playlist entry.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>subtitle_uri</parameter>&#160;:</term>
+<listitem><simpara> the URI of the subtitle file to add
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-get-playlist-length" role="function">
+<title>totem_get_playlist_length ()</title>
+<indexterm zone="totem-get-playlist-length"><primary sortas="get_playlist_length">totem_get_playlist_length</primary></indexterm><programlisting><link linkend="guint">guint</link>               totem_get_playlist_length           (<link linkend="Totem">Totem</link> *totem);</programlisting>
+<para>
+Returns the length of the current playlist.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the playlist length
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-get-playlist-pos" role="function">
+<title>totem_get_playlist_pos ()</title>
+<indexterm zone="totem-get-playlist-pos"><primary sortas="get_playlist_pos">totem_get_playlist_pos</primary></indexterm><programlisting><link linkend="int">int</link>                 totem_get_playlist_pos              (<link linkend="Totem">Totem</link> *totem);</programlisting>
+<para>
+Returns the <link linkend="0--CAPS"><literal>0</literal></link>-based index of the current entry in the playlist. If
+there is no current entry in the playlist, <link linkend="1--CAPS"><literal>-1</literal></link> is returned.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the index of the current playlist entry, or <link linkend="1--CAPS"><literal>-1</literal></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-get-title-at-playlist-pos" role="function">
+<title>totem_get_title_at_playlist_pos ()</title>
+<indexterm zone="totem-get-title-at-playlist-pos"><primary sortas="get_title_at_playlist_pos">totem_get_title_at_playlist_pos</primary></indexterm><programlisting><link linkend="char">char</link> *              totem_get_title_at_playlist_pos     (<link linkend="Totem">Totem</link> *totem,
+                                                         <link linkend="guint">guint</link> playlist_index);</programlisting>
+<para>
+Gets the title of the playlist entry at <parameter>index</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>playlist_index</parameter>&#160;:</term>
+<listitem><simpara> the <link linkend="0--CAPS"><literal>0</literal></link>-based entry index
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the entry title at <parameter>index</parameter>, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>; free with <link linkend="g-free"><function>g_free()</function></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-get-short-title" role="function">
+<title>totem_get_short_title ()</title>
+<indexterm zone="totem-get-short-title"><primary sortas="get_short_title">totem_get_short_title</primary></indexterm><programlisting><link linkend="char">char</link> *              totem_get_short_title               (<link linkend="Totem">Totem</link> *totem);</programlisting>
+<para>
+Gets the title of the current entry in the playlist.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the current entry's title, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>; free with <link linkend="g-free"><function>g_free()</function></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-add-sidebar-page" role="function">
+<title>totem_add_sidebar_page ()</title>
+<indexterm zone="totem-add-sidebar-page"><primary sortas="add_sidebar_page">totem_add_sidebar_page</primary></indexterm><programlisting><link linkend="void">void</link>                totem_add_sidebar_page              (<link linkend="Totem">Totem</link> *totem,
+                                                         const <link linkend="char">char</link> *page_id,
+                                                         const <link linkend="char">char</link> *title,
+                                                         <link linkend="GtkWidget">GtkWidget</link> *main_widget);</programlisting>
+<para>
+Adds a sidebar page to Totem's sidebar with the given <parameter>page_id</parameter>.
+<parameter>main_widget</parameter> is added into the page and shown automatically, while
+<parameter>title</parameter> is displayed as the page's title in the tab bar.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>page_id</parameter>&#160;:</term>
+<listitem><simpara> a string used to identify the page
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>title</parameter>&#160;:</term>
+<listitem><simpara> the page's title
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>main_widget</parameter>&#160;:</term>
+<listitem><simpara> the main widget for the page
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-remove-sidebar-page" role="function">
+<title>totem_remove_sidebar_page ()</title>
+<indexterm zone="totem-remove-sidebar-page"><primary sortas="remove_sidebar_page">totem_remove_sidebar_page</primary></indexterm><programlisting><link linkend="void">void</link>                totem_remove_sidebar_page           (<link linkend="Totem">Totem</link> *totem,
+                                                         const <link linkend="char">char</link> *page_id);</programlisting>
+<para>
+Removes the page identified by <parameter>page_id</parameter> from Totem's sidebar.
+If <parameter>page_id</parameter> doesn't exist in the sidebar, this function does
+nothing.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>page_id</parameter>&#160;:</term>
+<listitem><simpara> a string used to identify the page
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1 id="TotemObject.property-details" role="property_details">
+<title role="property_details.title">Property Details</title>
+<refsect2 id="TotemObject--current-mrl" role="property"><title>The <literal>&quot;current-mrl&quot;</literal> property</title>
+<indexterm zone="TotemObject--current-mrl"><primary sortas="Object:current-mrl">TotemObject:current-mrl</primary></indexterm><programlisting>  &quot;current-mrl&quot;              <link linkend="gchar">gchar</link>*                : Read</programlisting>
+<para>
+The MRL of the current stream.</para>
+<para>
+</para><para>Default value: NULL</para>
+</refsect2>
+<refsect2 id="TotemObject--current-time" role="property"><title>The <literal>&quot;current-time&quot;</literal> property</title>
+<indexterm zone="TotemObject--current-time"><primary sortas="Object:current-time">TotemObject:current-time</primary></indexterm><programlisting>  &quot;current-time&quot;             <link linkend="gint64">gint64</link>                : Read</programlisting>
+<para>
+The player's position (time) in the current stream, in milliseconds.</para>
+<para>
+</para><para>Default value: 0</para>
+</refsect2>
+<refsect2 id="TotemObject--fullscreen" role="property"><title>The <literal>&quot;fullscreen&quot;</literal> property</title>
+<indexterm zone="TotemObject--fullscreen"><primary sortas="Object:fullscreen">TotemObject:fullscreen</primary></indexterm><programlisting>  &quot;fullscreen&quot;               <link linkend="gboolean">gboolean</link>              : Read</programlisting>
+<para>
+If <link linkend="TRUE--CAPS"><literal>TRUE</literal></link>, Totem is in fullscreen mode.</para>
+<para>
+</para><para>Default value: FALSE</para>
+</refsect2>
+<refsect2 id="TotemObject--playing" role="property"><title>The <literal>&quot;playing&quot;</literal> property</title>
+<indexterm zone="TotemObject--playing"><primary sortas="Object:playing">TotemObject:playing</primary></indexterm><programlisting>  &quot;playing&quot;                  <link linkend="gboolean">gboolean</link>              : Read</programlisting>
+<para>
+If <link linkend="TRUE--CAPS"><literal>TRUE</literal></link>, Totem is playing an audio or video file.</para>
+<para>
+</para><para>Default value: FALSE</para>
+</refsect2>
+<refsect2 id="TotemObject--seekable" role="property"><title>The <literal>&quot;seekable&quot;</literal> property</title>
+<indexterm zone="TotemObject--seekable"><primary sortas="Object:seekable">TotemObject:seekable</primary></indexterm><programlisting>  &quot;seekable&quot;                 <link linkend="gboolean">gboolean</link>              : Read</programlisting>
+<para>
+If <link linkend="TRUE--CAPS"><literal>TRUE</literal></link>, the current stream is seekable.</para>
+<para>
+</para><para>Default value: FALSE</para>
+</refsect2>
+<refsect2 id="TotemObject--stream-length" role="property"><title>The <literal>&quot;stream-length&quot;</literal> property</title>
+<indexterm zone="TotemObject--stream-length"><primary sortas="Object:stream-length">TotemObject:stream-length</primary></indexterm><programlisting>  &quot;stream-length&quot;            <link linkend="gint64">gint64</link>                : Read</programlisting>
+<para>
+The length of the current stream, in milliseconds.</para>
+<para>
+</para><para>Default value: 0</para>
+</refsect2>
+</refsect1>
+
+<refsect1 id="TotemObject.signal-details" role="signals">
+<title role="signals.title">Signal Details</title>
+<refsect2 id="TotemObject-file-closed" role="signal"><title>The <literal>&quot;file-closed&quot;</literal> signal</title>
+<indexterm zone="TotemObject-file-closed"><primary sortas="Object::file-closed">TotemObject::file-closed</primary></indexterm><programlisting><link linkend="void">void</link>                user_function                      (<link linkend="TotemObject">TotemObject</link> *totem,
+                                                        <link linkend="gpointer">gpointer</link>     user_data)      : Run Last</programlisting>
+<para>
+The <link linkend="TotemObject-file-closed"><type>"file-closed"</type></link> signal is emitted when Totem closes a stream.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> the <link linkend="TotemObject"><type>TotemObject</type></link> which received the signal
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="TotemObject-file-opened" role="signal"><title>The <literal>&quot;file-opened&quot;</literal> signal</title>
+<indexterm zone="TotemObject-file-opened"><primary sortas="Object::file-opened">TotemObject::file-opened</primary></indexterm><programlisting><link linkend="void">void</link>                user_function                      (<link linkend="TotemObject">TotemObject</link> *totem,
+                                                        <link linkend="gchar">gchar</link>       *mrl,
+                                                        <link linkend="gpointer">gpointer</link>     user_data)      : Run Last</programlisting>
+<para>
+The <link linkend="TotemObject-file-opened"><type>"file-opened"</type></link> signal is emitted when a new stream is opened by Totem.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> the <link linkend="TotemObject"><type>TotemObject</type></link> which received the signal
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>mrl</parameter>&#160;:</term>
+<listitem><simpara> the MRL of the opened stream
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="TotemObject-metadata-updated" role="signal"><title>The <literal>&quot;metadata-updated&quot;</literal> signal</title>
+<indexterm zone="TotemObject-metadata-updated"><primary sortas="Object::metadata-updated">TotemObject::metadata-updated</primary></indexterm><programlisting><link linkend="void">void</link>                user_function                      (<link linkend="TotemObject">TotemObject</link> *totem,
+                                                        <link linkend="gchar">gchar</link>       *artist,
+                                                        <link linkend="gchar">gchar</link>       *title,
+                                                        <link linkend="gchar">gchar</link>       *album,
+                                                        <link linkend="guint">guint</link>        track_number,
+                                                        <link linkend="gpointer">gpointer</link>     user_data)         : Run Last</programlisting>
+<para>
+The <link linkend="TotemObject-metadata-updated"><type>"metadata-updated"</type></link> signal is emitted when the metadata of a stream is updated, typically
+when it's being loaded.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> the <link linkend="TotemObject"><type>TotemObject</type></link> which received the signal
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>artist</parameter>&#160;:</term>
+<listitem><simpara> the name of the artist, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>title</parameter>&#160;:</term>
+<listitem><simpara> the stream title, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>album</parameter>&#160;:</term>
+<listitem><simpara> the name of the stream's album, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>track_number</parameter>&#160;:</term>
+<listitem><simpara> the stream's track number
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+</refsect1>
+
+
+
+</refentry>

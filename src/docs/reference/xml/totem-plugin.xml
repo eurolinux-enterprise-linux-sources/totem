@@ -1,0 +1,434 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+	<!ENTITY % local.common.attrib "xmlns:xi  CDATA  #FIXED 'http://www.w3.org/2003/XInclude'">
+	<!ENTITY version SYSTEM "version.xml">
+	<!ENTITY slash "/">
+]>
+<refentry id="TotemPlugin">
+<refmeta>
+<refentrytitle role="top_of_page" id="TotemPlugin.top_of_page">TotemPlugin</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>TOTEM Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>TotemPlugin</refname>
+<refpurpose>base plugin class and loading/unloading functions</refpurpose>
+</refnamediv>
+<refsect1 id="TotemPlugin.stability-level">
+<title>Stability Level</title>
+Unstable, unless otherwise indicated
+</refsect1>
+
+<refsynopsisdiv id="TotemPlugin.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+
+#include &lt;totem-plugin.h&gt;
+
+                    <link linkend="TotemPlugin-struct">TotemPlugin</link>;
+                    <link linkend="TotemPluginClass">TotemPluginClass</link>;
+enum                <link linkend="TotemPluginError">TotemPluginError</link>;
+<link linkend="gboolean">gboolean</link>            (<link linkend="TotemPluginActivationFunc">*TotemPluginActivationFunc</link>)        (<link linkend="TotemPlugin">TotemPlugin</link> *plugin,
+                                                         <link linkend="TotemObject">TotemObject</link> *totem,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="void">void</link>                (<link linkend="TotemPluginDeactivationFunc">*TotemPluginDeactivationFunc</link>)      (<link linkend="TotemPlugin">TotemPlugin</link> *plugin,
+                                                         <link linkend="TotemObject">TotemObject</link> *totem);
+<link linkend="GtkWidget">GtkWidget</link> *         (<link linkend="TotemPluginWidgetFunc">*TotemPluginWidgetFunc</link>)            (<link linkend="TotemPlugin">TotemPlugin</link> *plugin);
+#define             <link linkend="TOTEM-PLUGIN-DEFINE-TYPE--CAPS">TOTEM_PLUGIN_DEFINE_TYPE</link>            (TypeName, type_name, TYPE_PARENT)
+#define             <link linkend="TOTEM-PLUGIN-REGISTER--CAPS">TOTEM_PLUGIN_REGISTER</link>               (PluginName, plugin_name)
+#define             <link linkend="TOTEM-PLUGIN-REGISTER-EXTENDED--CAPS">TOTEM_PLUGIN_REGISTER_EXTENDED</link>      (PluginName, plugin_name, _C_)
+#define             <link linkend="TOTEM-PLUGIN-REGISTER-TYPE--CAPS">TOTEM_PLUGIN_REGISTER_TYPE</link>          (type_name)
+<link linkend="gboolean">gboolean</link>            <link linkend="totem-plugin-activate">totem_plugin_activate</link>               (<link linkend="TotemPlugin">TotemPlugin</link> *plugin,
+                                                         <link linkend="TotemObject">TotemObject</link> *totem,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="void">void</link>                <link linkend="totem-plugin-deactivate">totem_plugin_deactivate</link>             (<link linkend="TotemPlugin">TotemPlugin</link> *plugin,
+                                                         <link linkend="TotemObject">TotemObject</link> *totem);
+<link linkend="GtkWidget">GtkWidget</link> *         <link linkend="totem-plugin-create-configure-dialog">totem_plugin_create_configure_dialog</link>
+                                                        (<link linkend="TotemPlugin">TotemPlugin</link> *plugin);
+<link linkend="gboolean">gboolean</link>            <link linkend="totem-plugin-is-configurable">totem_plugin_is_configurable</link>        (<link linkend="TotemPlugin">TotemPlugin</link> *plugin);
+<link linkend="GtkBuilder">GtkBuilder</link> *        <link linkend="totem-plugin-load-interface">totem_plugin_load_interface</link>         (<link linkend="TotemPlugin">TotemPlugin</link> *plugin,
+                                                         const <link linkend="char">char</link> *name,
+                                                         <link linkend="gboolean">gboolean</link> fatal,
+                                                         <link linkend="GtkWindow">GtkWindow</link> *parent,
+                                                         <link linkend="gpointer">gpointer</link> user_data);
+<link linkend="char">char</link> *              <link linkend="totem-plugin-find-file">totem_plugin_find_file</link>              (<link linkend="TotemPlugin">TotemPlugin</link> *plugin,
+                                                         const <link linkend="char">char</link> *file);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="TotemPlugin.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----TotemPlugin
+</synopsis>
+</refsect1>
+
+
+
+
+
+<refsect1 id="TotemPlugin.properties" role="properties">
+<title role="properties.title">Properties</title>
+<synopsis>
+  &quot;<link linkend="TotemPlugin--name">name</link>&quot;                     <link linkend="gchar">gchar</link>*                : Read / Write
+</synopsis>
+</refsect1>
+
+
+
+<refsect1 id="TotemPlugin.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+<link linkend="TotemPlugin"><type>TotemPlugin</type></link> is a general-purpose architecture for adding plugins to Totem, with
+derived support for different programming languages.</para>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="TotemPlugin.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="TotemPlugin-struct" role="struct">
+<title>TotemPlugin</title>
+<indexterm zone="TotemPlugin-struct"><primary sortas="Plugin">TotemPlugin</primary></indexterm><programlisting>typedef struct _TotemPlugin TotemPlugin;</programlisting>
+<para>
+All the fields in the <link linkend="TotemPlugin"><type>TotemPlugin</type></link> structure are private and should never be accessed directly.</para>
+<para>
+</para></refsect2>
+<refsect2 id="TotemPluginClass" role="struct">
+<title>TotemPluginClass</title>
+<indexterm zone="TotemPluginClass"><primary sortas="PluginClass">TotemPluginClass</primary></indexterm><programlisting>typedef struct {
+	GObjectClass parent_class;
+
+	/* Virtual public methods */
+
+	TotemPluginActivationFunc	activate;
+	TotemPluginDeactivationFunc	deactivate;
+	TotemPluginWidgetFunc		create_configure_dialog;
+} TotemPluginClass;
+</programlisting>
+<para>
+The class structure for the <link linkend="TotemPlParser"><type>TotemPlParser</type></link> type.</para>
+<para>
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="GObjectClass">GObjectClass</link>&#160;<structfield>parent_class</structfield>;</term>
+<listitem><simpara> the parent class
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="TotemPluginActivationFunc">TotemPluginActivationFunc</link>&#160;<structfield>activate</structfield>;</term>
+<listitem><simpara> function called when activating a plugin using <link linkend="totem-plugin-activate"><function>totem_plugin_activate()</function></link>.
+It must be set by inheriting classes, and should return <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if it successfully created/got handles to
+the resources needed by the plugin. If it returns <link linkend="FALSE--CAPS"><literal>FALSE</literal></link>, loading the plugin is abandoned.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="TotemPluginDeactivationFunc">TotemPluginDeactivationFunc</link>&#160;<structfield>deactivate</structfield>;</term>
+<listitem><simpara> function called when deactivating a plugin using <link linkend="totem-plugin-deactivate"><function>totem_plugin_deactivate()</function></link>;
+It must be set by inheriting classes, and should free/unref any resources the plugin used.
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="TotemPluginWidgetFunc">TotemPluginWidgetFunc</link>&#160;<structfield>create_configure_dialog</structfield>;</term>
+<listitem><simpara> function called when configuring a plugin using <link linkend="totem-plugin-create-configure-dialog"><function>totem_plugin_create_configure_dialog()</function></link>.
+If non-<link linkend="NULL--CAPS"><literal>NULL</literal></link>, it should create and return the plugin's configuration dialog. If <link linkend="NULL--CAPS"><literal>NULL</literal></link>, the plugin is not
+configurable.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="TotemPluginError" role="enum">
+<title>enum TotemPluginError</title>
+<indexterm zone="TotemPluginError"><primary sortas="PluginError">TotemPluginError</primary></indexterm><programlisting>typedef enum {
+	TOTEM_PLUGIN_ERROR_ACTIVATION
+} TotemPluginError;
+</programlisting>
+<para>
+Error codes returned by <link linkend="TotemPlugin"><type>TotemPlugin</type></link> operations.</para>
+<para>
+</para><variablelist role="enum">
+<varlistentry id="TOTEM-PLUGIN-ERROR-ACTIVATION--CAPS" role="constant">
+<term><literal>TOTEM_PLUGIN_ERROR_ACTIVATION</literal></term>
+<listitem><simpara> there was an error activating the plugin
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="TotemPluginActivationFunc" role="function">
+<title>TotemPluginActivationFunc ()</title>
+<indexterm zone="TotemPluginActivationFunc"><primary sortas="PluginActivationFunc">TotemPluginActivationFunc</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            (*TotemPluginActivationFunc)        (<link linkend="TotemPlugin">TotemPlugin</link> *plugin,
+                                                         <link linkend="TotemObject">TotemObject</link> *totem,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Called when the user has requested <parameter>plugin</parameter> be activated, this function should be used to initialise
+any resources the plugin needs, and attach itself to the Totem UI.
+</para>
+<para>
+If an error is encountered while setting up the plugin, <parameter>error</parameter> should be set, and the function
+should return <link linkend="FALSE--CAPS"><literal>FALSE</literal></link>. Totem will then not mark the plugin as activated, and will ensure it's not loaded
+again unless explicitly asked for by the user.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>plugin</parameter>&#160;:</term>
+<listitem><simpara> the <link linkend="TotemPlugin"><type>TotemPlugin</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="GError"><type>GError</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> on success, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="TotemPluginDeactivationFunc" role="function">
+<title>TotemPluginDeactivationFunc ()</title>
+<indexterm zone="TotemPluginDeactivationFunc"><primary sortas="PluginDeactivationFunc">TotemPluginDeactivationFunc</primary></indexterm><programlisting><link linkend="void">void</link>                (*TotemPluginDeactivationFunc)      (<link linkend="TotemPlugin">TotemPlugin</link> *plugin,
+                                                         <link linkend="TotemObject">TotemObject</link> *totem);</programlisting>
+<para>
+Called when the user has requested <parameter>plugin</parameter> be deactivated, this function should destroy all resources
+created during the plugin's lifetime, especially those created in the activation function.
+</para>
+<para>
+It should be possible to activate and deactivate the plugin multiple times sequentially in a single Totem
+session without memory or resource leaks, or errors.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>plugin</parameter>&#160;:</term>
+<listitem><simpara> the <link linkend="TotemPlugin"><type>TotemPlugin</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="TotemPluginWidgetFunc" role="function">
+<title>TotemPluginWidgetFunc ()</title>
+<indexterm zone="TotemPluginWidgetFunc"><primary sortas="PluginWidgetFunc">TotemPluginWidgetFunc</primary></indexterm><programlisting><link linkend="GtkWidget">GtkWidget</link> *         (*TotemPluginWidgetFunc)            (<link linkend="TotemPlugin">TotemPlugin</link> *plugin);</programlisting>
+<para>
+Called when the configuration dialogue for the plugin needs to be built, this function should return
+a complete window which will be shown by the Totem code. The widget needs to be capable of hiding itself
+when configuration is complete.
+</para>
+<para>
+If your plugin is not configurable, do not define this function.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>plugin</parameter>&#160;:</term>
+<listitem><simpara> the <link linkend="TotemPlugin"><type>TotemPlugin</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a <link linkend="GtkWidget"><type>GtkWidget</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="TOTEM-PLUGIN-DEFINE-TYPE--CAPS" role="macro">
+<title>TOTEM_PLUGIN_DEFINE_TYPE()</title>
+<indexterm zone="TOTEM-PLUGIN-DEFINE-TYPE--CAPS"><primary sortas="PLUGIN_DEFINE_TYPE">TOTEM_PLUGIN_DEFINE_TYPE</primary></indexterm><programlisting>#define             TOTEM_PLUGIN_DEFINE_TYPE(TypeName, type_name, TYPE_PARENT)</programlisting>
+<para>
+Registers a type to be used inside a Totem plugin, but not the plugin's itself;
+use <link linkend="TOTEM-PLUGIN-REGISTER--CAPS"><function>TOTEM_PLUGIN_REGISTER()</function></link> for that.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>TypeName</parameter>&#160;:</term>
+<listitem><simpara> the type name in camelcase
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>type_name</parameter>&#160;:</term>
+<listitem><simpara> the type name in lowercase, with underscores
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>TYPE_PARENT</parameter>&#160;:</term>
+<listitem><simpara> the type's parent name in uppercase, with underscores
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="TOTEM-PLUGIN-REGISTER--CAPS" role="macro">
+<title>TOTEM_PLUGIN_REGISTER()</title>
+<indexterm zone="TOTEM-PLUGIN-REGISTER--CAPS"><primary sortas="PLUGIN_REGISTER">TOTEM_PLUGIN_REGISTER</primary></indexterm><programlisting>#define             TOTEM_PLUGIN_REGISTER(PluginName, plugin_name)</programlisting>
+<para>
+Registers a new Totem plugin type. A plugin is, at its core, just a class which is
+instantiated and activated on the user's request. This macro registers that class.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>PluginName</parameter>&#160;:</term>
+<listitem><simpara> the plugin's name in camelcase
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>plugin_name</parameter>&#160;:</term>
+<listitem><simpara> the plugin's name in lowercase, with underscores
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="TOTEM-PLUGIN-REGISTER-EXTENDED--CAPS" role="macro">
+<title>TOTEM_PLUGIN_REGISTER_EXTENDED()</title>
+<indexterm zone="TOTEM-PLUGIN-REGISTER-EXTENDED--CAPS"><primary sortas="PLUGIN_REGISTER_EXTENDED">TOTEM_PLUGIN_REGISTER_EXTENDED</primary></indexterm><programlisting>#define             TOTEM_PLUGIN_REGISTER_EXTENDED(PluginName, plugin_name, _C_)</programlisting>
+<para>
+Registers a new Totem plugin type with custom code in the module type registration
+function. See <link linkend="TOTEM-PLUGIN-REGISTER--CAPS"><function>TOTEM_PLUGIN_REGISTER()</function></link> for more information about the registration
+process.
+</para>
+<para>
+A variable named <parameter>our_info</parameter> is available with the module's <link linkend="GTypeInfo"><type>GTypeInfo</type></link> information.
+<parameter>plugin_module_type</parameter> is the plugin's <link linkend="GTypeModule"><type>GTypeModule</type></link>.
+@<replaceable>plugin_name</replaceable>_type is the plugin's newly-registered <link linkend="GType"><type>GType</type></link>
+(where <replaceable>plugin_name</replaceable> is the plugin name passed to the
+<link linkend="TOTEM-PLUGIN-REGISTER-EXTENDED--CAPS"><function>TOTEM_PLUGIN_REGISTER_EXTENDED()</function></link> macro).</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>PluginName</parameter>&#160;:</term>
+<listitem><simpara> the plugin's name in camelcase
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>plugin_name</parameter>&#160;:</term>
+<listitem><simpara> the plugin's name in lowercase, with underscores
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>_C_</parameter>&#160;:</term>
+<listitem><simpara> extra code to call in the module type registration function
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="TOTEM-PLUGIN-REGISTER-TYPE--CAPS" role="macro">
+<title>TOTEM_PLUGIN_REGISTER_TYPE()</title>
+<indexterm zone="TOTEM-PLUGIN-REGISTER-TYPE--CAPS"><primary sortas="PLUGIN_REGISTER_TYPE">TOTEM_PLUGIN_REGISTER_TYPE</primary></indexterm><programlisting>#define             TOTEM_PLUGIN_REGISTER_TYPE(type_name)</programlisting>
+<para>
+Calls the type registration function for a type inside a plugin module previously
+defined with <link linkend="TOTEM-PLUGIN-DEFINE-TYPE--CAPS"><function>TOTEM_PLUGIN_DEFINE_TYPE()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>type_name</parameter>&#160;:</term>
+<listitem><simpara> the type's name in lowercase, with underscores
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-plugin-activate" role="function">
+<title>totem_plugin_activate ()</title>
+<indexterm zone="totem-plugin-activate"><primary sortas="plugin_activate">totem_plugin_activate</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            totem_plugin_activate               (<link linkend="TotemPlugin">TotemPlugin</link> *plugin,
+                                                         <link linkend="TotemObject">TotemObject</link> *totem,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Activates the passed <parameter>plugin</parameter> by calling its activate method.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>plugin</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlugin"><type>TotemPlugin</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> return location for a <link linkend="GError"><type>GError</type></link>, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> on success
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-plugin-deactivate" role="function">
+<title>totem_plugin_deactivate ()</title>
+<indexterm zone="totem-plugin-deactivate"><primary sortas="plugin_deactivate">totem_plugin_deactivate</primary></indexterm><programlisting><link linkend="void">void</link>                totem_plugin_deactivate             (<link linkend="TotemPlugin">TotemPlugin</link> *plugin,
+                                                         <link linkend="TotemObject">TotemObject</link> *totem);</programlisting>
+<para>
+Deactivates <parameter>plugin</parameter> by calling its deactivate method.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>plugin</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlugin"><type>TotemPlugin</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-plugin-create-configure-dialog" role="function">
+<title>totem_plugin_create_configure_dialog ()</title>
+<indexterm zone="totem-plugin-create-configure-dialog"><primary sortas="plugin_create_configure_dialog">totem_plugin_create_configure_dialog</primary></indexterm><programlisting><link linkend="GtkWidget">GtkWidget</link> *         totem_plugin_create_configure_dialog
+                                                        (<link linkend="TotemPlugin">TotemPlugin</link> *plugin);</programlisting>
+<para>
+Returns the plugin's configuration dialog, as created by
+the plugin's create_configure_dialog method.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>plugin</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlugin"><type>TotemPlugin</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the configuration dialog, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-plugin-is-configurable" role="function">
+<title>totem_plugin_is_configurable ()</title>
+<indexterm zone="totem-plugin-is-configurable"><primary sortas="plugin_is_configurable">totem_plugin_is_configurable</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            totem_plugin_is_configurable        (<link linkend="TotemPlugin">TotemPlugin</link> *plugin);</programlisting>
+<para>
+Returns <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if the plugin is configurable and has a
+configuration dialog. It calls the plugin's
+is_configurable method.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>plugin</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlugin"><type>TotemPlugin</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if the plugin is configurable
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-plugin-load-interface" role="function">
+<title>totem_plugin_load_interface ()</title>
+<indexterm zone="totem-plugin-load-interface"><primary sortas="plugin_load_interface">totem_plugin_load_interface</primary></indexterm><programlisting><link linkend="GtkBuilder">GtkBuilder</link> *        totem_plugin_load_interface         (<link linkend="TotemPlugin">TotemPlugin</link> *plugin,
+                                                         const <link linkend="char">char</link> *name,
+                                                         <link linkend="gboolean">gboolean</link> fatal,
+                                                         <link linkend="GtkWindow">GtkWindow</link> *parent,
+                                                         <link linkend="gpointer">gpointer</link> user_data);</programlisting>
+<para>
+Loads an interface file (GtkBuilder UI file) for a plugin, given its filename and
+assuming it's installed in the plugin's data directory.
+</para>
+<para>
+This should be used instead of attempting to load interfaces manually in plugins.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>plugin</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlugin"><type>TotemPlugin</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>name</parameter>&#160;:</term>
+<listitem><simpara> interface filename
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>fatal</parameter>&#160;:</term>
+<listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if it's a fatal error if the interface can't be loaded
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>parent</parameter>&#160;:</term>
+<listitem><simpara> the interface's parent <link linkend="GtkWindow"><type>GtkWindow</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara> a pointer to be passed to each signal handler in the interface when they're called
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the <link linkend="GtkBuilder"><type>GtkBuilder</type></link> instance for the interface
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-plugin-find-file" role="function">
+<title>totem_plugin_find_file ()</title>
+<indexterm zone="totem-plugin-find-file"><primary sortas="plugin_find_file">totem_plugin_find_file</primary></indexterm><programlisting><link linkend="char">char</link> *              totem_plugin_find_file              (<link linkend="TotemPlugin">TotemPlugin</link> *plugin,
+                                                         const <link linkend="char">char</link> *file);</programlisting>
+<para>
+Finds the specified <parameter>file</parameter> by looking in the plugin paths
+listed by <link linkend="totem-get-plugin-paths"><function>totem_get_plugin_paths()</function></link> and then in the system
+Totem data directory.
+</para>
+<para>
+This should be used by plugins to find plugin-specific
+resource files.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>plugin</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlugin"><type>TotemPlugin</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>file</parameter>&#160;:</term>
+<listitem><simpara> the file to find
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a newly-allocated absolute path for the file, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1 id="TotemPlugin.property-details" role="property_details">
+<title role="property_details.title">Property Details</title>
+<refsect2 id="TotemPlugin--name" role="property"><title>The <literal>&quot;name&quot;</literal> property</title>
+<indexterm zone="TotemPlugin--name"><primary sortas="Plugin:name">TotemPlugin:name</primary></indexterm><programlisting>  &quot;name&quot;                     <link linkend="gchar">gchar</link>*                : Read / Write</programlisting>
+<para>
+The plugin's name. It should be a construction property, but due to the Python plugin hack, it
+can't be: do not change the name after construction. Should be the same as used for naming plugin-
+specific resources.</para>
+<para>
+</para><para>Default value: NULL</para>
+</refsect2>
+</refsect1>
+
+
+
+
+</refentry>

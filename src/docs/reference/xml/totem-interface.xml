@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+	<!ENTITY % local.common.attrib "xmlns:xi  CDATA  #FIXED 'http://www.w3.org/2003/XInclude'">
+	<!ENTITY version SYSTEM "version.xml">
+	<!ENTITY slash "/">
+]>
+<refentry id="totem-Interface">
+<refmeta>
+<refentrytitle role="top_of_page" id="totem-Interface.top_of_page">Interface</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>TOTEM Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>Interface</refname>
+<refpurpose>interface utility/loading/error functions</refpurpose>
+</refnamediv>
+<refsect1 id="totem-Interface.stability-level">
+<title>Stability Level</title>
+Unstable, unless otherwise indicated
+</refsect1>
+
+<refsynopsisdiv id="totem-Interface.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+
+#include &lt;totem-interface.h&gt;
+
+<link linkend="void">void</link>                <link linkend="totem-interface-error">totem_interface_error</link>               (const <link linkend="char">char</link> *title,
+                                                         const <link linkend="char">char</link> *reason,
+                                                         <link linkend="GtkWindow">GtkWindow</link> *parent);
+<link linkend="void">void</link>                <link linkend="totem-interface-error-blocking">totem_interface_error_blocking</link>      (const <link linkend="char">char</link> *title,
+                                                         const <link linkend="char">char</link> *reason,
+                                                         <link linkend="GtkWindow">GtkWindow</link> *parent);
+<link linkend="void">void</link>                <link linkend="totem-interface-error-with-link">totem_interface_error_with_link</link>     (const <link linkend="char">char</link> *title,
+                                                         const <link linkend="char">char</link> *reason,
+                                                         const <link linkend="char">char</link> *uri,
+                                                         const <link linkend="char">char</link> *label,
+                                                         <link linkend="GtkWindow">GtkWindow</link> *parent,
+                                                         <link linkend="Totem">Totem</link> *totem);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="totem-Interface.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+A collection of interface utility functions, for loading interfaces and displaying errors.</para>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="totem-Interface.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="totem-interface-error" role="function">
+<title>totem_interface_error ()</title>
+<indexterm zone="totem-interface-error"><primary sortas="interface_error">totem_interface_error</primary></indexterm><programlisting><link linkend="void">void</link>                totem_interface_error               (const <link linkend="char">char</link> *title,
+                                                         const <link linkend="char">char</link> *reason,
+                                                         <link linkend="GtkWindow">GtkWindow</link> *parent);</programlisting>
+<para>
+Display a modal error dialogue with <parameter>title</parameter> as its primary error text, and <parameter>reason</parameter>
+as its secondary text.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>title</parameter>&#160;:</term>
+<listitem><simpara> the error title
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>reason</parameter>&#160;:</term>
+<listitem><simpara> the error reason (secondary text)
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>parent</parameter>&#160;:</term>
+<listitem><simpara> the error dialogue's parent <link linkend="GtkWindow"><type>GtkWindow</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-interface-error-blocking" role="function">
+<title>totem_interface_error_blocking ()</title>
+<indexterm zone="totem-interface-error-blocking"><primary sortas="interface_error_blocking">totem_interface_error_blocking</primary></indexterm><programlisting><link linkend="void">void</link>                totem_interface_error_blocking      (const <link linkend="char">char</link> *title,
+                                                         const <link linkend="char">char</link> *reason,
+                                                         <link linkend="GtkWindow">GtkWindow</link> *parent);</programlisting>
+<para>
+Display a modal error dialogue like <link linkend="totem-interface-error"><function>totem_interface_error()</function></link> which blocks until the user has
+dismissed it.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>title</parameter>&#160;:</term>
+<listitem><simpara> the error title
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>reason</parameter>&#160;:</term>
+<listitem><simpara> the error reason (secondary text)
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>parent</parameter>&#160;:</term>
+<listitem><simpara> the error dialogue's parent <link linkend="GtkWindow"><type>GtkWindow</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-interface-error-with-link" role="function">
+<title>totem_interface_error_with_link ()</title>
+<indexterm zone="totem-interface-error-with-link"><primary sortas="interface_error_with_link">totem_interface_error_with_link</primary></indexterm><programlisting><link linkend="void">void</link>                totem_interface_error_with_link     (const <link linkend="char">char</link> *title,
+                                                         const <link linkend="char">char</link> *reason,
+                                                         const <link linkend="char">char</link> *uri,
+                                                         const <link linkend="char">char</link> *label,
+                                                         <link linkend="GtkWindow">GtkWindow</link> *parent,
+                                                         <link linkend="Totem">Totem</link> *totem);</programlisting>
+<para>
+Display a modal error dialogue like <link linkend="totem-interface-error"><function>totem_interface_error()</function></link>,
+but add a button which will open <parameter>uri</parameter> in a browser window.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>title</parameter>&#160;:</term>
+<listitem><simpara> the error title
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>reason</parameter>&#160;:</term>
+<listitem><simpara> the error reason (secondary text)
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>uri</parameter>&#160;:</term>
+<listitem><simpara> the URI to open
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>label</parameter>&#160;:</term>
+<listitem><simpara> a label for the URI's button, or <link linkend="NULL--CAPS"><literal>NULL</literal></link> to use <parameter>uri</parameter> as the label
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>parent</parameter>&#160;:</term>
+<listitem><simpara> the error dialogue's parent <link linkend="GtkWindow"><type>GtkWindow</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>totem</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemObject"><type>TotemObject</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

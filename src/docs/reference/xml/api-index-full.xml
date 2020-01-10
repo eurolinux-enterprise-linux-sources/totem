@@ -1,0 +1,226 @@
+<?xml version="1.0"?>
+<!DOCTYPE indexdiv PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+	<!ENTITY % local.common.attrib "xmlns:xi  CDATA  #FIXED 'http://www.w3.org/2003/XInclude'">
+	<!ENTITY version SYSTEM "version.xml">
+	<!ENTITY slash "/">
+]>
+<indexdiv>
+<indexdiv><title></title>
+<indexentry><primaryie linkends="Totem"><link linkend="Totem">Totem</link></primaryie></indexentry>
+</indexdiv>
+<indexdiv><title>A</title>
+<indexentry><primaryie linkends="totem-action-error"><link linkend="totem-action-error">totem_action_error</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-action-exit"><link linkend="totem-action-exit">totem_action_exit</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-action-fullscreen"><link linkend="totem-action-fullscreen">totem_action_fullscreen</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-action-fullscreen-toggle"><link linkend="totem-action-fullscreen-toggle">totem_action_fullscreen_toggle</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-action-get-aspect-ratio"><link linkend="totem-action-get-aspect-ratio">totem_action_get_aspect_ratio</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-action-next"><link linkend="totem-action-next">totem_action_next</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-action-next-angle"><link linkend="totem-action-next-angle">totem_action_next_angle</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-action-pause"><link linkend="totem-action-pause">totem_action_pause</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-action-play"><link linkend="totem-action-play">totem_action_play</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-action-play-media"><link linkend="totem-action-play-media">totem_action_play_media</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-action-play-media-device"><link linkend="totem-action-play-media-device">totem_action_play_media_device</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-action-play-pause"><link linkend="totem-action-play-pause">totem_action_play_pause</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-action-previous"><link linkend="totem-action-previous">totem_action_previous</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-action-remote"><link linkend="totem-action-remote">totem_action_remote</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-action-remote-get-setting"><link linkend="totem-action-remote-get-setting">totem_action_remote_get_setting</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-action-remote-set-setting"><link linkend="totem-action-remote-set-setting">totem_action_remote_set_setting</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-action-seek-relative"><link linkend="totem-action-seek-relative">totem_action_seek_relative</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-action-seek-time"><link linkend="totem-action-seek-time">totem_action_seek_time</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-action-set-aspect-ratio"><link linkend="totem-action-set-aspect-ratio">totem_action_set_aspect_ratio</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-action-set-playlist-index"><link linkend="totem-action-set-playlist-index">totem_action_set_playlist_index</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-action-set-scale-ratio"><link linkend="totem-action-set-scale-ratio">totem_action_set_scale_ratio</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-action-stop"><link linkend="totem-action-stop">totem_action_stop</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-action-toggle-aspect-ratio"><link linkend="totem-action-toggle-aspect-ratio">totem_action_toggle_aspect_ratio</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-action-toggle-controls"><link linkend="totem-action-toggle-controls">totem_action_toggle_controls</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-action-volume-relative"><link linkend="totem-action-volume-relative">totem_action_volume_relative</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-action-volume-toggle-mute"><link linkend="totem-action-volume-toggle-mute">totem_action_volume_toggle_mute</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-add-sidebar-page"><link linkend="totem-add-sidebar-page">totem_add_sidebar_page</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-add-to-playlist-and-play"><link linkend="totem-add-to-playlist-and-play">totem_add_to_playlist_and_play</link></primaryie></indexentry>
+</indexdiv>
+<indexdiv><title>B</title>
+<indexentry><primaryie linkends="BaconVideoWidget-struct"><link linkend="BaconVideoWidget-struct">BaconVideoWidget</link></primaryie></indexentry>
+<indexentry><primaryie linkends="BaconVideoWidget-buffering"><link linkend="BaconVideoWidget-buffering">BaconVideoWidget::buffering</link></primaryie></indexentry>
+<indexentry><primaryie linkends="BaconVideoWidget-channels-change"><link linkend="BaconVideoWidget-channels-change">BaconVideoWidget::channels-change</link></primaryie></indexentry>
+<indexentry><primaryie linkends="BaconVideoWidget-eos"><link linkend="BaconVideoWidget-eos">BaconVideoWidget::eos</link></primaryie></indexentry>
+<indexentry><primaryie linkends="BaconVideoWidget-error"><link linkend="BaconVideoWidget-error">BaconVideoWidget::error</link></primaryie></indexentry>
+<indexentry><primaryie linkends="BaconVideoWidget-got-metadata"><link linkend="BaconVideoWidget-got-metadata">BaconVideoWidget::got-metadata</link></primaryie></indexentry>
+<indexentry><primaryie linkends="BaconVideoWidget-got-redirect"><link linkend="BaconVideoWidget-got-redirect">BaconVideoWidget::got-redirect</link></primaryie></indexentry>
+<indexentry><primaryie linkends="BaconVideoWidget-missing-plugins"><link linkend="BaconVideoWidget-missing-plugins">BaconVideoWidget::missing-plugins</link></primaryie></indexentry>
+<indexentry><primaryie linkends="BaconVideoWidget-tick"><link linkend="BaconVideoWidget-tick">BaconVideoWidget::tick</link></primaryie></indexentry>
+<indexentry><primaryie linkends="BaconVideoWidget--logo-mode"><link linkend="BaconVideoWidget--logo-mode">BaconVideoWidget:logo-mode</link></primaryie></indexentry>
+<indexentry><primaryie linkends="BaconVideoWidget--playing"><link linkend="BaconVideoWidget--playing">BaconVideoWidget:playing</link></primaryie></indexentry>
+<indexentry><primaryie linkends="BaconVideoWidget--position"><link linkend="BaconVideoWidget--position">BaconVideoWidget:position</link></primaryie></indexentry>
+<indexentry><primaryie linkends="BaconVideoWidget--referrer"><link linkend="BaconVideoWidget--referrer">BaconVideoWidget:referrer</link></primaryie></indexentry>
+<indexentry><primaryie linkends="BaconVideoWidget--seekable"><link linkend="BaconVideoWidget--seekable">BaconVideoWidget:seekable</link></primaryie></indexentry>
+<indexentry><primaryie linkends="BaconVideoWidget--show-cursor"><link linkend="BaconVideoWidget--show-cursor">BaconVideoWidget:show-cursor</link></primaryie></indexentry>
+<indexentry><primaryie linkends="BaconVideoWidget--show-visuals"><link linkend="BaconVideoWidget--show-visuals">BaconVideoWidget:show-visuals</link></primaryie></indexentry>
+<indexentry><primaryie linkends="BaconVideoWidget--stream-length"><link linkend="BaconVideoWidget--stream-length">BaconVideoWidget:stream-length</link></primaryie></indexentry>
+<indexentry><primaryie linkends="BaconVideoWidget--user-agent"><link linkend="BaconVideoWidget--user-agent">BaconVideoWidget:user-agent</link></primaryie></indexentry>
+<indexentry><primaryie linkends="BaconVideoWidget--volume"><link linkend="BaconVideoWidget--volume">BaconVideoWidget:volume</link></primaryie></indexentry>
+<indexentry><primaryie linkends="BaconVideoWidgetClass"><link linkend="BaconVideoWidgetClass">BaconVideoWidgetClass</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-can-deinterlace"><link linkend="bacon-video-widget-can-deinterlace">bacon_video_widget_can_deinterlace</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-can-direct-seek"><link linkend="bacon-video-widget-can-direct-seek">bacon_video_widget_can_direct_seek</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-can-get-frames"><link linkend="bacon-video-widget-can-get-frames">bacon_video_widget_can_get_frames</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-can-set-volume"><link linkend="bacon-video-widget-can-set-volume">bacon_video_widget_can_set_volume</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-close"><link linkend="bacon-video-widget-close">bacon_video_widget_close</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-dvd-event"><link linkend="bacon-video-widget-dvd-event">bacon_video_widget_dvd_event</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-get-aspect-ratio"><link linkend="bacon-video-widget-get-aspect-ratio">bacon_video_widget_get_aspect_ratio</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-get-audio-out-type"><link linkend="bacon-video-widget-get-audio-out-type">bacon_video_widget_get_audio_out_type</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-get-auto-resize"><link linkend="bacon-video-widget-get-auto-resize">bacon_video_widget_get_auto_resize</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-get-backend-name"><link linkend="bacon-video-widget-get-backend-name">bacon_video_widget_get_backend_name</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-get-connection-speed"><link linkend="bacon-video-widget-get-connection-speed">bacon_video_widget_get_connection_speed</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-get-current-frame"><link linkend="bacon-video-widget-get-current-frame">bacon_video_widget_get_current_frame</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-get-current-time"><link linkend="bacon-video-widget-get-current-time">bacon_video_widget_get_current_time</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-get-deinterlacing"><link linkend="bacon-video-widget-get-deinterlacing">bacon_video_widget_get_deinterlacing</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-get-language"><link linkend="bacon-video-widget-get-language">bacon_video_widget_get_language</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-get-languages"><link linkend="bacon-video-widget-get-languages">bacon_video_widget_get_languages</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-get-logo-mode"><link linkend="bacon-video-widget-get-logo-mode">bacon_video_widget_get_logo_mode</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-get-metadata"><link linkend="bacon-video-widget-get-metadata">bacon_video_widget_get_metadata</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-get-mrls"><link linkend="bacon-video-widget-get-mrls">bacon_video_widget_get_mrls</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-get-option-group"><link linkend="bacon-video-widget-get-option-group">bacon_video_widget_get_option_group</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-get-position"><link linkend="bacon-video-widget-get-position">bacon_video_widget_get_position</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-get-show-cursor"><link linkend="bacon-video-widget-get-show-cursor">bacon_video_widget_get_show_cursor</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-get-stream-length"><link linkend="bacon-video-widget-get-stream-length">bacon_video_widget_get_stream_length</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-get-subtitle"><link linkend="bacon-video-widget-get-subtitle">bacon_video_widget_get_subtitle</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-get-subtitles"><link linkend="bacon-video-widget-get-subtitles">bacon_video_widget_get_subtitles</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-get-video-property"><link linkend="bacon-video-widget-get-video-property">bacon_video_widget_get_video_property</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-get-visuals-list"><link linkend="bacon-video-widget-get-visuals-list">bacon_video_widget_get_visuals_list</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-get-volume"><link linkend="bacon-video-widget-get-volume">bacon_video_widget_get_volume</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-get-zoom"><link linkend="bacon-video-widget-get-zoom">bacon_video_widget_get_zoom</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-has-menus"><link linkend="bacon-video-widget-has-menus">bacon_video_widget_has_menus</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-has-next-track"><link linkend="bacon-video-widget-has-next-track">bacon_video_widget_has_next_track</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-has-previous-track"><link linkend="bacon-video-widget-has-previous-track">bacon_video_widget_has_previous_track</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-init-backend"><link linkend="bacon-video-widget-init-backend">bacon_video_widget_init_backend</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-is-playing"><link linkend="bacon-video-widget-is-playing">bacon_video_widget_is_playing</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-is-seekable"><link linkend="bacon-video-widget-is-seekable">bacon_video_widget_is_seekable</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-new"><link linkend="bacon-video-widget-new">bacon_video_widget_new</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-open"><link linkend="bacon-video-widget-open">bacon_video_widget_open</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-pause"><link linkend="bacon-video-widget-pause">bacon_video_widget_pause</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-play"><link linkend="bacon-video-widget-play">bacon_video_widget_play</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-seek"><link linkend="bacon-video-widget-seek">bacon_video_widget_seek</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-seek-time"><link linkend="bacon-video-widget-seek-time">bacon_video_widget_seek_time</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-set-aspect-ratio"><link linkend="bacon-video-widget-set-aspect-ratio">bacon_video_widget_set_aspect_ratio</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-set-audio-out-type"><link linkend="bacon-video-widget-set-audio-out-type">bacon_video_widget_set_audio_out_type</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-set-auto-resize"><link linkend="bacon-video-widget-set-auto-resize">bacon_video_widget_set_auto_resize</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-set-connection-speed"><link linkend="bacon-video-widget-set-connection-speed">bacon_video_widget_set_connection_speed</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-set-deinterlacing"><link linkend="bacon-video-widget-set-deinterlacing">bacon_video_widget_set_deinterlacing</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-set-fullscreen"><link linkend="bacon-video-widget-set-fullscreen">bacon_video_widget_set_fullscreen</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-set-language"><link linkend="bacon-video-widget-set-language">bacon_video_widget_set_language</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-set-logo"><link linkend="bacon-video-widget-set-logo">bacon_video_widget_set_logo</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-set-logo-mode"><link linkend="bacon-video-widget-set-logo-mode">bacon_video_widget_set_logo_mode</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-set-referrer"><link linkend="bacon-video-widget-set-referrer">bacon_video_widget_set_referrer</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-set-scale-ratio"><link linkend="bacon-video-widget-set-scale-ratio">bacon_video_widget_set_scale_ratio</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-set-show-cursor"><link linkend="bacon-video-widget-set-show-cursor">bacon_video_widget_set_show_cursor</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-set-show-visuals"><link linkend="bacon-video-widget-set-show-visuals">bacon_video_widget_set_show_visuals</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-set-subtitle"><link linkend="bacon-video-widget-set-subtitle">bacon_video_widget_set_subtitle</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-set-subtitle-encoding"><link linkend="bacon-video-widget-set-subtitle-encoding">bacon_video_widget_set_subtitle_encoding</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-set-subtitle-font"><link linkend="bacon-video-widget-set-subtitle-font">bacon_video_widget_set_subtitle_font</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-set-user-agent"><link linkend="bacon-video-widget-set-user-agent">bacon_video_widget_set_user_agent</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-set-video-property"><link linkend="bacon-video-widget-set-video-property">bacon_video_widget_set_video_property</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-set-visuals"><link linkend="bacon-video-widget-set-visuals">bacon_video_widget_set_visuals</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-set-visuals-quality"><link linkend="bacon-video-widget-set-visuals-quality">bacon_video_widget_set_visuals_quality</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-set-volume"><link linkend="bacon-video-widget-set-volume">bacon_video_widget_set_volume</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-set-zoom"><link linkend="bacon-video-widget-set-zoom">bacon_video_widget_set_zoom</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-step"><link linkend="bacon-video-widget-step">bacon_video_widget_step</link></primaryie></indexentry>
+<indexentry><primaryie linkends="bacon-video-widget-stop"><link linkend="bacon-video-widget-stop">bacon_video_widget_stop</link></primaryie></indexentry>
+<indexentry><primaryie linkends="BvwAspectRatio"><link linkend="BvwAspectRatio">BvwAspectRatio</link></primaryie></indexentry>
+<indexentry><primaryie linkends="BvwAudioOutType"><link linkend="BvwAudioOutType">BvwAudioOutType</link></primaryie></indexentry>
+<indexentry><primaryie linkends="BvwDVDEvent"><link linkend="BvwDVDEvent">BvwDVDEvent</link></primaryie></indexentry>
+<indexentry><primaryie linkends="BvwError"><link linkend="BvwError">BvwError</link></primaryie></indexentry>
+<indexentry><primaryie linkends="BvwMetadataType"><link linkend="BvwMetadataType">BvwMetadataType</link></primaryie></indexentry>
+<indexentry><primaryie linkends="BvwUseType"><link linkend="BvwUseType">BvwUseType</link></primaryie></indexentry>
+<indexentry><primaryie linkends="BvwVideoProperty"><link linkend="BvwVideoProperty">BvwVideoProperty</link></primaryie></indexentry>
+<indexentry><primaryie linkends="BvwVisualsQuality"><link linkend="BvwVisualsQuality">BvwVisualsQuality</link></primaryie></indexentry>
+</indexdiv>
+<indexdiv><title>C</title>
+<indexentry><primaryie linkends="TotemCellRendererVideo-struct"><link linkend="TotemCellRendererVideo-struct">TotemCellRendererVideo</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemCellRendererVideo--alignment"><link linkend="TotemCellRendererVideo--alignment">TotemCellRendererVideo:alignment</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemCellRendererVideo--thumbnail"><link linkend="TotemCellRendererVideo--thumbnail">TotemCellRendererVideo:thumbnail</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemCellRendererVideo--title"><link linkend="TotemCellRendererVideo--title">TotemCellRendererVideo:title</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemCellRendererVideo--use-placeholder"><link linkend="TotemCellRendererVideo--use-placeholder">TotemCellRendererVideo:use-placeholder</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemCellRendererVideoClass"><link linkend="TotemCellRendererVideoClass">TotemCellRendererVideoClass</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-cell-renderer-video-new"><link linkend="totem-cell-renderer-video-new">totem_cell_renderer_video_new</link></primaryie></indexentry>
+</indexdiv>
+<indexdiv><title>F</title>
+<indexentry><primaryie linkends="totem-file-closed"><link linkend="totem-file-closed">totem_file_closed</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-file-opened"><link linkend="totem-file-opened">totem_file_opened</link></primaryie></indexentry>
+</indexdiv>
+<indexdiv><title>G</title>
+<indexentry><primaryie linkends="TOTEM-GCONF-PREFIX--CAPS"><link linkend="TOTEM-GCONF-PREFIX--CAPS">TOTEM_GCONF_PREFIX</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-get-current-mrl"><link linkend="totem-get-current-mrl">totem_get_current_mrl</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-get-current-time"><link linkend="totem-get-current-time">totem_get_current_time</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-get-main-window"><link linkend="totem-get-main-window">totem_get_main_window</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-get-playlist-length"><link linkend="totem-get-playlist-length">totem_get_playlist_length</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-get-playlist-pos"><link linkend="totem-get-playlist-pos">totem_get_playlist_pos</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-get-short-title"><link linkend="totem-get-short-title">totem_get_short_title</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-get-title-at-playlist-pos"><link linkend="totem-get-title-at-playlist-pos">totem_get_title_at_playlist_pos</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-get-ui-manager"><link linkend="totem-get-ui-manager">totem_get_ui_manager</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-get-video-widget"><link linkend="totem-get-video-widget">totem_get_video_widget</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-get-video-widget-backend-name"><link linkend="totem-get-video-widget-backend-name">totem_get_video_widget_backend_name</link></primaryie></indexentry>
+</indexdiv>
+<indexdiv><title>I</title>
+<indexentry><primaryie linkends="totem-interface-error"><link linkend="totem-interface-error">totem_interface_error</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-interface-error-blocking"><link linkend="totem-interface-error-blocking">totem_interface_error_blocking</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-interface-error-with-link"><link linkend="totem-interface-error-with-link">totem_interface_error_with_link</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-is-fullscreen"><link linkend="totem-is-fullscreen">totem_is_fullscreen</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-is-paused"><link linkend="totem-is-paused">totem_is_paused</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-is-playing"><link linkend="totem-is-playing">totem_is_playing</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-is-seekable"><link linkend="totem-is-seekable">totem_is_seekable</link></primaryie></indexentry>
+</indexdiv>
+<indexdiv><title>M</title>
+<indexentry><primaryie linkends="totem-metadata-updated"><link linkend="totem-metadata-updated">totem_metadata_updated</link></primaryie></indexentry>
+</indexdiv>
+<indexdiv><title>O</title>
+<indexentry><primaryie linkends="TotemObject"><link linkend="TotemObject">TotemObject</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemObject-file-closed"><link linkend="TotemObject-file-closed">TotemObject::file-closed</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemObject-file-opened"><link linkend="TotemObject-file-opened">TotemObject::file-opened</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemObject-metadata-updated"><link linkend="TotemObject-metadata-updated">TotemObject::metadata-updated</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemObject--current-mrl"><link linkend="TotemObject--current-mrl">TotemObject:current-mrl</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemObject--current-time"><link linkend="TotemObject--current-time">TotemObject:current-time</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemObject--fullscreen"><link linkend="TotemObject--fullscreen">TotemObject:fullscreen</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemObject--playing"><link linkend="TotemObject--playing">TotemObject:playing</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemObject--seekable"><link linkend="TotemObject--seekable">TotemObject:seekable</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemObject--stream-length"><link linkend="TotemObject--stream-length">TotemObject:stream-length</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemObjectClass"><link linkend="TotemObjectClass">TotemObjectClass</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-object-plugins-init"><link linkend="totem-object-plugins-init">totem_object_plugins_init</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-object-plugins-shutdown"><link linkend="totem-object-plugins-shutdown">totem_object_plugins_shutdown</link></primaryie></indexentry>
+</indexdiv>
+<indexdiv><title>P</title>
+<indexentry><primaryie linkends="TotemPlugin-struct"><link linkend="TotemPlugin-struct">TotemPlugin</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemPlugin--name"><link linkend="TotemPlugin--name">TotemPlugin:name</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemPluginActivationFunc"><link linkend="TotemPluginActivationFunc">TotemPluginActivationFunc</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemPluginClass"><link linkend="TotemPluginClass">TotemPluginClass</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemPluginDeactivationFunc"><link linkend="TotemPluginDeactivationFunc">TotemPluginDeactivationFunc</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemPluginError"><link linkend="TotemPluginError">TotemPluginError</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemPluginWidgetFunc"><link linkend="TotemPluginWidgetFunc">TotemPluginWidgetFunc</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-plugin-activate"><link linkend="totem-plugin-activate">totem_plugin_activate</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-plugin-create-configure-dialog"><link linkend="totem-plugin-create-configure-dialog">totem_plugin_create_configure_dialog</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-plugin-deactivate"><link linkend="totem-plugin-deactivate">totem_plugin_deactivate</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TOTEM-PLUGIN-DEFINE-TYPE--CAPS"><link linkend="TOTEM-PLUGIN-DEFINE-TYPE--CAPS">TOTEM_PLUGIN_DEFINE_TYPE</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-plugin-find-file"><link linkend="totem-plugin-find-file">totem_plugin_find_file</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-plugin-is-configurable"><link linkend="totem-plugin-is-configurable">totem_plugin_is_configurable</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-plugin-load-interface"><link linkend="totem-plugin-load-interface">totem_plugin_load_interface</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TOTEM-PLUGIN-REGISTER--CAPS"><link linkend="TOTEM-PLUGIN-REGISTER--CAPS">TOTEM_PLUGIN_REGISTER</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TOTEM-PLUGIN-REGISTER-EXTENDED--CAPS"><link linkend="TOTEM-PLUGIN-REGISTER-EXTENDED--CAPS">TOTEM_PLUGIN_REGISTER_EXTENDED</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TOTEM-PLUGIN-REGISTER-TYPE--CAPS"><link linkend="TOTEM-PLUGIN-REGISTER-TYPE--CAPS">TOTEM_PLUGIN_REGISTER_TYPE</link></primaryie></indexentry>
+</indexdiv>
+<indexdiv><title>R</title>
+<indexentry><primaryie linkends="TotemRemoteCommand"><link linkend="TotemRemoteCommand">TotemRemoteCommand</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemRemoteSetting"><link linkend="TotemRemoteSetting">TotemRemoteSetting</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-remove-sidebar-page"><link linkend="totem-remove-sidebar-page">totem_remove_sidebar_page</link></primaryie></indexentry>
+</indexdiv>
+<indexdiv><title>S</title>
+<indexentry><primaryie linkends="totem-set-current-subtitle"><link linkend="totem-set-current-subtitle">totem_set_current_subtitle</link></primaryie></indexentry>
+</indexdiv>
+<indexdiv><title>V</title>
+<indexentry><primaryie linkends="TotemVideoList-struct"><link linkend="TotemVideoList-struct">TotemVideoList</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemVideoList-starting-video"><link linkend="TotemVideoList-starting-video">TotemVideoList::starting-video</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemVideoList--mrl-column"><link linkend="TotemVideoList--mrl-column">TotemVideoList:mrl-column</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemVideoList--tooltip-column"><link linkend="TotemVideoList--tooltip-column">TotemVideoList:tooltip-column</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemVideoList--totem"><link linkend="TotemVideoList--totem">TotemVideoList:totem</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemVideoListClass"><link linkend="TotemVideoListClass">TotemVideoListClass</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-video-list-get-ui-manager"><link linkend="totem-video-list-get-ui-manager">totem_video_list_get_ui_manager</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-video-list-new"><link linkend="totem-video-list-new">totem_video_list_new</link></primaryie></indexentry>
+</indexdiv>
+</indexdiv>

@@ -1,0 +1,202 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+	<!ENTITY % local.common.attrib "xmlns:xi  CDATA  #FIXED 'http://www.w3.org/2003/XInclude'">
+	<!ENTITY version SYSTEM "version.xml">
+	<!ENTITY slash "/">
+]>
+<refentry id="TotemVideoList">
+<refmeta>
+<refentrytitle role="top_of_page" id="TotemVideoList.top_of_page">TotemVideoList</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>TOTEM Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>TotemVideoList</refname>
+<refpurpose>a <link linkend="GtkTreeView"><type>GtkTreeView</type></link> widget for listing videos</refpurpose>
+</refnamediv>
+<refsect1 id="TotemVideoList.stability-level">
+<title>Stability Level</title>
+Unstable, unless otherwise indicated
+</refsect1>
+
+<refsynopsisdiv id="TotemVideoList.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+
+#include &lt;totem-video-list.h&gt;
+
+                    <link linkend="TotemVideoList-struct">TotemVideoList</link>;
+                    <link linkend="TotemVideoListClass">TotemVideoListClass</link>;
+<link linkend="TotemVideoList">TotemVideoList</link> *    <link linkend="totem-video-list-new">totem_video_list_new</link>                (void);
+<link linkend="GtkUIManager">GtkUIManager</link> *      <link linkend="totem-video-list-get-ui-manager">totem_video_list_get_ui_manager</link>     (<link linkend="TotemVideoList">TotemVideoList</link> *self);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="TotemVideoList.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----<link linkend="GInitiallyUnowned">GInitiallyUnowned</link>
+         +----<link linkend="GtkObject">GtkObject</link>
+               +----<link linkend="GtkWidget">GtkWidget</link>
+                     +----<link linkend="GtkContainer">GtkContainer</link>
+                           +----<link linkend="GtkTreeView">GtkTreeView</link>
+                                 +----TotemVideoList
+</synopsis>
+</refsect1>
+
+
+
+<refsect1 id="TotemVideoList.implemented-interfaces" role="impl_interfaces">
+<title role="impl_interfaces.title">Implemented Interfaces</title>
+<para>
+TotemVideoList implements
+ <link linkend="AtkImplementorIface">AtkImplementorIface</link> and  <link linkend="GtkBuildable">GtkBuildable</link>.</para>
+</refsect1>
+
+
+<refsect1 id="TotemVideoList.properties" role="properties">
+<title role="properties.title">Properties</title>
+<synopsis>
+  &quot;<link linkend="TotemVideoList--mrl-column">mrl-column</link>&quot;               <link linkend="gint">gint</link>                  : Read / Write
+  &quot;<link linkend="TotemVideoList--tooltip-column">tooltip-column</link>&quot;           <link linkend="gint">gint</link>                  : Read / Write
+  &quot;<link linkend="TotemVideoList--totem">totem</link>&quot;                    <link linkend="TotemObject">TotemObject</link>*          : Read / Write
+</synopsis>
+</refsect1>
+
+<refsect1 id="TotemVideoList.signals" role="signal_proto">
+<title role="signal_proto.title">Signals</title>
+<synopsis>
+  &quot;<link linkend="TotemVideoList-starting-video">starting-video</link>&quot;                                 : Run Last
+</synopsis>
+</refsect1>
+
+
+<refsect1 id="TotemVideoList.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+<link linkend="TotemVideoList"><type>TotemVideoList</type></link> is a <link linkend="GtkTreeView"><type>GtkTreeView</type></link> designed for listing videos by their thumbnails using <link linkend="TotemCellRendererVideo"><type>TotemCellRendererVideo</type></link>.
+It supports tooltips, loading the videos by activating tree view rows, and <link linkend="GtkUIManager"><type>GtkUIManager</type></link> actions in the popup menu.</para>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="TotemVideoList.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="TotemVideoList-struct" role="struct">
+<title>TotemVideoList</title>
+<indexterm zone="TotemVideoList-struct"><primary sortas="VideoList">TotemVideoList</primary></indexterm><programlisting>typedef struct _TotemVideoList TotemVideoList;</programlisting>
+<para>
+All the fields in the <link linkend="TotemVideoList"><type>TotemVideoList</type></link> structure are private and should never be accessed directly.</para>
+<para>
+</para></refsect2>
+<refsect2 id="TotemVideoListClass" role="struct">
+<title>TotemVideoListClass</title>
+<indexterm zone="TotemVideoListClass"><primary sortas="VideoListClass">TotemVideoListClass</primary></indexterm><programlisting>typedef struct {
+	GtkTreeViewClass parent;
+	gboolean (*starting_video) (TotemVideoList *video_list, GtkTreePath *path);
+} TotemVideoListClass;
+</programlisting>
+<para>
+The class structure for the <link linkend="TotemVideoList"><type>TotemVideoList</type></link> type.</para>
+<para>
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="GtkTreeViewClass">GtkTreeViewClass</link>&#160;<structfield>parent</structfield>;</term>
+<listitem><simpara> the parent class
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><structfield>starting_video</structfield>&#160;()</term>
+<listitem><simpara> the generic signal handler for the <link linkend="TotemVideoList-starting-video"><type>"starting-video"</type></link> signal,
+which can be overridden by inheriting classes
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-video-list-new" role="function">
+<title>totem_video_list_new ()</title>
+<indexterm zone="totem-video-list-new"><primary sortas="video_list_new">totem_video_list_new</primary></indexterm><programlisting><link linkend="TotemVideoList">TotemVideoList</link> *    totem_video_list_new                (void);</programlisting>
+<para>
+Creates a new <link linkend="TotemVideoList"><type>TotemVideoList</type></link> with default properties.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a new <link linkend="TotemVideoList"><type>TotemVideoList</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-video-list-get-ui-manager" role="function">
+<title>totem_video_list_get_ui_manager ()</title>
+<indexterm zone="totem-video-list-get-ui-manager"><primary sortas="video_list_get_ui_manager">totem_video_list_get_ui_manager</primary></indexterm><programlisting><link linkend="GtkUIManager">GtkUIManager</link> *      totem_video_list_get_ui_manager     (<link linkend="TotemVideoList">TotemVideoList</link> *self);</programlisting>
+<para>
+Returns the <link linkend="GtkUIManager"><type>GtkUIManager</type></link> in use by <parameter>self</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>self</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemVideoList"><type>TotemVideoList</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <parameter>self</parameter>'s <link linkend="GtkUIManager"><type>GtkUIManager</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1 id="TotemVideoList.property-details" role="property_details">
+<title role="property_details.title">Property Details</title>
+<refsect2 id="TotemVideoList--mrl-column" role="property"><title>The <literal>&quot;mrl-column&quot;</literal> property</title>
+<indexterm zone="TotemVideoList--mrl-column"><primary sortas="VideoList:mrl-column">TotemVideoList:mrl-column</primary></indexterm><programlisting>  &quot;mrl-column&quot;               <link linkend="gint">gint</link>                  : Read / Write</programlisting>
+<para>
+The column number of the <link linkend="GtkTreeModel"><type>GtkTreeModel</type></link> column containing MRLs of the videos in the video list.
+If it's set to -1, video rows will not be activatable (e.g. by double-clicking them).</para>
+<para>
+</para><para>Allowed values: &gt;= G_MAXULONG</para>
+<para>Default value: -1</para>
+</refsect2>
+<refsect2 id="TotemVideoList--tooltip-column" role="property"><title>The <literal>&quot;tooltip-column&quot;</literal> property</title>
+<indexterm zone="TotemVideoList--tooltip-column"><primary sortas="VideoList:tooltip-column">TotemVideoList:tooltip-column</primary></indexterm><programlisting>  &quot;tooltip-column&quot;           <link linkend="gint">gint</link>                  : Read / Write</programlisting>
+<para>
+The column number of the <link linkend="GtkTreeModel"><type>GtkTreeModel</type></link> column containing tooltips to be displayed by the video list.
+If it's set to -1, no tooltips shall be displayed.</para>
+<para>
+</para><para>Allowed values: &gt;= G_MAXULONG</para>
+<para>Default value: -1</para>
+</refsect2>
+<refsect2 id="TotemVideoList--totem" role="property"><title>The <literal>&quot;totem&quot;</literal> property</title>
+<indexterm zone="TotemVideoList--totem"><primary sortas="VideoList:totem">TotemVideoList:totem</primary></indexterm><programlisting>  &quot;totem&quot;                    <link linkend="TotemObject">TotemObject</link>*          : Read / Write</programlisting>
+<para>
+A <link linkend="TotemObject"><type>TotemObject</type></link> for integration purposes.</para>
+<para>
+</para></refsect2>
+</refsect1>
+
+<refsect1 id="TotemVideoList.signal-details" role="signals">
+<title role="signals.title">Signal Details</title>
+<refsect2 id="TotemVideoList-starting-video" role="signal"><title>The <literal>&quot;starting-video&quot;</literal> signal</title>
+<indexterm zone="TotemVideoList-starting-video"><primary sortas="VideoList::starting-video">TotemVideoList::starting-video</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            user_function                      (<link linkend="TotemVideoList">TotemVideoList</link> *video_list,
+                                                        <link linkend="GtkTreePath">GtkTreePath</link>    *tree_path,
+                                                        <link linkend="gpointer">gpointer</link>        user_data)       : Run Last</programlisting>
+<para>
+The <link linkend="TotemVideoList-starting-video"><type>"starting-video"</type></link> signal is emitted when a video row is activated, just before the video is
+added to the playlist. It allows for the video's MRL in the <link linkend="GtkTreeModel"><type>GtkTreeModel</type></link> to be modified, for example.
+</para>
+<para>
+If this returns <link linkend="TRUE--CAPS"><literal>TRUE</literal></link>, the video will be played; otherwise, it will not.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>video_list</parameter>&#160;:</term>
+<listitem><simpara> the <link linkend="TotemVideoList"><type>TotemVideoList</type></link> which received the signal
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>tree_path</parameter>&#160;:</term>
+<listitem><simpara> the <link linkend="GtkTreePath"><type>GtkTreePath</type></link> of the video row about to be played
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+</refsect1>
+
+
+<refsect1 id="TotemVideoList.see-also">
+<title>See Also</title>
+#TotemCellRendererVideo
+</refsect1>
+
+</refentry>
