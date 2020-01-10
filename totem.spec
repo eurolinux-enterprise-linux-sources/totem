@@ -6,7 +6,7 @@
 Summary: Movie player for GNOME
 Name: totem
 Version: 2.28.6
-Release: 2%{?dist}
+Release: 4%{?dist}
 License: GPLv2+ with exceptions
 Group: Applications/Multimedia
 URL: http://projects.gnome.org/totem/
@@ -102,7 +102,7 @@ This package provides a plugin to allow browsing YouTube videos in Totem,
 and watching them.
 
 To play back the videos however, you will need codecs that are not
-available in the Fedora repositories.
+available in the standard repositories.
 
 %package jamendo
 Summary: Jamendo plugin for Totem
@@ -309,6 +309,13 @@ fi
 %{_libexecdir}/totem-plugin-viewer
 
 %changelog
+* Fri Jun 14 2013 Milan Crha <mcrha@redhat.com> 2.28.6-4
+- Change a description of a totem-youtube package
+
+* Thu Jun 06 2013 Debarshi Ray <debarshir@redhat.com> 2.28.6-3
+- Rebuild against libgdata-0.6.4
+Resolves: #883032
+
 * Thu Jul 22 2010 Bastien Nocera <bnocera@redhat.com> 2.28.6-2
 - Update translations
 Resolves: #588728
