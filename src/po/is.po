@@ -9,10 +9,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: totem 0.99\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-01-31 15:00+0000\n"
-"PO-Revision-Date: 2017-02-28 14:44+0000\n"
+"POT-Creation-Date: 2017-02-24 00:48+0000\n"
+"PO-Revision-Date: 2017-02-28 14:13+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -127,30 +127,38 @@ msgid "Encoding character set for subtitle."
 msgstr "Stafatafla fyrir kóðun skjátexta."
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:15
-msgid "Default location for the \"Open...\" dialogs"
-msgstr "Sjálfgefin staðsetning \"Opna...\"-glugga"
+#| msgid "Default location for the \"Open...\" dialogs"
+msgid "Default location for the “Open…” dialogs"
+msgstr "Sjálfgefin staðsetning 'Opna...'-glugga"
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:16
+#| msgid ""
+#| "Default location for the \"Open...\" dialogs. Default is the current "
+#| "directory."
 msgid ""
-"Default location for the \"Open...\" dialogs. Default is the current "
-"directory."
+"Default location for the “Open…” dialogs. Default is the current directory."
 msgstr ""
-"Sjálfgefin staðsetning \"Opna...\"-glugga. Sjálfgefið er núverandi mappa."
+"Sjálfgefin staðsetning 'Opna...'-glugga. Sjálfgefið er núverandi mappa."
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:17
-msgid "Default location for the \"Take Screenshot\" dialogs"
-msgstr "Sjálfgefin staðsetning \"Taka skjámynd\"-glugga"
+#| msgid "Default location for the \"Take Screenshot\" dialogs"
+msgid "Default location for the “Take Screenshot” dialogs"
+msgstr "Sjálfgefin staðsetning 'Taka skjámynd'-glugga"
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:18
+#| msgid ""
+#| "Default location for the \"Take Screenshot\" dialogs. Default is the "
+#| "Pictures directory."
 msgid ""
-"Default location for the \"Take Screenshot\" dialogs. Default is the "
-"Pictures directory."
+"Default location for the “Take Screenshot” dialogs. Default is the Pictures "
+"directory."
 msgstr ""
-"Sjálfgefin staðsetning \"Taka skjámynd\"-glugga. Sjálfgefið er núverandi "
+"Sjálfgefin staðsetning 'Taka skjámynd'-glugga. Sjálfgefið er núverandi "
 "mappa."
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:19
-msgid "Whether to disable the plugins in the user's home directory"
+#| msgid "Whether to disable the plugins in the user's home directory"
+msgid "Whether to disable the plugins in the user’s home directory"
 msgstr "Hvort gera eigi óvirkar þær viðbætur sem eru í heimamöppu notanda"
 
 #: ../data/org.gnome.totem.gschema.xml.in.h:20
@@ -241,8 +249,9 @@ msgid "Plugins"
 msgstr "Viðbætur"
 
 #: ../data/preferences.ui.h:15
-msgid "Plugins..."
-msgstr "Viðbætur..."
+#| msgid "Plugins"
+msgid "Plugins…"
+msgstr "Viðbætur…"
 
 #: ../data/preferences.ui.h:16 ../data/properties.ui.h:1
 msgid "General"
@@ -357,131 +366,161 @@ msgid "General"
 msgstr "Almennt"
 
 #: ../data/shortcuts.ui.h:2
+#| msgid "Properties"
+msgctxt "shortcut window"
+msgid "Properties"
+msgstr "Eiginleikar"
+
+#: ../data/shortcuts.ui.h:3
+#| msgid "Make Available Offline"
+msgctxt "shortcut window"
+msgid "Make Available Offline"
+msgstr "Gera tiltækt ótengt við net"
+
+#: ../data/shortcuts.ui.h:4
+#| msgid "Take _Screenshot"
+msgctxt "shortcut window"
+msgid "Take Screenshot"
+msgstr "Taka skjámynd"
+
+#: ../data/shortcuts.ui.h:5
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Hætta"
 
-#: ../data/shortcuts.ui.h:3
+#: ../data/shortcuts.ui.h:6
 msgctxt "shortcut window"
 msgid "Volume"
 msgstr "Hljóðstyrkur"
 
-#: ../data/shortcuts.ui.h:4
+#: ../data/shortcuts.ui.h:7
 msgctxt "shortcut window"
 msgid "Increase volume"
 msgstr "Hækka hljóðstyrk"
 
-#: ../data/shortcuts.ui.h:5
+#: ../data/shortcuts.ui.h:8
 msgctxt "shortcut window"
 msgid "Decrease volume"
 msgstr "Minnka hljóðstyrk"
 
-#: ../data/shortcuts.ui.h:6
+#: ../data/shortcuts.ui.h:9
 msgctxt "shortcut window"
 msgid "View"
 msgstr "Skoða"
 
-#: ../data/shortcuts.ui.h:7
+#: ../data/shortcuts.ui.h:10
 msgctxt "shortcut window"
 msgid "Toggle fullscreen"
 msgstr "Víxla heilskjá"
 
-#: ../data/shortcuts.ui.h:8
+#: ../data/shortcuts.ui.h:11
 msgctxt "shortcut window"
 msgid "Exit fullscreen"
 msgstr "Hætta í skjáfylli"
 
-#: ../data/shortcuts.ui.h:9
+#: ../data/shortcuts.ui.h:12
 msgctxt "shortcut window"
 msgid "Zoom in"
 msgstr "Renna að"
 
-#: ../data/shortcuts.ui.h:10
+#: ../data/shortcuts.ui.h:13
 msgctxt "shortcut window"
 msgid "Zoom out"
 msgstr "Renna frá"
 
-#: ../data/shortcuts.ui.h:11
+#: ../data/shortcuts.ui.h:14
+#| msgid "_Rotate ↷"
+msgctxt "shortcut window"
+msgid "Rotate ↷"
+msgstr "Snúa ↷"
+
+#: ../data/shortcuts.ui.h:15
+#| msgid "Rotate ↶"
+msgctxt "shortcut window"
+msgid "Rotate ↶"
+msgstr "Snúa ↶"
+
+#: ../data/shortcuts.ui.h:16
 msgctxt "shortcut window"
 msgid "Playback"
 msgstr "Afspilun"
 
-#: ../data/shortcuts.ui.h:12
+#: ../data/shortcuts.ui.h:17
 msgctxt "shortcut window"
 msgid "Play/Pause"
 msgstr "Spila/stöðva"
 
-#: ../data/shortcuts.ui.h:13
+#: ../data/shortcuts.ui.h:18
 msgctxt "shortcut window"
 msgid "Previous video or chapter"
 msgstr "Fyrra myndskeið eða kafli"
 
-#: ../data/shortcuts.ui.h:14
+#: ../data/shortcuts.ui.h:19
 msgctxt "shortcut window"
 msgid "Next video or chapter"
 msgstr "Næsta myndskeið eða kafli"
 
-#: ../data/shortcuts.ui.h:15
+#: ../data/shortcuts.ui.h:20
 msgctxt "shortcut window"
 msgid "Skip"
 msgstr "Sleppa"
 
-#: ../data/shortcuts.ui.h:16
+#: ../data/shortcuts.ui.h:21
 msgctxt "shortcut window"
 msgid "Go back 15 seconds"
 msgstr "Fara afturábak um 15 sekúndur"
 
-#: ../data/shortcuts.ui.h:17
+#: ../data/shortcuts.ui.h:22
 msgctxt "shortcut window"
 msgid "Go forward 60 seconds"
 msgstr "Fara áfram um 60 sekúndur"
 
-#: ../data/shortcuts.ui.h:18
+#: ../data/shortcuts.ui.h:23
 msgctxt "shortcut window"
 msgid "Go back 5 seconds"
 msgstr "Fara afturábak um 5 sekúndur"
 
-#: ../data/shortcuts.ui.h:19
+#: ../data/shortcuts.ui.h:24
 msgctxt "shortcut window"
 msgid "Go forward 15 seconds"
 msgstr "Fara áfram um 15 sekúndur"
 
-#: ../data/shortcuts.ui.h:20
+#: ../data/shortcuts.ui.h:25
 msgctxt "shortcut window"
 msgid "Go back 3 minutes"
 msgstr "Fara afturábak um 3 mínútur"
 
-#: ../data/shortcuts.ui.h:21
+#: ../data/shortcuts.ui.h:26
 msgctxt "shortcut window"
 msgid "Go forward 10 minutes"
 msgstr "Fara áfram um 10 mínútur"
 
-#: ../data/shortcuts.ui.h:22
+#: ../data/shortcuts.ui.h:27
 msgctxt "shortcut window"
 msgid "Skip to…"
 msgstr "Stökkva á…"
 
-#: ../data/shortcuts.ui.h:23
+#: ../data/shortcuts.ui.h:28
 msgctxt "shortcut window"
 msgid "DVD menu navigation"
 msgstr "Flakk í DVD-valmynd"
 
-#: ../data/shortcuts.ui.h:24
+#: ../data/shortcuts.ui.h:29
 msgctxt "shortcut window"
 msgid "Navigate up"
 msgstr "Fara upp"
 
-#: ../data/shortcuts.ui.h:25
+#: ../data/shortcuts.ui.h:30
 msgctxt "shortcut window"
 msgid "Navigate down"
 msgstr "Fara niður"
 
-#: ../data/shortcuts.ui.h:26
+#: ../data/shortcuts.ui.h:31
 msgctxt "shortcut window"
 msgid "Navigate left"
 msgstr "Fara til vinstri"
 
-#: ../data/shortcuts.ui.h:27
+#: ../data/shortcuts.ui.h:32
 msgctxt "shortcut window"
 msgid "Navigate right"
 msgstr "Fara til hægri"
@@ -665,8 +704,11 @@ msgstr[1] ""
 "%s"
 
 #: ../src/backend/bacon-video-widget.c:3954
+#| msgid ""
+#| "This stream cannot be played. It's possible that a firewall is blocking "
+#| "it."
 msgid ""
-"This stream cannot be played. It's possible that a firewall is blocking it."
+"This stream cannot be played. It’s possible that a firewall is blocking it."
 msgstr ""
 "Ekki er hægt að spila þennan straum. Hugsanlega er eldveggur að hindra hann."
 
@@ -929,8 +971,9 @@ msgstr "Rásir"
 
 #: ../src/totem-interface.c:179 ../src/totem-interface.c:222
 #, c-format
-msgid "Couldn't load the '%s' interface. %s"
-msgstr "Tókst ekki að hlaða inn '%s' viðmótinu. %s"
+#| msgid "Couldn't load the '%s' interface. %s"
+msgid "Couldn’t load the “%s” interface. %s"
+msgstr "Tókst ekki að hlaða inn „%s“ viðmótinu. %s"
 
 #: ../src/totem-interface.c:179
 msgid "The file does not exist."
@@ -996,8 +1039,9 @@ msgstr "Afspilun"
 #: ../src/totem-object.c:1470 ../src/totem-object.c:1497
 #: ../src/totem-object.c:1989
 #, c-format
-msgid "Totem could not play '%s'."
-msgstr "Totem tókst ekki að spila '%s'."
+#| msgid "Totem could not play '%s'."
+msgid "Totem could not play “%s”."
+msgstr "Totem tókst ekki að spila „%s“."
 
 #: ../src/totem-object.c:2160
 msgid "Totem could not display the help contents."
@@ -1099,7 +1143,8 @@ msgid "Movies to play"
 msgstr "Kvikmyndir sem á að spila"
 
 #: ../src/totem-options.c:100
-msgid "Can't enqueue and replace at the same time"
+#| msgid "Can't enqueue and replace at the same time"
+msgid "Can’t enqueue and replace at the same time"
 msgstr "Get ekki bæði sett í bið og skipt út á sama tíma"
 
 #. This is "Title 3", where title is a DVD title
@@ -1111,8 +1156,9 @@ msgstr "Titill %d"
 
 #: ../src/totem-playlist.c:992
 #, c-format
-msgid "The playlist '%s' could not be parsed. It might be damaged."
-msgstr "Ekki var hægt að þátta '%s' spilunarlistann. Hann gæti verið skemmdur."
+#| msgid "The playlist '%s' could not be parsed. It might be damaged."
+msgid "The playlist “%s” could not be parsed. It might be damaged."
+msgstr "Ekki var hægt að þátta „%s“ spilunarlistann. Hann gæti verið skemmdur."
 
 #: ../src/totem-preferences.c:184
 msgid "Configure Plugins"
@@ -1151,8 +1197,8 @@ msgstr "%d kb/sek"
 #: ../src/totem-properties-view.c:190
 #: ../src/plugins/properties/totem-movie-properties.c:151
 #, c-format
-msgid "%d x %d"
-msgstr "%d x %d"
+msgid "%d × %d"
+msgstr "%d × %d"
 
 #: ../src/totem-properties-view.c:222
 #: ../src/plugins/properties/totem-movie-properties.c:168
@@ -1498,12 +1544,14 @@ msgid "Support infrared remote control"
 msgstr "Stuðningur við innrauða fjarstýringu"
 
 #: ../src/plugins/lirc/totem-lirc.c:239
-msgid "Couldn't initialize lirc."
+#| msgid "Couldn't initialize lirc."
+msgid "Couldn’t initialize lirc."
 msgstr "Tókst ekki að frumstilla LIRC."
 
 #: ../src/plugins/lirc/totem-lirc.c:251
-msgid "Couldn't read lirc configuration."
-msgstr "Tókst ekki að lesa LIRC stillingaskrá."
+#| msgid "Couldn't read lirc configuration."
+msgid "Couldn’t read lirc configuration."
+msgstr "Tókst ekki að lesa lirc-stillingaskrá."
 
 #: ../src/plugins/media-player-keys/media-player-keys.plugin.in.h:1
 msgid "Media Player Keys"
@@ -1620,9 +1668,13 @@ msgid "rpdb2 password"
 msgstr "rpdb2 lykilorð"
 
 #: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.h:2
+#| msgid ""
+#| "A password to protect the rpdb2 server for debugging Totem from "
+#| "unauthorized remote access. If this is empty, a default of 'totem' will "
+#| "be used."
 msgid ""
 "A password to protect the rpdb2 server for debugging Totem from unauthorized "
-"remote access. If this is empty, a default of 'totem' will be used."
+"remote access. If this is empty, a default of “totem” will be used."
 msgstr ""
 "Lykilorð til að verja rpdb2-miðlarann við aflúsun Totem í gegnum óvottaðan "
 "fjaraðgang. Ef þetta er autt, er sjálfgefið að nota 'totem'."
@@ -1646,7 +1698,8 @@ msgstr "Python aflúsun"
 #. pylint: disable-msg=E1101
 #: ../src/plugins/pythonconsole/pythonconsole.py:90
 #, python-format
-msgid "You can access the Totem.Object through 'totem_object' :\\n%s"
+#| msgid "You can access the Totem.Object through 'totem_object' :\\n%s"
+msgid "You can access the Totem.Object through “totem_object” :\\n%s"
 msgstr "Þú getur komist í Totem.Object í gegnum 'totem_object' :\\n%s"
 
 #: ../src/plugins/pythonconsole/pythonconsole.py:94
@@ -1655,10 +1708,14 @@ msgstr "Totem Python stjórnskjár"
 
 #. pylint: disable-msg=W0613
 #: ../src/plugins/pythonconsole/pythonconsole.py:104
+#| msgid ""
+#| "After you press OK, Totem will wait until you connect to it with winpdb "
+#| "or rpdb2. If you have not set a debugger password in DConf, it will use "
+#| "the default password ('totem')."
 msgid ""
 "After you press OK, Totem will wait until you connect to it with winpdb or "
 "rpdb2. If you have not set a debugger password in DConf, it will use the "
-"default password ('totem')."
+"default password (“totem”)."
 msgstr ""
 "Eftir að þú ýtir á „Í lagi“, bíður Totem eftir tengingu við winpdb eða "
 "rpdb2. Ef þú hefur ekki lykilorð fyrir aflúsun í DConf, þá verður lykilorðið "
@@ -1778,8 +1835,9 @@ msgstr "Bý til myndasafn..."
 #. Set the progress label
 #: ../src/plugins/screenshot/totem-gallery-progress.c:107
 #, c-format
-msgid "Saving gallery as \"%s\""
-msgstr "Vista myndasafn sem \"%s\""
+#| msgid "Saving gallery as \"%s\""
+msgid "Saving gallery as “%s”"
+msgstr "Vista myndasafn sem „%s“"
 
 #: ../src/plugins/screenshot/totem-screenshot-plugin.c:221
 #: ../src/plugins/screenshot/totem-screenshot-plugin.c:230
@@ -1804,8 +1862,9 @@ msgid "Skip To"
 msgstr "Stökkva á"
 
 #: ../src/plugins/skipto/skipto.plugin.in.h:2
-msgid "Provides the \"Skip to\" dialog"
-msgstr "Útbýr \"Stökkva á\" glugga"
+#| msgid "Provides the \"Skip to\" dialog"
+msgid "Provides the “Skip to” dialog"
+msgstr "Útbýr „Stökkva á“ glugga"
 
 #: ../src/plugins/skipto/skipto.ui.h:1
 msgid "_Skip to:"
@@ -1895,9 +1954,15 @@ msgstr "Zeitgeist viðbót"
 msgid "A plugin sending events to Zeitgeist"
 msgstr "Viðbót sem sendir atburði til Zeitgeist"
 
+#~ msgid "Plugins..."
+#~ msgstr "Viðbætur..."
+
 #~ msgctxt "shortcut window"
 #~ msgid "Preferences"
 #~ msgstr "Kjörstillingar"
+
+#~ msgid "%d x %d"
+#~ msgstr "%d x %d"
 
 #, fuzzy
 #~| msgid "Go to the chapter menu"

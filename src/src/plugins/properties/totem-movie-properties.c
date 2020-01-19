@@ -148,7 +148,7 @@ update_properties_from_bvw (BaconVideoWidgetProperties *props,
 	if (has_video != FALSE)
 	{
 		UPDATE_FROM_INT2 (BVW_INFO_DIMENSION_X, BVW_INFO_DIMENSION_Y,
-				  "dimensions", N_("%d x %d"));
+				  "dimensions", N_("%d × %d"));
 		UPDATE_FROM_STRING (BVW_INFO_VIDEO_CODEC, "vcodec");
 		UPDATE_FROM_INT (BVW_INFO_VIDEO_BITRATE, "video_bitrate",
 				 N_("%d kbps"), C_("Stream bit rate", "N/A"));
@@ -311,7 +311,7 @@ impl_deactivate (PeasActivatable *plugin)
 {
 	TotemMoviePropertiesPlugin *pi;
 	TotemObject *totem;
-	const char const *accels[] = { NULL };
+	const char * const accels[] = { NULL };
 
 	pi = TOTEM_MOVIE_PROPERTIES_PLUGIN (plugin);
 	totem = g_object_get_data (G_OBJECT (plugin), "object");

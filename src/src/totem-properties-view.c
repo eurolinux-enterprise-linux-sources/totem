@@ -187,7 +187,7 @@ update_video (TotemPropertiesView    *props,
 
 	width = gst_discoverer_video_info_get_width (info);
 	height = gst_discoverer_video_info_get_height (info);
-	string = g_strdup_printf (N_("%d x %d"), width, height);
+	string = g_strdup_printf (N_("%d × %d"), width, height);
 	bacon_video_widget_properties_set_label (props->priv->props,
 						 "dimensions",
 						 string);
@@ -345,7 +345,13 @@ totem_properties_view_finalize (GObject *object)
 	props = TOTEM_PROPERTIES_VIEW (object);
 
 	if (props->priv != NULL) {
-		g_clear_object (&props->priv->disco);
+		if (props->priv->disco) {
+			g_signal_handlers_disconnect_by_func (props->priv->disco,
+							      discovered_cb,
+							      props);
+			gst_discoverer_stop (props->priv->disco);
+			g_clear_object (&props->priv->disco);
+		}
 		g_clear_object (&props->priv->label);
 		g_free (props->priv);
 	}

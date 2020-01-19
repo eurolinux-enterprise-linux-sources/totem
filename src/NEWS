@@ -1,16 +1,51 @@
 New features and significant updates in version...
 
-Major changes in 3.22.1:
+Major changes in 3.26.2:
+- Fix OpenSubtitles dialogue not opening
+- Fix error early in build when vala is not available
+
+Major changes in 3.26.1:
+- Fix crash when properties tab is closed too fast
+- Thumbnail OPUS and M4B audio files
+- Fix thumbnailing on platforms with V4L M2M hardware decoders
+- Fix playing back MJPEG files
+- Fix Python Console menu not appearing
+- Build fixes:
+  - Remove dependency on Debian-specific pycompile utility
+  - Fix build with gtk-doc 1.26
+
+Major changes in 3.26.0:
+- Fix a possible build race
+- Fix lirc plugin compilation
+- Python console bug fixes
+- Install appdata in the new location
+- Translation updates
+
+Major changes in 3.25.90.1:
+- Build fixes
+
+Major changes in 3.25.90:
+- Move to meson build system
+- Fix media-player keys usage to match API documentation
+- Fix internal video widget API documentation
+- Remove unused totem-audio-preview
+- Split off video thumbnailer into thumbnailer and gallery maker
+- Blacklist bmcdec plugin in the thumbnailer
+
+Major changes in 3.24.0:
+- Translation updates
+- Add Flatpak build definition
+
+Major changes in 3.23.90:
 - Add keyboard shortcut to de-select all items
 - Fix possible crash on first run
 - Set a minimum width for the "Go" menu
 - Mark many audio and video mime-types as handled
+- Add more shortcuts to the keyboard shortcuts dialogue
 - Fix a small memory leak in thumbnailer
 - Fix missing plugins' startup notification on Wayland
 - Fix crash when network turns off
 - Port to non-obsoleted widgets
-- Fix closing subtitles download dialogue
-- Update thumbnailer for new vaapi plugin names
 - and build fixes
 
 Major changes in 3.22.0:

@@ -2,14 +2,17 @@
 %global gtk3_version 3.19.4
 
 Name: totem
-Version: 3.22.1
-Release: 1%{?dist}
 Epoch: 1
+Version: 3.26.2
+Release: 1%{?dist}
 Summary: Movie player for GNOME
 
 License: GPLv2+ with exceptions
 URL: https://wiki.gnome.org/Apps/Videos
-Source0: https://download.gnome.org/sources/%{name}/3.22/%{name}-%{version}.tar.xz
+Source0: https://download.gnome.org/sources/%{name}/3.26/%{name}-%{version}.tar.xz
+
+# Fix the build with Python 2
+Patch1: totem-python2.patch
 
 BuildRequires: pkgconfig(cairo)
 BuildRequires: pkgconfig(clutter-1.0)
@@ -30,9 +33,12 @@ BuildRequires: pkgconfig(totem-plparser)
 # Needed for the videoscale element.
 BuildRequires: gstreamer1-plugins-good
 
-BuildRequires: gcc-c++, gettext
+BuildRequires: gcc-c++
+BuildRequires: gettext
+BuildRequires: gtk-doc
 BuildRequires: intltool
 BuildRequires: itstool
+BuildRequires: meson
 BuildRequires: vala
 BuildRequires: /usr/bin/appstream-util
 
@@ -51,6 +57,7 @@ Requires: gstreamer1%{?_isa}
 Requires: gstreamer1-plugins-base%{?_isa} >= %{gst_plugins_base_version}
 Requires: gstreamer1-plugins-good%{?_isa}
 Requires: gstreamer1-plugins-bad-free%{?_isa}
+Requires: gstreamer1-plugins-ugly-free%{?_isa}
 Requires: gvfs-fuse%{?_isa}
 # Disabled until ported to GStreamer 1.0
 # Requires: gnome-dvb-daemon
@@ -81,6 +88,10 @@ Provides: totem-publish = %{epoch}:%{version}-%{release}
 # mozilla plugin support removed in 3.13.90
 Obsoletes: totem-mozplugin < 1:3.13.90-1
 Obsoletes: totem-mozplugin-vegas < 1:3.13.90-1
+# The youtube sub-package was removed
+# (obsoleted by the grilo plugin)
+Obsoletes: totem-youtube < 1:3.22.1-1
+Provides: totem-youtube = %{epoch}:%{version}-%{release}
 
 %description
 Totem is simple movie player for the GNOME desktop. It features a
@@ -106,22 +117,18 @@ This package provides a Nautilus extension that shows the properties of
 audio and video files in the properties dialog.
 
 %prep
-%setup -q
+%autosetup -p1
 
 %build
-%configure \
-  --enable-nautilus \
-  --disable-static \
-  --disable-python
-
-make %{?_smp_mflags}
+export LANG=en_US.utf8
+%meson -Denable-gtk-doc=true -Denable-python=no
+# -j1 to work-around https://github.com/mesonbuild/meson/issues/1994
+%meson_build -j1
 
 %install
-%make_install
+export LANG=en_US.utf8
+%meson_install
 %find_lang %{name} --with-gnome
-
-#nuke the .la file(s)
-find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 # for backward compatibility with user defined file associations
 cp $RPM_BUILD_ROOT%{_datadir}/applications/org.gnome.Totem.desktop $RPM_BUILD_ROOT%{_datadir}/applications/totem.desktop
@@ -129,14 +136,9 @@ echo NoDisplay=true >> $RPM_BUILD_ROOT%{_datadir}/applications/totem.desktop
 echo X-GNOME-UsesNotifications=false >> $RPM_BUILD_ROOT%{_datadir}/applications/totem.desktop
 echo X-RHEL-AliasOf=org.gnome.Totem >> $RPM_BUILD_ROOT%{_datadir}/applications/totem.desktop
 
-rm -rf $RPM_BUILD_ROOT%{_libdir}/totem/plugins/dbus/		\
-	$RPM_BUILD_ROOT%{_libdir}/totem/plugins/opensubtitles/	\
-	$RPM_BUILD_ROOT%{_libdir}/totem/plugins/pythonconsole/
-
 %check
-appstream-util validate-relax --nonet $RPM_BUILD_ROOT/%{_datadir}/appdata/*.appdata.xml
-desktop-file-validate $RPM_BUILD_ROOT/%{_datadir}/applications/org.gnome.Totem.desktop
-
+appstream-util validate-relax --nonet $RPM_BUILD_ROOT%{_datadir}/metainfo/org.gnome.Totem.appdata.xml
+desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/org.gnome.Totem.desktop
 
 %post
 /sbin/ldconfig
@@ -156,18 +158,16 @@ fi
 gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 
-
 %files -f %{name}.lang
 %doc AUTHORS NEWS README TODO
 %license COPYING
 %{_bindir}/%{name}
 %{_bindir}/%{name}-video-thumbnailer
-%{_bindir}/%{name}-audio-preview
 %{_libdir}/libtotem.so.*
 %{_libdir}/girepository-1.0/Totem-1.0.typelib
-%{_datadir}/appdata/org.gnome.Totem.appdata.xml
 %{_datadir}/applications/*.desktop
 %{_datadir}/dbus-1/services/org.gnome.Totem.service
+%{_datadir}/metainfo/org.gnome.Totem.appdata.xml
 %dir %{_datadir}/totem
 %{_datadir}/totem/controls.ui
 %{_datadir}/totem/playlist.ui
@@ -194,10 +194,10 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_libdir}/totem/plugins/save-file
 %{_libdir}/totem/plugins/variable-rate
 %{_libdir}/totem/plugins/vimeo
+%{_libexecdir}/totem-gallery-thumbnailer
 %{_datadir}/icons/hicolor/*/apps/org.gnome.Totem.png
 %{_datadir}/icons/hicolor/symbolic/apps/org.gnome.Totem-symbolic.svg
 %{_mandir}/man1/%{name}.1*
-%{_mandir}/man1/totem-audio-preview.1*
 %{_mandir}/man1/totem-video-thumbnailer.1*
 %{_datadir}/GConf/gsettings/*.convert
 %{_datadir}/glib-2.0/schemas/*.xml
@@ -214,6 +214,19 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_datadir}/gir-1.0/Totem-1.0.gir
 
 %changelog
+* Wed Aug 01 2018 Kalev Lember <klember@redhat.com> - 1:3.26.2-1
+- Update to 3.26.2
+- Resolves: #1569787
+
+* Fri Jun 15 2018 Bastien Nocera <bnocera@redhat.com> - 3.26.1-1
++ totem-3.26.1-1
+- Update to 3.26.1
+- Resolves: #1569787
+
+* Mon Sep 11 2017 Kalev Lember <klember@redhat.com> - 1:3.26.0-1
+- Update to 3.26.0
+- Resolves: #1569787
+
 * Fri Mar 03 2017 Bastien Nocera <bnocera@redhat.com> - 3.22.1-1
 + totem-3.22.1-1
 - Update to 3.22.1

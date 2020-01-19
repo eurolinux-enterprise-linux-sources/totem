@@ -54,6 +54,7 @@ audio/x-flac
 audio/x-gsm
 audio/x-it
 audio/x-m4a
+audio/x-m4b
 audio/x-matroska
 audio/x-mod
 audio/x-mp1
@@ -67,6 +68,7 @@ audio/x-ms-asx
 audio/x-ms-wax
 audio/x-ms-wma
 audio/x-musepack
+audio/x-opus+ogg
 audio/x-pn-aiff
 audio/x-pn-au
 audio/x-pn-realaudio
@@ -121,6 +123,7 @@ video/x-flic
 video/x-flv
 video/x-m4v
 video/x-matroska
+video/x-mjpeg
 video/x-mpeg
 video/x-mpeg2
 video/x-ms-asf
