@@ -1,7 +1,7 @@
 Summary: Movie player for GNOME
 Name: totem
 Version: 3.14.3
-Release: 5%{?dist}
+Release: 6%{?dist}
 Epoch: 1
 License: GPLv2+ with exceptions
 Group: Applications/Multimedia
@@ -11,6 +11,7 @@ Source0: http://download.gnome.org/sources/totem/3.14/totem-%{version}.tar.xz
 Patch0: totem-translations-3.14.patch
 Patch1: 0001-Disable-pylint-BR.patch
 Patch2: 0001-grilo-Update-YouTube-API-key.patch
+Patch3: totem-3.14.3-EL7.3_translations.patch
 
 # For all the Python plugins
 Requires: pygobject3
@@ -127,6 +128,7 @@ audio and video files in the properties dialog.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 
@@ -240,6 +242,10 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_datadir}/gir-1.0/Totem-1.0.gir
 
 %changelog
+* Thu Jun 30 2016 Bastien Nocera <bnocera@redhat.com> - 3.14.3-6
+- Update translations
+Resolves: #1273060
+
 * Wed Sep 23 2015 Ray Strode <rstrode@redhat.com> 3.14.3-5
 - Add more goo to the compat desktop file to prevent them
   from exposing in control-center
