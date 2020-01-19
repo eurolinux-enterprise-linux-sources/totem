@@ -1,28 +1,26 @@
 # List of source files containing translatable strings.
 # Please keep this file sorted alphabetically.
 [encoding: UTF-8]
-data/appdata/org.gnome.Totem.appdata.xml.in
-[type: gettext/glade]data/controls.ui
-data/org.gnome.Totem.desktop.in.in
-[type: gettext/gsettings]data/org.gnome.totem.gschema.xml.in
+browser-plugin/totem-plugin-viewer.c
+[type: gettext/glade]data/fullscreen.ui
+data/org.gnome.totem.gschema.xml.in.in
 [type: gettext/glade]data/playlist.ui
 [type: gettext/glade]data/preferences.ui
 [type: gettext/glade]data/properties.ui
-[type: gettext/glade]data/shortcuts.ui
+data/totem.desktop.in.in.in
 [type: gettext/glade]data/totem.ui
 [type: gettext/glade]data/uri.ui
-src/backend/bacon-time-label.c
 src/backend/bacon-video-widget.c
-src/backend/bacon-video-widget-gst-missing-plugins.c
+src/eggdesktopfile.c
+src/eggfileformatchooser.c
+src/eggsmclient.c
 src/gst/totem-time-helpers.c
 src/properties/bacon-video-widget-properties.c
-[type: gettext/glade]src/grilo.ui
+src/totem-audio-preview.c
 src/totem.c
-src/totem-gallery-thumbnailer.c
-src/totem-grilo.c
+src/totem-dnd-menu.c
+src/totem-fullscreen.c
 src/totem-interface.c
-src/totem-main-toolbar.c
-[type: gettext/glade]src/totemmaintoolbar.ui
 src/totem-menu.c
 src/totem-object.c
 src/totem-open-location.c
@@ -31,7 +29,8 @@ src/totem-playlist.c
 src/totem-preferences.c
 src/totem-properties-main.c
 src/totem-properties-view.c
-[type: gettext/glade]src/totemselectiontoolbar.ui
+src/totem-sidebar.c
+src/totem-statusbar.c
 src/totem-subtitle-encoding.c
 src/totem-time-label.c
 src/totem-uri.c
@@ -40,8 +39,17 @@ src/totem-video-thumbnailer.c
 [type: gettext/ini]src/plugins/autoload-subtitles/autoload-subtitles.plugin.in
 [type: gettext/ini]src/plugins/brasero-disc-recorder/brasero-disc-recorder.plugin.in
 src/plugins/brasero-disc-recorder/totem-disc-recorder.c
+[type: gettext/glade]src/plugins/chapters/chapters-edit.ui
+[type: gettext/glade]src/plugins/chapters/chapters-list.ui
+[type: gettext/ini]src/plugins/chapters/chapters.plugin.in
+src/plugins/chapters/totem-chapters.c
+src/plugins/chapters/totem-cmml-parser.c
+src/plugins/chapters/totem-edit-chapter.c
 [type: gettext/ini]src/plugins/dbusservice/dbusservice.plugin.in
 src/plugins/dbusservice/dbusservice.py
+[type: gettext/ini]src/plugins/grilo/grilo.plugin.in
+[type: gettext/glade]src/plugins/grilo/grilo.ui
+src/plugins/grilo/totem-grilo.c
 [type: gettext/ini]src/plugins/gromit/gromit.plugin.in
 src/plugins/gromit/totem-gromit.c
 src/plugins/im-status/totem-im-status.c
@@ -53,10 +61,10 @@ src/plugins/lirc/totem-lirc.c
 [type: gettext/ini]src/plugins/opensubtitles/opensubtitles.plugin.in
 src/plugins/opensubtitles/opensubtitles.py
 [type: gettext/glade]src/plugins/opensubtitles/opensubtitles.ui
-[type: gettext/gsettings]src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in
+src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.in
 [type: gettext/ini]src/plugins/properties/movie-properties.plugin.in
 src/plugins/properties/totem-movie-properties.c
-[type: gettext/gsettings]src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in
+src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.in
 [type: gettext/ini]src/plugins/pythonconsole/pythonconsole.plugin.in
 src/plugins/pythonconsole/pythonconsole.py
 [type: gettext/ini]src/plugins/recent/recent.plugin.in
@@ -78,7 +86,4 @@ src/plugins/skipto/totem-skipto.c
 src/plugins/skipto/totem-skipto-plugin.c
 src/plugins/skipto/totem-time-entry.c
 src/plugins/totem-plugins-engine.c
-src/plugins/variable-rate/totem-variable-rate-plugin.c
-[type: gettext/ini]src/plugins/variable-rate/variable-rate.plugin.in
-[type: gettext/ini]src/plugins/vimeo/vimeo.plugin.in
 [type: gettext/ini]src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in

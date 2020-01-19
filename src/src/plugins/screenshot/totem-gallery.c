@@ -38,7 +38,8 @@
 
 static void dialog_response_callback (GtkDialog *dialog, gint response_id, TotemGallery *self);
 
-static void default_screenshot_count_toggled_callback (GtkToggleButton *toggle_button, TotemGallery *self);
+/* GtkBuilder callbacks */
+void default_screenshot_count_toggled_callback (GtkToggleButton *toggle_button, TotemGallery *self);
 
 struct _TotemGalleryPrivate {
 	Totem *totem;
@@ -84,8 +85,6 @@ totem_gallery_new (Totem *totem)
 	gallery->priv->default_screenshot_count = GTK_CHECK_BUTTON (gtk_builder_get_object (builder, "default_screenshot_count"));
 	gallery->priv->screenshot_count = GTK_SPIN_BUTTON (gtk_builder_get_object (builder, "screenshot_count"));
 	gallery->priv->screenshot_width = GTK_SPIN_BUTTON (gtk_builder_get_object (builder, "screenshot_width"));
-	g_signal_connect (gtk_builder_get_object (builder, "default_screenshot_count"), "toggled",
-			  G_CALLBACK (default_screenshot_count_toggled_callback), gallery);
 
 	gallery->priv->totem = totem;
 
@@ -95,8 +94,8 @@ totem_gallery_new (Totem *totem)
 	/*gtk_window_set_resizable (GTK_WINDOW (gallery), FALSE);
 	gtk_dialog_set_has_separator (GTK_DIALOG (gallery), TRUE);*/
 	gtk_dialog_add_buttons (GTK_DIALOG (gallery),
-			_("_Cancel"), GTK_RESPONSE_CANCEL,
-			_("_Save"), GTK_RESPONSE_OK,
+			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			GTK_STOCK_SAVE, GTK_RESPONSE_OK,
 			NULL);
 	gtk_dialog_set_default_response (GTK_DIALOG (gallery), GTK_RESPONSE_OK);
 
@@ -107,7 +106,7 @@ totem_gallery_new (Totem *totem)
 				"gallery_dialog_content"));
 	gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (gallery), container);
 
-	movie_title = totem_object_get_short_title (totem);
+	movie_title = totem_get_short_title (totem);
 
 	/* Translators: The first argument is the movie title. The second
 	 * argument is a number which is used to prevent overwriting files.
@@ -134,7 +133,7 @@ totem_gallery_new (Totem *totem)
 	return gallery;
 }
 
-static void
+void
 default_screenshot_count_toggled_callback (GtkToggleButton *toggle_button, TotemGallery *self)
 {
 	/* Only have the screenshot count spin button sensitive when the default screenshot count
@@ -166,11 +165,11 @@ dialog_response_callback (GtkDialog *dialog, gint response_id, TotemGallery *sel
 		screenshot_count = gtk_spin_button_get_value_as_int (self->priv->screenshot_count);
 
 	filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (self));
-	video_mrl = totem_object_get_current_mrl (self->priv->totem);
-	totem_screenshot_plugin_update_file_chooser (gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (self)));
+	video_mrl = totem_get_current_mrl (self->priv->totem);
+	totem_screenshot_plugin_update_file_chooser (filename);
 
 	/* Build the command and arguments to pass it */
-	argv[0] = (gchar*) LIBEXECDIR "/totem-gallery-thumbnailer"; /* a little hacky, but only the allocated stuff is freed below */
+	argv[0] = (gchar*) "totem-video-thumbnailer"; /* a little hacky, but only the allocated stuff is freed below */
 	argv[1] = (gchar*) "-j"; /* JPEG mode */
 	argv[2] = (gchar*) "-l"; /* don't limit resources */
 	argv[3] = (gchar*) "-p"; /* print progress */

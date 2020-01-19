@@ -33,8 +33,8 @@
 
 #include "totem-playlist.h"
 #include "backend/bacon-video-widget.h"
-#include "backend/bacon-time-label.h"
 #include "totem-open-location.h"
+#include "totem-fullscreen.h"
 #include "totem-plugins-engine.h"
 
 #define totem_signal_block_by_data(obj, data) (g_signal_handlers_block_matched (obj, G_SIGNAL_MATCH_DATA, 0, 0, NULL, NULL, data))
@@ -46,18 +46,19 @@
 		widget = GTK_WIDGET (gtk_builder_get_object (xml, name));	\
 		gtk_widget_set_sensitive (widget, state);			\
 	}
-#define totem_controls_set_sensitivity(name, state) gtk_widget_set_sensitive (g_object_get_data (totem->controls, name), state)
+#define totem_main_set_sensitivity(name, state) totem_set_sensitivity (totem->xml, name, state)
 
-#define totem_object_set_sensitivity2(name, state)					\
+#define totem_action_set_sensitivity(name, state)					\
 	{										\
-		GAction *__action;							\
-		__action = g_action_map_lookup_action (G_ACTION_MAP (totem), name);	\
-		g_simple_action_set_enabled (G_SIMPLE_ACTION (__action), state);	\
+		GtkAction *__action;							\
+		__action = gtk_action_group_get_action (totem->main_action_group, name);\
+		gtk_action_set_sensitive (__action, state);				\
 	}
 
 typedef enum {
 	TOTEM_CONTROLS_UNDEFINED,
 	TOTEM_CONTROLS_VISIBLE,
+	TOTEM_CONTROLS_HIDDEN,
 	TOTEM_CONTROLS_FULLSCREEN
 } ControlsVisibility;
 
@@ -73,26 +74,32 @@ struct _TotemObject {
 	/* Control window */
 	GtkBuilder *xml;
 	GtkWidget *win;
-	GtkWidget *stack;
 	BaconVideoWidget *bvw;
 	GtkWidget *prefs;
 	GtkBuilder *prefs_xml;
-	GtkWindow *shortcuts_win;
+	GtkWidget *statusbar;
 
-	GtkWidget *grilo;
+	/* UI manager */
+	GtkActionGroup *main_action_group;
+	GtkUIManager *ui_manager;
 
-	GObject *controls;
-	GtkWidget *play_button;
-	BaconTimeLabel *time_label;
-	BaconTimeLabel *time_rem_label;
-	GtkWidget *header;
+	GtkActionGroup *devices_action_group;
+	guint devices_ui_id;
 
-	GtkWidget *fullscreen_header;
-	GtkWidget *fullscreen_gear_button;
+	GtkActionGroup *languages_action_group;
+	guint languages_ui_id;
+
+	GtkActionGroup *subtitles_action_group;
+	guint subtitles_ui_id;
 
 	/* Plugins */
 	GtkWidget *plugins;
 	TotemPluginsEngine *engine;
+
+	/* Sidebar */
+	GtkWidget *sidebar;
+	gboolean sidebar_shown;
+	int sidebar_w;
 
 	/* Seek */
 	GtkWidget *seek;
@@ -107,9 +114,13 @@ struct _TotemObject {
 	double prev_volume;
 
 	/* Subtitles/Languages menus */
-	gboolean updating_menu;
+	GtkWidget *subtitles;
+	GtkWidget *languages;
 	GList *subtitles_list;
-	GList *languages_list;
+	GList *language_list;
+
+	/* Fullscreen */
+	TotemFullscreen *fs;
 
 	/* controls management */
 	ControlsVisibility controls_visibility;
@@ -117,37 +128,33 @@ struct _TotemObject {
 	/* Stream info */
 	gint64 stream_length;
 
+	/* recent file stuff */
+	GtkRecentManager *recent_manager;
+	GtkActionGroup *recent_action_group;
+	guint recent_ui_id;
+
 	/* Monitor for playlist unmounts and drives/volumes monitoring */
 	GVolumeMonitor *monitor;
 	gboolean drives_changed;
 
 	/* session */
+	const char *argv0;
 	gint64 seek_to_start;
-	gboolean pause_start;
-	guint save_timeout_id;
+	guint index;
+	gboolean session_restored;
 
 	/* Window State */
 	int window_w, window_h;
 	gboolean maximised;
 
-	/* Toolbar state */
-	char *title;
-	char *subtitle;
-	char *search_string;
-	gboolean select_mode;
-	GObject *custom_title;
-	GtkWidget *fullscreen_button;
-	GtkWidget *gear_button;
-	GtkWidget *add_button;
-
-	char *player_title;
-
 	/* other */
 	char *mrl;
+	gint64 seek_to;
 	TotemPlaylist *playlist;
 	GSettings *settings;
 	TotemStates state;
 	TotemOpenLocation *open_location;
+	gboolean remember_position;
 	gboolean disable_kbd_shortcuts;
 	gboolean has_played_emitted;
 };
@@ -166,39 +173,20 @@ GtkWidget *totem_volume_create (void);
 #define ZOOM_IN_OFFSET 0.01
 #define ZOOM_OUT_OFFSET -0.01
 
-void	totem_object_open			(Totem *totem);
-void	totem_object_open_location		(Totem *totem);
-void	totem_object_eject			(Totem *totem);
-void	totem_object_set_zoom			(Totem *totem, gboolean zoom);
-void	totem_object_show_help			(Totem *totem);
-void	totem_object_show_keyboard_shortcuts	(Totem *totem);
-void	totem_object_show_properties		(Totem *totem);
-void    totem_object_set_mrl			(TotemObject *totem,
-						 const char *mrl,
-						 const char *subtitle);
-gboolean totem_object_open_files		(Totem *totem, char **list);
-G_GNUC_NORETURN void totem_object_show_error_and_exit (const char *title, const char *reason, Totem *totem);
+void	totem_action_open			(Totem *totem);
+void	totem_action_open_location		(Totem *totem);
+void	totem_action_eject			(Totem *totem);
+void	totem_action_set_zoom			(Totem *totem, gboolean zoom);
+void	totem_action_show_help			(Totem *totem);
+void	totem_action_show_properties		(Totem *totem);
+gboolean totem_action_open_files		(Totem *totem, char **list);
+G_GNUC_NORETURN void totem_action_error_and_exit (const char *title, const char *reason, Totem *totem);
 
 void	show_controls				(Totem *totem, gboolean was_fullscreen);
 
-void	totem_setup_window			(Totem *totem);
+char	*totem_setup_window			(Totem *totem);
 void	totem_callback_connect			(Totem *totem);
 void	playlist_widget_setup			(Totem *totem);
-void	grilo_widget_setup			(Totem *totem);
 void	video_widget_create			(Totem *totem);
-void    totem_object_plugins_init		(TotemObject *totem);
-void    totem_object_plugins_shutdown		(TotemObject *totem);
-void	totem_object_set_fullscreen		(TotemObject *totem, gboolean state);
-void	totem_object_set_volume_relative	(TotemObject *totem, double off_pct);
-void	totem_object_volume_toggle_mute		(TotemObject *totem);
-void	totem_object_set_main_page		(TotemObject *totem,
-						 const char  *page_id);
-const char * totem_object_get_main_page		(Totem *totem);
-void	totem_object_add_items_to_playlist	(TotemObject *totem,
-						 GList       *items);
-
-/* Signal emission */
-void	totem_file_has_played			(TotemObject *totem,
-						 const char *mrl);
 
 #endif /* __TOTEM_PRIVATE_H__ */

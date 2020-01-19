@@ -1,14 +1,15 @@
+data/mozilla-viewer.ui
+data/org.gnome.totem.gschema.xml.in
+data/totem-handlers.schemas.in
+data/totem-video-thumbnail.schemas.in
+data/totem.desktop.in
+data/totem.desktop.in.in
 data/fullscreen.glade
 data/mozilla-viewer.glade
-data/mozilla-viewer.ui
-data/org.gnome.Totem.desktop.in
-data/org.gnome.totem.gschema.xml.in
 data/playlist.glade
 data/plugins.glade
 data/properties.glade
 data/totem.glade
-data/totem-handlers.schemas.in
-data/totem-video-thumbnail.schemas.in
 data/uri.glade
 src/backend/gstscreenshot.c
 src/totem-video-indexer.c
@@ -22,4 +23,3 @@ src/plugins/rotation/totem-rotation-plugin.c
 src/plugins/samplepython/samplepython.plugin.in
 src/plugins/sample-vala/sample-vala.plugin.in
 src/plugins/sidebar-test/sidebar-test.plugin.in
-sub/data/org.gnome.Totem.desktop.in

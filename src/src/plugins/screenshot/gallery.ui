@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <interface>
-	<requires lib="gtk+" version="3.20"/>
 	<object class="GtkAdjustment" id="screenshot_count_adjustment">
 		<property name="upper">30</property>
 		<property name="lower">1</property>
@@ -17,13 +16,13 @@
 		<property name="page-size">0</property>
 		<property name="value">128</property>
 	</object>
-	<object class="GtkBox" id="gallery_dialog_content">
-		<property name="orientation">vertical</property>
-		<property name="border-width">12</property>
+	<object class="GtkVBox" id="gallery_dialog_content">
+		<property name="spacing">2</property>
 		<child>
-			<object class="GtkGrid" id="table1">
-				<property name="row-spacing">8</property>
-				<property name="column-spacing">12</property>
+			<object class="GtkTable" id="table1">
+				<property name="n-rows">4</property>
+				<property name="n-columns">2</property>
+				<property name="row-spacing">5</property>
 				<child>
 					<object class="GtkSpinButton" id="screenshot_count">
 						<property name="sensitive">False</property><!-- made sensitive when default_screenshot_count is unchecked -->
@@ -32,7 +31,9 @@
 					</object>
 					<packing>
 						<property name="left-attach">1</property>
+						<property name="right-attach">2</property>
 						<property name="top-attach">3</property>
+						<property name="bottom-attach">4</property>
 					</packing>
 				</child>
 				<child>
@@ -41,8 +42,12 @@
 						<property name="label" translatable="yes">Screenshot width (in pixels):</property>
 					</object>
 					<packing>
-						<property name="left-attach">0</property>
 						<property name="top-attach">1</property>
+						<property name="bottom-attach">2</property>
+						<property name="x-options">GTK_FILL</property>
+						<property name="y-options">GTK_FILL</property>
+						<property name="x-padding">5</property>
+						<property name="y-padding">5</property>
 					</packing>
 				</child>
 				<child>
@@ -50,11 +55,14 @@
 						<property name="label" translatable="yes">Calculate the number of screenshots</property>
 						<property name="active">True</property>
 						<property name="draw-indicator">True</property>
+						<signal name="toggled" handler="default_screenshot_count_toggled_callback"/>
 					</object>
 					<packing>
-						<property name="left-attach">0</property>
-						<property name="width">2</property>
+						<property name="right-attach">2</property>
 						<property name="top-attach">2</property>
+						<property name="bottom-attach">3</property>
+						<property name="y-options">GTK_FILL</property>
+						<property name="y-padding">5</property>
 					</packing>
 				</child>
 				<child>
@@ -64,7 +72,9 @@
 					</object>
 					<packing>
 						<property name="left-attach">1</property>
+						<property name="right-attach">2</property>
 						<property name="top-attach">1</property>
+						<property name="bottom-attach">2</property>
 					</packing>
 				</child>
 				<child>
@@ -73,14 +83,17 @@
 						<property name="label" translatable="yes">Number of screenshots:</property>
 					</object>
 					<packing>
-						<property name="left-attach">0</property>
 						<property name="top-attach">3</property>
+						<property name="bottom-attach">4</property>
+						<property name="x-options">GTK_FILL</property>
+						<property name="y-options">GTK_FILL</property>
+						<property name="x-padding">5</property>
+						<property name="y-padding">5</property>
 					</packing>
 				</child>
 			</object>
 			<packing>
 				<property name="padding">5</property>
-				<property name="pack_type">end</property>
 			</packing>
 		</child>
 	</object>

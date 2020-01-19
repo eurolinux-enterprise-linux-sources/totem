@@ -31,6 +31,7 @@ G_BEGIN_DECLS
 
 /* Stores the state of the command line options */
 typedef struct {
+	gboolean debug;
 	gboolean playpause;
 	gboolean play;
 	gboolean pause;
@@ -46,17 +47,22 @@ typedef struct {
 	gboolean quit;
 	gboolean enqueue;
 	gboolean replace;
+	gdouble playlistidx;
 	gint64 seek;
 	gchar **filenames;
-	gboolean had_filenames;
 } TotemCmdLineOptions;
 
 extern const GOptionEntry all_options[];
 extern TotemCmdLineOptions optionstate;
 
 void totem_options_register_remote_commands (Totem *totem);
+GOptionContext *totem_options_get_context (void);
+void totem_options_process_early (Totem *totem,
+				  const TotemCmdLineOptions* options);
+void totem_options_process_late (Totem *totem, 
+				 const TotemCmdLineOptions* options);
 void totem_options_process_for_server (Totem *totem,
-				       TotemCmdLineOptions* options);
+				       const TotemCmdLineOptions* options);
 
 G_END_DECLS
 

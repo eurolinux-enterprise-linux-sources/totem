@@ -27,6 +27,8 @@
 	  <property name="selectable">False</property>
 	  <property name="xalign">0.5</property>
 	  <property name="yalign">0.5</property>
+	  <property name="xpad">0</property>
+	  <property name="ypad">0</property>
 	  <property name="mnemonic_widget">tstw_skip_time_entry</property>
 	  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
 	  <property name="width_chars">-1</property>
@@ -54,10 +56,12 @@
               <property name="page-increment">10</property>
               <property name="page-size">0</property>
               <property name="value">0</property>
+              <signal name="value-changed" handler="tstw_adjustment_value_changed_cb"/>
 	    </object>
 	    <object class="TotemTimeEntry" id="tstw_skip_time_entry">
 	      <property name="climb_rate">1</property>
 	      <property name="adjustment">tstw_skip_adjustment</property>
+	      <signal name="activate" handler="time_entry_activate_cb"/>
 	    </object>
 	    <packing>
 	      <property name="padding">0</property>
@@ -77,6 +81,8 @@
 	      <property name="selectable">False</property>
 	      <property name="xalign">0.5</property>
 	      <property name="yalign">0.5</property>
+	      <property name="xpad">0</property>
+	      <property name="ypad">0</property>
 	      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
 	      <property name="single_line_mode">False</property>
 	      <property name="angle">0</property>

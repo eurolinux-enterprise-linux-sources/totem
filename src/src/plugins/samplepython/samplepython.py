@@ -1,6 +1,6 @@
 # From code by James Livingston
 
-from gi.repository import GObject, Peas, Totem # pylint: disable=no-name-in-module,unused-import
+from gi.repository import GObject, Peas, Totem # pylint: disable-msg=E0611,W0611
 
 class SamplePython (GObject.Object, Peas.Activatable):
     __gtype_name__ = 'SamplePython'
@@ -11,9 +11,9 @@ class SamplePython (GObject.Object, Peas.Activatable):
         GObject.Object.__init__ (self)
 
     def do_activate (self):
-        print("Activating sample Python plugin")
-        self.object.action_fullscreen_toggle () # pylint: disable=no-member
+        print "Activating sample Python plugin"
+        self.object.action_fullscreen_toggle ()
 
     def do_deactivate (self):
-        print("Deactivating sample Python plugin")
-        self.object.action_fullscreen_toggle () # pylint: disable=no-member
+        print "Deactivating sample Python plugin"
+        self.object.action_fullscreen_toggle ()

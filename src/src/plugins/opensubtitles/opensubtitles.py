@@ -1,25 +1,22 @@
 # -*- coding: utf-8 -*-
 
-import xmlrpc.client
+from gi.repository import GObject, Peas, Gtk, Gdk # pylint: disable-msg=E0611
+from gi.repository import Gio, Pango, Totem # pylint: disable-msg=E0611
+
+import xmlrpclib
 import threading
-import zlib
-from os import sep
+import xdg.BaseDirectory
+from os import sep, path, mkdir
 import gettext
 
 from hash import hash_file
-
-import gi
-gi.require_version('Peas', '1.0')
-gi.require_version('Gtk', '3.0')
-gi.require_version('Totem', '1.0')
-from gi.repository import GLib, GObject # pylint: disable=wrong-import-position
-from gi.repository import Peas, Gtk, Gdk # pylint: disable=wrong-import-position,
-from gi.repository import Gio, Pango, Totem # pylint: disable=wrong-import-position,no-name-in-module
 
 gettext.textdomain ("totem")
 
 D_ = gettext.dgettext
 _ = gettext.gettext
+
+GObject.threads_init ()
 
 USER_AGENT = 'Totem'
 OK200 = '200 OK'
@@ -41,7 +38,6 @@ LANGUAGES_STR = [ (D_('iso_639_3', 'Albanian'), 'sq'),
          (D_('iso_639_3', 'Arabic'), 'ar'),
          (D_('iso_639_3', 'Armenian'), 'hy'),
          (D_('iso_639_3', 'Neo-Aramaic, Assyrian'), 'ay'),
-         (D_('iso_639_3', 'Basque'), 'eu'),
          (D_('iso_639_3', 'Bosnian'), 'bs'),
          (_('Brazilian Portuguese'), 'pb'),
          (D_('iso_639_3', 'Bulgarian'), 'bg'),
@@ -107,7 +103,6 @@ LANGUAGES = {'sq':'alb',
          'nl':'dut',
          'en':'eng',
          'eo':'epo',
-         'eu':'eus',
          'et':'est',
          'fi':'fin',
          'fr':'fre',
@@ -145,11 +140,6 @@ LANGUAGES = {'sq':'alb',
          'tr':'tur',
          'uk':'ukr',
          'vi':'vie',}
-
-def _cache_subtitles_dir ():
-    bpath = GLib.get_user_cache_dir() + sep
-    bpath += 'totem' + sep + 'subtitles' + sep
-    return bpath
 
 class SearchThread (threading.Thread):
     """
@@ -261,9 +251,9 @@ class OpenSubtitlesModel (object):
 
         try:
             import locale
-            (language_code, _) = locale.getlocale ()
+            (language_code, _encoding) = locale.getlocale ()
             self.lang = LANGUAGES[language_code.split ('_')[0]]
-        except (ImportError, IndexError, AttributeError, KeyError):
+        except (ImportError, IndexError, AttributeError):
             self.lang = 'eng'
 
         self._lock = threading.Lock ()
@@ -281,7 +271,7 @@ class OpenSubtitlesModel (object):
             # We have already logged-in before, check the connection
             try:
                 result = self._server.NoOperation (self._token)
-            except (xmlrpc.client.Fault, xmlrpc.client.ProtocolError):
+            except (xmlrpclib.Fault, xmlrpclib.ProtocolError):
                 pass
             if result and result['status'] != OK200:
                 return (True, '')
@@ -289,7 +279,7 @@ class OpenSubtitlesModel (object):
         try:
             result = self._server.LogIn (username, password, self.lang,
                                          USER_AGENT)
-        except (xmlrpc.client.Fault, xmlrpc.client.ProtocolError):
+        except (xmlrpclib.Fault, xmlrpclib.ProtocolError):
             pass
 
         if result and result.get ('status') == OK200:
@@ -329,7 +319,7 @@ class OpenSubtitlesModel (object):
             try:
                 result = self._server.SearchSubtitles (self._token,
                                                        [searchdata])
-            except xmlrpc.client.ProtocolError:
+            except xmlrpclib.ProtocolError:
                 message = _(u'Could not contact the OpenSubtitles website.')
 
             if result.get ('data'):
@@ -353,11 +343,10 @@ class OpenSubtitlesModel (object):
         (log_in_success, log_in_message) = self._log_in ()
 
         if log_in_success:
-            result = None
             try:
                 result = self._server.DownloadSubtitles (self._token,
                                                          [subtitle_id])
-            except xmlrpc.client.ProtocolError:
+            except xmlrpclib.ProtocolError:
                 message = error_message
 
             if result and result.get ('status') == OK200:
@@ -367,11 +356,14 @@ class OpenSubtitlesModel (object):
                     self._lock.release ()
                     return (None, error_message)
 
-                subtitle_unzipped = zlib.decompress(GLib.base64_decode (subtitle64), 47)
+                import StringIO, gzip, base64
+                subtitle_decoded = base64.decodestring (subtitle64)
+                subtitle_gzipped = StringIO.StringIO (subtitle_decoded)
+                subtitle_gzipped_file = gzip.GzipFile (fileobj=subtitle_gzipped)
 
                 self._lock.release ()
 
-                return (subtitle_unzipped, message)
+                return (subtitle_gzipped_file.read (), message)
         else:
             message = log_in_message
 
@@ -379,11 +371,11 @@ class OpenSubtitlesModel (object):
 
         return (None, message)
 
-class OpenSubtitles (GObject.Object, # pylint: disable=R0902
+class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
                      Peas.Activatable):
     __gtype_name__ = 'OpenSubtitles'
 
-    object = GObject.Property (type = GObject.Object)
+    object = GObject.property (type = GObject.Object)
 
     def __init__ (self):
         GObject.Object.__init__ (self)
@@ -393,6 +385,9 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
         schema = 'org.gnome.totem.plugins.opensubtitles'
         self._settings = Gio.Settings.new (schema)
 
+        self._manager = None
+        self._menu_id = None
+        self._action_group = None
         self._action = None
 
         self._find_button = None
@@ -420,13 +415,14 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
         # are related to.
         self._filename = None
 
+        self._manager = self._totem.get_ui_manager ()
         self._append_menu ()
 
         self._totem.connect ('file-opened', self.__on_totem__file_opened)
         self._totem.connect ('file-closed', self.__on_totem__file_closed)
 
         # Obtain the ServerProxy and init the model
-        server = xmlrpc.client.Server ('http://api.opensubtitles.org/xml-rpc')
+        server = xmlrpclib.Server ('http://api.opensubtitles.org/xml-rpc')
         self._model = OpenSubtitlesModel (server)
 
     def do_deactivate (self):
@@ -441,8 +437,8 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
     def _build_dialog (self):
         builder = Totem.plugin_load_interface ("opensubtitles",
                                                "opensubtitles.ui", True,
-                                               self._totem.get_main_window (), # pylint: disable=no-member
-                                               None)
+                                               self._totem.get_main_window (),
+                                               self)
 
         # Obtain all the widgets we need to initialize
         combobox = builder.get_object ('language_combobox')
@@ -503,7 +499,8 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
         # Set up signals
 
         combobox.connect ('changed', self.__on_combobox__changed)
-        self._dialog.set_transient_for (self._totem.get_main_window ()) # pylint: disable=no-member
+        self._dialog.connect ('delete-event', self._dialog.hide_on_delete)
+        self._dialog.set_transient_for (self._totem.get_main_window ())
         self._dialog.set_position (Gtk.WindowPosition.CENTER_ON_PARENT)
 
         # Connect the callbacks
@@ -514,7 +511,7 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
         self._tree_view.connect ('row-activated',
                                self.__on_treeview__row_activate)
 
-    def _show_dialog (self, *_):
+    def _show_dialog (self, _action):
         if not self._dialog:
             self._build_dialog ()
 
@@ -523,21 +520,39 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
         self._progress.set_fraction (0.0)
 
     def _append_menu (self):
-        self._action = Gio.SimpleAction.new ("opensubtitles", None)
+        self._action_group = Gtk.ActionGroup (name='OpenSubtitles')
+
+        tooltip_text = _(u"Download movie subtitles from OpenSubtitles")
+        self._action = Gtk.Action (name='opensubtitles',
+                                 label=_(u'_Download Movie Subtitles…'),
+                                 tooltip=tooltip_text,
+                                 stock_id=None)
+
+        self._action_group.add_action (self._action)
+
+        self._manager.insert_action_group (self._action_group, 0)
+
+        self._menu_id = self._manager.new_merge_id ()
+        merge_path = '/tmw-menubar/view/subtitles/subtitle-download-placeholder'
+        self._manager.add_ui (self._menu_id,
+                             merge_path,
+                             'opensubtitles',
+                             'opensubtitles',
+                             Gtk.UIManagerItemType.MENUITEM,
+                             False
+                            )
+        self._action.set_visible (True)
+
+        self._manager.ensure_update ()
+
         self._action.connect ('activate', self._show_dialog)
-        self._totem.add_action (self._action) # pylint: disable=no-member
-        self._totem.set_accels_for_action ("app.opensubtitles",  # pylint: disable=no-member
-                                           ["<Primary><Shift>s"])
 
-        menu = self._totem.get_menu_section ("subtitle-download-placeholder") # pylint: disable=no-member
-        menu.append (_(u'_Download Movie Subtitles…'), "app.opensubtitles")
-
-        self._action.set_enabled (self._totem.is_playing () and # pylint: disable=no-member
+        self._action.set_sensitive (self._totem.is_playing () and
                   self._check_allowed_scheme () and
                                   not self._check_is_audio ())
 
     def _check_allowed_scheme (self):
-        current_file = Gio.file_new_for_uri (self._totem.get_current_mrl ()) # pylint: disable=no-member
+        current_file = Gio.file_new_for_uri (self._totem.get_current_mrl ())
         scheme = current_file.get_uri_scheme ()
 
         if (scheme == 'dvd' or scheme == 'http' or
@@ -550,13 +565,14 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
         # FIXME need to use something else here
         # I think we must use video widget metadata but I don't found a way
         # to get this info from python
-        filename = self._totem.get_current_mrl () # pylint: disable=no-member
+        filename = self._totem.get_current_mrl ()
         if Gio.content_type_guess (filename, '')[0].split ('/')[0] == 'audio':
             return True
         return False
 
     def _delete_menu (self):
-        self._totem.empty_menu_section ("subtitle-download-placeholder") # pylint: disable=no-member
+        self._manager.remove_action_group (self._action_group)
+        self._manager.remove_ui (self._menu_id)
 
     def _get_results (self, movie_hash, movie_size):
         self._list_store.clear ()
@@ -568,10 +584,10 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
 
         thread = SearchThread (self._model, movie_hash, movie_size)
         thread.start ()
-        GLib.idle_add (self._populate_treeview, thread)
+        GObject.idle_add (self._populate_treeview, thread)
 
         self._progress.set_text (_(u'Searching subtitles…'))
-        GLib.timeout_add (350, self._progress_bar_increment, thread)
+        GObject.timeout_add (350, self._progress_bar_increment, thread)
 
     def _populate_treeview (self, search_thread):
         if not search_thread.done:
@@ -591,7 +607,7 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
 
         return False
 
-    def _save_selected_subtitle (self):
+    def _save_selected_subtitle (self, filename=None):
         cursor = Gdk.Cursor.new (Gdk.CursorType.WATCH)
         self._dialog.get_window ().set_cursor (cursor)
 
@@ -601,80 +617,62 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
             subtitle_id = model.get_value (subtitle_iter, 3)
             subtitle_format = model.get_value (subtitle_iter, 1)
 
-            bpath = _cache_subtitles_dir()
+            if not filename:
+                bpath = xdg.BaseDirectory.xdg_cache_home + sep
+                bpath += 'totem' + sep
 
-            directory = Gio.file_new_for_path (bpath)
-            try:
-                directory.make_directory_with_parents (None)
-            except: # pylint: disable=bare-except
-                pass
+                directory = Gio.file_new_for_path (bpath + 'subtitles' + sep)
+
+                if not directory.query_exists (None):
+                    if not path.exists (bpath):
+                        mkdir (bpath)
+                    if not path.exists (bpath + 'subtitles' + sep):
+                        mkdir (bpath + 'subtitles' + sep)
+                    # FIXME: We can't use this function until we depend on
+                    # GLib (PyGObject) 2.18
+                    # directory.make_directory_with_parents ()
+
+                subtitle_file = Gio.file_new_for_path (self._filename)
+                movie_name = subtitle_file.get_basename ().rpartition ('.')[0]
+
+                filename = directory.get_uri () + sep
+                filename += movie_name + '.' + subtitle_format
 
             thread = DownloadThread (self._model, subtitle_id)
             thread.start ()
-            GLib.idle_add (self._save_subtitles, thread, subtitle_format)
+            GObject.idle_add (self._save_subtitles, thread, filename)
 
             self._progress.set_text (_(u'Downloading the subtitles…'))
-            GLib.timeout_add (350, self._progress_bar_increment, thread)
+            GObject.timeout_add (350, self._progress_bar_increment, thread)
         else:
             #warn user!
             pass
 
-    def _movie_dir (self):
-        directory = Gio.file_new_for_uri (self._filename)
-        parent = directory.get_parent()
-        return parent.get_path ()
-
-    def _save_subtitles (self, download_thread, extension):
+    def _save_subtitles (self, download_thread, filename):
         if not download_thread.done:
             return True
 
         subtitles = download_thread.get_subtitles ()
-        suburi = None
         if subtitles:
-            subtitle_file = Gio.file_new_for_uri (self._filename)
-            movie_name = subtitle_file.get_basename ().rpartition ('.')[0]
-
             # Delete all previous cached subtitle for this file
             for ext in SUBTITLES_EXT:
-                # In the cache dir
-                old_subtitle_file = Gio.file_new_for_path (_cache_subtitles_dir() +
-                        sep + movie_name + '.' + ext)
-                try:
-                    old_subtitle_file.delete (None)
-                except: # pylint: disable=bare-except
-                    pass
+                subtitle_file = Gio.file_new_for_path (filename[:-3] + ext)
+                if subtitle_file.query_exists (None):
+                    subtitle_file.delete (None)
 
-                # In the movie dir
-                old_subtitle_file = Gio.file_new_for_path (self._movie_dir() +
-                        sep + movie_name + '.' + ext)
-                try:
-                    old_subtitle_file.delete (None)
-                except: # pylint: disable=bare-except
-                    pass
+            subtitle_file = Gio.file_new_for_uri (filename)
+            suburi = subtitle_file.get_uri ()
 
             flags = Gio.FileCreateFlags.REPLACE_DESTINATION
-            try:
-                subtitle_file = Gio.file_new_for_path (self._movie_dir() +
-                        sep + movie_name + '.' + extension)
-                suburi = subtitle_file.get_uri ()
-
-                sub_file = subtitle_file.replace ('', False, flags, None)
-                sub_file.write (subtitles, None)
-                sub_file.close (None)
-            except: # pylint: disable=bare-except
-                subtitle_file = Gio.file_new_for_path (_cache_subtitles_dir() +
-                        sep + movie_name + '.' + extension)
-                suburi = subtitle_file.get_uri ()
-
-                sub_file = subtitle_file.replace ('', False, flags, None)
-                sub_file.write (subtitles, None)
-                sub_file.close (None)
+            sub_file = subtitle_file.replace ('', False, flags, None)
+            sub_file.write (subtitles, None)
+            sub_file.close (None)
 
         self._dialog.get_window ().set_cursor (None)
         self._close_dialog ()
 
         if suburi:
-            self._totem.set_current_subtitle (suburi) # pylint: disable=no-member
+            self._totem.set_current_subtitle (suburi)
 
         return False
 
@@ -698,7 +696,7 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
     def _download_and_apply (self):
         self._apply_button.set_sensitive (False)
         self._find_button.set_sensitive (False)
-        self._action.set_enabled (False)
+        self._action.set_sensitive (False)
         self._tree_view.set_sensitive (False)
         self._save_selected_subtitle ()
 
@@ -710,7 +708,7 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
 
     # Callbacks
 
-    def __on_window__key_press_event (self, _, event):
+    def __on_window__key_press_event (self, _widget, event):
         if event.keyval == Gdk.KEY_Escape:
             self._close_dialog ()
             return True
@@ -722,16 +720,13 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
         else:
             self._apply_button.set_sensitive (False)
 
-    def __on_treeview__row_activate (self,
-                                     _tree_path, # pylint: disable=W0613
-                                     _column, # pylint: disable=W0613
-                                     _data): # pylint: disable=W0613
+    def __on_treeview__row_activate (self, _tree_path, _column, _data):
         self._download_and_apply ()
 
-    def __on_totem__file_opened (self, _, new_mrl):
+    def __on_totem__file_opened (self, _totem, new_mrl):
         # Check if allows subtitles
         if self._check_allowed_scheme () and not self._check_is_audio ():
-            self._action.set_enabled (True)
+            self._action.set_sensitive (True)
             if self._dialog:
                 self._find_button.set_sensitive (True)
                 # Check we're not re-opening the same file; if we are, don't
@@ -742,15 +737,15 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
                     self._list_store.clear ()
                     self._apply_button.set_sensitive (False)
         else:
-            self._action.set_enabled (False)
+            self._action.set_sensitive (False)
             if self._dialog and self._dialog.is_active ():
                 self._filename = None
                 self._list_store.clear ()
                 self._apply_button.set_sensitive (False)
                 self._find_button.set_sensitive (False)
 
-    def __on_totem__file_closed (self, _):
-        self._action.set_enabled (False)
+    def __on_totem__file_closed (self, _totem):
+        self._action.set_sensitive (False)
         if self._dialog:
             self._apply_button.set_sensitive (False)
             self._find_button.set_sensitive (False)
@@ -761,16 +756,17 @@ class OpenSubtitles (GObject.Object, # pylint: disable=R0902
         self._model.lang = LANGUAGES[combo_model.get_value (combo_iter, 1)]
         self._settings.set_string ('language', self._model.lang)
 
-    def __on_close_clicked (self, _):
+    def __on_close_clicked (self, _data):
         self._close_dialog ()
 
-    def __on_apply_clicked (self, _):
+    def __on_apply_clicked (self, _data):
         self._download_and_apply ()
 
-    def __on_find_clicked (self, _):
+    def __on_find_clicked (self, _data):
         self._apply_button.set_sensitive (False)
         self._find_button.set_sensitive (False)
-        self._filename = self._totem.get_current_mrl () # pylint: disable=no-member
+        self._filename = self._totem.get_current_mrl ()
         (movie_hash, movie_size) = hash_file (self._filename)
 
         self._get_results (movie_hash, movie_size)
+

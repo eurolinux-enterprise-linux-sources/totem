@@ -34,13 +34,13 @@
 #include <stdio.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <libpeas-gtk/peas-gtk-plugin-manager.h>
 
 #include "bacon-video-widget-enums.h"
 #include "totem.h"
 #include "totem-private.h"
 #include "totem-preferences.h"
 #include "totem-interface.h"
+#include "video-utils.h"
 #include "totem-subtitle-encoding.h"
 #include "totem-plugins-engine.h"
 
@@ -49,14 +49,106 @@
 
 /* Callback functions for GtkBuilder */
 G_MODULE_EXPORT void checkbutton2_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
+G_MODULE_EXPORT void audio_screensaver_button_toggled_cb (GtkToggleButton *togglebutton, Totem *totem);
+G_MODULE_EXPORT void visual_menu_changed (GtkComboBox *combobox, Totem *totem);
 G_MODULE_EXPORT void tpw_color_reset_clicked_cb (GtkButton *button, Totem *totem);
 G_MODULE_EXPORT void font_set_cb (GtkFontButton * fb, Totem * totem);
 G_MODULE_EXPORT void encoding_set_cb (GtkComboBox *cb, Totem *totem);
 
 static void
+totem_prefs_set_show_visuals (Totem *totem, gboolean value)
+{
+	GtkWidget *item;
+
+	g_settings_set_boolean (totem->settings, "show-visualizations", value);
+
+	item = PWID ("tpw_visuals_type_label");
+	gtk_widget_set_sensitive (item, value);
+	item = PWID ("tpw_visuals_type_combobox");
+	gtk_widget_set_sensitive (item, value);
+	item = PWID ("tpw_visuals_size_label");
+	gtk_widget_set_sensitive (item, value);
+	item = PWID ("tpw_visuals_size_combobox");
+	gtk_widget_set_sensitive (item, value);
+
+	bacon_video_widget_set_show_visualizations
+		(BACON_VIDEO_WIDGET (totem->bvw), value);
+}
+
+void
+checkbutton2_toggled_cb (GtkToggleButton *togglebutton, Totem *totem)
+{
+	gboolean value;
+
+	value = gtk_toggle_button_get_active (togglebutton);
+	totem_prefs_set_show_visuals (totem, value);
+}
+
+void
+audio_screensaver_button_toggled_cb (GtkToggleButton *togglebutton, Totem *totem)
+{
+	gboolean value;
+
+	value = gtk_toggle_button_get_active (togglebutton);
+	g_settings_set_boolean (totem->settings, "lock-screensaver-on-audio", value);
+}
+
+static void
+show_vfx_changed_cb (GSettings *settings, const gchar *key, TotemObject *totem)
+{
+	GObject *item;
+
+	item = POBJ ("tpw_visuals_checkbutton");
+	g_signal_handlers_disconnect_by_func (item,
+			checkbutton2_toggled_cb, totem);
+
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), g_settings_get_boolean (totem->settings, "show-visualizations"));
+
+	g_signal_connect (item, "toggled",
+			G_CALLBACK (checkbutton2_toggled_cb), totem);
+}
+
+static void
 disable_kbd_shortcuts_changed_cb (GSettings *settings, const gchar *key, TotemObject *totem)
 {
 	totem->disable_kbd_shortcuts = g_settings_get_boolean (totem->settings, "disable-keyboard-shortcuts");
+}
+
+static void
+lock_screensaver_on_audio_changed_cb (GSettings *settings, const gchar *key, TotemObject *totem)
+{
+	GObject *item, *radio;
+	gboolean value;
+
+	item = POBJ ("tpw_audio_toggle_button");
+	g_signal_handlers_disconnect_by_func (item,
+					      audio_screensaver_button_toggled_cb, totem);
+
+	value = g_settings_get_boolean (totem->settings, "lock-screensaver-on-audio");
+	if (value != FALSE) {
+		radio = POBJ ("tpw_audio_toggle_button");
+	} else {
+		radio = POBJ ("tpw_video_toggle_button");
+	}
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio), TRUE);
+
+	g_signal_connect (item, "toggled",
+			  G_CALLBACK (audio_screensaver_button_toggled_cb), totem);
+}
+
+void
+visual_menu_changed (GtkComboBox *combobox, Totem *totem)
+{
+	GList *list;
+	const gchar *name;
+	int i;
+
+	i = gtk_combo_box_get_active (combobox);
+	list = bacon_video_widget_get_visualization_list (totem->bvw);
+	name = g_list_nth_data (list, i);
+
+	g_settings_set_string (totem->settings, "visualization-name", name);
+	bacon_video_widget_set_visualization (totem->bvw, name);
 }
 
 void
@@ -156,66 +248,30 @@ int_enum_set_mapping (const GValue *value, const GVariantType *expected_type, GE
 	return g_variant_new_string (enum_value->value_nick);
 }
 
-static gboolean
-totem_plugins_window_delete_cb (GtkWidget *window,
-				   GdkEventAny *event,
-				   gpointer data)
-{
-	gtk_widget_hide (window);
-
-	return TRUE;
-}
-
 static void
-totem_plugins_response_cb (GtkDialog *dialog,
-			      int response_id,
-			      gpointer data)
+visualization_quality_writable_changed_cb (GSettings *settings, const gchar *key, TotemObject *totem)
 {
-	gtk_widget_hide (GTK_WIDGET (dialog));
-}
+	gboolean writable, show_visualizations;
 
-static void
-plugin_button_clicked_cb (GtkButton *button,
-			  Totem     *totem)
-{
-	if (totem->plugins == NULL) {
-		GtkWidget *manager;
+	if (strcmp (key, "visualization-quality") != 0)
+		return;
 
-		totem->plugins = gtk_dialog_new_with_buttons (_("Configure Plugins"),
-							      GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (button))),
-							      GTK_DIALOG_DESTROY_WITH_PARENT,
-							      _("_Close"),
-							      GTK_RESPONSE_CLOSE,
-							      NULL);
-		gtk_window_set_modal (GTK_WINDOW (totem->plugins), TRUE);
-		gtk_container_set_border_width (GTK_CONTAINER (totem->plugins), 5);
-		gtk_box_set_spacing (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (totem->plugins))), 2);
+	writable = g_settings_is_writable (settings, key);
+	show_visualizations = g_settings_get_boolean (settings, "show-visualizations");
 
-		g_signal_connect_object (G_OBJECT (totem->plugins),
-					 "delete_event",
-					 G_CALLBACK (totem_plugins_window_delete_cb),
-					 NULL, 0);
-		g_signal_connect_object (G_OBJECT (totem->plugins),
-					 "response",
-					 G_CALLBACK (totem_plugins_response_cb),
-					 NULL, 0);
-
-		manager = peas_gtk_plugin_manager_new (NULL);
-		gtk_widget_show_all (GTK_WIDGET (manager));
-		gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (totem->plugins))),
-				    manager, TRUE, TRUE, 0);
-		gtk_window_set_default_size (GTK_WINDOW (totem->plugins), 600, 400);
-	}
-
-	gtk_window_present (GTK_WINDOW (totem->plugins));
+	/* Only enable the size combobox if the visualization-quality setting is writable, and visualizations are enabled */
+	gtk_widget_set_sensitive (PWID ("tpw_visuals_size_combobox"), writable && show_visualizations);
 }
 
 void
 totem_setup_preferences (Totem *totem)
 {
-	GtkWidget *bvw;
+	GtkWidget *menu, *content_area, *bvw;
+	gboolean show_visuals, lock_screensaver_on_audio;
 	guint i, hidden;
-	char *font, *encoding;
+	char *visual, *font, *encoding;
+	GList *list, *l;
+	GtkWidget *widget;
 	GObject *item;
 
 	static struct {
@@ -233,9 +289,25 @@ totem_setup_preferences (Totem *totem)
 
 	g_return_if_fail (totem->settings != NULL);
 
-	bvw = totem_object_get_video_widget (totem);
+	bvw = totem_get_video_widget (totem);
 
-	totem->prefs = PWID ("totem_preferences_window");
+	/* Work-around builder dialogue not parenting properly for
+	 * On top windows */
+	widget = PWID ("tpw_notebook");
+	totem->prefs = gtk_dialog_new_with_buttons (_("Preferences"),
+			GTK_WINDOW (totem->win),
+			GTK_DIALOG_DESTROY_WITH_PARENT,
+			GTK_STOCK_CLOSE,
+			GTK_RESPONSE_ACCEPT,
+			NULL);
+	gtk_container_set_border_width (GTK_CONTAINER (totem->prefs), 5);
+	content_area = gtk_dialog_get_content_area (GTK_DIALOG (totem->prefs));
+	gtk_box_set_spacing (GTK_BOX (content_area), 2);
+	gtk_widget_reparent (widget, content_area);
+	gtk_widget_show_all (content_area);
+	widget = PWID ("totem_preferences_window");
+	gtk_widget_destroy (widget);
+
 	g_signal_connect (G_OBJECT (totem->prefs), "response",
 			G_CALLBACK (gtk_widget_hide), NULL);
 	g_signal_connect (G_OBJECT (totem->prefs), "delete-event",
@@ -243,11 +315,42 @@ totem_setup_preferences (Totem *totem)
         g_signal_connect (totem->prefs, "destroy",
                           G_CALLBACK (gtk_widget_destroyed), &totem->prefs);
 
+	/* Remember position */
+	item = POBJ ("tpw_remember_position_checkbutton");
+	g_settings_bind (totem->settings, "remember-position", item, "active", G_SETTINGS_BIND_DEFAULT);
+	g_settings_bind (totem->settings, "remember-position", totem, "remember-position", G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY);
+
+	/* Auto-resize */
+	item = POBJ ("tpw_display_checkbutton");
+	g_settings_bind (totem->settings, "auto-resize", item, "active", G_SETTINGS_BIND_DEFAULT);
+	g_settings_bind (totem->settings, "auto-resize", bvw, "auto-resize", G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY);
+
+	/* Screensaver audio locking */
+	lock_screensaver_on_audio = g_settings_get_boolean (totem->settings, "lock-screensaver-on-audio");
+	if (lock_screensaver_on_audio != FALSE)
+		item = POBJ ("tpw_audio_toggle_button");
+	else
+		item = POBJ ("tpw_video_toggle_button");
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (item), TRUE);
+	g_signal_connect (totem->settings, "changed::lock-screensaver-on-audio", (GCallback) lock_screensaver_on_audio_changed_cb, totem);
+
 	/* Disable deinterlacing */
 	item = POBJ ("tpw_no_deinterlace_checkbutton");
 	g_settings_bind (totem->settings, "disable-deinterlacing", item, "active", G_SETTINGS_BIND_DEFAULT);
 	g_settings_bind (totem->settings, "disable-deinterlacing", bvw, "deinterlacing",
 	                 G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY | G_SETTINGS_BIND_INVERT_BOOLEAN);
+
+	/* Enable visuals */
+	item = POBJ ("tpw_visuals_checkbutton");
+	show_visuals = g_settings_get_boolean (totem->settings, "show-visualizations");
+
+	g_signal_handlers_disconnect_by_func (item, checkbutton2_toggled_cb, totem);
+	gtk_toggle_button_set_active
+		(GTK_TOGGLE_BUTTON (item), show_visuals);
+	totem_prefs_set_show_visuals (totem, show_visuals);
+	g_signal_connect (item, "toggled", G_CALLBACK (checkbutton2_toggled_cb), totem);
+
+	g_signal_connect (totem->settings, "changed::show-visualizations", (GCallback) show_vfx_changed_cb, totem);
 
 	/* Auto-load subtitles */
 	item = POBJ ("tpw_auto_subtitles_checkbutton");
@@ -257,10 +360,49 @@ totem_setup_preferences (Totem *totem)
 	item = POBJ ("tpw_auto_chapters_checkbutton");
 	g_settings_bind (totem->settings, "autoload-chapters", item, "active", G_SETTINGS_BIND_DEFAULT);
 
-	/* Plugins button */
-	item = POBJ ("tpw_plugins_button");
-	g_signal_connect (G_OBJECT (item), "clicked",
-			  G_CALLBACK (plugin_button_clicked_cb), totem);
+	/* Visuals list */
+	list = bacon_video_widget_get_visualization_list (totem->bvw);
+	menu = gtk_menu_new ();
+	gtk_widget_show (menu);
+
+	visual = g_settings_get_string (totem->settings, "visualization-name");
+	if (*visual == '\0') {
+		g_free (visual);
+		visual = g_strdup ("goom");
+	}
+
+	item = POBJ ("tpw_visuals_type_liststore");
+
+	i = 0;
+	for (l = list; l != NULL; l = l->next) {
+		const char *name = l->data;
+		GtkTreeIter iter;
+
+		gtk_list_store_append (GTK_LIST_STORE (item), &iter);
+		gtk_list_store_set (GTK_LIST_STORE (item), &iter,
+				    0, name, -1);
+
+		if (strcmp (name, visual) == 0) {
+			GObject *combobox;
+
+			combobox = POBJ ("tpw_visuals_type_combobox");
+			gtk_combo_box_set_active (GTK_COMBO_BOX (combobox), i);
+		}
+
+		i++;
+	}
+	g_free (visual);
+
+	/* Visualisation quality. We have to bind the writability separately, as the sensitivity of the size combobox is also affected by whether
+	 * visualizations are enabled. */
+	item = POBJ ("tpw_visuals_size_combobox");
+	g_settings_bind (totem->settings, "visualization-quality", bvw, "visualization-quality",
+	                 G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY);
+	g_settings_bind_with_mapping (totem->settings, "visualization-quality", item, "active",
+	                              G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY,
+	                              (GSettingsBindGetMapping) int_enum_get_mapping, (GSettingsBindSetMapping) int_enum_set_mapping,
+	                              g_type_class_ref (BVW_TYPE_VISUALIZATION_QUALITY), (GDestroyNotify) g_type_class_unref);
+	g_signal_connect (totem->settings, "writable-changed::visualization-quality", (GCallback) visualization_quality_writable_changed_cb, totem);
 
 	/* Brightness and all */
 	hidden = 0;
@@ -330,4 +472,19 @@ totem_setup_preferences (Totem *totem)
 	g_signal_connect (totem->settings, "changed::disable-keyboard-shortcuts", (GCallback) disable_kbd_shortcuts_changed_cb, totem);
 
 	g_object_unref (bvw);
+}
+
+void
+totem_preferences_visuals_setup (Totem *totem)
+{
+	char *visual;
+
+	visual = g_settings_get_string (totem->settings, "visualization-name");
+	if (*visual == '\0') {
+		g_free (visual);
+		visual = g_strdup ("goom");
+	}
+
+	bacon_video_widget_set_visualization (totem->bvw, visual);
+	g_free (visual);
 }

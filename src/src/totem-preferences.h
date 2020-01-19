@@ -32,6 +32,7 @@
 G_BEGIN_DECLS
 
 void totem_setup_preferences (Totem *totem);
+void totem_preferences_visuals_setup (Totem *totem);
 
 G_END_DECLS
 

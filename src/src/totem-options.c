@@ -46,6 +46,7 @@ option_version_cb (const gchar *option_name,
 }
 
 const GOptionEntry all_options[] = {
+	{"debug", '\0', 0, G_OPTION_ARG_NONE, &optionstate.debug, N_("Enable debug"), NULL},
 	{"play-pause", '\0', 0, G_OPTION_ARG_NONE, &optionstate.playpause, N_("Play/Pause"), NULL},
 	{"play", '\0', 0, G_OPTION_ARG_NONE, &optionstate.play, N_("Play"), NULL},
 	{"pause", '\0', 0, G_OPTION_ARG_NONE, &optionstate.pause, N_("Pause"), NULL},
@@ -57,33 +58,74 @@ const GOptionEntry all_options[] = {
 	{"volume-down", '\0', 0, G_OPTION_ARG_NONE, &optionstate.volumedown, N_("Volume Down"), NULL},
 	{"mute", '\0', 0, G_OPTION_ARG_NONE, &optionstate.mute, N_("Mute sound"), NULL},
 	{"fullscreen", '\0', 0, G_OPTION_ARG_NONE, &optionstate.fullscreen, N_("Toggle Fullscreen"), NULL},
+	{"toggle-controls", '\0', 0, G_OPTION_ARG_NONE, &optionstate.togglecontrols, N_("Show/Hide Controls"), NULL},
 	{"quit", '\0', 0, G_OPTION_ARG_NONE, &optionstate.quit, N_("Quit"), NULL},
 	{"enqueue", '\0', 0, G_OPTION_ARG_NONE, &optionstate.enqueue, N_("Enqueue"), NULL},
 	{"replace", '\0', 0, G_OPTION_ARG_NONE, &optionstate.replace, N_("Replace"), NULL},
 	{"seek", '\0', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_INT64, &optionstate.seek, N_("Seek"), NULL},
-	{"version", 0, G_OPTION_FLAG_NO_ARG | G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_CALLBACK, option_version_cb, NULL, NULL},
+	/* Translators: help for a (hidden) command line option to specify (the zero-based index of) a playlist entry to start playing once Totem's finished loading */
+	{"playlist-idx", '\0', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_DOUBLE, &optionstate.playlistidx, N_("Playlist index"), NULL},
+	{ "version", 0, G_OPTION_FLAG_NO_ARG | G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_CALLBACK, option_version_cb, NULL, NULL },
 	{G_OPTION_REMAINING, '\0', 0, G_OPTION_ARG_FILENAME_ARRAY, &optionstate.filenames, N_("Movies to play"), NULL},
 	{NULL} /* end the list */
 };
 
-static void
-totem_send_remote_command (Totem              *totem,
-			   TotemRemoteCommand  action,
-			   const char         *url)
+GOptionContext *
+totem_options_get_context (void)
 {
-	GVariant *variant;
+	GOptionContext *context;
+	GOptionGroup *baconoptiongroup;
 
-	variant = g_variant_new ("(is)", action, url ? url : "");
-	g_action_group_activate_action (G_ACTION_GROUP (totem), "remote-command", variant);
+	context = g_option_context_new (N_("- Play movies and songs"));
+	baconoptiongroup = bacon_video_widget_get_option_group ();
+	if (baconoptiongroup == NULL) {
+		g_warning ("Clutter or GTK+ failed to initialise properly");
+		g_option_context_free (context);
+		return NULL;
+	}
+	g_option_context_add_main_entries (context, all_options, GETTEXT_PACKAGE);
+	g_option_context_set_translation_domain (context, GETTEXT_PACKAGE);
+	g_option_context_add_group (context, baconoptiongroup);
+
+	g_option_context_add_group (context, gtk_get_option_group (FALSE));
+	/* FIXME:
+	 * This seems to hang on startup */
+	/* totem_session_add_options (context); */
+
+	return context;
 }
 
 void
-totem_options_process_for_server (Totem               *totem,
-				  TotemCmdLineOptions *options)
+totem_options_process_late (Totem *totem, const TotemCmdLineOptions *options)
+{
+	if (options->togglecontrols)
+		totem_action_toggle_controls (totem);
+
+	/* Handle --playlist-idx */
+	totem->index = options->playlistidx;
+
+	/* Handle --seek */
+	totem->seek_to_start = options->seek;
+}
+
+void
+totem_options_process_early (Totem *totem, const TotemCmdLineOptions* options)
+{
+	if (options->quit) {
+		/* If --quit is one of the commands, just quit */
+		gdk_notify_startup_complete ();
+		exit (0);
+	}
+
+	g_settings_set_boolean (totem->settings, "debug", options->debug);
+}
+
+void
+totem_options_process_for_server (Totem                     *totem,
+				  const TotemCmdLineOptions *options)
 {
 	TotemRemoteCommand action;
 	GList *commands, *l;
-	char **filenames;
 	int i;
 
 	commands = NULL;
@@ -91,32 +133,28 @@ totem_options_process_for_server (Totem               *totem,
 
 	/* Are we quitting ? */
 	if (options->quit) {
-		totem_send_remote_command (totem, TOTEM_REMOTE_COMMAND_QUIT, NULL);
+		totem_action_remote (totem, TOTEM_REMOTE_COMMAND_QUIT, NULL);
 		return;
 	}
 
 	/* Then handle the things that modify the playlist */
 	if (options->replace && options->enqueue) {
-		g_warning (_("Can’t enqueue and replace at the same time"));
+		g_warning (_("Can't enqueue and replace at the same time"));
 	} else if (options->replace) {
 		action = TOTEM_REMOTE_COMMAND_REPLACE;
 	} else if (options->enqueue) {
 		action = TOTEM_REMOTE_COMMAND_ENQUEUE;
 	}
 
-	filenames = options->filenames;
-	options->filenames = NULL;
-	options->had_filenames = (filenames != NULL);
-
 	/* Send the files to enqueue */
-	for (i = 0; filenames && filenames[i] != NULL; i++) {
+	for (i = 0; options->filenames && options->filenames[i] != NULL; i++) {
 		const char *filename;
 		char *full_path;
 
-		filename = filenames[i];
+		filename = options->filenames[i];
 		full_path = totem_create_full_path (filename);
 
-		totem_send_remote_command (totem, action, full_path ? full_path : filename);
+		totem_action_remote (totem, action, full_path ? full_path : filename);
 
 		g_free (full_path);
 
@@ -126,8 +164,6 @@ totem_options_process_for_server (Totem               *totem,
 			action = TOTEM_REMOTE_COMMAND_ENQUEUE;
 		}
 	}
-
-	g_clear_pointer (&filenames, g_strfreev);
 
 	if (options->playpause) {
 		commands = g_list_append (commands, GINT_TO_POINTER
@@ -184,16 +220,20 @@ totem_options_process_for_server (Totem               *totem,
 					  (TOTEM_REMOTE_COMMAND_FULLSCREEN));
 	}
 
+	if (options->togglecontrols) {
+		commands = g_list_append (commands, GINT_TO_POINTER
+					  (TOTEM_REMOTE_COMMAND_TOGGLE_CONTROLS));
+	}
+
 	/* No commands, no files, show ourselves */
-	if (commands == NULL &&
-	    !(g_application_get_flags (G_APPLICATION (totem)) & G_APPLICATION_IS_SERVICE)) {
-		totem_send_remote_command (totem, TOTEM_REMOTE_COMMAND_SHOW, NULL);
+	if (commands == NULL && options->filenames == NULL) {
+		totem_action_remote (totem, TOTEM_REMOTE_COMMAND_SHOW, NULL);
 		return;
 	}
 
 	/* Send commands */
 	for (l = commands; l != NULL; l = l->next) {
-		totem_send_remote_command (totem, GPOINTER_TO_INT (l->data), NULL);
+		totem_action_remote (totem, GPOINTER_TO_INT (l->data), NULL);
 	}
 
 	g_list_free (commands);

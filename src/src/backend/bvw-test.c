@@ -16,7 +16,7 @@ static void
 test_bvw_set_mrl (GtkWidget *bvw, const char *path)
 {
 	mrl = g_strdup (path);
-	bacon_video_widget_open (BACON_VIDEO_WIDGET (bvw), mrl);
+	bacon_video_widget_open (BACON_VIDEO_WIDGET (bvw), mrl, NULL);
 }
 
 static void
@@ -77,9 +77,6 @@ int main
 	GError *error = NULL;
 	GtkWidget *win, *bvw;
 	GtkSettings *gtk_settings;
-	GtkBox *box;
-	GtkToolItem *item;
-	GtkWidget *image;
 
 #ifdef GDK_WINDOWING_X11
 	XInitThreads ();
@@ -113,44 +110,18 @@ int main
 	g_object_set (G_OBJECT (gtk_settings), "gtk-application-prefer-dark-theme", TRUE, NULL);
 
 	win = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+	gtk_window_set_default_size (GTK_WINDOW (win), 500, 500);
 	g_signal_connect (G_OBJECT (win), "destroy",
 			G_CALLBACK (gtk_main_quit), NULL);
 
 	bvw = bacon_video_widget_new (NULL);
-	bacon_video_widget_set_logo (BACON_VIDEO_WIDGET (bvw), "org.gnome.Totem");
+	bacon_video_widget_set_logo (BACON_VIDEO_WIDGET (bvw), "totem");
+	bacon_video_widget_set_show_visualizations (BACON_VIDEO_WIDGET (bvw), TRUE);
 
 	g_signal_connect (G_OBJECT (bvw), "eos", G_CALLBACK (on_eos_event), NULL);
 	g_signal_connect (G_OBJECT (bvw), "got-metadata", G_CALLBACK (on_got_metadata), NULL);
 	g_signal_connect (G_OBJECT (bvw), "got-redirect", G_CALLBACK (on_redirect), NULL);
 	g_signal_connect (G_OBJECT (bvw), "error", G_CALLBACK (error_cb), NULL);
-
-	box = g_object_get_data (bacon_video_widget_get_controls_object (BACON_VIDEO_WIDGET (bvw)), "controls_box");
-
-	/* Previous */
-	item = gtk_tool_button_new (NULL, NULL);
-	gtk_tool_button_set_icon_name (GTK_TOOL_BUTTON (item), "media-skip-backward-symbolic");
-	gtk_box_pack_start (box, GTK_WIDGET (item), FALSE, FALSE, 0);
-
-	/* Play/Pause */
-	item = gtk_tool_button_new (NULL, NULL);
-	gtk_tool_button_set_icon_name (GTK_TOOL_BUTTON (item), "media-playback-start-symbolic");
-	gtk_box_pack_start (box, GTK_WIDGET (item), FALSE, FALSE, 0);
-
-	/* Next */
-	item = gtk_tool_button_new (NULL, NULL);
-	gtk_tool_button_set_icon_name (GTK_TOOL_BUTTON (item), "media-skip-forward-symbolic");
-	gtk_box_pack_start (box, GTK_WIDGET (item), FALSE, FALSE, 0);
-
-	/* Separator */
-	item = gtk_separator_tool_item_new ();
-	gtk_box_pack_start (box, GTK_WIDGET (item), FALSE, FALSE, 0);
-
-	/* Go button */
-	item = g_object_get_data (bacon_video_widget_get_controls_object (BACON_VIDEO_WIDGET (bvw)), "go_button");
-	image = gtk_image_new_from_icon_name ("view-more-symbolic", GTK_ICON_SIZE_SMALL_TOOLBAR);
-	gtk_button_set_image (GTK_BUTTON (item), image);
-
-	gtk_widget_show_all (GTK_WIDGET (box));
 
 	gtk_container_add (GTK_CONTAINER (win),bvw);
 

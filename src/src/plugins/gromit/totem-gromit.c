@@ -191,7 +191,6 @@ totem_gromit_clear (TotemGromitPlugin *plugin, gboolean now)
 	launch (visibility_cmd);
 	launch (clear_cmd);
 	plugin->priv->id = g_timeout_add_seconds (INTERVAL, totem_gromit_timeout_cb, plugin);
-	g_source_set_name_by_id (plugin->priv->id, "[totem] totem_gromit_timeout_cb");
 }
 
 static gboolean
@@ -235,7 +234,7 @@ impl_activate (PeasActivatable *plugin)
 #endif
 	}
 
-	window = totem_object_get_main_window (g_object_get_data (G_OBJECT (plugin), "object"));
+	window = totem_get_main_window (g_object_get_data (G_OBJECT (plugin), "object"));
 	pi->priv->handler_id = g_signal_connect (G_OBJECT(window), "key-press-event", 
 			G_CALLBACK (on_window_key_press_event), plugin);
 	g_object_unref (window);
@@ -248,7 +247,7 @@ impl_deactivate (PeasActivatable *plugin)
 	GtkWindow *window;
 
 	if (pi->priv->handler_id != 0) {
-		window = totem_object_get_main_window (g_object_get_data (G_OBJECT (plugin), "object"));
+		window = totem_get_main_window (g_object_get_data (G_OBJECT (plugin), "object"));
 		g_signal_handler_disconnect (G_OBJECT(window), pi->priv->handler_id);
 		pi->priv->handler_id = 0;
 		g_object_unref (window);

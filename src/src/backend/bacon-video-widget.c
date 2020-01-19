@@ -1,8 +1,7 @@
-/*
+/* 
  * Copyright (C) 2003-2007 the GStreamer project
  *      Julien Moutte <julien@moutte.net>
  *      Ronald Bultje <rbultje@ronald.bitfreak.net>
- * Copyright (C) 2003-2014 Bastien Nocera <hadess@hadess.net>
  * Copyright (C) 2005-2008 Tim-Philipp Müller <tim centricular net>
  * Copyright (C) 2009 Sebastian Dröge <sebastian.droege@collabora.co.uk>
  * Copyright © 2009 Christian Persch
@@ -79,20 +78,23 @@
 #include <gio/gio.h>
 #include <gdesktop-enums.h>
 
+#ifdef GDK_WINDOWING_X11
+#include <gtk/gtkx.h>
+#endif /* GDK_WINDOWING_X11 */
+
 #include "totem-gst-helpers.h"
 #include "totem-gst-pixbuf-helpers.h"
 #include "bacon-video-widget.h"
 #include "bacon-video-widget-gst-missing-plugins.h"
-#include "bacon-video-controls-actor.h"
-#include "bacon-video-spinner-actor.h"
+#include "bacon-video-osd-actor.h"
 #include "bacon-video-widget-enums.h"
+#include "video-utils.h"
 
 #define DEFAULT_USER_AGENT "Videos/"VERSION
 
-#define DEFAULT_CONTROLS_WIDTH 600             /* In pixels */
+#define OSD_SIZE 130                           /* Size of the OSD popup */
+#define OSD_MARGIN 8                           /* Pixels from the top-left */
 #define LOGO_SIZE 256                          /* Maximum size of the logo */
-#define REWIND_OR_PREVIOUS 4000
-#define POPUP_HIDING_TIMEOUT 2
 
 #define MAX_NETWORK_SPEED 10752
 #define BUFFERING_LEFT_RATIO 1.1
@@ -102,7 +104,6 @@
 #define SEEK_TIMEOUT NANOSECS_IN_SEC / 10
 #define FORWARD_RATE 1.0
 #define REVERSE_RATE -1.0
-#define DIRECTION_STR (forward == FALSE ? "reverse" : "forward")
 
 #define is_error(e, d, c) \
   (e->domain == GST_##d##_ERROR && \
@@ -128,9 +129,6 @@ enum
   SIGNAL_BUFFERING,
   SIGNAL_MISSING_PLUGINS,
   SIGNAL_DOWNLOAD_BUFFERING,
-  SIGNAL_SEEK_REQUESTED,
-  SIGNAL_TRACK_SKIP_REQUESTED,
-  SIGNAL_VOLUME_CHANGE_REQUESTED,
   LAST_SIGNAL
 };
 
@@ -145,17 +143,20 @@ enum
   PROP_PLAYING,
   PROP_REFERRER,
   PROP_SEEKABLE,
+  PROP_SHOW_CURSOR,
+  PROP_SHOW_VISUALIZATIONS,
   PROP_USER_AGENT,
   PROP_VOLUME,
   PROP_DOWNLOAD_FILENAME,
+  PROP_AUTO_RESIZE,
   PROP_DEINTERLACING,
+  PROP_VISUALIZATION_QUALITY,
   PROP_BRIGHTNESS,
   PROP_CONTRAST,
   PROP_SATURATION,
   PROP_HUE,
   PROP_AUDIO_OUTPUT_TYPE,
-  PROP_AV_OFFSET,
-  PROP_REVEAL_CONTROLS
+  PROP_AV_OFFSET
 };
 
 static const gchar *video_props_str[4] = {
@@ -175,7 +176,6 @@ struct BaconVideoWidgetPrivate
   BvwAspectRatio               ratio_type;
 
   GstElement                  *play;
-  GstElement                  *video_sink;
   GstNavigation               *navigation;
 
   guint                        update_id;
@@ -204,37 +204,38 @@ struct BaconVideoWidgetPrivate
   ClutterActor                *stage;
   ClutterActor                *texture;
   ClutterActor                *frame;
-  ClutterActor                *header_controls;
-  ClutterActor                *controls;
-  ClutterActor                *spinner;
+  ClutterActor                *osd;
 
   ClutterActor                *logo_frame;
-  ClutterContent              *logo;
+  ClutterActor                *logo;
 
   GdkCursor                   *cursor;
 
-  /* Controls */
-  gboolean                     reveal_controls;
-  guint                        transition_timeout_id;
-  GHashTable                  *busy_popup_ht; /* key=reason string, value=gboolean */
-
   /* Visual effects */
+  GList                       *vis_plugins_list;
+  GHashTable                  *vis_plugins_ht;
+  gboolean                     show_vfx;
+  BvwVisualizationQuality      visq;
+  gchar                       *vis_element_name;
   GstElement                  *audio_capsfilter;
   GstElement                  *audio_pitchcontrol;
 
   /* Other stuff */
   gboolean                     logo_mode;
   gboolean                     cursor_shown;
+  gboolean                     fullscreen_mode;
+  gboolean                     auto_resize;
   gboolean                     uses_audio_fakesink;
   gdouble                      volume;
   gboolean                     is_menu;
   gboolean                     has_angles;
-  GList                       *chapters;
 
   BvwRotation                  rotation;
   
   gint                         video_width; /* Movie width */
   gint                         video_height; /* Movie height */
+  gboolean                     window_resized; /* Whether the window has already been resized
+						  for this media */
   gint                         movie_par_n; /* Movie pixel aspect ratio numerator */
   gint                         movie_par_d; /* Movie pixel aspect ratio denominator */
   gint                         video_width_pixels; /* Scaled movie width */
@@ -260,6 +261,7 @@ struct BaconVideoWidgetPrivate
   GstState                     target_state;
   gboolean                     buffering;
   gboolean                     download_buffering;
+  GstElement                  *download_buffering_element;
   char                        *download_filename;
   /* used to compute when the download buffer has gone far
    * enough to start playback, not "amount of buffering time left
@@ -269,7 +271,6 @@ struct BaconVideoWidgetPrivate
   /* for easy codec installation */
   GList                       *missing_plugins;   /* GList of GstMessages */
   gboolean                     plugin_install_in_progress;
-  GCancellable                *missing_plugins_cancellable;
 
   /* for mounting locations if necessary */
   GCancellable                *mount_cancellable;
@@ -295,7 +296,8 @@ static void bacon_video_widget_get_property (GObject * object,
 
 static void bacon_video_widget_finalize (GObject * object);
 
-static void bvw_reconfigure_fill_timeout (BaconVideoWidget *bvw, guint msecs);
+static void setup_vis (BaconVideoWidget * bvw);
+static GList * get_visualization_features (void);
 static void size_changed_cb (GdkScreen *screen, BaconVideoWidget *bvw);
 static void bvw_stop_play_pipeline (BaconVideoWidget * bvw);
 static GError* bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage *m);
@@ -306,9 +308,6 @@ static gboolean bacon_video_widget_seek_time_no_lock (BaconVideoWidget *bvw,
 						      gint64 _time,
 						      GstSeekFlags flag,
 						      GError **error);
-static void set_controls_visibility (BaconVideoWidget *bvw,
-				     gboolean          visible,
-				     gboolean          animate);
 
 typedef struct {
   GstTagList *tags;
@@ -325,6 +324,16 @@ GST_DEBUG_CATEGORY (_totem_gst_debug_cat);
 #define GST_CAT_DEFAULT _totem_gst_debug_cat
 
 typedef gchar * (* MsgToStrFunc) (GstMessage * msg);
+
+static gboolean
+is_gtk_plug (GtkWidget *toplevel)
+{
+#ifdef GDK_WINDOWING_X11
+  return GTK_IS_PLUG(toplevel);
+#else
+  return FALSE;
+#endif /* GDK_WINDOWING_X11 */
+}
 
 static const gchar *
 get_type_name (GType class_type, int type)
@@ -371,7 +380,9 @@ bvw_get_missing_plugins_descriptions (const GList * missing_plugins)
 static void
 bvw_clear_missing_plugins_messages (BaconVideoWidget * bvw)
 {
-  g_list_free_full (bvw->priv->missing_plugins, (GDestroyNotify) gst_mini_object_unref);
+  g_list_foreach (bvw->priv->missing_plugins,
+                  (GFunc) gst_mini_object_unref, NULL);
+  g_list_free (bvw->priv->missing_plugins);
   bvw->priv->missing_plugins = NULL;
 }
 
@@ -409,7 +420,6 @@ bvw_check_if_video_decoder_is_missing (BaconVideoWidget * bvw)
 
 static void
 set_display_pixel_aspect_ratio (GdkScreen *screen,
-				int        monitor,
 				GValue    *value)
 {
   static const gint par[][2] = {
@@ -419,22 +429,19 @@ set_display_pixel_aspect_ratio (GdkScreen *screen,
     {54, 59},                   /* 625 line Rec.601 video */
     {64, 45},                   /* 1280x1024 on 16:9 display */
     {5, 3},                     /* 1280x1024 on 4:3 display */
-    {4, 3}                      /* 800x600 on 16:9 display */
+    {4, 3}                      /*  800x600 on 16:9 display */
   };
   guint i;
   gint par_index;
   gdouble ratio;
   gdouble delta;
-  GdkRectangle rect;
 
 #define DELTA(idx) (ABS (ratio - ((gdouble) par[idx][0] / par[idx][1])))
 
   /* first calculate the "real" ratio based on the X values;
-   * which is the "physical" w/h divided by the w/h in pixels of the display */
-  gdk_screen_get_monitor_geometry (screen, monitor, &rect);
-
-  ratio = (gdouble) (gdk_screen_get_monitor_width_mm (screen, monitor) * rect.height) /
-    (gdk_screen_get_monitor_height_mm (screen, monitor) * rect.width);
+   *    * which is the "physical" w/h divided by the w/h in pixels of the display */
+  ratio = (gdouble) (gdk_screen_get_width_mm (screen) * gdk_screen_get_height (screen))
+    / (gdk_screen_get_height_mm (screen) * gdk_screen_get_width (screen));
 
   GST_DEBUG ("calculated pixel aspect ratio: %f", ratio);
   /* now find the one from par[][2] with the lowest delta to the real one */
@@ -486,17 +493,8 @@ get_media_size (BaconVideoWidget *bvw, gint *width, gint *height)
       gst_value_set_fraction (&disp_par, 1, 1);
 
       /* Now try getting display's pixel aspect ratio */
-      if (gtk_widget_get_realized (GTK_WIDGET (bvw))) {
-	GdkScreen *screen;
-	GdkWindow *window;
-	int monitor = 0;
-
-	screen = gtk_widget_get_screen (GTK_WIDGET (bvw));
-	window = gtk_widget_get_window (GTK_WIDGET (bvw));
-	if (window)
-	  monitor = gdk_screen_get_monitor_at_window (screen, window);
-	set_display_pixel_aspect_ratio (screen, monitor, &disp_par);
-      }
+      if (gtk_widget_get_realized (GTK_WIDGET (bvw)))
+	set_display_pixel_aspect_ratio (gtk_widget_get_screen (GTK_WIDGET (bvw)), &disp_par);
 
       disp_par_n = gst_value_get_fraction_numerator (&disp_par);
       disp_par_d = gst_value_get_fraction_denominator (&disp_par);
@@ -590,36 +588,6 @@ get_media_size (BaconVideoWidget *bvw, gint *width, gint *height)
   }
 }
 
-static gboolean
-leave_notify_cb (GtkWidget        *widget,
-		 GdkEventCrossing *event,
-		 gpointer          user_data)
-{
-  gboolean res = GDK_EVENT_PROPAGATE;
-  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (user_data);
-  GdkDevice *device;
-
-  if (event->detail != GDK_NOTIFY_NONLINEAR &&
-      event->detail != GDK_NOTIFY_NONLINEAR_VIRTUAL)
-    return res;
-
-  device = gdk_event_get_source_device ((GdkEvent *) event);
-  if (gdk_device_get_source (device) == GDK_SOURCE_TOUCHSCREEN)
-    return res;
-
-  if (bvw->priv->reveal_controls) {
-    gboolean not_busy;
-
-    not_busy = g_hash_table_size (bvw->priv->busy_popup_ht) == 0;
-    if (not_busy) {
-      GST_DEBUG ("will hide because we're not busy and cursor left");
-      set_controls_visibility (bvw, FALSE, TRUE);
-    }
-  }
-
-  return res;
-}
-
 static void
 bacon_video_widget_realize (GtkWidget * widget)
 {
@@ -636,41 +604,18 @@ bacon_video_widget_realize (GtkWidget * widget)
 
   /* setup the toplevel, ready to be resized */
   toplevel = gtk_widget_get_toplevel (widget);
-  gtk_window_set_geometry_hints (GTK_WINDOW (toplevel), widget, NULL, 0);
-  g_signal_connect (G_OBJECT (toplevel), "leave-notify-event",
-		    G_CALLBACK (leave_notify_cb), bvw);
+  if (gtk_widget_is_toplevel (toplevel) &&
+      gtk_widget_get_parent (widget) != toplevel &&
+      !is_gtk_plug(toplevel))
+    gtk_window_set_geometry_hints (GTK_WINDOW (toplevel), widget, NULL, 0);
 
-  bvw->priv->missing_plugins_cancellable = g_cancellable_new ();
-  g_object_set_data_full (G_OBJECT (bvw), "missing-plugins-cancellable",
-			  bvw->priv->missing_plugins_cancellable, g_object_unref);
   bacon_video_widget_gst_missing_plugins_setup (bvw);
-}
-
-static void
-bacon_video_widget_unrealize (GtkWidget *widget)
-{
-  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
-  GtkWidget *toplevel;
-
-  GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
-
-  gtk_widget_set_realized (widget, FALSE);
-
-  g_signal_handlers_disconnect_by_func (G_OBJECT (gtk_widget_get_screen (widget)),
-					size_changed_cb, bvw);
-  toplevel = gtk_widget_get_toplevel (widget);
-  g_signal_handlers_disconnect_by_func (G_OBJECT (toplevel),
-					leave_notify_cb, bvw);
-
-  g_cancellable_cancel (bvw->priv->missing_plugins_cancellable);
-  bvw->priv->missing_plugins_cancellable = NULL;
-  g_object_set_data (G_OBJECT (bvw), "missing-plugins-cancellable", NULL);
 }
 
 static void
 size_changed_cb (GdkScreen *screen, BaconVideoWidget *bvw)
 {
-  bvw_check_for_cover_pixbuf (bvw);
+  setup_vis (bvw);
 }
 
 static void
@@ -685,7 +630,7 @@ set_current_actor (BaconVideoWidget *bvw)
    * If we have a cover image to display, we display it regardless of whether we're
    * doing visualisations. */
   draw_logo = bvw->priv->media_has_audio &&
-      !bvw->priv->media_has_video && bvw->priv->cover_pixbuf;
+      !bvw->priv->media_has_video && (!bvw->priv->show_vfx || bvw->priv->cover_pixbuf);
 
   if (bvw->priv->logo_mode || draw_logo) {
     const GdkPixbuf *pixbuf;
@@ -695,15 +640,16 @@ set_current_actor (BaconVideoWidget *bvw)
       gboolean ret;
       GError *err = NULL;
 
-      ret = clutter_image_set_data (CLUTTER_IMAGE (bvw->priv->logo),
-				    gdk_pixbuf_get_pixels (pixbuf),
-				    gdk_pixbuf_get_has_alpha (pixbuf) ? COGL_PIXEL_FORMAT_RGBA_8888 : COGL_PIXEL_FORMAT_RGB_888,
-				    gdk_pixbuf_get_width (pixbuf),
-				    gdk_pixbuf_get_height (pixbuf),
-				    gdk_pixbuf_get_rowstride (pixbuf),
-				    &err);
+      ret = clutter_texture_set_from_rgb_data (CLUTTER_TEXTURE (bvw->priv->logo),
+					       gdk_pixbuf_get_pixels (pixbuf),
+					       gdk_pixbuf_get_has_alpha (pixbuf),
+					       gdk_pixbuf_get_width (pixbuf),
+					       gdk_pixbuf_get_height (pixbuf),
+					       gdk_pixbuf_get_rowstride (pixbuf),
+					       gdk_pixbuf_get_has_alpha (pixbuf) ? 4 : 3,
+					       CLUTTER_TEXTURE_NONE, &err);
       if (ret == FALSE) {
-	g_warning ("clutter_image_set_data() failed %s", err->message);
+	g_message ("clutter_texture_set_from_rgb_data failed %s", err->message);
 	g_error_free (err);
       } else {
 	clutter_actor_show (CLUTTER_ACTOR (bvw->priv->logo_frame));
@@ -717,121 +663,6 @@ set_current_actor (BaconVideoWidget *bvw)
   clutter_actor_hide (CLUTTER_ACTOR (bvw->priv->logo_frame));
 }
 
-static void
-unschedule_hiding_popup (BaconVideoWidget *bvw)
-{
-  if (bvw->priv->transition_timeout_id > 0)
-    g_source_remove (bvw->priv->transition_timeout_id);
-  bvw->priv->transition_timeout_id = 0;
-}
-
-static gboolean
-hide_popup_timeout_cb (BaconVideoWidget *bvw)
-{
-  set_controls_visibility (bvw, FALSE, TRUE);
-  unschedule_hiding_popup (bvw);
-  return G_SOURCE_REMOVE;
-}
-
-static void
-schedule_hiding_popup (BaconVideoWidget *bvw)
-{
-  unschedule_hiding_popup (bvw);
-  bvw->priv->transition_timeout_id = g_timeout_add_seconds (POPUP_HIDING_TIMEOUT, (GSourceFunc) hide_popup_timeout_cb, bvw);
-  g_source_set_name_by_id (bvw->priv->transition_timeout_id, "[totem] hide_popup_timeout_cb");
-}
-
-static void
-set_show_cursor (BaconVideoWidget *bvw,
-		 gboolean show_cursor)
-{
-  GdkWindow *window;
-
-  bvw->priv->cursor_shown = show_cursor;
-  window = gtk_widget_get_window (GTK_WIDGET (bvw));
-
-  if (!window)
-    return;
-
-  if (show_cursor == FALSE) {
-    GdkCursor *cursor;
-
-    cursor = gdk_cursor_new (GDK_BLANK_CURSOR);
-    gdk_window_set_cursor (window, cursor);
-    g_object_unref (cursor);
-  } else {
-    gdk_window_set_cursor (window, bvw->priv->cursor);
-  }
-}
-
-static void
-set_controls_visibility (BaconVideoWidget *bvw,
-			 gboolean          visible,
-			 gboolean          animate)
-{
-  guint8 opacity = visible ? OVERLAY_OPACITY : 0;
-  gint header_controls_height;
-  gfloat header_controls_y;
-  guint duration;
-
-  gtk_widget_get_preferred_height (gtk_clutter_actor_get_widget (GTK_CLUTTER_ACTOR (bvw->priv->header_controls)),
-                                   NULL,
-                                   &header_controls_height);
-  header_controls_y = visible ? 0 : -header_controls_height;
-
-  duration = animate ? 250 : 0;
-
-  /* FIXME:
-   * Using a show/hide seems to not trigger the
-   * controls to redraw, so let's change the opacity instead */
-  clutter_actor_set_easing_duration (bvw->priv->controls, duration);
-  clutter_actor_set_easing_duration (bvw->priv->header_controls, duration);
-  clutter_actor_set_opacity (bvw->priv->controls, opacity);
-  clutter_actor_set_y (bvw->priv->header_controls, header_controls_y);
-
-  set_show_cursor (bvw, visible);
-  if (visible && animate)
-    schedule_hiding_popup (bvw);
-
-  bvw->priv->reveal_controls = visible;
-  g_object_notify (G_OBJECT (bvw), "reveal-controls");
-}
-
-static void
-translate_coords (GtkWidget   *widget,
-		  GdkWindow   *window,
-		  int          x,
-		  int          y,
-		  int         *out_x,
-		  int         *out_y)
-{
-  GtkWidget *src;
-
-  gdk_window_get_user_data (window, (gpointer *)&src);
-  if (src && src != widget) {
-    gtk_widget_translate_coordinates (src, widget, x, y, out_x, out_y);
-  } else {
-    *out_x = x;
-    *out_y = y;
-  }
-}
-
-static gboolean
-ignore_event (BaconVideoWidget *bvw,
-	      int               x,
-	      int               y)
-{
-  ClutterActor *actor;
-
-  actor = clutter_stage_get_actor_at_pos (CLUTTER_STAGE (bvw->priv->stage), CLUTTER_PICK_REACTIVE, x, y);
-
-  /* Eat the GTK+ event if we're not clicking on the video itself */
-  if (actor == bvw->priv->controls)
-    return TRUE;
-
-  return FALSE;
-}
-
 /* need to use gstnavigation interface for these vmethods, to allow for the sink
    to map screen coordinates to video coordinates in the presence of e.g.
    hardware scaling */
@@ -839,10 +670,8 @@ ignore_event (BaconVideoWidget *bvw,
 static gboolean
 bacon_video_widget_motion_notify (GtkWidget *widget, GdkEventMotion *event)
 {
-  gboolean res = GDK_EVENT_PROPAGATE;
+  gboolean res = FALSE;
   BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
-  GdkDevice *device;
-  int x, y;
 
   g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
 
@@ -852,161 +681,51 @@ bacon_video_widget_motion_notify (GtkWidget *widget, GdkEventMotion *event)
   if (GTK_WIDGET_CLASS (parent_class)->motion_notify_event)
     res |= GTK_WIDGET_CLASS (parent_class)->motion_notify_event (widget, event);
 
-  device = gdk_event_get_source_device ((GdkEvent *) event);
-  if (gdk_device_get_source (device) == GDK_SOURCE_TOUCHSCREEN)
-    return res;
-
-  if (!bvw->priv->reveal_controls)
-    set_controls_visibility (bvw, TRUE, TRUE);
-
-  translate_coords (widget, event->window, event->x, event->y, &x, &y);
-  if (ignore_event (bvw, x, y)) {
-    /* Is the mouse on the popups? */
-    unschedule_hiding_popup (bvw);
-  } else {
-    schedule_hiding_popup (bvw);
-  }
-
   return res;
 }
 
 static gboolean
-bacon_video_widget_button_press_or_release (GtkWidget *widget, GdkEventButton *event)
+bacon_video_widget_button_press (GtkWidget *widget, GdkEventButton *event)
 {
   gboolean res = FALSE;
   BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
-  int x, y;
-  GdkDevice *device;
-
-  device = gdk_event_get_source_device ((GdkEvent *) event);
-  if (gdk_device_get_source (device) == GDK_SOURCE_TOUCHSCREEN)
-    return FALSE;
 
   g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
 
-  translate_coords (widget, event->window, event->x, event->y, &x, &y);
-  if (ignore_event (bvw, x, y))
-    return GDK_EVENT_STOP;
-
-  if (event->type != GDK_BUTTON_PRESS &&
-      event->type != GDK_BUTTON_RELEASE)
-    goto bail;
-
-  if (bvw->priv->navigation &&
-      !bvw->priv->logo_mode &&
-      event->button == 1 &&
-      bvw->priv->is_menu != FALSE) {
-    const char *event_str;
-    event_str = (event->type == GDK_BUTTON_PRESS) ? "mouse-button-press" : "mouse-button-release";
+  if (bvw->priv->navigation && !bvw->priv->logo_mode) {
     gst_navigation_send_mouse_event (bvw->priv->navigation,
-				     event_str, event->button, x, y);
+				     "mouse-button-press", event->button, event->x, event->y);
 
     /* FIXME need to check whether the backend will have handled
      * the button press
      res = TRUE; */
   }
 
-bail:
-  if (event->type == GDK_BUTTON_PRESS && GTK_WIDGET_CLASS (parent_class)->button_press_event)
+  if (GTK_WIDGET_CLASS (parent_class)->button_press_event)
     res |= GTK_WIDGET_CLASS (parent_class)->button_press_event (widget, event);
-  if (event->type == GDK_BUTTON_RELEASE && GTK_WIDGET_CLASS (parent_class)->button_release_event)
-    res |= GTK_WIDGET_CLASS (parent_class)->button_release_event (widget, event);
 
   return res;
 }
 
 static gboolean
-bacon_video_widget_tap (ClutterTapAction *action,
-			ClutterActor     *actor,
-			BaconVideoWidget *bvw)
+bacon_video_widget_button_release (GtkWidget *widget, GdkEventButton *event)
 {
-  ClutterInputDevice *device;
-  const ClutterEvent *event;
-  gboolean value;
-
-  GST_DEBUG ("Tap event received");
-
-  event = clutter_gesture_action_get_last_event (CLUTTER_GESTURE_ACTION (action), 0);
-  if (!event)
-    return CLUTTER_EVENT_PROPAGATE;
-
-  device = clutter_event_get_source_device (event);
-  if (device == NULL ||
-      clutter_input_device_get_device_type (device) != CLUTTER_TOUCHSCREEN_DEVICE)
-    return CLUTTER_EVENT_PROPAGATE;
-
-  value = (clutter_actor_get_opacity (bvw->priv->controls) == 0);
-  set_controls_visibility (bvw, value, FALSE);
-  return CLUTTER_EVENT_STOP;
-}
-
-static gboolean
-bacon_video_widget_swipe (ClutterSwipeAction    *action,
-			  ClutterActor          *actor,
-			  ClutterSwipeDirection  direction,
-			  BaconVideoWidget      *bvw)
-{
-  GST_DEBUG ("Swipe event received");
-
-  if ((direction & CLUTTER_SWIPE_DIRECTION_UP) ||
-      (direction & CLUTTER_SWIPE_DIRECTION_DOWN)) {
-    if ((direction & CLUTTER_SWIPE_DIRECTION_LEFT) ||
-        (direction & CLUTTER_SWIPE_DIRECTION_RIGHT))
-      GST_DEBUG ("Ignoring diagonal swipe 0x%X", direction);
-      return CLUTTER_EVENT_PROPAGATE;
-  }
-
-  if (direction & CLUTTER_SWIPE_DIRECTION_LEFT)
-    g_signal_emit (G_OBJECT (bvw), bvw_signals[SIGNAL_SEEK_REQUESTED], 0,
-		   gtk_widget_get_direction (GTK_WIDGET (bvw)) == GTK_TEXT_DIR_RTL);
-  if (direction & CLUTTER_SWIPE_DIRECTION_RIGHT)
-    g_signal_emit (G_OBJECT (bvw), bvw_signals[SIGNAL_SEEK_REQUESTED], 0,
-		   gtk_widget_get_direction (GTK_WIDGET (bvw)) == GTK_TEXT_DIR_LTR);
-
-  return CLUTTER_EVENT_STOP;
-}
-
-static gboolean
-bacon_video_widget_handle_scroll (GtkWidget        *widget,
-				  GdkEventScroll   *event,
-				  BaconVideoWidget *bvw)
-{
-  int x, y;
-  gboolean forward;
-  gdouble delta_y;
+  gboolean res = FALSE;
+  BaconVideoWidget *bvw = BACON_VIDEO_WIDGET (widget);
 
   g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
 
-  if (event->direction != GDK_SCROLL_SMOOTH)
-    return GDK_EVENT_PROPAGATE;
+  if (bvw->priv->navigation && !bvw->priv->logo_mode) {
+    gst_navigation_send_mouse_event (bvw->priv->navigation,
+				     "mouse-button-release", event->button, event->x, event->y);
 
-  if (widget == (gpointer) bvw) {
-    translate_coords (widget, event->window, event->x, event->y, &x, &y);
-    if (ignore_event (bvw, x, y))
-      return GDK_EVENT_STOP;
+    res = TRUE;
   }
 
-  gdk_event_get_scroll_deltas ((GdkEvent *) event, NULL, &delta_y);
-  if (delta_y == 0.0)
-    return GDK_EVENT_PROPAGATE;
-  forward = delta_y >= 0.0 ? FALSE : TRUE;
+  if (GTK_WIDGET_CLASS (parent_class)->button_release_event)
+    res |= GTK_WIDGET_CLASS (parent_class)->button_release_event (widget, event);
 
-  if (widget == (gpointer) bvw ||
-      widget == g_object_get_data (G_OBJECT (bvw->priv->controls), "seek_scale")) {
-    if (bvw->priv->seekable > 0)
-      g_signal_emit (G_OBJECT (bvw), bvw_signals[SIGNAL_SEEK_REQUESTED], 0, forward);
-  } else if (widget == g_object_get_data (G_OBJECT (bvw->priv->controls), "volume_button")) {
-    if (bacon_video_widget_can_set_volume (bvw))
-      g_signal_emit (G_OBJECT (bvw), bvw_signals[SIGNAL_VOLUME_CHANGE_REQUESTED], 0, forward);
-  }
-
-  return GDK_EVENT_STOP;
-}
-
-static gboolean
-bacon_video_widget_scroll (GtkWidget *widget, GdkEventScroll *event)
-{
-  return bacon_video_widget_handle_scroll (widget, event, BACON_VIDEO_WIDGET (widget));
+  return res;
 }
 
 static void
@@ -1014,8 +733,7 @@ bacon_video_widget_get_preferred_width (GtkWidget *widget,
                                         gint      *minimum,
                                         gint      *natural)
 {
-  /* We could also make the actor a minimum width, based on its contents */
-  *minimum = *natural = DEFAULT_CONTROLS_WIDTH;
+  *minimum = *natural = 240;
 }
 
 static void
@@ -1023,7 +741,7 @@ bacon_video_widget_get_preferred_height (GtkWidget *widget,
                                          gint      *minimum,
                                          gint      *natural)
 {
-  *minimum = *natural = DEFAULT_CONTROLS_WIDTH / 16 * 9;
+  *minimum = *natural = 180;
 }
 
 static gboolean
@@ -1059,12 +777,12 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
   widget_class->get_preferred_width = bacon_video_widget_get_preferred_width;
   widget_class->get_preferred_height = bacon_video_widget_get_preferred_height;
   widget_class->realize = bacon_video_widget_realize;
-  widget_class->unrealize = bacon_video_widget_unrealize;
 
+  /* FIXME: Remove those when GtkClutterEmbedded passes on GDK XI 1.2
+   * events properly */
   widget_class->motion_notify_event = bacon_video_widget_motion_notify;
-  widget_class->button_press_event = bacon_video_widget_button_press_or_release;
-  widget_class->button_release_event = bacon_video_widget_button_press_or_release;
-  widget_class->scroll_event = bacon_video_widget_scroll;
+  widget_class->button_press_event = bacon_video_widget_button_press;
+  widget_class->button_release_event = bacon_video_widget_button_release;
 
   /* GObject */
   object_class->set_property = bacon_video_widget_set_property;
@@ -1140,6 +858,29 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                                                         G_PARAM_STATIC_STRINGS));
 
   /**
+   * BaconVideoWidget:show-cursor:
+   *
+   * Whether the cursor should be shown, or should be invisible, when it is over
+   * the video widget.
+   **/
+  g_object_class_install_property (object_class, PROP_SHOW_CURSOR,
+                                   g_param_spec_boolean ("show-cursor", "Show cursor?",
+                                                         "Whether the cursor should be shown.", FALSE,
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_STATIC_STRINGS));
+
+  /**
+   * BaconVideoWidget:show-visualizations:
+   *
+   * Whether visualisations should be shown for audio-only streams.
+   **/
+  g_object_class_install_property (object_class, PROP_SHOW_VISUALIZATIONS,
+                                   g_param_spec_boolean ("show-visualizations", "Show visualizations?",
+                                                         "Whether visualisations should be shown for audio-only streams.", FALSE,
+                                                         G_PARAM_WRITABLE |
+                                                         G_PARAM_STATIC_STRINGS));
+
+  /**
    * BaconVideoWidget:referrer:
    *
    * The HTTP referrer URI.
@@ -1173,6 +914,17 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                                                         G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
   /**
+   * BaconVideoWidget:auto-resize:
+   *
+   * Whether to automatically resize the video widget to the video size when loading a new video.
+   **/
+  g_object_class_install_property (object_class, PROP_AUTO_RESIZE,
+                                   g_param_spec_boolean ("auto-resize", "Auto resize?",
+                                                         "Whether to automatically resize the video widget to the video size.", FALSE,
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_STATIC_STRINGS));
+
+  /**
    * BaconVideoWidget:deinterlacing:
    *
    * Whether to automatically deinterlace videos.
@@ -1182,6 +934,18 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                                                          "Whether to automatically deinterlace videos.", FALSE,
                                                          G_PARAM_READWRITE |
                                                          G_PARAM_STATIC_STRINGS));
+
+  /**
+   * BaconVideoWidget:visualization-quality:
+   *
+   * The size of the visualizations to display when playing audio.
+   **/
+  g_object_class_install_property (object_class, PROP_VISUALIZATION_QUALITY,
+                                   g_param_spec_enum ("visualization-quality", "Visualization quality",
+                                                      "The size of the visualizations to display when playing audio.", BVW_TYPE_VISUALIZATION_QUALITY,
+                                                      BVW_VISUALIZATION_SMALL,
+                                                      G_PARAM_READWRITE |
+                                                      G_PARAM_STATIC_STRINGS));
 
   /**
    * BaconVideoWidget:brightness:
@@ -1253,21 +1017,9 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 						       0, G_PARAM_READWRITE |
 						       G_PARAM_STATIC_STRINGS));
 
-  /**
-   * BaconVideoWidget:reveal-controls:
-   *
-   * Whether to show or hide the controls.
-   **/
-  g_object_class_install_property (object_class, PROP_REVEAL_CONTROLS,
-                                   g_param_spec_boolean ("reveal-controls", "Reveal controls",
-                                                         "Whether to show or hide the controls.", FALSE,
-                                                         G_PARAM_READABLE |
-                                                         G_PARAM_STATIC_STRINGS));
-
   /* Signals */
   /**
    * BaconVideoWidget::error:
-   * @bvw: the #BaconVideoWidget which received the signal
    * @message: the error message
    * @playback_stopped: %TRUE if playback has stopped due to the error, %FALSE otherwise
    * @fatal: %TRUE if the error was fatal to playback, %FALSE otherwise
@@ -1286,7 +1038,6 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 
   /**
    * BaconVideoWidget::eos:
-   * @bvw: the #BaconVideoWidget which received the signal
    *
    * Emitted when the end of the current stream is reached.
    **/
@@ -1299,7 +1050,6 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 
   /**
    * BaconVideoWidget::got-metadata:
-   * @bvw: the #BaconVideoWidget which received the signal
    *
    * Emitted when the widget has updated the metadata of the current stream. This
    * will typically happen just after opening a stream.
@@ -1315,7 +1065,6 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 
   /**
    * BaconVideoWidget::got-redirect:
-   * @bvw: the #BaconVideoWidget which received the signal
    * @new_mrl: the new MRL
    *
    * Emitted when a redirect response is received from a stream's server.
@@ -1330,7 +1079,6 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 
   /**
    * BaconVideoWidget::channels-change:
-   * @bvw: the #BaconVideoWidget which received the signal
    *
    * Emitted when the number of audio languages available changes, or when the
    * selected audio language is changed.
@@ -1346,7 +1094,6 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 
   /**
    * BaconVideoWidget::tick:
-   * @bvw: the #BaconVideoWidget which received the signal
    * @current_time: the current position in the stream, in milliseconds since the beginning of the stream
    * @stream_length: the length of the stream, in milliseconds
    * @current_position: the current position in the stream, as a percentage between <code class="literal">0</code> and <code class="literal">1</code>
@@ -1366,7 +1113,6 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 
   /**
    * BaconVideoWidget::buffering:
-   * @bvw: the #BaconVideoWidget which received the signal
    * @percentage: the percentage of buffering completed, between <code class="literal">0</code> and <code class="literal">1</code>
    *
    * Emitted regularly when a network stream is being buffered, to provide status updates on the buffering
@@ -1382,7 +1128,6 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 
   /**
    * BaconVideoWidget::missing-plugins:
-   * @bvw: the #BaconVideoWidget which received the signal
    * @details: a %NULL-terminated array of missing plugin details for use when installing the plugins with libgimme-codec
    * @descriptions: a %NULL-terminated array of missing plugin descriptions for display to the user
    * @playing: %TRUE if the stream could be played even without these plugins, %FALSE otherwise
@@ -1405,7 +1150,6 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
 
   /**
    * BaconVideoWidget::download-buffering:
-   * @bvw: the #BaconVideoWidget which received the signal
    * @percentage: the percentage of download buffering completed, between <code class="literal">0</code> and <code class="literal">1</code>
    *
    * Emitted regularly when a network stream is being cached on disk, to provide status
@@ -1418,52 +1162,6 @@ bacon_video_widget_class_init (BaconVideoWidgetClass * klass)
                   G_STRUCT_OFFSET (BaconVideoWidgetClass, download_buffering),
                   NULL, NULL,
                   g_cclosure_marshal_VOID__DOUBLE, G_TYPE_NONE, 1, G_TYPE_DOUBLE);
-
-  /**
-   * BaconVideoWidget::seek-requested:
-   * @bvw: the #BaconVideoWidget which received the signal
-   * @forward: whether the seek requested is a forward or backward seek.
-   *
-   * Emitted when a gesture, our mouse movement that should seek is made.
-   **/
-  bvw_signals[SIGNAL_SEEK_REQUESTED] =
-    g_signal_new ("seek-requested",
-                  G_TYPE_FROM_CLASS (object_class),
-                  G_SIGNAL_RUN_LAST,
-                  0,
-                  NULL, NULL,
-                  g_cclosure_marshal_generic, G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
-
-  /**
-   * BaconVideoWidget::track-skip-requested:
-   * @bvw: the #BaconVideoWidget which received the signal
-   * @forward: whether the track change requested is a forward or backward skip.
-   *
-   * Emitted when a gesture, our mouse movement that should seek is made.
-   **/
-  bvw_signals[SIGNAL_TRACK_SKIP_REQUESTED] =
-    g_signal_new ("track-skip-requested",
-                  G_TYPE_FROM_CLASS (object_class),
-                  G_SIGNAL_RUN_LAST,
-                  0,
-                  NULL, NULL,
-                  g_cclosure_marshal_generic, G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
-
-  /**
-   * BaconVideoWidget::volume-change-requested:
-   * @bvw: the #BaconVideoWidget which received the signal
-   * @increase: whether the volume change requested is an increase or decrease.
-   *
-   * Emitted when a gesture, our mouse movement that should change the volume
-   * is emitted.
-   **/
-  bvw_signals[SIGNAL_VOLUME_CHANGE_REQUESTED] =
-    g_signal_new ("volume-change-requested",
-                  G_TYPE_FROM_CLASS (object_class),
-                  G_SIGNAL_RUN_LAST,
-                  0,
-                  NULL, NULL,
-                  g_cclosure_marshal_generic, G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
 }
 
 static void
@@ -1478,8 +1176,6 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
   g_type_class_ref (BVW_TYPE_ROTATION);
 
   bvw->priv = priv = G_TYPE_INSTANCE_GET_PRIVATE (bvw, BACON_TYPE_VIDEO_WIDGET, BaconVideoWidgetPrivate);
-
-  g_object_set (G_OBJECT (bvw), "use-layout-size", TRUE, NULL);
 
   priv->update_id = 0;
   priv->tagcache = NULL;
@@ -1504,8 +1200,6 @@ bacon_video_widget_init (BaconVideoWidget * bvw)
   priv->mount_in_progress = FALSE;
   priv->auth_last_result = G_MOUNT_OPERATION_HANDLED;
   priv->auth_dialog = NULL;
-
-  priv->busy_popup_ht = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
 
   bacon_video_widget_gst_missing_plugins_blacklist ();
 }
@@ -1548,6 +1242,12 @@ bvw_handle_application_message (BaconVideoWidget *bvw, GstMessage *msg)
     get_media_size (bvw, &w, &h);
     clutter_actor_set_size (bvw->priv->texture, w, h);
 
+    if (bvw->priv->auto_resize
+	&& !bvw->priv->fullscreen_mode
+	&& !bvw->priv->window_resized) {
+      bacon_video_widget_set_scale_ratio (bvw, 0.0);
+    }
+    bvw->priv->window_resized = TRUE;
     set_current_actor (bvw);
   } else {
     g_debug ("Unhandled application message %s", msg_name);
@@ -1570,45 +1270,35 @@ mount_cb (GObject *obj, GAsyncResult *res, gpointer user_data)
   gboolean ret;
   gchar *uri;
   GError *error = NULL;
-  GError *err = NULL;
-  GstMessage *msg;
 
   ret = g_file_mount_enclosing_volume_finish (G_FILE (obj), res, &error);
-  if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
-    return;
 
   g_clear_object (&bvw->priv->mount_cancellable);
   bvw->priv->mount_in_progress = FALSE;
 
-  uri = g_strdup (bvw->priv->mrl);
+  g_object_get (G_OBJECT (bvw->priv->play), "uri", &uri, NULL);
 
   if (ret) {
-    GstState target_state;
 
     GST_DEBUG ("Mounting location '%s' successful", GST_STR_NULL (uri));
-    /* Save the expected pipeline state */
-    target_state = bvw->priv->target_state;
-    bacon_video_widget_open (bvw, uri);
-    if (target_state == GST_STATE_PLAYING)
+    if (bvw->priv->target_state == GST_STATE_PLAYING)
       bacon_video_widget_play (bvw, NULL);
-    g_free (uri);
-    return;
-  }
+  } else {
+    GError *err = NULL;
+    GstMessage *msg;
 
-  if (!ret)
     GST_DEBUG ("Mounting location '%s' failed: %s", GST_STR_NULL (uri), error->message);
-  else
-    GST_DEBUG ("Failed to set '%s' back to playing: %s", GST_STR_NULL (uri), error->message);
 
-  /* create a fake GStreamer error so we get a nice warning message */
-  err = g_error_new_literal (GST_RESOURCE_ERROR, GST_RESOURCE_ERROR_OPEN_READ, error->message);
-  msg = gst_message_new_error (GST_OBJECT (bvw->priv->play), err, error->message);
-  g_error_free (err);
-  g_error_free (error);
-  err = bvw_error_from_gst_error (bvw, msg);
-  gst_message_unref (msg);
-  g_signal_emit (bvw, bvw_signals[SIGNAL_ERROR], 0, err->message, FALSE);
-  g_error_free (err);
+    /* create a fake GStreamer error so we get a nice warning message */
+    err = g_error_new_literal (GST_RESOURCE_ERROR, GST_RESOURCE_ERROR_OPEN_READ, error->message);
+    msg = gst_message_new_error (GST_OBJECT (bvw->priv->play), err, error->message);
+    g_error_free (err);
+    g_error_free (error);
+    err = bvw_error_from_gst_error (bvw, msg);
+    gst_message_unref (msg);
+    g_signal_emit (bvw, bvw_signals[SIGNAL_ERROR], 0, err->message, FALSE);
+    g_error_free (err);
+  }
 
   g_free (uri);
 }
@@ -1663,11 +1353,9 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
     GFile *file;
     GMountOperation *mount_op;
     GtkWidget *toplevel;
-    GstState target_state;
-    const char *uri;
+    gchar *uri;
 
-    val = gst_structure_get_value (structure, "uri");
-    uri = g_value_get_string (val);
+    g_object_get (G_OBJECT (bvw->priv->play), "uri", &uri, NULL);
 
     if (bvw->priv->mount_in_progress) {
       g_cancellable_cancel (bvw->priv->mount_cancellable);
@@ -1676,7 +1364,8 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
     }
 
     GST_DEBUG ("Trying to mount location '%s'", GST_STR_NULL (uri));
-
+    g_free (uri);
+    
     toplevel = gtk_widget_get_toplevel (GTK_WIDGET (bvw));
     if (toplevel == GTK_WIDGET (bvw) || !GTK_IS_WINDOW (toplevel))
       toplevel = NULL;
@@ -1689,10 +1378,7 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
     if (file == NULL)
       goto done;
 
-    /* Save and restore the expected pipeline state */
-    target_state = bvw->priv->target_state;
     bacon_video_widget_stop (bvw);
-    bvw->priv->target_state = target_state;
 
     mount_op = gtk_mount_operation_new (toplevel ? GTK_WINDOW (toplevel) : NULL);
     bvw->priv->mount_in_progress = TRUE;
@@ -1701,20 +1387,6 @@ bvw_handle_element_message (BaconVideoWidget *bvw, GstMessage *msg)
         mount_op, bvw->priv->mount_cancellable, mount_cb, bvw);
 
     g_object_unref (mount_op);
-    goto done;
-  } else if (strcmp (type_name, "GstCacheDownloadComplete") == 0) {
-    const gchar *location;
-
-    /* do query for the last time */
-    bvw_query_buffering_timeout (bvw);
-    /* Finished buffering the whole file, so don't run the timeout anymore */
-    bvw_reconfigure_fill_timeout (bvw, 0);
-
-    /* Tell the front-end about the downloaded file */
-    g_object_notify (G_OBJECT (bvw), "download-filename");
-
-    location = gst_structure_get_string (structure, "location");
-    GST_DEBUG ("Finished download of '%s'", GST_STR_NULL (location));
     goto done;
   } else {
     GstNavigationMessageType nav_msg_type =
@@ -1817,7 +1489,6 @@ bvw_reconfigure_tick_timeout (BaconVideoWidget *bvw, guint msecs)
     GST_DEBUG ("adding tick timeout (at %ums)", msecs);
     bvw->priv->update_id =
       g_timeout_add (msecs, (GSourceFunc) bvw_query_timeout, bvw);
-    g_source_set_name_by_id (bvw->priv->update_id, "[totem] bvw_query_timeout");
   }
 }
 
@@ -1833,7 +1504,6 @@ bvw_reconfigure_fill_timeout (BaconVideoWidget *bvw, guint msecs)
     GST_DEBUG ("adding fill timeout (at %ums)", msecs);
     bvw->priv->fill_id =
       g_timeout_add (msecs, (GSourceFunc) bvw_query_buffering_timeout, bvw);
-    g_source_set_name_by_id (bvw->priv->fill_id, "[totem] bvw_query_buffering_timeout");
   }
 }
 
@@ -2027,56 +1697,20 @@ bvw_check_missing_plugins_on_preroll (BaconVideoWidget * bvw)
 }
 
 static void
-update_orientation_from_video (BaconVideoWidget *bvw)
-{
-  BvwRotation rotation = BVW_ROTATION_R_ZERO;
-  char *orientation_str = NULL;
-  gboolean ret;
-  gdouble angle;
-
-  /* Don't change the rotation if explicitely set */
-  if (bvw->priv->rotation != BVW_ROTATION_R_ZERO)
-    return;
-
-  ret = gst_tag_list_get_string_index (bvw->priv->tagcache,
-				       GST_TAG_IMAGE_ORIENTATION, 0, &orientation_str);
-  if (!ret || !orientation_str || g_str_equal (orientation_str, "rotate-0"))
-    rotation = BVW_ROTATION_R_ZERO;
-  else if (g_str_equal (orientation_str, "rotate-90"))
-    rotation = BVW_ROTATION_R_90R;
-  else if (g_str_equal (orientation_str, "rotate-180"))
-    rotation = BVW_ROTATION_R_180;
-  else if (g_str_equal (orientation_str, "rotate-270"))
-    rotation = BVW_ROTATION_R_90L;
-  else
-    g_warning ("Unhandled orientation value: '%s'", orientation_str);
-
-  g_free (orientation_str);
-
-  angle = rotation * 90.0;
-  totem_aspect_frame_set_rotation (TOTEM_ASPECT_FRAME (bvw->priv->frame), angle);
-}
-
-static void
 bvw_update_tags (BaconVideoWidget * bvw, GstTagList *tag_list, const gchar *type)
 {
   GstTagList **cache = NULL;
   GstTagList *result;
 
+  GST_DEBUG ("Tags: %" GST_PTR_FORMAT, tag_list);
+
   /* all tags (replace previous tags, title/artist/etc. might change
    * in the middle of a stream, e.g. with radio streams) */
   result = gst_tag_list_merge (bvw->priv->tagcache, tag_list,
                                    GST_TAG_MERGE_REPLACE);
-  if (bvw->priv->tagcache &&
-      result &&
-      gst_tag_list_is_equal (result, bvw->priv->tagcache)) {
-    gst_tag_list_unref (result);
-    GST_WARNING ("Pipeline sent %s tags update with no changes", type);
-    return;
-  }
-  g_clear_pointer (&bvw->priv->tagcache, gst_tag_list_unref);
+  if (bvw->priv->tagcache)
+    gst_tag_list_unref (bvw->priv->tagcache);
   bvw->priv->tagcache = result;
-  GST_DEBUG ("Tags: %" GST_PTR_FORMAT, tag_list);
 
   /* media-type-specific tags */
   if (!strcmp (type, "video")) {
@@ -2099,8 +1733,6 @@ bvw_update_tags (BaconVideoWidget * bvw, GstTagList *tag_list, const gchar *type
   bvw_check_for_cover_pixbuf (bvw);
 
   g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0);
-
-  update_orientation_from_video (bvw);
 
   set_current_actor (bvw);
 }
@@ -2142,10 +1774,8 @@ bvw_update_tags_delayed (BaconVideoWidget *bvw, GstTagList *tags, const gchar *t
   g_async_queue_lock (bvw->priv->tag_update_queue);
   g_async_queue_push_unlocked (bvw->priv->tag_update_queue, data);
 
-  if (bvw->priv->tag_update_id == 0) {
+  if (bvw->priv->tag_update_id == 0)
     bvw->priv->tag_update_id = g_idle_add ((GSourceFunc) bvw_update_tags_dispatcher, bvw);
-    g_source_set_name_by_id (bvw->priv->tag_update_id, "[totem] bvw_update_tags_dispatcher");
-  }
 
   g_async_queue_unlock (bvw->priv->tag_update_queue);
 }
@@ -2225,7 +1855,7 @@ bvw_download_buffering_done (BaconVideoWidget *bvw)
   }
 
   if (bvw->priv->buffering_left * BUFFERING_LEFT_RATIO < bvw->priv->stream_length - bvw->priv->current_time) {
-    GST_DEBUG ("Buffering left: %" G_GINT64_FORMAT " * %f, = %f < %" G_GUINT64_FORMAT,
+    GST_DEBUG ("Buffering left: %lld * %f = %lld < %lld",
 	       bvw->priv->buffering_left, BUFFERING_LEFT_RATIO,
 	       bvw->priv->buffering_left * BUFFERING_LEFT_RATIO,
 	       bvw->priv->stream_length - bvw->priv->current_time);
@@ -2250,6 +1880,7 @@ bvw_handle_buffering_message (GstMessage * message, BaconVideoWidget *bvw)
        gst_element_set_state (GST_ELEMENT (bvw->priv->play), GST_STATE_PAUSED);
 
        bvw_reconfigure_fill_timeout (bvw, 200);
+       bvw->priv->download_buffering_element = g_object_ref (message->src);
      }
 
      return;
@@ -2265,15 +1896,6 @@ bvw_handle_buffering_message (GstMessage * message, BaconVideoWidget *bvw)
    /* Live, timeshift and stream buffering modes */
   gst_message_parse_buffering (message, &percent);
   g_signal_emit (bvw, bvw_signals[SIGNAL_BUFFERING], 0, (gdouble) percent / 100.0);
-
-  if (percent >= 100) {
-    clutter_actor_hide (bvw->priv->spinner);
-    /* Reset */
-    g_object_set (G_OBJECT (bvw->priv->spinner), "percent", 0.0, NULL);
-  } else {
-    clutter_actor_show (bvw->priv->spinner);
-    g_object_set (G_OBJECT (bvw->priv->spinner), "percent", (float) percent, NULL);
-  }
 
   if (percent >= 100) {
     /* a 100% message means buffering is done */
@@ -2298,7 +1920,6 @@ bvw_handle_buffering_message (GstMessage * message, BaconVideoWidget *bvw)
     bvw->priv->buffering = TRUE;
   } else {
     GST_LOG ("Buffering ... %d", percent);
-    bvw->priv->buffering = TRUE;
   }
 }
 
@@ -2312,53 +1933,6 @@ bvw_get_navigation_if_available (BaconVideoWidget *bvw)
 
   if (nav)
     bvw->priv->navigation = GST_NAVIGATION (nav);
-}
-
-static void
-bvw_handle_toc_message (GstMessage       *message,
-			BaconVideoWidget *bvw)
-{
-  GstToc *toc;
-  GList *entries, *l;
-  guint i;
-
-  gst_message_parse_toc (message, &toc, NULL);
-  if (gst_toc_get_scope (toc) != GST_TOC_SCOPE_GLOBAL)
-    goto out;
-
-  entries = gst_toc_get_entries (toc);
-
-parse:
-  if (entries == NULL)
-    goto out;
-  if (gst_toc_entry_get_entry_type (entries->data) != GST_TOC_ENTRY_TYPE_CHAPTER) {
-    if (g_list_length (entries) == 1) {
-      entries = gst_toc_entry_get_sub_entries (entries->data);
-      goto parse;
-    }
-    goto out;
-  }
-
-  GST_DEBUG ("Found %d chapters", g_list_length (entries));
-
-  if (bvw->priv->chapters)
-    g_list_free_full (bvw->priv->chapters, (GDestroyNotify) gst_mini_object_unref);
-
-  for (l = entries, i = 0; l != NULL; l = l->next, i++) {
-    GstTocEntry *entry = l->data;
-    gint64 start, stop;
-
-    if (!gst_toc_entry_get_start_stop_times (entry, &start, &stop)) {
-      GST_DEBUG ("Chapter #%d (couldn't get times)", i);
-    } else {
-      GST_DEBUG ("Chapter #%d (start: %" G_GINT64_FORMAT " stop: %" G_GINT64_FORMAT ")", i, start, stop);
-    }
-  }
-
-  bvw->priv->chapters = g_list_copy_deep (entries, (GCopyFunc) gst_mini_object_ref, NULL);
-
-out:
-  gst_toc_unref (toc);
 }
 
 static void
@@ -2413,10 +1987,8 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, BaconVideoWidget *bvw)
       GST_DEBUG ("EOS message");
       /* update slider one last time */
       bvw_query_timeout (bvw);
-      if (bvw->priv->eos_id == 0) {
+      if (bvw->priv->eos_id == 0)
         bvw->priv->eos_id = g_idle_add (bvw_signal_eos_delayed, bvw);
-        g_source_set_name_by_id (bvw->priv->eos_id, "[totem] bvw_signal_eos_delayed");
-      }
       break;
     case GST_MESSAGE_BUFFERING:
       bvw_handle_buffering_message (message, bvw);
@@ -2485,7 +2057,7 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, BaconVideoWidget *bvw)
       }
       break;
     }
-    case GST_MESSAGE_ELEMENT: {
+    case GST_MESSAGE_ELEMENT:{
       bvw_handle_element_message (bvw, message);
       break;
     }
@@ -2523,11 +2095,6 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, BaconVideoWidget *bvw)
       break;
     }
 
-    case GST_MESSAGE_TOC: {
-	bvw_handle_toc_message (message, bvw);
-	break;
-    }
-
     /* FIXME: at some point we might want to handle CLOCK_LOST and set the
      * pipeline back to PAUSED and then PLAYING again to select a different
      * clock (this seems to trip up rtspsrc though so has to wait until
@@ -2552,10 +2119,6 @@ bvw_bus_message_cb (GstBus * bus, GstMessage * message, BaconVideoWidget *bvw)
     case GST_MESSAGE_QOS:
     case GST_MESSAGE_PROGRESS:
     case GST_MESSAGE_ANY:
-    case GST_MESSAGE_RESET_TIME:
-    case GST_MESSAGE_STREAM_START:
-    case GST_MESSAGE_NEED_CONTEXT:
-    case GST_MESSAGE_HAVE_CONTEXT:
     default:
       GST_LOG ("Unhandled message: %" GST_PTR_FORMAT, message);
       break;
@@ -2587,12 +2150,12 @@ got_time_tick (GstElement * play, gint64 time_nanos, BaconVideoWidget * bvw)
   bvw->priv->is_live = (bvw->priv->stream_length == 0);
 
 /*
-  GST_DEBUG ("current time: %" GST_TIME_FORMAT ", stream length: %" GST_TIME_FORMAT ", seekable: %s",
-      GST_TIME_ARGS (bvw->priv->current_time * GST_MSECOND),
-      GST_TIME_ARGS (bvw->priv->stream_length * GST_MSECOND),
+  GST_DEBUG ("%" GST_TIME_FORMAT ",%" GST_TIME_FORMAT " %s",
+      GST_TIME_ARGS (bvw->priv->current_time),
+      GST_TIME_ARGS (bvw->priv->stream_length),
       (seekable) ? "TRUE" : "FALSE");
 */
-
+  
   g_signal_emit (bvw, bvw_signals[SIGNAL_TICK], 0,
                  bvw->priv->current_time, bvw->priv->stream_length,
                  bvw->priv->current_position,
@@ -2795,58 +2358,68 @@ bvw_query_buffering_timeout (BaconVideoWidget *bvw)
   GstQuery *query;
   GstElement *element;
 
-  element = bvw->priv->play;
+  element = bvw->priv->download_buffering_element;
+  if (element == NULL)
+    element = bvw->priv->play;
 
   query = gst_query_new_buffering (GST_FORMAT_PERCENT);
   if (gst_element_query (element, query)) {
-    gint64 stop, estimated_total;
+    gint64 start, stop;
+    GstFormat format;
     gdouble fill;
-    guint n_ranges, i, pos;
+    gboolean busy;
+    gint percent;
 
-    gst_query_parse_buffering_range (query, NULL, NULL, &stop, &estimated_total);
+    gst_query_parse_buffering_stats (query, NULL, NULL, NULL, &bvw->priv->buffering_left);
+    gst_query_parse_buffering_percent (query, &busy, &percent);
+    gst_query_parse_buffering_range (query, &format, &start, &stop, NULL);
 
-    /* stop expresses the last bit of data that we have from the currently downloading
-     * region and is a good value to use for the fill level if it is after our
-     * current position. */
-    pos = bvw->priv->current_position * GST_FORMAT_PERCENT_MAX;
-    if (stop < pos)
-      stop = -1;
+    GST_DEBUG ("start %" G_GINT64_FORMAT ", stop %" G_GINT64_FORMAT
+	       ", buffering left %" G_GINT64_FORMAT ", percent %d%%",
+	       start, stop, bvw->priv->buffering_left, percent);
 
-    n_ranges = gst_query_get_n_buffering_ranges (query);
-
+#if 0
+    guint i;
     for (i = 0; i < n_ranges; i++) {
       gint64 n_start, n_stop;
       gst_query_parse_nth_buffering_range (query, i, &n_start, &n_stop);
-
-      /* take first stop after current offset if not known */
-      if (stop == -1 && n_stop > pos)
-        stop = n_stop;
-
       GST_DEBUG ("%s range %d: start %" G_GINT64_FORMAT " stop %" G_GINT64_FORMAT,
 		 n_stop == stop ? "*" : " ",
 		 i, n_start, n_stop);
     }
-    /* if no fill level, just take the current position */
-    if (stop == -1)
-      stop = pos;
+#endif
 
-    /* estimated_total is the amount of time it will take to download the
-     * remaining part of the file, from the current position to the end. */
-    bvw->priv->buffering_left = estimated_total;
-    GST_DEBUG ("stop %" G_GINT64_FORMAT ", buffering left %" G_GINT64_FORMAT,
-               stop, bvw->priv->buffering_left);
+    if (stop != -1)
+      fill = (gdouble) stop / GST_FORMAT_PERCENT_MAX;
+    else
+      fill = -1.0;
 
-    fill = (gdouble) stop / GST_FORMAT_PERCENT_MAX;
     GST_DEBUG ("download buffer filled up to %f%% (element: %s)", fill * 100.0,
 	       G_OBJECT_TYPE_NAME (element));
 
     g_signal_emit (bvw, bvw_signals[SIGNAL_DOWNLOAD_BUFFERING], 0, fill);
+
+    /* Nothing left to buffer when fill is 100% */
+    if (fill == 1.0)
+      bvw->priv->buffering_left = 0;
 
     /* Start playing when we've downloaded enough */
     if (bvw_download_buffering_done (bvw) != FALSE &&
 	bvw->priv->target_state == GST_STATE_PLAYING) {
       GST_DEBUG ("Starting playback because the download buffer is filled enough");
       bacon_video_widget_play (bvw, NULL);
+    }
+
+    /* Finished buffering, so don't run the timeout anymore */
+    if (fill == 1.0) {
+      bvw->priv->fill_id = 0;
+      gst_query_unref (query);
+      g_clear_object (&bvw->priv->download_buffering_element);
+
+      /* Tell the front-end about the downloaded file */
+      g_object_notify (G_OBJECT (bvw), "download-filename");
+
+      return FALSE;
     }
   } else {
     g_debug ("Failed to query the source element for buffering info in percent");
@@ -2898,6 +2471,9 @@ caps_set (GObject * obj,
   gst_caps_unref (caps);
 }
 
+static void get_visualization_size (BaconVideoWidget *bvw,
+                                    int *w, int *h, gint *fps_n, gint *fps_d);
+
 static void
 parse_stream_info (BaconVideoWidget *bvw)
 {
@@ -2919,7 +2495,20 @@ parse_stream_info (BaconVideoWidget *bvw)
       g_signal_emit_by_name (bvw->priv->play, "get-video-pad", i, &videopad);
   }
 
-  bvw->priv->media_has_audio = (n_audio > 0);
+  bvw->priv->media_has_audio = FALSE;
+  if (n_audio > 0) {
+    bvw->priv->media_has_audio = TRUE;
+    if (!bvw->priv->media_has_video) {
+      gint flags;
+
+      g_object_get (bvw->priv->play, "flags", &flags, NULL);
+      if (bvw->priv->show_vfx && !bvw->priv->cover_pixbuf)
+	flags |= GST_PLAY_FLAG_VIS;
+      else
+	flags &= ~GST_PLAY_FLAG_VIS;
+      g_object_set (bvw->priv->play, "flags", flags, NULL);
+    }
+  }
 
   if (videopad) {
     GstCaps *caps;
@@ -2931,6 +2520,9 @@ parse_stream_info (BaconVideoWidget *bvw)
     g_signal_connect (videopad, "notify::caps",
         G_CALLBACK (caps_set), bvw);
     gst_object_unref (videopad);
+  } else if (bvw->priv->show_vfx) {
+    get_visualization_size (bvw, &bvw->priv->video_width,
+        &bvw->priv->video_height, NULL, NULL);
   }
 
   set_current_actor (bvw);
@@ -2960,8 +2552,6 @@ bacon_video_widget_finalize (GObject * object)
   g_type_class_unref (g_type_class_peek (BVW_TYPE_DVD_EVENT));
   g_type_class_unref (g_type_class_peek (BVW_TYPE_ROTATION));
 
-  unschedule_hiding_popup (bvw);
-
   if (bvw->priv->bus) {
     /* make bus drop all messages to make sure none of our callbacks is ever
      * called again (main loop might be run again to display error dialog) */
@@ -2977,9 +2567,12 @@ bacon_video_widget_finalize (GObject * object)
   g_clear_pointer (&bvw->priv->referrer, g_free);
   g_clear_pointer (&bvw->priv->mrl, g_free);
   g_clear_pointer (&bvw->priv->subtitle_uri, g_free);
-  g_clear_pointer (&bvw->priv->busy_popup_ht, g_hash_table_destroy);
+  g_clear_pointer (&bvw->priv->vis_element_name, g_free);
 
   g_clear_object (&bvw->priv->clock);
+
+  g_clear_pointer (&bvw->priv->vis_plugins_list, g_list_free);
+  g_clear_pointer (&bvw->priv->vis_plugins_ht, g_hash_table_destroy);
 
   if (bvw->priv->play != NULL)
     gst_element_set_state (bvw->priv->play, GST_STATE_NULL);
@@ -2989,11 +2582,6 @@ bacon_video_widget_finalize (GObject * object)
   if (bvw->priv->update_id) {
     g_source_remove (bvw->priv->update_id);
     bvw->priv->update_id = 0;
-  }
-
-  if (bvw->priv->chapters) {
-    g_list_free_full (bvw->priv->chapters, (GDestroyNotify) gst_mini_object_unref);
-    bvw->priv->chapters = NULL;
   }
 
   g_clear_pointer (&bvw->priv->tagcache, gst_tag_list_unref);
@@ -3035,14 +2623,26 @@ bacon_video_widget_set_property (GObject * object, guint property_id,
     case PROP_REFERRER:
       bacon_video_widget_set_referrer (bvw, g_value_get_string (value));
       break;
+    case PROP_SHOW_CURSOR:
+      bacon_video_widget_set_show_cursor (bvw, g_value_get_boolean (value));
+      break;
+    case PROP_SHOW_VISUALIZATIONS:
+      bacon_video_widget_set_show_visualizations (bvw, g_value_get_boolean (value));
+      break;
     case PROP_USER_AGENT:
       bacon_video_widget_set_user_agent (bvw, g_value_get_string (value));
       break;
     case PROP_VOLUME:
       bacon_video_widget_set_volume (bvw, g_value_get_double (value));
       break;
+    case PROP_AUTO_RESIZE:
+      bacon_video_widget_set_auto_resize (bvw, g_value_get_boolean (value));
+      break;
     case PROP_DEINTERLACING:
       bacon_video_widget_set_deinterlacing (bvw, g_value_get_boolean (value));
+      break;
+    case PROP_VISUALIZATION_QUALITY:
+      bacon_video_widget_set_visualization_quality (bvw, g_value_get_enum (value));
       break;
     case PROP_BRIGHTNESS:
       bacon_video_widget_set_video_property (bvw, BVW_VIDEO_BRIGHTNESS, g_value_get_int (value));
@@ -3095,6 +2695,9 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
     case PROP_SEEKABLE:
       g_value_set_boolean (value, bacon_video_widget_is_seekable (bvw));
       break;
+    case PROP_SHOW_CURSOR:
+      g_value_set_boolean (value, bacon_video_widget_get_show_cursor (bvw));
+      break;
     case PROP_USER_AGENT:
       g_value_set_string (value, bvw->priv->user_agent);
       break;
@@ -3104,8 +2707,14 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
     case PROP_DOWNLOAD_FILENAME:
       g_value_set_string (value, bvw->priv->download_filename);
       break;
+    case PROP_AUTO_RESIZE:
+      g_value_set_boolean (value, bvw->priv->auto_resize);
+      break;
     case PROP_DEINTERLACING:
       g_value_set_boolean (value, bacon_video_widget_get_deinterlacing (bvw));
+      break;
+    case PROP_VISUALIZATION_QUALITY:
+      g_value_set_enum (value, bvw->priv->visq);
       break;
     case PROP_BRIGHTNESS:
       g_value_set_int (value, bacon_video_widget_get_video_property (bvw, BVW_VIDEO_BRIGHTNESS));
@@ -3124,9 +2733,6 @@ bacon_video_widget_get_property (GObject * object, guint property_id,
       break;
     case PROP_AV_OFFSET:
       g_object_get_property (G_OBJECT (bvw->priv->play), "av-offset", value);
-      break;
-    case PROP_REVEAL_CONTROLS:
-      g_value_set_boolean (value, bvw->priv->reveal_controls);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -3170,20 +2776,6 @@ bacon_video_widget_get_subtitle (BaconVideoWidget * bvw)
   return subtitle;
 }
 
-static gboolean
-sublang_is_valid (int sublang,
-		  int n_sublang)
-{
-  if (sublang == -1 ||
-      sublang == -2)
-    return TRUE;
-  if (sublang < 0)
-    return FALSE;
-  if (sublang >= n_sublang)
-    return FALSE;
-  return TRUE;
-}
-
 /**
  * bacon_video_widget_set_subtitle:
  * @bvw: a #BaconVideoWidget
@@ -3197,14 +2789,11 @@ bacon_video_widget_set_subtitle (BaconVideoWidget * bvw, int subtitle)
 {
   GstTagList *tags;
   gint flags;
-  gint n_text;
 
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (bvw->priv->play != NULL);
 
-  g_object_get (bvw->priv->play, "flags", &flags, "n-text", &n_text, NULL);
-
-  g_return_if_fail (sublang_is_valid (subtitle, n_text));
+  g_object_get (bvw->priv->play, "flags", &flags, NULL);
 
   if (subtitle == -2) {
     flags &= ~GST_PLAY_FLAG_TEXT;
@@ -3224,52 +2813,6 @@ bacon_video_widget_set_subtitle (BaconVideoWidget * bvw, int subtitle)
 }
 
 /**
- * bacon_video_widget_set_next_subtitle:
- * @bvw: a #BaconVideoWidget
- *
- * Switch to the next text subtitle index for the current video. See
- * bacon_video_widget_set_subtitle().
- *
- * Since: 3.12
- */
-void
-bacon_video_widget_set_next_subtitle (BaconVideoWidget *bvw)
-{
-  int n_text;
-  int current_text;
-
-  g_object_get (bvw->priv->play, "current-text", &current_text, "n-text", &n_text, NULL);
-
-  current_text++;
-  if (current_text >= n_text)
-    current_text = -2;
-
-  bacon_video_widget_set_subtitle (bvw, current_text);
-}
-
-static gboolean
-bvw_chapter_compare_func (GstTocEntry      *entry,
-			  BaconVideoWidget *bvw)
-{
-  gint64 start, stop;
-
-  if (!gst_toc_entry_get_start_stop_times (entry, &start, &stop))
-    return -1;
-
-  if (bvw->priv->current_time >= start / GST_MSECOND &&
-      bvw->priv->current_time < stop / GST_MSECOND)
-    return 0;
-
-  return -1;
-}
-
-static GList *
-bvw_get_current_chapter (BaconVideoWidget *bvw)
-{
-  return g_list_find_custom (bvw->priv->chapters, bvw, (GCompareFunc) bvw_chapter_compare_func);
-}
-
-/**
  * bacon_video_widget_has_next_track:
  * @bvw: a #BaconVideoWidget
  *
@@ -3281,18 +2824,12 @@ bvw_get_current_chapter (BaconVideoWidget *bvw)
 gboolean
 bacon_video_widget_has_next_track (BaconVideoWidget *bvw)
 {
-  GList *l;
-
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
 
   if (bvw->priv->mrl == NULL)
     return FALSE;
 
   if (g_str_has_prefix (bvw->priv->mrl, "dvd:/"))
-    return TRUE;
-
-  l = bvw_get_current_chapter (bvw);
-  if (l != NULL && l->next != NULL)
     return TRUE;
 
   return FALSE;
@@ -3312,7 +2849,6 @@ bacon_video_widget_has_previous_track (BaconVideoWidget *bvw)
 {
   GstFormat fmt;
   gint64 val;
-  GList *l;
 
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
 
@@ -3320,11 +2856,6 @@ bacon_video_widget_has_previous_track (BaconVideoWidget *bvw)
     return FALSE;
 
   if (g_str_has_prefix (bvw->priv->mrl, "dvd:/"))
-    return TRUE;
-
-  /* Look in the chapters first */
-  l = bvw_get_current_chapter (bvw);
-  if (l != NULL && l->prev != NULL)
     return TRUE;
 
   fmt = gst_format_get_by_nick ("chapter");
@@ -3338,19 +2869,6 @@ bacon_video_widget_has_previous_track (BaconVideoWidget *bvw)
   return FALSE;
 }
 
-static char *
-get_label_for_type (const char *type_name,
-		    int         num)
-{
-  if (g_str_equal (type_name, "AUDIO")) {
-    return g_strdup_printf (_("Audio Track #%d"), num);
-  } else if (g_str_equal (type_name, "TEXT")) {
-    return g_strdup_printf (_("Subtitle #%d"), num);
-  }
-
-  g_assert_not_reached ();
-}
-
 static GList *
 get_lang_list_for_type (BaconVideoWidget * bvw, const gchar * type_name)
 {
@@ -3359,13 +2877,16 @@ get_lang_list_for_type (BaconVideoWidget * bvw, const gchar * type_name)
   gint i, n;
   const char *prop;
   const char *signal;
+  const char *text;
 
   if (g_str_equal (type_name, "AUDIO")) {
     prop = "n-audio";
     signal = "get-audio-tags";
+    text = N_("Audio Track #%d");
   } else if (g_str_equal (type_name, "TEXT")) {
     prop = "n-text";
     signal = "get-text-tags";
+    text = N_("Subtitle #%d");
   } else {
     g_critical ("Invalid stream type '%s'", type_name);
     return NULL;
@@ -3393,11 +2914,11 @@ get_lang_list_for_type (BaconVideoWidget * bvw, const gchar * type_name)
       } else if (cd) {
 	ret = g_list_prepend (ret, cd);
       } else {
-	  ret = g_list_prepend (ret, get_label_for_type (type_name, num++));
+	  ret = g_list_prepend (ret, g_strdup_printf (_(text), num++));
       }
       gst_tag_list_unref (tags);
     } else {
-      ret = g_list_prepend (ret, get_label_for_type (type_name, num++));
+      ret = g_list_prepend (ret, g_strdup_printf (_(text), num++));
     }
   }
 
@@ -3491,14 +3012,9 @@ void
 bacon_video_widget_set_language (BaconVideoWidget * bvw, int language)
 {
   GstTagList *tags;
-  int n_lang;
 
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (bvw->priv->play != NULL);
-
-  g_object_get (bvw->priv->play, "n-audio", &n_lang, NULL);
-
-  g_return_if_fail (sublang_is_valid (language, n_lang));
 
   if (language == -1)
     language = 0;
@@ -3518,30 +3034,6 @@ bacon_video_widget_set_language (BaconVideoWidget * bvw, int language)
   /* so it updates its metadata for the newly-selected stream */
   g_signal_emit (bvw, bvw_signals[SIGNAL_GOT_METADATA], 0, NULL);
   g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
-}
-
-/**
- * bacon_video_widget_set_next_language:
- * @bvw: a #BaconVideoWidget
- *
- * Switch to the next audio language index for the current video. See
- * bacon_video_widget_set_language().
- *
- * Since: 3.12
- */
-void
-bacon_video_widget_set_next_language (BaconVideoWidget *bvw)
-{
-  int n_audio;
-  int current_audio;
-
-  g_object_get (bvw->priv->play, "current-audio", &current_audio, "n-audio", &n_audio, NULL);
-
-  current_audio++;
-  if (current_audio >= n_audio)
-    current_audio = -2;
-
-  bacon_video_widget_set_language (bvw, current_audio);
 }
 
 /**
@@ -3728,111 +3220,15 @@ bacon_video_widget_set_audio_output_type (BaconVideoWidget *bvw,
   set_audio_filter (bvw);
 }
 
-/**
- * bacon_video_widget_show_popup:
- * @bvw: a #BaconVideoWidget
- *
- * Show the video controls popup, and schedule for it to be hidden again after
- * a timeout.
- *
- * Since: 3.12
- */
 void
-bacon_video_widget_show_popup (BaconVideoWidget *bvw)
+bacon_video_widget_popup_osd (BaconVideoWidget *bvw,
+			      const char       *icon_name)
 {
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
 
-  set_controls_visibility (bvw, TRUE, FALSE);
-  schedule_hiding_popup (bvw);
-}
-
-/**
- * bacon_video_widget_mark_popup_busy:
- * @bvw: a #BaconVideoWidget
- * @reason: human-readable reason for the controls popup being marked as busy
- *
- * Mark the video controls popup as busy, for the given @reason. Use
- * bacon_video_widget_unmark_popup_busy() to undo.
- *
- * Since: 3.12
- */
-void
-bacon_video_widget_mark_popup_busy (BaconVideoWidget *bvw,
-				    const char       *reason)
-{
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-
-  g_hash_table_insert (bvw->priv->busy_popup_ht,
-		       g_strdup (reason),
-		       GINT_TO_POINTER (1));
-
-  set_controls_visibility (bvw, TRUE, FALSE);
-
-  GST_DEBUG ("Adding popup busy for reason %s", reason);
-
-  unschedule_hiding_popup (bvw);
-}
-
-/**
- * bacon_video_widget_unmark_popup_busy:
- * @bvw: a #BaconVideoWidget
- * @reason: human-readable reason for the controls popup being unmarked as busy
- *
- * Unmark the video controls popup as busy, for the given @reason. The popup
- * must previously have been marked as busy using
- * bacon_video_widget_mark_popup_busy().
- *
- * Since: 3.12
- */
-void
-bacon_video_widget_unmark_popup_busy (BaconVideoWidget *bvw,
-				      const char       *reason)
-{
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-
-  g_hash_table_remove (bvw->priv->busy_popup_ht, reason);
-
-  GST_DEBUG ("Removing popup busy for reason %s", reason);
-
-  if (g_hash_table_size (bvw->priv->busy_popup_ht) == 0 &&
-      clutter_actor_get_opacity (bvw->priv->controls) != 0) {
-    GST_DEBUG ("Will hide popup soon");
-    schedule_hiding_popup (bvw);
-  }
-}
-
-/**
- * bacon_video_widget_get_controls_object:
- * @bvw: a #BaconVideoWidget
- *
- * Get the widget which displays the video controls.
- *
- * Returns: (transfer none): controls widget
- * Since: 3.12
- */
-GObject *
-bacon_video_widget_get_controls_object (BaconVideoWidget *bvw)
-{
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
-
-  return G_OBJECT (bvw->priv->controls);
-}
-
-/**
- * bacon_video_widget_get_header_controls_object:
- * @bvw: a #BaconVideoWidget
- *
- * Get the widget which displays the video header controls.
- *
- * Returns: (transfer none): header controls widget
- * Since: 3.20
- */
-GObject *
-bacon_video_widget_get_header_controls_object (BaconVideoWidget *bvw)
-{
-  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
-
-  return G_OBJECT (gtk_clutter_actor_get_widget (GTK_CLUTTER_ACTOR (bvw->priv->header_controls)));
+  bacon_video_osd_actor_set_icon_name (BACON_VIDEO_OSD_ACTOR (bvw->priv->osd),
+				       icon_name);
+  bacon_video_osd_actor_show_and_fade (BACON_VIDEO_OSD_ACTOR (bvw->priv->osd));
 }
 
 /* =========================================== */
@@ -3858,6 +3254,7 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
 
   /* FIXME:
    * Unemitted errors:
+   * BVW_ERROR_NETWORK_UNREACHABLE
    * BVW_ERROR_DVD_ENCRYPTED
    * BVW_ERROR_FILE_ENCRYPTED
    * BVW_ERROR_EMPTY_FILE
@@ -3966,14 +3363,9 @@ bvw_error_from_gst_error (BaconVideoWidget *bvw, GstMessage * err_msg)
       }
       g_strfreev (descs);
     } else {
-      if (g_str_has_prefix (bvw->priv->mrl, "rtsp:")) {
-	ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_NETWORK_UNREACHABLE,
-				   _("This stream cannot be played. It’s possible that a firewall is blocking it."));
-      } else {
-	ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_CODEC_NOT_HANDLED,
-				   _("An audio or video stream is not handled due to missing codecs. "
-				     "You might need to install additional plugins to be able to play some types of movies"));
-      }
+      ret = g_error_new_literal (BVW_ERROR, BVW_ERROR_CODEC_NOT_HANDLED,
+				 _("An audio or video stream is not handled due to missing codecs. "
+				   "You might need to install additional plugins to be able to play some types of movies"));
     }
     goto done;
   }
@@ -4017,20 +3409,27 @@ get_target_uri (GFile *file)
  * bacon_video_widget_open:
  * @bvw: a #BaconVideoWidget
  * @mrl: an MRL
+ * @error: a #GError, or %NULL
  *
  * Opens the given @mrl in @bvw for playing.
  *
- * The MRL is loaded and waiting to be played with bacon_video_widget_play().
+ * If there was a filesystem error, a %BVW_ERROR_GENERIC error will be returned. Otherwise,
+ * more specific #BvwError errors will be returned.
+ *
+ * On success, the MRL is loaded and waiting to be played with bacon_video_widget_play().
+ *
+ * Return value: %TRUE on success, %FALSE otherwise
  **/
-void
-bacon_video_widget_open (BaconVideoWidget *bvw,
-                         const char       *mrl)
+gboolean
+bacon_video_widget_open (BaconVideoWidget * bvw,
+                         const gchar * mrl, GError ** error)
 {
   GFile *file;
+  char *path;
 
-  g_return_if_fail (mrl != NULL);
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-  g_return_if_fail (bvw->priv->play != NULL);
+  g_return_val_if_fail (mrl != NULL, FALSE);
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+  g_return_val_if_fail (bvw->priv->play != NULL, FALSE);
   
   /* So we aren't closed yet... */
   if (bvw->priv->mrl) {
@@ -4042,17 +3441,28 @@ bacon_video_widget_open (BaconVideoWidget *bvw,
   /* this allows non-URI type of files in the thumbnailer and so on */
   file = g_file_new_for_commandline_arg (mrl);
 
-  if (g_file_has_uri_scheme (file, "trash") != FALSE ||
-      g_file_has_uri_scheme (file, "recent") != FALSE) {
+  /* Only use the URI when FUSE isn't available for a file
+   * or we're trying to read from an archive or ObexFTP */
+  if (g_file_has_uri_scheme (file, "archive") != FALSE ||
+      g_file_has_uri_scheme (file, "obex") != FALSE ||
+      g_file_has_uri_scheme (file, "ftp") != FALSE) {
+    path = NULL;
+  } else if (g_file_has_uri_scheme (file, "trash") != FALSE ||
+           g_file_has_uri_scheme (file, "recent") != FALSE) {
+    path = NULL;
     bvw->priv->mrl = get_target_uri (file);
-    GST_DEBUG ("Found target location '%s' for original MRL '%s'",
-	       GST_STR_NULL (bvw->priv->mrl), mrl);
-  } else if (g_file_has_uri_scheme (file, "cdda") != FALSE) {
-    char *path;
+    if (bvw->priv->mrl == NULL)
+      path = g_file_get_path (file);
+    else
+      GST_DEBUG ("Found target location '%s' for original MRL '%s'",
+		 GST_STR_NULL (bvw->priv->mrl), mrl);
+  } else {
     path = g_file_get_path (file);
+  }
+  if (path) {
     bvw->priv->mrl = g_filename_to_uri (path, NULL, NULL);
     g_free (path);
-  } else {
+  } else if (bvw->priv->mrl == NULL) {
     bvw->priv->mrl = g_strdup (mrl);
   }
 
@@ -4061,6 +3471,7 @@ bacon_video_widget_open (BaconVideoWidget *bvw,
   bvw->priv->got_redirect = FALSE;
   bvw->priv->media_has_video = FALSE;
   bvw->priv->media_has_audio = FALSE;
+  bvw->priv->stream_length = 0;
 
   /* Flush the bus to make sure we don't get any messages
    * from the previous URI, see bug #607224.
@@ -4076,11 +3487,11 @@ bacon_video_widget_open (BaconVideoWidget *bvw,
   bvw->priv->target_state = GST_STATE_PAUSED;
   bvw_clear_missing_plugins_messages (bvw);
 
-  bacon_video_widget_mark_popup_busy (bvw, "opening file");
-
   gst_element_set_state (bvw->priv->play, GST_STATE_PAUSED);
 
   g_signal_emit (bvw, bvw_signals[SIGNAL_CHANNELS_CHANGE], 0);
+
+  return TRUE;
 }
 
 /**
@@ -4141,8 +3552,6 @@ bacon_video_widget_play (BaconVideoWidget * bvw, GError ** error)
     GST_DEBUG ("Failed to reset direction back to forward to play");
     return FALSE;
   }
-
-  bacon_video_widget_unmark_popup_busy (bvw, "opening file");
 
   GST_DEBUG ("play");
   gst_element_set_state (bvw->priv->play, GST_STATE_PLAYING);
@@ -4310,8 +3719,6 @@ bacon_video_widget_step (BaconVideoWidget *bvw, gboolean forward, GError **error
 
   if (retval != FALSE)
     bvw_query_timeout (bvw);
-  else
-    GST_WARNING ("Failed to step %s", DIRECTION_STR);
 
   return retval;
 }
@@ -4350,12 +3757,10 @@ bvw_stop_play_pipeline (BaconVideoWidget * bvw)
   bvw->priv->download_buffering = FALSE;
   g_clear_pointer (&bvw->priv->download_filename, g_free);
   bvw->priv->buffering_left = -1;
+  g_clear_object (&bvw->priv->download_buffering_element);
   bvw_reconfigure_fill_timeout (bvw, 0);
   bvw->priv->movie_par_n = bvw->priv->movie_par_d = 1;
   g_clear_object (&bvw->priv->cover_pixbuf);
-  clutter_actor_hide (bvw->priv->spinner);
-  g_object_set (G_OBJECT (bvw->priv->spinner), "percent", 0.0, NULL);
-  totem_aspect_frame_set_internal_rotation (TOTEM_ASPECT_FRAME (bvw->priv->frame), 0.0);
   GST_DEBUG ("stopped");
 }
 
@@ -4395,28 +3800,21 @@ bacon_video_widget_close (BaconVideoWidget * bvw)
 
   g_clear_pointer (&bvw->priv->mrl, g_free);
   g_clear_pointer (&bvw->priv->subtitle_uri, g_free);
-  g_object_set (G_OBJECT (bvw->priv->play), "suburi", NULL, NULL);
-  g_clear_pointer (&bvw->priv->subtitle_uri, g_free);
   g_clear_pointer (&bvw->priv->user_id, g_free);
   g_clear_pointer (&bvw->priv->user_pw, g_free);
 
   bvw->priv->is_live = FALSE;
   bvw->priv->is_menu = FALSE;
   bvw->priv->has_angles = FALSE;
+  bvw->priv->window_resized = FALSE;
   bvw->priv->rate = FORWARD_RATE;
 
   bvw->priv->current_time = 0;
   bvw->priv->seek_req_time = GST_CLOCK_TIME_NONE;
   bvw->priv->seek_time = -1;
-  bvw->priv->stream_length = 0;
 
   if (bvw->priv->eos_id != 0)
     g_source_remove (bvw->priv->eos_id);
-
-  if (bvw->priv->chapters) {
-    g_list_free_full (bvw->priv->chapters, (GDestroyNotify) gst_mini_object_unref);
-    bvw->priv->chapters = NULL;
-  }
 
   g_clear_pointer (&bvw->priv->tagcache, gst_tag_list_unref);
   g_clear_pointer (&bvw->priv->audiotags, gst_tag_list_unref);
@@ -4486,70 +3884,6 @@ bacon_video_widget_set_text_subtitle (BaconVideoWidget * bvw,
 					  GST_SEEK_FLAG_ACCURATE, NULL);
 }
 
-static void
-handle_dvd_seek (BaconVideoWidget *bvw,
-		 int               offset,
-		 const char       *fmt_name)
-{
-  GstFormat fmt;
-  gint64 val;
-
-  fmt = gst_format_get_by_nick (fmt_name);
-  if (!fmt)
-    return;
-
-  bvw_set_playback_direction (bvw, TRUE);
-
-  if (gst_element_query_position (bvw->priv->play, fmt, &val)) {
-    GST_DEBUG ("current %s is: %" G_GINT64_FORMAT, fmt_name, val);
-    val += offset;
-    GST_DEBUG ("seeking to %s: %" G_GINT64_FORMAT, fmt_name, val);
-    gst_element_seek (bvw->priv->play, FORWARD_RATE, fmt, GST_SEEK_FLAG_FLUSH,
-		      GST_SEEK_TYPE_SET, val, GST_SEEK_TYPE_NONE, G_GINT64_CONSTANT (0));
-    bvw->priv->rate = FORWARD_RATE;
-  } else {
-    GST_DEBUG ("failed to query position (%s)", fmt_name);
-  }
-}
-
-static gboolean
-handle_chapters_seek (BaconVideoWidget *bvw,
-		      gboolean          forward)
-{
-  GList *l;
-  GstTocEntry *entry;
-  gint64 start;
-
-  l = bvw_get_current_chapter (bvw);
-  if (!l)
-    return FALSE;
-
-  entry = NULL;
-  if (forward && l->next)
-    entry = l->next->data;
-  else if (!forward) {
-    gint64 current_start;
-    if (gst_toc_entry_get_start_stop_times (l->data, &current_start, NULL)) {
-      if (bvw->priv->current_time - current_start / GST_MSECOND < REWIND_OR_PREVIOUS &&
-	  bvw->priv->current_time - current_start / GST_MSECOND > 0 &&
-	  l->prev) {
-	entry = l->prev->data;
-      } else {
-	entry = l->data;
-      }
-    }
-  }
-
-  if (!entry)
-    return FALSE;
-
-  if (!gst_toc_entry_get_start_stop_times (entry, &start, NULL))
-    return FALSE;
-
-  GST_DEBUG ("Found chapter and seeking to %" G_GINT64_FORMAT, start / GST_MSECOND);
-
-  return bacon_video_widget_seek_time (bvw, start / GST_MSECOND, FALSE, NULL);
-}
 
 /**
  * bacon_video_widget_dvd_event:
@@ -4605,19 +3939,41 @@ bacon_video_widget_dvd_event (BaconVideoWidget * bvw,
       bvw_do_navigation_command (bvw, GST_NAVIGATION_COMMAND_ACTIVATE);
       break;
     case BVW_DVD_NEXT_CHAPTER:
-      if (!handle_chapters_seek (bvw, TRUE))
-	handle_dvd_seek (bvw, 1, "chapter");
-      break;
     case BVW_DVD_PREV_CHAPTER:
-      if (!handle_chapters_seek (bvw, FALSE))
-	handle_dvd_seek (bvw, -1, "chapter");
-      break;
     case BVW_DVD_NEXT_TITLE:
-      handle_dvd_seek (bvw, 1, "title");
+    case BVW_DVD_PREV_TITLE: {
+      const gchar *fmt_name;
+      GstFormat fmt;
+      gint64 val;
+      gint dir;
+
+      if (type == BVW_DVD_NEXT_CHAPTER || type == BVW_DVD_NEXT_TITLE)
+        dir = 1;
+      else
+        dir = -1;
+
+      if (type == BVW_DVD_NEXT_CHAPTER || type == BVW_DVD_PREV_CHAPTER)
+        fmt_name = "chapter"; 
+      else if (type == BVW_DVD_NEXT_TITLE || type == BVW_DVD_PREV_TITLE)
+        fmt_name = "title";
+      else
+        fmt_name = "angle";
+
+      bvw_set_playback_direction (bvw, TRUE);
+
+      fmt = gst_format_get_by_nick (fmt_name);
+      if (gst_element_query_position (bvw->priv->play, fmt, &val)) {
+        GST_DEBUG ("current %s is: %" G_GINT64_FORMAT, fmt_name, val);
+        val += dir;
+        GST_DEBUG ("seeking to %s: %" G_GINT64_FORMAT, fmt_name, val);
+        gst_element_seek (bvw->priv->play, FORWARD_RATE, fmt, GST_SEEK_FLAG_FLUSH,
+            GST_SEEK_TYPE_SET, val, GST_SEEK_TYPE_NONE, G_GINT64_CONSTANT (0));
+	bvw->priv->rate = FORWARD_RATE;
+      } else {
+        GST_DEBUG ("failed to query position (%s)", fmt_name);
+      }
       break;
-    case BVW_DVD_PREV_TITLE:
-      handle_dvd_seek (bvw, -1, "title");
-      break;
+    }
     default:
       GST_WARNING ("unhandled type %d", type);
       break;
@@ -4719,6 +4075,9 @@ bvw_check_for_cover_pixbuf (BaconVideoWidget * bvw)
     bvw->priv->cover_pixbuf = g_value_dup_object (&value);
     g_value_unset (&value);
   }
+
+  if (bvw->priv->cover_pixbuf)
+    setup_vis (bvw);
 
   return (bvw->priv->cover_pixbuf != NULL);
 }
@@ -4933,6 +4292,436 @@ bacon_video_widget_get_volume (BaconVideoWidget * bvw)
 }
 
 /**
+ * bacon_video_widget_set_fullscreen:
+ * @bvw: a #BaconVideoWidget
+ * @fullscreen: %TRUE to go fullscreen, %FALSE otherwise
+ *
+ * Sets whether the widget renders the stream in fullscreen mode.
+ **/
+void
+bacon_video_widget_set_fullscreen (BaconVideoWidget * bvw,
+                                   gboolean fullscreen)
+{
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+
+  bvw->priv->fullscreen_mode = fullscreen;
+}
+
+/**
+ * bacon_video_widget_set_show_cursor:
+ * @bvw: a #BaconVideoWidget
+ * @show_cursor: %TRUE to show the cursor, %FALSE otherwise
+ *
+ * Sets whether the cursor should be shown when it is over the video
+ * widget. If @show_cursor is %FALSE, the cursor will be invisible
+ * when it is moved over the video widget.
+ **/
+void
+bacon_video_widget_set_show_cursor (BaconVideoWidget * bvw,
+                                    gboolean show_cursor)
+{
+  GdkWindow *window;
+
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+
+  bvw->priv->cursor_shown = show_cursor;
+  window = gtk_widget_get_window (GTK_WIDGET (bvw));
+
+  if (!window) {
+    return;
+  }
+
+  if (show_cursor == FALSE) {
+    totem_gdk_window_set_invisible_cursor (window);
+  } else {
+    gdk_window_set_cursor (window, bvw->priv->cursor);
+  }
+}
+
+/**
+ * bacon_video_widget_get_show_cursor:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Returns whether the cursor is shown when it is over the video widget.
+ *
+ * Return value: %TRUE if the cursor is shown, %FALSE otherwise
+ **/
+gboolean
+bacon_video_widget_get_show_cursor (BaconVideoWidget * bvw)
+{
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+
+  return bvw->priv->cursor_shown;
+}
+
+static struct {
+	int height;
+	int fps;
+} const vis_qualities[] = {
+	{ 240, 15 }, /* BVW_VISUALIZATION_SMALL */
+	{ 320, 25 }, /* BVW_VISUALIZATION_NORMAL */
+	{ 480, 25 }, /* BVW_VISUALIZATION_LARGE */
+	{ 600, 30 }  /* BVW_VISUALIZATION_EXTRA_LARGE */
+};
+
+static void
+get_visualization_size (BaconVideoWidget *bvw,
+                        int *w, int *h, gint *fps_n, gint *fps_d)
+{
+  GdkScreen *screen;
+  int new_fps_n;
+
+  g_return_if_fail (h != NULL);
+  g_return_if_fail (bvw->priv->visq < G_N_ELEMENTS (vis_qualities));
+
+  if (gtk_widget_get_realized (GTK_WIDGET (bvw)) == FALSE) {
+    if (fps_n)
+      *fps_n = 1;
+    if (fps_d)
+      *fps_d = 1;
+    return;
+  }
+
+  *h = vis_qualities[bvw->priv->visq].height;
+  new_fps_n = vis_qualities[bvw->priv->visq].fps;
+
+  screen = gtk_widget_get_screen (GTK_WIDGET (bvw));
+  *w = *h * gdk_screen_get_width (screen) / gdk_screen_get_height (screen);
+
+  if (fps_n)
+    *fps_n = new_fps_n;
+  if (fps_d)
+    *fps_d = 1;
+}
+
+static void
+add_longname (GstElementFactory *f, GHashTable *ht)
+{
+  g_hash_table_insert (ht,
+		       (gpointer) gst_element_factory_get_metadata (f, GST_ELEMENT_METADATA_LONGNAME),
+		       (gpointer) gst_plugin_feature_get_name (GST_PLUGIN_FEATURE (f)));
+}
+
+static void
+ensure_vis_plugins_list (BaconVideoWidget *bvw)
+{
+  GHashTable *ht;
+  GList *features;
+
+  if (bvw->priv->vis_plugins_ht)
+    return;
+
+  features = get_visualization_features ();
+  ht = g_hash_table_new (g_str_hash, g_str_equal);
+  g_list_foreach (features, (GFunc) add_longname, ht);
+  g_list_free (features);
+
+  bvw->priv->vis_plugins_ht = ht;
+}
+
+static GstElementFactory *
+setup_vis_find_factory (BaconVideoWidget * bvw, const gchar * vis_name)
+{
+  const char *factory_name;
+
+  ensure_vis_plugins_list (bvw);
+
+  factory_name = g_hash_table_lookup (bvw->priv->vis_plugins_ht, vis_name);
+  if (factory_name == NULL)
+    return NULL;
+
+  return gst_element_factory_find (factory_name);
+}
+
+static void
+setup_vis (BaconVideoWidget * bvw)
+{
+  GstElement *vis_bin = NULL;
+
+  GST_DEBUG ("setup_vis called, show_vfx %d, vis element %s",
+      bvw->priv->show_vfx, bvw->priv->vis_element_name);
+
+  /* Check to see if we have an embedded cover image. If we do, don't show visualisations.
+   * FIXME probably wrong now, hide that and use an OSD instead */
+  bvw_check_for_cover_pixbuf (bvw);
+
+  if (bvw->priv->show_vfx && !bvw->priv->cover_pixbuf && bvw->priv->vis_element_name) {
+    GstElement *vis_element = NULL, *vis_capsfilter = NULL;
+    GstPad *pad = NULL;
+    GstCaps *caps = NULL;
+    GstElementFactory *fac = NULL;
+    
+    fac = setup_vis_find_factory (bvw, bvw->priv->vis_element_name);
+    if (!fac) {
+      GST_DEBUG ("Could not find element factory for visualisation '%s'",
+          GST_STR_NULL (bvw->priv->vis_element_name));
+      /* use goom as fallback, better than nothing */
+      fac = setup_vis_find_factory (bvw, "goom");
+      if (fac == NULL) {
+        goto beach;
+      } else {
+        GST_DEBUG ("Falling back on 'goom' for visualisation");
+      }     
+    }
+    
+    vis_element = gst_element_factory_create (fac, "vis_element");
+    if (!GST_IS_ELEMENT (vis_element)) {
+      GST_DEBUG ("failed creating visualisation element");
+      goto beach;
+    }
+    
+    vis_capsfilter = gst_element_factory_make ("capsfilter",
+        "vis_capsfilter");
+    if (!GST_IS_ELEMENT (vis_capsfilter)) {
+      GST_DEBUG ("failed creating visualisation capsfilter element");
+      gst_object_unref (vis_element);
+      goto beach;
+    }
+    
+    vis_bin = gst_bin_new ("vis_bin");
+    if (!GST_IS_ELEMENT (vis_bin)) {
+      GST_DEBUG ("failed creating visualisation bin");
+      gst_object_unref (vis_element);
+      gst_object_unref (vis_capsfilter);
+      goto beach;
+    }
+    /* We created the bin, now ref and sink to make sure we own it */
+    gst_object_ref (vis_bin);
+    gst_object_ref_sink (vis_bin);
+    
+    gst_bin_add_many (GST_BIN (vis_bin), vis_element, vis_capsfilter, NULL);
+    
+    /* Sink ghostpad */
+    pad = gst_element_get_static_pad (vis_element, "sink");
+    gst_element_add_pad (vis_bin, gst_ghost_pad_new ("sink", pad));
+    gst_object_unref (pad);
+
+    /* Source ghostpad, link with vis_element */
+    pad = gst_element_get_static_pad (vis_capsfilter, "src");
+    gst_element_add_pad (vis_bin, gst_ghost_pad_new ("src", pad));
+    gst_element_link_pads (vis_element, "src", vis_capsfilter, "sink");
+    gst_object_unref (pad);
+
+    /* Get allowed output caps from visualisation element */
+    pad = gst_element_get_static_pad (vis_element, "src");
+    caps = gst_pad_get_allowed_caps (pad);
+    gst_object_unref (pad);
+    
+    GST_DEBUG ("allowed caps: %" GST_PTR_FORMAT, caps);
+    
+    /* Can we fixate ? */
+    if (caps && !gst_caps_is_fixed (caps)) {
+      guint i;
+      gint w, h, fps_n, fps_d;
+
+      caps = gst_caps_make_writable (caps);
+
+      /* Get visualization size */
+      get_visualization_size (bvw, &w, &h, &fps_n, &fps_d);
+
+      for (i = 0; i < gst_caps_get_size (caps); ++i) {
+        GstStructure *s = gst_caps_get_structure (caps, i);
+      
+        /* Fixate */
+        gst_structure_fixate_field_nearest_int (s, "width", w);
+        gst_structure_fixate_field_nearest_int (s, "height", h);
+        gst_structure_fixate_field_nearest_fraction (s, "framerate", fps_n,
+            fps_d);
+      }
+
+      /* set this */
+      g_object_set (vis_capsfilter, "caps", caps, NULL);
+    }
+
+    GST_DEBUG ("visualisation caps: %" GST_PTR_FORMAT, caps);
+    
+    if (GST_IS_CAPS (caps)) {
+      gst_caps_unref (caps);
+    }
+  }
+
+  if (bvw->priv->media_has_audio &&
+      !bvw->priv->media_has_video) {
+    gint flags;
+
+    g_object_get (bvw->priv->play, "flags", &flags, NULL);
+    if (bvw->priv->show_vfx && !bvw->priv->cover_pixbuf) {
+      flags |= GST_PLAY_FLAG_VIS;
+    } else {
+      flags &= ~GST_PLAY_FLAG_VIS;
+    }
+    g_object_set (bvw->priv->play, "flags", flags, NULL);
+  }
+
+beach:
+  g_object_set (bvw->priv->play, "vis-plugin", vis_bin, NULL);
+  if (vis_bin)
+    gst_object_unref (vis_bin);
+  
+  return;
+}
+
+/**
+ * bacon_video_widget_set_show_visualizations:
+ * @bvw: a #BaconVideoWidget
+ * @show_visualizations: %TRUE to show visualisations, %FALSE otherwise
+ *
+ * Sets whether to show visualisations when playing audio-only streams.
+ **/
+void
+bacon_video_widget_set_show_visualizations (BaconVideoWidget * bvw,
+                                     gboolean show_visualizations)
+{
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
+
+  if (show_visualizations == bvw->priv->show_vfx)
+    return;
+
+  bvw->priv->show_vfx = show_visualizations;
+  setup_vis (bvw);
+  set_current_actor (bvw);
+}
+
+static gboolean
+filter_features (GstPluginFeature * feature, gpointer data)
+{
+  const gchar *element_type;
+
+  if (!GST_IS_ELEMENT_FACTORY (feature))
+    return FALSE;
+  element_type = gst_element_factory_get_metadata (GST_ELEMENT_FACTORY (feature),
+                                                   GST_ELEMENT_METADATA_KLASS);
+  if (!g_strrstr (element_type, "Visualization"))
+    return FALSE;
+
+  return TRUE;
+}
+
+static GList *
+get_visualization_features (void)
+{
+  return gst_registry_feature_filter (gst_registry_get (),
+      filter_features, FALSE, NULL);
+}
+
+/**
+ * bacon_video_widget_get_visualization_list:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Returns a list of the visualisations available when playing audio-only streams.
+ *
+ * Return value: a #GList of visualisation names; owned by @bvw
+ **/
+GList *
+bacon_video_widget_get_visualization_list (BaconVideoWidget * bvw)
+{
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), NULL);
+  g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), NULL);
+
+  if (bvw->priv->vis_plugins_list)
+    return bvw->priv->vis_plugins_list;
+
+  ensure_vis_plugins_list (bvw);
+  bvw->priv->vis_plugins_list = g_hash_table_get_keys (bvw->priv->vis_plugins_ht);
+
+  return bvw->priv->vis_plugins_list;
+}
+
+/**
+ * bacon_video_widget_set_visualization:
+ * @bvw: a #BaconVideoWidget
+ * @name: the visualisation's name, or %NULL
+ *
+ * Sets the visualisation to display when playing audio-only streams.
+ *
+ * If @name is %NULL, visualisations will be disabled. Otherwise, @name
+ * should be from the list returned by bacon_video_widget_get_visualization_list().
+ **/
+void
+bacon_video_widget_set_visualization (BaconVideoWidget * bvw, const char *name)
+{
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
+
+  if (bvw->priv->vis_element_name) {
+    if (strcmp (bvw->priv->vis_element_name, name) == 0) {
+      return;
+    }
+    else {
+      g_free (bvw->priv->vis_element_name);
+    }
+  }
+
+  bvw->priv->vis_element_name = g_strdup (name);
+
+  GST_DEBUG ("new visualisation element name = '%s'", GST_STR_NULL (name));
+
+  setup_vis (bvw);
+}
+
+/**
+ * bacon_video_widget_set_visualization_quality:
+ * @bvw: a #BaconVideoWidget
+ * @quality: the visualisation quality
+ *
+ * Sets the quality/size of displayed visualisations.
+ **/
+void
+bacon_video_widget_set_visualization_quality (BaconVideoWidget * bvw,
+                                        BvwVisualizationQuality quality)
+{
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
+
+  if (bvw->priv->visq == quality)
+    return;
+
+  bvw->priv->visq = quality;
+  
+  setup_vis (bvw);
+
+  g_object_notify (G_OBJECT (bvw), "visualization-quality");
+}
+
+/**
+ * bacon_video_widget_get_auto_resize:
+ * @bvw: a #BaconVideoWidget
+ *
+ * Returns whether the widget will automatically resize to fit videos.
+ *
+ * Return value: %TRUE if the widget will resize, %FALSE otherwise
+ **/
+gboolean
+bacon_video_widget_get_auto_resize (BaconVideoWidget * bvw)
+{
+  g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), FALSE);
+
+  return bvw->priv->auto_resize;
+}
+
+/**
+ * bacon_video_widget_set_auto_resize:
+ * @bvw: a #BaconVideoWidget
+ * @auto_resize: %TRUE to automatically resize for new videos, %FALSE otherwise
+ *
+ * Sets whether the widget should automatically resize to fit to new videos when
+ * they are loaded. Changes to this will take effect when the next media file is
+ * loaded.
+ **/
+void
+bacon_video_widget_set_auto_resize (BaconVideoWidget * bvw,
+                                    gboolean auto_resize)
+{
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+
+  bvw->priv->auto_resize = auto_resize;
+
+  /* this will take effect when the next media file loads */
+  g_object_notify (G_OBJECT (bvw), "auto-resize");
+}
+
+/**
  * bacon_video_widget_set_aspect_ratio:
  * @bvw: a #BaconVideoWidget
  * @ratio: the new aspect ratio
@@ -4945,9 +4734,8 @@ void
 bacon_video_widget_set_aspect_ratio (BaconVideoWidget *bvw,
                                 BvwAspectRatio ratio)
 {
-  GstMessage *msg;
-
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  GstMessage *msg;
 
   bvw->priv->ratio_type = ratio;
   msg = gst_message_new_application (GST_OBJECT (bvw->priv->play),
@@ -4972,6 +4760,57 @@ bacon_video_widget_get_aspect_ratio (BaconVideoWidget *bvw)
   g_return_val_if_fail (BACON_IS_VIDEO_WIDGET (bvw), 0);
 
   return bvw->priv->ratio_type;
+}
+
+/**
+ * bacon_video_widget_set_scale_ratio:
+ * @bvw: a #BaconVideoWidget
+ * @ratio: the new scale ratio
+ *
+ * Sets the ratio by which the widget will scale videos when they are
+ * displayed. If @ratio is set to <code class="literal">0</code>, the highest ratio possible will
+ * be chosen.
+ **/
+void
+bacon_video_widget_set_scale_ratio (BaconVideoWidget * bvw, gfloat ratio)
+{
+  GtkWidget *toplevel;
+  gint w, h;
+
+  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
+  g_return_if_fail (GST_IS_ELEMENT (bvw->priv->play));
+
+  GST_DEBUG ("ratio = %.2f", ratio);
+
+  if (!bvw->priv->media_has_video && bvw->priv->show_vfx) {
+    get_visualization_size (bvw, &w, &h, NULL, NULL);
+  } else {
+    get_media_size (bvw, &w, &h);
+  }
+
+  if (ratio == 0.0) {
+    if (totem_ratio_fits_screen (GTK_WIDGET (bvw), w, h, 2.0))
+      ratio = 2.0;
+    else if (totem_ratio_fits_screen (GTK_WIDGET (bvw), w, h, 1.0))
+      ratio = 1.0;
+    else if (totem_ratio_fits_screen (GTK_WIDGET (bvw), w, h, 0.5))
+      ratio = 0.5;
+    else
+      return;
+  } else {
+    if (!totem_ratio_fits_screen (GTK_WIDGET (bvw), w, h, ratio)) {
+      GST_DEBUG ("movie doesn't fit on screen @ %.1fx (%dx%d)", w, h, ratio);
+      return;
+    }
+  }
+  w = (gfloat) w * ratio;
+  h = (gfloat) h * ratio;
+
+  GST_DEBUG ("setting preferred size %dx%d", w, h);
+
+  toplevel = gtk_widget_get_toplevel (GTK_WIDGET (bvw));
+  if (gtk_widget_is_toplevel (toplevel))
+    gtk_window_resize_to_geometry (GTK_WINDOW (toplevel), w, h);
 }
 
 /**
@@ -5231,10 +5070,7 @@ notify_volume_cb (GObject             *object,
 		  GParamSpec          *pspec,
 		  BaconVideoWidget    *bvw)
 {
-  guint id;
-
-  id = g_idle_add ((GSourceFunc) notify_volume_idle_cb, bvw);
-  g_source_set_name_by_id (id, "[totem] notify_volume_idle_cb");
+  g_idle_add ((GSourceFunc) notify_volume_idle_cb, bvw);
 }
 
 /**
@@ -5253,11 +5089,10 @@ bacon_video_widget_set_video_property (BaconVideoWidget *bvw,
                                        BvwVideoProperty type,
                                        int value)
 {
-  GstColorBalanceChannel *found_channel = NULL;
-  int i_value;
-
   g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
   g_return_if_fail (bvw->priv->play != NULL);
+  GstColorBalanceChannel *found_channel = NULL;
+  int i_value;
 
   GST_DEBUG ("set video property type %d to value %d", type, value);
 
@@ -5544,16 +5379,11 @@ bacon_video_widget_get_metadata_string (BaconVideoWidget * bvw,
     case BVW_INFO_YEAR:
       if (bvw->priv->tagcache != NULL) {
         GDate *date;
-        GstDateTime *datetime;
 
         if ((res = gst_tag_list_get_date (bvw->priv->tagcache,
                                           GST_TAG_DATE, &date))) {
           string = g_strdup_printf ("%d", g_date_get_year (date));
           g_date_free (date);
-        } else if ((res = gst_tag_list_get_date_time (bvw->priv->tagcache,
-                                                      GST_TAG_DATE_TIME, &datetime))) {
-          string = g_strdup_printf ("%d", gst_date_time_get_year (datetime));
-          gst_date_time_unref (datetime);
         }
       }
       break;
@@ -5913,7 +5743,7 @@ bacon_video_widget_can_get_frames (BaconVideoWidget * bvw, GError ** error)
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
   /* check for video */
-  if (!bvw->priv->media_has_video) {
+  if (!bvw->priv->media_has_video && !bvw->priv->show_vfx) {
     g_set_error_literal (error, BVW_ERROR, BVW_ERROR_CANNOT_CAPTURE,
         _("Media contains no supported video streams."));
     return FALSE;
@@ -5986,88 +5816,57 @@ bvw_set_playback_direction (BaconVideoWidget *bvw, gboolean forward)
 {
   gboolean is_forward;
   gboolean retval;
-  float target_rate;
-  GstEvent *event;
-  gint64 cur = 0;
 
   is_forward = (bvw->priv->rate > 0.0);
   if (forward == is_forward)
     return TRUE;
 
   retval = FALSE;
-  target_rate = (forward ? FORWARD_RATE : REVERSE_RATE);
 
-  if (gst_element_query_position (bvw->priv->play, GST_FORMAT_TIME, &cur)) {
-    GST_DEBUG ("Setting playback direction to %s at %"G_GINT64_FORMAT"", DIRECTION_STR, cur);
-    event = gst_event_new_seek (target_rate,
-				GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE,
-				GST_SEEK_TYPE_SET, forward ? cur : G_GINT64_CONSTANT (0),
-				GST_SEEK_TYPE_SET, forward ? G_GINT64_CONSTANT (0) : cur);
-    if (gst_element_send_event (bvw->priv->play, event) == FALSE) {
-      GST_WARNING ("Failed to set playback direction to %s", DIRECTION_STR);
+  if (forward == FALSE) {
+    GstEvent *event;
+    gint64 cur = 0;
+
+    if (gst_element_query_position (bvw->priv->play, GST_FORMAT_TIME, &cur)) {
+      GST_DEBUG ("Setting playback direction to reverse at %"G_GINT64_FORMAT"", cur);
+      event = gst_event_new_seek (REVERSE_RATE,
+				  GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE,
+				  GST_SEEK_TYPE_SET, G_GINT64_CONSTANT (0),
+				  GST_SEEK_TYPE_SET, cur);
+      if (gst_element_send_event (bvw->priv->play, event) == FALSE) {
+	GST_WARNING ("Failed to set playback direction to reverse");
+      } else {
+	gst_element_get_state (bvw->priv->play, NULL, NULL, GST_CLOCK_TIME_NONE);
+	bvw->priv->rate = REVERSE_RATE;
+	retval = TRUE;
+      }
     } else {
-      gst_element_get_state (bvw->priv->play, NULL, NULL, GST_CLOCK_TIME_NONE);
-      bvw->priv->rate = target_rate;
-      retval = TRUE;
+      GST_LOG ("Failed to query position to set playback to reverse");
     }
   } else {
-    GST_LOG ("Failed to query position to set playback to %s", DIRECTION_STR);
+    GstEvent *event;
+    gint64 cur = 0;
+
+    cur = 0;
+    if (gst_element_query_position (bvw->priv->play, GST_FORMAT_TIME, &cur)) {
+      GST_DEBUG ("Setting playback direction to forward at %"G_GINT64_FORMAT"", cur);
+      event = gst_event_new_seek (FORWARD_RATE,
+				  GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_ACCURATE,
+				  GST_SEEK_TYPE_SET, cur,
+				  GST_SEEK_TYPE_SET, G_GINT64_CONSTANT (0));
+      if (gst_element_send_event (bvw->priv->play, event) == FALSE) {
+	GST_WARNING ("Failed to set playback direction to forward");
+      } else {
+	gst_element_get_state (bvw->priv->play, NULL, NULL, GST_CLOCK_TIME_NONE);
+	bvw->priv->rate = FORWARD_RATE;
+	retval = TRUE;
+      }
+    } else {
+      GST_LOG ("Failed to query position to set playback to forward");
+    }
   }
 
   return retval;
-}
-
-static gboolean
-navigation_event (ClutterActor *actor,
-                  ClutterEvent *event,
-                  BaconVideoWidget *bvw)
-{
-  ClutterGstFrame *frame =
-    clutter_gst_video_sink_get_frame (CLUTTER_GST_VIDEO_SINK (bvw->priv->video_sink));
-  gfloat actor_width, actor_height;
-  gfloat x, y;
-
-  if (frame == NULL)
-    return CLUTTER_EVENT_PROPAGATE;
-
-  /* Get event coordinates into the actor's coordinates. */
-  clutter_event_get_coords (event, &x, &y);
-  clutter_actor_transform_stage_point (actor, x, y, &x, &y);
-
-  clutter_actor_get_size (actor, &actor_width, &actor_height);
-
-  /* Convert event's coordinates into the frame's coordinates. */
-  x = x * frame->resolution.width / actor_width;
-  y = y * frame->resolution.height / actor_height;
-
-  if (event->type == CLUTTER_MOTION) {
-    gst_navigation_send_mouse_event (GST_NAVIGATION (bvw->priv->video_sink),
-                                     "mouse-move", 0, x, y);
-  } else if (event->type == CLUTTER_BUTTON_PRESS ||
-             event->type == CLUTTER_BUTTON_RELEASE) {
-    ClutterButtonEvent *bevent = (ClutterButtonEvent *) event;
-    const char *type = (event->type == CLUTTER_BUTTON_PRESS) ?
-      "mouse-button-press" : "mouse-button-release";
-    gst_navigation_send_mouse_event (GST_NAVIGATION (bvw->priv->video_sink), type,
-                                     bevent->button, x, y);
-  }
-
-  return CLUTTER_EVENT_PROPAGATE;
-}
-
-static void
-listen_navigation_events (ClutterActor *actor,
-                          BaconVideoWidget *bvw)
-{
-  const char * const events[] = {
-    "button-press-event",
-    "button-release-event",
-    "motion-event"
-  };
-  guint i;
-
-  for (i = 0; i < G_N_ELEMENTS (events); i++)
-    g_signal_connect (actor, events[i], G_CALLBACK (navigation_event), bvw);
 }
 
 static GstElement *
@@ -6087,14 +5886,12 @@ bacon_video_widget_initable_init (GInitable     *initable,
 				  GError       **error)
 {
   BaconVideoWidget *bvw;
-  GstElement *audio_sink = NULL;
+  GstElement *audio_sink = NULL, *video_sink = NULL;
   gchar *version_str;
   GstPlayFlags flags;
-  ClutterActor *layout;
-  GstElement *audio_bin;
+  ClutterConstraint *constraint;
+  GstElement *audio_bin, *audio_converter;
   GstPad *audio_pad;
-  ClutterAction *action;
-  GObject *item;
 
   bvw = BACON_VIDEO_WIDGET (initable);
 
@@ -6113,18 +5910,22 @@ bacon_video_widget_initable_init (GInitable     *initable,
 
   /* Instantiate all the fallible plugins */
   bvw->priv->play = element_make_or_warn ("playbin", "play");
+  audio_converter = element_make_or_warn ("audioconvert", "audio-converter");
   bvw->priv->audio_pitchcontrol = element_make_or_warn ("scaletempo", "scaletempo");
-  bvw->priv->video_sink = GST_ELEMENT (clutter_gst_video_sink_new ());
+  video_sink = element_make_or_warn ("cluttersink", "video-sink");
   audio_sink = element_make_or_warn ("autoaudiosink", "audio-sink");
 
   if (!bvw->priv->play ||
+      !audio_converter ||
       !bvw->priv->audio_pitchcontrol ||
-      !bvw->priv->video_sink ||
+      !video_sink ||
       !audio_sink) {
-    if (bvw->priv->video_sink)
-      g_object_ref_sink (bvw->priv->video_sink);
+    if (video_sink)
+      g_object_ref_sink (video_sink);
     if (audio_sink)
       g_object_ref_sink (audio_sink);
+    if (audio_converter)
+      g_object_ref_sink (audio_converter);
     g_set_error_literal (error, BVW_ERROR, BVW_ERROR_PLUGIN_LOAD,
 			 _("Some necessary plug-ins are missing. "
 			   "Make sure that the program is correctly installed."));
@@ -6136,7 +5937,9 @@ bacon_video_widget_initable_init (GInitable     *initable,
   /* Add the download flag, for streaming buffering,
    * and the deinterlace flag, for video only */
   g_object_get (bvw->priv->play, "flags", &flags, NULL);
-  flags |= GST_PLAY_FLAG_DOWNLOAD | GST_PLAY_FLAG_DEINTERLACE;
+  flags |= GST_PLAY_FLAG_DOWNLOAD;
+  g_object_set (bvw->priv->play, "flags", flags, NULL);
+  flags |= GST_PLAY_FLAG_DEINTERLACE;
   g_object_set (bvw->priv->play, "flags", flags, NULL);
 
   gst_bus_add_signal_watch (bvw->priv->bus);
@@ -6147,34 +5950,33 @@ bacon_video_widget_initable_init (GInitable     *initable,
                         bvw);
 
   bvw->priv->speakersetup = BVW_AUDIO_SOUND_STEREO;
+  bvw->priv->visq = BVW_VISUALIZATION_SMALL;
+  bvw->priv->show_vfx = FALSE;
+  bvw->priv->vis_plugins_list = NULL;
+  bvw->priv->vis_element_name = g_strdup ("goom");
   bvw->priv->ratio_type = BVW_RATIO_AUTO;
 
   bvw->priv->cursor_shown = TRUE;
   bvw->priv->logo_mode = FALSE;
+  bvw->priv->auto_resize = FALSE;
 
   bvw->priv->stage = gtk_clutter_embed_get_stage (GTK_CLUTTER_EMBED (bvw));
-  clutter_actor_set_layout_manager (bvw->priv->stage,
-                                    clutter_bin_layout_new (CLUTTER_BIN_ALIGNMENT_FILL, CLUTTER_BIN_ALIGNMENT_FILL));
-  clutter_actor_set_name (bvw->priv->stage, "stage");
-  clutter_actor_set_background_color (bvw->priv->stage, CLUTTER_COLOR_Black);
+  clutter_actor_set_background_color (CLUTTER_ACTOR (bvw->priv->stage), CLUTTER_COLOR_Black);
 
   /* Video sink, with aspect frame */
-  bvw->priv->texture = g_object_new (CLUTTER_TYPE_ACTOR,
-                                     "content", g_object_new (CLUTTER_GST_TYPE_CONTENT,
-                                                              "sink", bvw->priv->video_sink,
-                                                              NULL),
-				     "name", "texture",
-				     "reactive", TRUE,
+  bvw->priv->texture = g_object_new (CLUTTER_TYPE_TEXTURE,
+				     "disable-slicing", TRUE,
 				     NULL);
-  listen_navigation_events (bvw->priv->texture, bvw);
+  g_object_set (G_OBJECT (video_sink), "texture", bvw->priv->texture, NULL);
 
   /* The logo */
-  bvw->priv->logo_frame = clutter_actor_new ();
+  bvw->priv->logo_frame = totem_aspect_frame_new ();
   clutter_actor_set_name (bvw->priv->logo_frame, "logo-frame");
-  bvw->priv->logo = clutter_image_new ();
-  clutter_actor_set_content (bvw->priv->logo_frame, bvw->priv->logo);
-  clutter_actor_set_content_gravity (bvw->priv->logo_frame, CLUTTER_CONTENT_GRAVITY_RESIZE_ASPECT);
-  clutter_actor_add_child (bvw->priv->stage, bvw->priv->logo_frame);
+  bvw->priv->logo = clutter_texture_new ();
+  totem_aspect_frame_set_child (TOTEM_ASPECT_FRAME (bvw->priv->logo_frame), bvw->priv->logo);
+  clutter_actor_add_child (CLUTTER_ACTOR (bvw->priv->stage), bvw->priv->logo_frame);
+  constraint = clutter_bind_constraint_new (bvw->priv->stage, CLUTTER_BIND_SIZE, 0.0);
+  clutter_actor_add_constraint_with_name (bvw->priv->logo_frame, "size", constraint);
   clutter_actor_hide (CLUTTER_ACTOR (bvw->priv->logo_frame));
 
   /* The video */
@@ -6182,73 +5984,26 @@ bacon_video_widget_initable_init (GInitable     *initable,
   clutter_actor_set_name (bvw->priv->frame, "frame");
   totem_aspect_frame_set_child (TOTEM_ASPECT_FRAME (bvw->priv->frame), bvw->priv->texture);
 
-  clutter_actor_add_child (bvw->priv->stage, bvw->priv->frame);
+  clutter_actor_add_child (CLUTTER_ACTOR (bvw->priv->stage), bvw->priv->frame);
+  constraint = clutter_bind_constraint_new (bvw->priv->stage, CLUTTER_BIND_SIZE, 0.0);
+  clutter_actor_add_constraint_with_name (bvw->priv->frame, "size", constraint);
 
+  clutter_actor_set_child_above_sibling (CLUTTER_ACTOR (bvw->priv->stage),
+					 CLUTTER_ACTOR (bvw->priv->logo_frame),
+					 CLUTTER_ACTOR (bvw->priv->frame));
+
+  /* The OSD */
+  bvw->priv->osd = bacon_video_osd_actor_new ();
+  clutter_actor_set_anchor_point (bvw->priv->osd, -OSD_MARGIN, -OSD_MARGIN); /* FIXME RTL */
+  clutter_actor_set_size (bvw->priv->osd, OSD_SIZE, OSD_SIZE);
+  clutter_actor_add_child (bvw->priv->stage, bvw->priv->osd);
   clutter_actor_set_child_above_sibling (bvw->priv->stage,
-					 bvw->priv->logo_frame,
+					 bvw->priv->osd,
 					 bvw->priv->frame);
-
-  /* The video's actions */
-  action = clutter_tap_action_new ();
-  clutter_actor_add_action (bvw->priv->texture, action);
-  g_signal_connect (action, "tap",
-		    G_CALLBACK (bacon_video_widget_tap), bvw);
-
-  action = clutter_swipe_action_new ();
-  clutter_gesture_action_set_threshold_trigger_distance (CLUTTER_GESTURE_ACTION (action), 80.0, 80.0);
-  clutter_actor_add_action (bvw->priv->texture, action);
-  g_signal_connect (action, "swipe",
-		    G_CALLBACK (bacon_video_widget_swipe), bvw);
-
-  /* The spinner */
-  bvw->priv->spinner = bacon_video_spinner_actor_new ();
-  clutter_actor_set_name (bvw->priv->spinner, "spinner");
-  clutter_actor_add_child (bvw->priv->stage, bvw->priv->spinner);
-  clutter_actor_set_child_above_sibling (bvw->priv->stage,
-					 bvw->priv->spinner,
-					 bvw->priv->frame);
-  clutter_actor_hide (bvw->priv->spinner);
-
-  /* Fullscreen header controls */
-  bvw->priv->header_controls = gtk_clutter_actor_new ();
-  clutter_actor_set_opacity (bvw->priv->header_controls, OVERLAY_OPACITY);
-  clutter_actor_set_name (bvw->priv->header_controls, "header-controls");
-  clutter_actor_add_constraint (bvw->priv->header_controls,
-                                clutter_bind_constraint_new (bvw->priv->stage,
-                                                             CLUTTER_BIND_WIDTH,
-                                                             0));
-  layout = g_object_new (CLUTTER_TYPE_ACTOR,
-			 "layout-manager", clutter_bin_layout_new (CLUTTER_BIN_ALIGNMENT_CENTER, CLUTTER_BIN_ALIGNMENT_START),
-			 NULL);
-  clutter_actor_set_name (layout, "layout");
-  clutter_actor_add_child (layout, bvw->priv->header_controls);
-  clutter_actor_add_child (bvw->priv->stage, layout);
-
-  /* The controls */
-  bvw->priv->controls = bacon_video_controls_actor_new ();
-  clutter_actor_set_name (bvw->priv->controls, "controls");
-  layout = g_object_new (CLUTTER_TYPE_ACTOR,
-			 "layout-manager", clutter_bin_layout_new (CLUTTER_BIN_ALIGNMENT_CENTER, CLUTTER_BIN_ALIGNMENT_END),
-			 NULL);
-  clutter_actor_set_name (layout, "layout");
-  clutter_actor_add_child (layout, bvw->priv->controls);
-
-  clutter_actor_add_child (bvw->priv->stage, layout);
-  clutter_actor_set_child_above_sibling (bvw->priv->stage,
-					 layout,
-					 bvw->priv->logo_frame);
-
-  clutter_actor_set_opacity (bvw->priv->controls, 0);
-
-  item = g_object_get_data (G_OBJECT (bvw->priv->controls), "seek_scale");
-  g_signal_connect (item, "scroll-event",
-		    G_CALLBACK (bacon_video_widget_handle_scroll), bvw);
-  item = g_object_get_data (G_OBJECT (bvw->priv->controls), "volume_button");
-  g_signal_connect (item, "scroll-event",
-		    G_CALLBACK (bacon_video_widget_handle_scroll), bvw);
+  bacon_video_osd_actor_hide (BACON_VIDEO_OSD_ACTOR (bvw->priv->osd));
 
   /* And tell playbin */
-  g_object_set (bvw->priv->play, "video-sink", bvw->priv->video_sink, NULL);
+  g_object_set (bvw->priv->play, "video-sink", video_sink, NULL);
 
   /* Link the audiopitch element */
   bvw->priv->audio_capsfilter =
@@ -6256,8 +6011,11 @@ bacon_video_widget_initable_init (GInitable     *initable,
   audio_bin = gst_bin_new ("audiosinkbin");
   gst_bin_add_many (GST_BIN (audio_bin),
                     bvw->priv->audio_capsfilter,
-		    audio_sink, NULL);
+                    bvw->priv->audio_pitchcontrol,
+		   audio_converter, audio_sink, NULL);
   gst_element_link_many (bvw->priv->audio_capsfilter,
+			 bvw->priv->audio_pitchcontrol,
+			 audio_converter,
 			 audio_sink,
 			 NULL);
 
@@ -6267,12 +6025,9 @@ bacon_video_widget_initable_init (GInitable     *initable,
 
   /* And tell playbin */
   g_object_set (bvw->priv->play, "audio-sink", audio_bin, NULL);
-  g_object_set (bvw->priv->play, "audio-filter", bvw->priv->audio_pitchcontrol, NULL);
 
   /* Set default connection speed */
-  /* Cast the value to guint64 to match the type of the 'connection-speed'
-   * property to avoid problems reading variable arguments on 32-bit systems. */
-  g_object_set (bvw->priv->play, "connection-speed", (guint64) MAX_NETWORK_SPEED, NULL);
+  g_object_set (bvw->priv->play, "connection-speed", MAX_NETWORK_SPEED, NULL);
 
   g_signal_connect (G_OBJECT (bvw->priv->play), "notify::volume",
       G_CALLBACK (notify_volume_cb), bvw);
@@ -6354,10 +6109,10 @@ bacon_video_widget_set_rate (BaconVideoWidget *bvw,
   g_return_val_if_fail (GST_IS_ELEMENT (bvw->priv->play), FALSE);
 
   /* set upper and lower limit for rate */
-  if (new_rate < 0.5)
-    return retval;
-  if (new_rate > 2.0)
-    return retval;
+  if (new_rate <= 0.5)
+	return TRUE;
+  if (new_rate >= 2.0)
+	return TRUE;
 
   if (gst_element_query_position (bvw->priv->play, GST_FORMAT_TIME, &cur)) {
     GST_DEBUG ("Setting new rate at %"G_GINT64_FORMAT"", cur);
@@ -6377,23 +6132,6 @@ bacon_video_widget_set_rate (BaconVideoWidget *bvw,
   }
 
   return retval;
-}
-
-/**
- * bacon_video_widget_set_fullscreen:
- * @bvw: a #BaconVideoWidget
- * @fullscreen: the new fullscreen state
- *
- * Sets the fullscreen state, enabling a toplevel header bar sliding from
- * the top of the video widget.
- **/
-void
-bacon_video_widget_set_fullscreen (BaconVideoWidget *bvw,
-                                   gboolean          fullscreen)
-{
-  g_return_if_fail (BACON_IS_VIDEO_WIDGET (bvw));
-
-  g_object_set (bvw->priv->header_controls, "visible", fullscreen, NULL);
 }
 
 /*

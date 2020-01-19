@@ -19,6 +19,8 @@
 using GLib;
 using Totem;
 using Peas;
+using Clutter;
+using GtkClutter;
 
 public const string GIO_ROTATION_FILE_ATTRIBUTE = "metadata::totem::rotation";
 
@@ -27,46 +29,40 @@ class RotationPlugin: GLib.Object, Peas.Activatable
     private const int STATE_COUNT = 4;
     public GLib.Object object { owned get; construct; }
     private Bacon.VideoWidget bvw = null;
-    private GLib.SimpleAction rotate_left_action = null;
-    private GLib.SimpleAction rotate_right_action = null;
+    private uint ui_id;
+    private Gtk.ActionGroup action_group;
 
     public void activate ()
     {
         Totem.Object t = (Totem.Object) this.object;
         string mrl = t.get_current_mrl ();
-        GLib.Menu menu = t.get_menu_section ("rotation-placeholder");
 
         this.bvw = t.get_video_widget () as Bacon.VideoWidget;
 
         // add interface elements to control the rotation
-        this.rotate_left_action = new GLib.SimpleAction ("rotate-left", null);
-        this.rotate_left_action.activate.connect (this.cb_rotate_left);
-        t.add_action (this.rotate_left_action);
-        t.add_accelerator("<Primary><Shift>R", "app.rotate-left", null);
+        unowned Gtk.UIManager ui_manager = t.get_ui_manager ();
+        this.ui_id = ui_manager.new_merge_id ();
+        ui_manager.add_ui (this.ui_id, "/ui/tmw-menubar/view/next-angle",
+                "rotate-left", "rotate-left", Gtk.UIManagerItemType.AUTO, false);
+        ui_manager.add_ui (this.ui_id, "/ui/tmw-menubar/view/next-angle",
+                "rotate-right", "rotate-right", Gtk.UIManagerItemType.AUTO, false);
 
-        this.rotate_right_action = new GLib.SimpleAction ("rotate-right", null);
-        this.rotate_right_action.activate.connect (this.cb_rotate_right);
-        t.add_action (this.rotate_right_action);
-        t.add_accelerator("<Primary>R", "app.rotate-right", null);
+        var rotate_right  = new Gtk.Action ("rotate-right", _("_Rotate Clockwise"), null, null);
+        rotate_right.activate.connect (this.cb_rotate_right);
+        var rotate_left = new Gtk.Action ("rotate-left", _("Rotate Counterc_lockwise"), null, null);
+        rotate_left.activate.connect (this.cb_rotate_left);
 
-        GLib.MenuItem item = new GLib.MenuItem (_("_Rotate ↷"), "app.rotate-right");
-        item.set_attribute ("accel", "s", "<Primary>R");
-        menu.append_item (item);
-
-        item = new GLib.MenuItem (_("Rotate ↶"), "app.rotate-left");
-        item.set_attribute ("accel", "s", "<Primary><Shift>R");
-        menu.append_item (item);
-
+        this.action_group = new Gtk.ActionGroup ("RotationActions");
+        this.action_group.add_action_with_accel (rotate_right, "<ctrl>R");
+        this.action_group.add_action_with_accel (rotate_left, "<ctrl><shift>R");
         if (mrl == null) {
-            this.rotate_right_action.set_enabled (false);
-            this.rotate_left_action.set_enabled (false);
+            this.action_group.sensitive = false;
         }
+        ui_manager.insert_action_group (this.action_group, 0);
 
         // read the state of the current video from the GIO attribute
         if (mrl != null) {
-            this.try_restore_state.begin (mrl, (o, r) => {
-                this.try_restore_state.end (r);
-            });
+            this.try_restore_state (mrl);
         }
 
         t.file_closed.connect (this.cb_file_closed);
@@ -82,11 +78,9 @@ class RotationPlugin: GLib.Object, Peas.Activatable
         t.file_opened.disconnect (this.cb_file_opened);
 
         // remove interface elements to control the rotation
-        t.empty_menu_section ("rotation-placeholder");
-
-        // remove accelerators
-        t.remove_accelerator("app.rotate-right", null);
-        t.remove_accelerator("app.rotate-left", null);
+        unowned Gtk.UIManager ui_manager = t.get_ui_manager ();
+        ui_manager.remove_ui (this.ui_id);
+        ui_manager.remove_action_group (this.action_group);
 
         // undo transformations
         this.bvw.set_rotation (Bacon.Rotation.R_ZERO);
@@ -101,31 +95,27 @@ class RotationPlugin: GLib.Object, Peas.Activatable
     {
         int state = (this.bvw.get_rotation() - 1) % STATE_COUNT;
         this.bvw.set_rotation ((Bacon.Rotation) state);
-        this.store_state.begin ((o, r) => { this.store_state.end (r); });
+        this.store_state ();
     }
 
     private void cb_rotate_right ()
     {
         int state = (this.bvw.get_rotation() + 1) % STATE_COUNT;
         this.bvw.set_rotation ((Bacon.Rotation) state);
-        this.store_state.begin ((o, r) => { this.store_state.end (r); });
+        this.store_state ();
     }
 
     private void cb_file_closed ()
     {
         // reset the rotation
         this.bvw.set_rotation (Bacon.Rotation.R_ZERO);
-        this.rotate_right_action.set_enabled (false);
-        this.rotate_left_action.set_enabled (false);
+        this.action_group.sensitive = false;
     }
 
     private void cb_file_opened (string mrl)
     {
-        this.rotate_right_action.set_enabled (true);
-        this.rotate_left_action.set_enabled (true);
-        this.try_restore_state.begin (mrl, (o, r) => {
-            this.try_restore_state.end (r);
-        });
+        this.action_group.sensitive = true;
+        this.try_restore_state (mrl);
     }
 
     private async void store_state ()
@@ -151,7 +141,6 @@ class RotationPlugin: GLib.Object, Peas.Activatable
             file_info.set_attribute_string (GIO_ROTATION_FILE_ATTRIBUTE, state_str);
             yield file.set_attributes_async (file_info, GLib.FileQueryInfoFlags.NONE,
                     GLib.Priority.DEFAULT, null, null);
-        } catch (IOError.NOT_SUPPORTED e) {
         } catch (GLib.Error e) {
             GLib.warning ("Could not store file attribute: %s", e.message);
         }
@@ -160,8 +149,6 @@ class RotationPlugin: GLib.Object, Peas.Activatable
     private async void try_restore_state (string mrl)
     {
         var file = GLib.File.new_for_uri (mrl);
-        if (file.has_uri_scheme ("http") || file.has_uri_scheme ("dvd"))
-          return;
         try {
             var file_info = yield file.query_info_async (GIO_ROTATION_FILE_ATTRIBUTE,
                     GLib.FileQueryInfoFlags.NONE);
@@ -170,7 +157,6 @@ class RotationPlugin: GLib.Object, Peas.Activatable
                 int state = (Bacon.Rotation) uint64.parse (state_str);
                 this.bvw.set_rotation ((Bacon.Rotation) state);
             }
-        } catch (IOError.NOT_SUPPORTED e) {
         } catch (GLib.Error e) {
             GLib.warning ("Could not query file attribute: %s", e.message);
         }

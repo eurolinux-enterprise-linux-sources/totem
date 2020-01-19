@@ -14,7 +14,8 @@
  *
  *  You should have received a copy of the GNU Library General Public
  *  License along with the Gnome Library; see the file COPYING.LIB.  If not,
- *  see <http://www.gnu.org/licenses/>.
+ *  write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ *  Boston, MA 02110-1301  USA.
  *
  *  Author: Bastien Nocera <hadess@hadess.net>
  * 
@@ -53,7 +54,7 @@ totem_interface_error_dialog (const char *title, const char *reason,
 	GtkWidget *error_dialog;
 
 	if (reason == NULL)
-		g_warning ("%s called with reason == NULL", G_STRFUNC);
+		g_warning ("totem_action_error called with reason == NULL");
 
 	error_dialog =
 		gtk_message_dialog_new (NULL,
@@ -64,9 +65,10 @@ totem_interface_error_dialog (const char *title, const char *reason,
 	gtk_message_dialog_format_secondary_text
 		(GTK_MESSAGE_DIALOG (error_dialog), "%s", reason);
 
-	gtk_window_set_transient_for (GTK_WINDOW (error_dialog),
-				      GTK_WINDOW (parent));
+	totem_interface_set_transient_for (GTK_WINDOW (error_dialog),
+				GTK_WINDOW (parent));
 	gtk_window_set_title (GTK_WINDOW (error_dialog), ""); /* as per HIG */
+	gtk_container_set_border_width (GTK_CONTAINER (error_dialog), 5);
 	gtk_dialog_set_default_response (GTK_DIALOG (error_dialog),
 			GTK_RESPONSE_OK);
 	gtk_window_set_modal (GTK_WINDOW (error_dialog), TRUE);
@@ -176,7 +178,7 @@ totem_interface_load (const char *name, gboolean fatal, GtkWindow *parent, gpoin
 	if (filename == NULL) {
 		char *msg;
 
-		msg = g_strdup_printf (_("Couldn’t load the “%s” interface. %s"), name, _("The file does not exist."));
+		msg = g_strdup_printf (_("Couldn't load the '%s' interface. %s"), name, _("The file does not exist."));
 		if (fatal == FALSE)
 			totem_interface_error (msg, _("Make sure that Totem is properly installed."), parent);
 		else
@@ -219,7 +221,7 @@ totem_interface_load_with_full_path (const char *filename, gboolean fatal,
 	if (builder == NULL || gtk_builder_add_from_file (builder, filename, &error) == FALSE) {
 		char *msg;
 
-		msg = g_strdup_printf (_("Couldn’t load the “%s” interface. %s"), filename, error->message);
+		msg = g_strdup_printf (_("Couldn't load the '%s' interface. %s"), filename, error->message);
 		if (fatal == FALSE)
 			totem_interface_error (msg, _("Make sure that Totem is properly installed."), parent);
 		else
@@ -287,39 +289,90 @@ totem_interface_get_full_path (const char *name)
 	return filename;
 }
 
-/**
- * totem_interface_create_header_button:
- * @header: The header widget to put the button in
- * @button: The button to use in the header
- * @icon_name: The icon name for the button image
- * @pack_type: A #GtkPackType to tell us where to include the button
- *
- * Put the given @icon_name into @button, and pack @button into @header
- * according to @pack_type.
- *
- * Return value: (transfer none): the button passed as input
- */
-GtkWidget *
-totem_interface_create_header_button (GtkWidget  *header,
-				      GtkWidget  *button,
-				      const char *icon_name,
-				      GtkPackType pack_type)
+#ifdef GDK_WINDOWING_X11
+static GdkWindow *
+totem_gtk_plug_get_toplevel (GtkPlug *plug)
 {
-	GtkWidget *image;
-	GtkStyleContext *context;
+	Window root, parent, *children;
+	guint nchildren;
+	Window xid;
 
-	image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_MENU);
-	gtk_button_set_image (GTK_BUTTON (button), image);
-	context = gtk_widget_get_style_context (button);
-	gtk_style_context_add_class (context, "image-button");
-	g_object_set (G_OBJECT (button), "valign", GTK_ALIGN_CENTER, NULL);
-	if (GTK_IS_MENU_BUTTON (button))
-		      g_object_set (G_OBJECT (button), "use-popover", TRUE, NULL);
+	g_return_val_if_fail (GTK_IS_PLUG (plug), NULL);
 
-	if (pack_type == GTK_PACK_END)
-		gtk_header_bar_pack_end (GTK_HEADER_BAR (header), button);
-	else
-		gtk_header_bar_pack_start (GTK_HEADER_BAR (header), button);
+	xid = gtk_plug_get_id (plug);
 
-	return button;
+	do
+	{
+		/* FIXME: multi-head */
+		if (XQueryTree (GDK_DISPLAY_XDISPLAY (gdk_display_get_default ()), xid, &root,
+					&parent, &children, &nchildren) == 0)
+		{
+			g_warning ("Couldn't find window manager window");
+			return NULL;
+		}
+
+		if (root == parent) {
+			GdkWindow *toplevel;
+			toplevel = gdk_x11_window_foreign_new_for_display (gdk_display_get_default (), xid);
+			return toplevel;
+		}
+
+		xid = parent;
+	}
+	while (TRUE);
 }
+#endif /* GDK_WINDOWING_X11 */
+
+void
+totem_interface_set_transient_for (GtkWindow *window, GtkWindow *parent)
+{
+#ifdef GDK_WINDOWING_X11
+	GdkDisplay *display;
+
+	display = gdk_display_get_default ();
+
+	if (GDK_IS_X11_DISPLAY (display) &&
+	    GTK_IS_PLUG (parent)) {
+		GdkWindow *toplevel;
+
+		gtk_widget_realize (GTK_WIDGET (window));
+		toplevel = totem_gtk_plug_get_toplevel (GTK_PLUG (parent));
+		if (toplevel != NULL) {
+			gdk_window_set_transient_for
+				(gtk_widget_get_window (GTK_WIDGET (window)), toplevel);
+			g_object_unref (toplevel);
+		}
+		return;
+	}
+#endif /* GDK_WINDOWING_X11 */
+
+	gtk_window_set_transient_for (GTK_WINDOW (window),
+				      GTK_WINDOW (parent));
+}
+
+char *
+totem_interface_get_license (void)
+{
+	const char *license[] = {
+		N_("Totem is free software; you can redistribute it and/or modify "
+		   "it under the terms of the GNU General Public License as published by "
+		   "the Free Software Foundation; either version 2 of the License, or "
+		   "(at your option) any later version."),
+		N_("Totem is distributed in the hope that it will be useful, "
+		   "but WITHOUT ANY WARRANTY; without even the implied warranty of "
+		   "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the "
+		   "GNU General Public License for more details."),
+		N_("You should have received a copy of the GNU General Public License "
+		   "along with Totem; if not, write to the Free Software Foundation, Inc., "
+		   "59 Temple Place, Suite 330, Boston, MA  02111-1307  USA"),
+		N_("Totem contains an exception to allow the use of proprietary "
+		   "GStreamer plugins.")
+	};
+	return g_strjoin ("\n\n",
+			  _(license[0]),
+			  _(license[1]),
+			  _(license[2]),
+			  _(license[3]),
+			  NULL);
+}
+

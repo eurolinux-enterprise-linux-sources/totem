@@ -97,8 +97,8 @@ totem_im_status_update_from_state (TotemObject         *totem,
 	if (pi->priv->proxy == NULL)
 		return;
 
-	if (totem_object_is_playing (totem) != FALSE
-	    && totem_object_is_fullscreen (totem) != FALSE) {
+	if (totem_is_playing (totem) != FALSE
+	    && totem_is_fullscreen (totem) != FALSE) {
 		totem_im_status_set_idleness (pi, TRUE);
 	} else {
 		totem_im_status_set_idleness (pi, FALSE);

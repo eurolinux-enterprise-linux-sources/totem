@@ -30,8 +30,6 @@
 
 #include <glib.h>
 
-char *totem_time_to_string (gint64   msecs,
-			    gboolean remaining,
-			    gboolean force_hour);
+char *totem_time_to_string (gint64 msecs);
 
 #endif /* _TOTEM_TIME_HELPERS_H_ */

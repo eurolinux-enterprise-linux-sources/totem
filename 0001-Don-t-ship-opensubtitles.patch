@@ -1,0 +1,27 @@
+From b08d1060932150dd5cbc1297862f390f3268c3ea Mon Sep 17 00:00:00 2001
+From: Bastien Nocera <hadess@hadess.net>
+Date: Wed, 29 Jan 2014 18:39:58 +0100
+Subject: [PATCH] Don't ship opensubtitles
+
+It depends on PyXDG, and it's not useful in an enterprise
+environment.
+---
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure.ac b/configure.ac
+index 0810f01..d8aa67d 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -79,7 +79,7 @@ AC_SUBST(TOTEM_API_VERSION)
+ AC_DEFINE_UNQUOTED(TOTEM_API_VERSION, ["$TOTEM_API_VERSION"], [Define to the Totem plugin API version])
+ 
+ # The full list of plugins
+-allowed_plugins="apple-trailers autoload-subtitles brasero-disc-recorder chapters dbusservice im-status gromit lirc media-player-keys ontop opensubtitles properties pythonconsole recent rotation save-file samplepython sample-vala screensaver screenshot sidebar-test skipto zeitgeist-dp grilo"
++allowed_plugins="apple-trailers autoload-subtitles brasero-disc-recorder chapters dbusservice im-status gromit lirc media-player-keys ontop properties pythonconsole recent rotation save-file samplepython sample-vala screensaver screenshot sidebar-test skipto zeitgeist-dp grilo"
+ 
+ PLUGINDIR='${libdir}/totem/plugins'
+ AC_SUBST(PLUGINDIR)
+-- 
+1.8.4.2
+

@@ -30,13 +30,12 @@
 #define GST_USE_UNSTABLE_API 1
 
 #include <glib/gstdio.h>
+#include <gtk/gtk.h>
 #include <glib/gi18n.h>
 #include <cairo.h>
 #include <gst/gst.h>
-#include <gdk/gdk.h>
-#include <totem-pl-parser.h>
+#include <totem-disc.h>
 
-#include <locale.h>
 #include <errno.h>
 #include <unistd.h>
 #include <string.h>
@@ -49,6 +48,7 @@
 #include "gst/totem-gst-helpers.h"
 #include "gst/totem-time-helpers.h"
 #include "gst/totem-gst-pixbuf-helpers.h"
+#include "video-utils.h"
 #include "totem-resources.h"
 
 #ifdef G_HAVE_ISO_VARARGS
@@ -63,13 +63,19 @@
 #define MAX_PROGRESS 90.0
 
 #define BORING_IMAGE_VARIANCE 256.0		/* Tweak this if necessary */
+#define GALLERY_MIN 3				/* minimum number of screenshots in a gallery */
+#define GALLERY_MAX 30				/* maximum number of screenshots in a gallery */
+#define GALLERY_HEADER_HEIGHT 66		/* header height (in pixels) for the gallery */
 #define DEFAULT_OUTPUT_SIZE 256
 
+static gboolean jpeg_output = FALSE;
 static gboolean raw_output = FALSE;
 static int output_size = -1;
 static gboolean time_limit = TRUE;
 static gboolean verbose = FALSE;
 static gboolean print_progress = FALSE;
+static gboolean g_fatal_warnings = FALSE;
+static gint gallery = -1;
 static gint64 second_index = -1;
 static char **filenames = NULL;
 
@@ -83,21 +89,11 @@ typedef struct {
 static void save_pixbuf (GdkPixbuf *pixbuf, const char *path,
 			 const char *video_path, int size, gboolean is_still);
 
-static void
-entry_parsed_cb (TotemPlParser *parser,
-		 const char    *uri,
-		 GHashTable    *metadata,
-		 char         **new_url)
-{
-	*new_url = g_strdup (uri);
-}
-
 static char *
 get_special_url (GFile *file)
 {
 	char *path, *orig_uri, *uri, *mime_type;
-	TotemPlParser *parser;
-	TotemPlParserResult res;
+	TotemDiscMediaType type;
 
 	path = g_file_get_path (file);
 
@@ -111,17 +107,11 @@ get_special_url (GFile *file)
 
 	uri = NULL;
 	orig_uri = g_file_get_uri (file);
-
-	parser = totem_pl_parser_new ();
-	g_signal_connect (parser, "entry-parsed",
-			  G_CALLBACK (entry_parsed_cb), &uri);
-
-	res = totem_pl_parser_parse (parser, orig_uri, FALSE);
-
+	type = totem_cd_detect_type_with_url (orig_uri, &uri, NULL);
 	g_free (orig_uri);
-	g_object_unref (parser);
 
-	if (res == TOTEM_PL_PARSER_RESULT_SUCCESS)
+	if (type == MEDIA_TYPE_DVD ||
+	    type == MEDIA_TYPE_VCD)
 		return uri;
 
 	g_free (uri);
@@ -177,37 +167,6 @@ error_handler (GstBus *bus,
 	case GST_MESSAGE_EOS:
 		exit (0);
 
-	case GST_MESSAGE_ASYNC_DONE:
-	case GST_MESSAGE_UNKNOWN:
-	case GST_MESSAGE_WARNING:
-	case GST_MESSAGE_INFO:
-	case GST_MESSAGE_TAG:
-	case GST_MESSAGE_BUFFERING:
-	case GST_MESSAGE_STATE_CHANGED:
-	case GST_MESSAGE_STATE_DIRTY:
-	case GST_MESSAGE_STEP_DONE:
-	case GST_MESSAGE_CLOCK_PROVIDE:
-	case GST_MESSAGE_CLOCK_LOST:
-	case GST_MESSAGE_NEW_CLOCK:
-	case GST_MESSAGE_STRUCTURE_CHANGE:
-	case GST_MESSAGE_STREAM_STATUS:
-	case GST_MESSAGE_APPLICATION:
-	case GST_MESSAGE_ELEMENT:
-	case GST_MESSAGE_SEGMENT_START:
-	case GST_MESSAGE_SEGMENT_DONE:
-	case GST_MESSAGE_DURATION_CHANGED:
-	case GST_MESSAGE_LATENCY:
-	case GST_MESSAGE_ASYNC_START:
-	case GST_MESSAGE_REQUEST_STATE:
-	case GST_MESSAGE_STEP_START:
-	case GST_MESSAGE_QOS:
-	case GST_MESSAGE_PROGRESS:
-	case GST_MESSAGE_TOC:
-	case GST_MESSAGE_RESET_TIME:
-	case GST_MESSAGE_STREAM_START:
-	case GST_MESSAGE_ANY:
-	case GST_MESSAGE_NEED_CONTEXT:
-	case GST_MESSAGE_HAVE_CONTEXT:
 	default:
 		/* Ignored */
 		;;
@@ -220,7 +179,8 @@ static void
 thumb_app_cleanup (ThumbApp *app)
 {
 	gst_element_set_state (app->play, GST_STATE_NULL);
-	g_clear_object (&app->play);
+	g_object_unref (app->play);
+	app->play = NULL;
 }
 
 static void
@@ -230,7 +190,6 @@ thumb_app_set_error_handler (ThumbApp *app)
 
 	bus = gst_element_get_bus (app->play);
 	gst_bus_set_sync_handler (bus, (GstBusSyncHandler) error_handler, app->play, NULL);
-	g_object_unref (bus);
 }
 
 static void
@@ -251,7 +210,7 @@ check_cover_for_stream (ThumbApp   *app,
 		return;
 	}
 
-	PROGRESS_DEBUG("Saving cover image to %s", app->output);
+	PROGRESS_DEBUG("Saving cover image");
 	thumb_app_cleanup (app);
 	save_pixbuf (pixbuf, app->output, app->input, output_size, TRUE);
 	g_object_unref (pixbuf);
@@ -331,37 +290,6 @@ thumb_app_start (ThumbApp *app)
 			terminate = TRUE;
 			break;
 
-		case GST_MESSAGE_UNKNOWN:
-		case GST_MESSAGE_EOS:
-		case GST_MESSAGE_WARNING:
-		case GST_MESSAGE_INFO:
-		case GST_MESSAGE_TAG:
-		case GST_MESSAGE_BUFFERING:
-		case GST_MESSAGE_STATE_CHANGED:
-		case GST_MESSAGE_STATE_DIRTY:
-		case GST_MESSAGE_STEP_DONE:
-		case GST_MESSAGE_CLOCK_PROVIDE:
-		case GST_MESSAGE_CLOCK_LOST:
-		case GST_MESSAGE_NEW_CLOCK:
-		case GST_MESSAGE_STRUCTURE_CHANGE:
-		case GST_MESSAGE_STREAM_STATUS:
-		case GST_MESSAGE_APPLICATION:
-		case GST_MESSAGE_ELEMENT:
-		case GST_MESSAGE_SEGMENT_START:
-		case GST_MESSAGE_SEGMENT_DONE:
-		case GST_MESSAGE_DURATION_CHANGED:
-		case GST_MESSAGE_LATENCY:
-		case GST_MESSAGE_ASYNC_START:
-		case GST_MESSAGE_REQUEST_STATE:
-		case GST_MESSAGE_STEP_START:
-		case GST_MESSAGE_QOS:
-		case GST_MESSAGE_PROGRESS:
-		case GST_MESSAGE_TOC:
-		case GST_MESSAGE_RESET_TIME:
-		case GST_MESSAGE_STREAM_START:
-		case GST_MESSAGE_ANY:
-		case GST_MESSAGE_NEED_CONTEXT:
-		case GST_MESSAGE_HAVE_CONTEXT:
 		default:
 			/* Ignore */
 			;;
@@ -385,13 +313,6 @@ thumb_app_setup_play (ThumbApp *app)
 {
 	GstElement *play;
 	GstElement *audio_sink, *video_sink;
-	GstRegistry *registry;
-	const char *blacklisted_plugins[] = {
-	  "bmcdec",
-	  "vaapi",
-	  "video4linux2"
-	};
-	guint i;
 
 	play = gst_element_factory_make ("playbin", "play");
 	audio_sink = gst_element_factory_make ("fakesink", "audio-fake-sink");
@@ -405,20 +326,6 @@ thumb_app_setup_play (ThumbApp *app)
 		      NULL);
 
 	app->play = play;
-
-	/* Disable the vaapi plugin as it will not work with the
-	 * fakesink we use:
-	 * See: https://bugzilla.gnome.org/show_bug.cgi?id=700186 and
-	 * https://bugzilla.gnome.org/show_bug.cgi?id=749605 */
-	registry = gst_registry_get ();
-
-	for (i = 0; i < G_N_ELEMENTS (blacklisted_plugins); i++) {
-		GstPlugin *plugin =
-			gst_registry_find_plugin (registry,
-						  blacklisted_plugins[i]);
-		if (plugin)
-			gst_registry_remove_plugin (registry, plugin);
-	}
 }
 
 static void
@@ -431,6 +338,141 @@ thumb_app_seek (ThumbApp *app,
 			  GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE);
 	/* And wait for this seek to complete */
 	gst_element_get_state (app->play, NULL, NULL, GST_CLOCK_TIME_NONE);
+}
+
+static GdkPixbuf *
+add_holes_to_pixbuf_small (GdkPixbuf *pixbuf, int width, int height)
+{
+	GdkPixbuf *holes, *tmp, *target;
+	char *filename;
+	int i;
+
+	filename = g_build_filename (DATADIR, "totem", "filmholes.png", NULL);
+	holes = gdk_pixbuf_new_from_file (filename, NULL);
+	g_free (filename);
+
+	if (holes == NULL) {
+		g_object_ref (pixbuf);
+		return pixbuf;
+	}
+
+	g_assert (gdk_pixbuf_get_has_alpha (pixbuf) == FALSE);
+	g_assert (gdk_pixbuf_get_has_alpha (holes) != FALSE);
+	target = g_object_ref (pixbuf);
+
+	for (i = 0; i < height; i += gdk_pixbuf_get_height (holes))
+	{
+		gdk_pixbuf_composite (holes, target, 0, i,
+				      MIN (width, gdk_pixbuf_get_width (holes)),
+				      MIN (height - i, gdk_pixbuf_get_height (holes)),
+				      0, i, 1, 1, GDK_INTERP_NEAREST, 255);
+	}
+
+	tmp = gdk_pixbuf_flip (holes, FALSE);
+	g_object_unref (holes);
+	holes = tmp;
+
+	for (i = 0; i < height; i += gdk_pixbuf_get_height (holes))
+	{
+		gdk_pixbuf_composite (holes, target,
+				      width - gdk_pixbuf_get_width (holes), i,
+				      MIN (width, gdk_pixbuf_get_width (holes)),
+				      MIN (height - i, gdk_pixbuf_get_height (holes)),
+				      width - gdk_pixbuf_get_width (holes), i,
+				      1, 1, GDK_INTERP_NEAREST, 255);
+	}
+
+	g_object_unref (holes);
+
+	return target;
+}
+
+static GdkPixbuf *
+add_holes_to_pixbuf_large (GdkPixbuf *pixbuf, int size)
+{
+	char *filename;
+	int lh, lw, rh, rw, i;
+	GdkPixbuf *left, *right, *small;
+	int canvas_w, canvas_h;
+	int d_height, d_width;
+	double ratio;
+
+	filename = g_build_filename (DATADIR, "totem",
+			"filmholes-big-left.png", NULL);
+	left = gdk_pixbuf_new_from_file (filename, NULL);
+	g_free (filename);
+
+	if (left == NULL) {
+		g_object_ref (pixbuf);
+		return pixbuf;
+	}
+
+	filename = g_build_filename (DATADIR, "totem",
+			"filmholes-big-right.png", NULL);
+	right = gdk_pixbuf_new_from_file (filename, NULL);
+	g_free (filename);
+
+	if (right == NULL) {
+		g_object_unref (left);
+		g_object_ref (pixbuf);
+		return pixbuf;
+	}
+
+	lh = gdk_pixbuf_get_height (left);
+	lw = gdk_pixbuf_get_width (left);
+	rh = gdk_pixbuf_get_height (right);
+	rw = gdk_pixbuf_get_width (right);
+	g_assert (lh == rh);
+	g_assert (lw == rw);
+
+	{
+		int height, width;
+
+		height = gdk_pixbuf_get_height (pixbuf);
+		width = gdk_pixbuf_get_width (pixbuf);
+
+		if (width > height) {
+			d_width = size - lw - lw;
+			d_height = d_width * height / width;
+		} else {
+			d_height = size - lw -lw;
+			d_width = d_height * width / height;
+		}
+
+		canvas_h = d_height;
+		canvas_w = d_width + 2 * lw;
+	}
+
+	small = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8,
+			canvas_w, canvas_h);
+	gdk_pixbuf_fill (small, 0x000000ff);
+	ratio = ((double)d_width / (double) gdk_pixbuf_get_width (pixbuf));
+
+	gdk_pixbuf_scale (pixbuf, small, lw, 0,
+			d_width, d_height,
+			lw, 0, ratio, ratio, GDK_INTERP_BILINEAR);
+
+	/* Left side holes */
+	for (i = 0; i < canvas_h; i += lh) {
+		gdk_pixbuf_composite (left, small, 0, i,
+				MIN (canvas_w, lw),
+				MIN (canvas_h - i, lh),
+				0, i, 1, 1, GDK_INTERP_NEAREST, 255);
+	}
+
+	/* Right side holes */
+	for (i = 0; i < canvas_h; i += rh) {
+		gdk_pixbuf_composite (right, small,
+				canvas_w - rw, i,
+				MIN (canvas_w, rw),
+				MIN (canvas_h - i, rh),
+				canvas_w - rw, i,
+				1, 1, GDK_INTERP_NEAREST, 255);
+	}
+
+	/* TODO Add a one pixel border of 0x33333300 all around */
+
+	return small;
 }
 
 /* This function attempts to detect images that are mostly solid images
@@ -495,12 +537,24 @@ scale_pixbuf (GdkPixbuf *pixbuf, int size, gboolean is_still)
 		GdkPixbuf *small;
 
 		small = gdk_pixbuf_scale_simple (pixbuf, d_width, d_height, GDK_INTERP_BILINEAR);
-		result = small;
+
+		if (is_still == FALSE) {
+			result = add_holes_to_pixbuf_small (small, d_width, d_height);
+			g_return_val_if_fail (result != NULL, NULL);
+			g_object_unref (small);
+		} else {
+			result = small;
+		}
 	} else {
-		if (size > 0)
-			result = gdk_pixbuf_scale_simple (pixbuf, d_width, d_height, GDK_INTERP_BILINEAR);
-		else
-			result = g_object_ref (pixbuf);
+		if (is_still == FALSE) {
+			result = add_holes_to_pixbuf_large (pixbuf, size);
+			g_return_val_if_fail (result != NULL, NULL);
+		} else {
+			if (size > 0)
+				result = gdk_pixbuf_scale_simple (pixbuf, d_width, d_height, GDK_INTERP_BILINEAR);
+			else
+				result = g_object_ref (pixbuf);
+		}
 	}
 
 	return result;
@@ -511,7 +565,6 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path,
 	     const char *video_path, int size, gboolean is_still)
 {
 	int width, height;
-	char *a_width, *a_height;
 	GdkPixbuf *with_holes;
 	GError *err = NULL;
 	gboolean ret;
@@ -519,22 +572,29 @@ save_pixbuf (GdkPixbuf *pixbuf, const char *path,
 	height = gdk_pixbuf_get_height (pixbuf);
 	width = gdk_pixbuf_get_width (pixbuf);
 
-	/* If we're outputting a raw image without a size,
+	/* If we're outputting a gallery or a raw image without a size,
 	 * don't scale the pixbuf or add borders */
-	if (raw_output != FALSE && size == -1)
+	if (gallery != -1 || (raw_output != FALSE && size == -1))
 		with_holes = g_object_ref (pixbuf);
 	else if (raw_output != FALSE)
 		with_holes = scale_pixbuf (pixbuf, size, TRUE);
 	else
 		with_holes = scale_pixbuf (pixbuf, size, is_still);
 
-	a_width = g_strdup_printf ("%d", width);
-	a_height = g_strdup_printf ("%d", height);
 
-	ret = gdk_pixbuf_save (with_holes, path, "png", &err,
-			       "tEXt::Thumb::Image::Width", a_width,
-			       "tEXt::Thumb::Image::Height", a_height,
-			       NULL);
+	if (jpeg_output == FALSE) {
+		char *a_width, *a_height;
+
+		a_width = g_strdup_printf ("%d", width);
+		a_height = g_strdup_printf ("%d", height);
+
+		ret = gdk_pixbuf_save (with_holes, path, "png", &err,
+				       "tEXt::Thumb::Image::Width", a_width,
+				       "tEXt::Thumb::Image::Height", a_height,
+				       NULL);
+	} else {
+		ret = gdk_pixbuf_save (with_holes, path, "jpeg", &err, NULL);
+	}
 
 	if (ret == FALSE) {
 		if (err != NULL) {
@@ -596,19 +656,290 @@ capture_interesting_frame (ThumbApp *app)
 
 		/* If we get to the end of this loop, we'll end up using
 		 * the last image we pulled */
-		if (current + 1 < G_N_ELEMENTS(frame_locations))
-			g_clear_object (&pixbuf);
+		if (current + 1 < G_N_ELEMENTS(frame_locations)) {
+			if (pixbuf != NULL) {
+				g_object_unref (pixbuf);
+				pixbuf = NULL;
+			}
+		}
 		PROGRESS_DEBUG("Frame for iter %d was not interesting", current);
 	}
 	return pixbuf;
 }
 
+static GdkPixbuf *
+cairo_surface_to_pixbuf (cairo_surface_t *surface)
+{
+	gint stride, width, height, x, y;
+	guchar *data, *output, *output_pixel;
+
+	/* This doesn't deal with alpha --- it simply converts the 4-byte Cairo ARGB
+	 * format to the 3-byte GdkPixbuf packed RGB format. */
+	g_assert (cairo_image_surface_get_format (surface) == CAIRO_FORMAT_RGB24);
+
+	stride = cairo_image_surface_get_stride (surface);
+	width = cairo_image_surface_get_width (surface);
+	height = cairo_image_surface_get_height (surface);
+	data = cairo_image_surface_get_data (surface);
+
+	output = g_malloc (stride * height);
+	output_pixel = output;
+
+	for (y = 0; y < height; y++) {
+		guint32 *row = (guint32*) (data + y * stride);
+
+		for (x = 0; x < width; x++) {
+			output_pixel[0] = (row[x] & 0x00ff0000) >> 16;
+			output_pixel[1] = (row[x] & 0x0000ff00) >> 8;
+			output_pixel[2] = (row[x] & 0x000000ff);
+
+			output_pixel += 3;
+		}
+	}
+
+	return gdk_pixbuf_new_from_data (output, GDK_COLORSPACE_RGB, FALSE, 8,
+					 width, height, width * 3,
+					 (GdkPixbufDestroyNotify) g_free, NULL);
+}
+
+
+static GdkPixbuf *
+create_gallery (ThumbApp *app)
+{
+	GdkPixbuf *screenshot, *pixbuf = NULL;
+	cairo_t *cr;
+	cairo_surface_t *surface;
+	PangoLayout *layout;
+	PangoFontDescription *font_desc;
+	gint64 stream_length, screenshot_interval, pos;
+	guint columns = 3, rows, current_column, current_row, x, y;
+	gint screenshot_width = 0, screenshot_height = 0, x_padding = 0, y_padding = 0;
+	gfloat scale = 1.0;
+	gchar *header_text, *duration_text, *filename;
+
+	/* Calculate how many screenshots we're going to take */
+	stream_length = app->duration;
+
+	/* As a default, we have one screenshot per minute of stream,
+	 * but adjusted so we don't have any gaps in the resulting gallery. */
+	if (gallery == 0) {
+		gallery = stream_length / 60000;
+
+		while (gallery % 3 != 0 &&
+		       gallery % 4 != 0 &&
+		       gallery % 5 != 0) {
+			gallery++;
+		}
+	}
+
+	if (gallery < GALLERY_MIN)
+		gallery = GALLERY_MIN;
+	if (gallery > GALLERY_MAX)
+		gallery = GALLERY_MAX;
+	screenshot_interval = stream_length / gallery;
+
+	/* Put a lower bound on the screenshot interval so we can't enter an infinite loop below */
+	if (screenshot_interval == 0)
+		screenshot_interval = 1;
+
+	PROGRESS_DEBUG ("Producing gallery of %u screenshots, taken at %" G_GINT64_FORMAT " millisecond intervals throughout a %" G_GINT64_FORMAT " millisecond-long stream.",
+			gallery, screenshot_interval, stream_length);
+
+	/* Calculate how to arrange the screenshots so we don't get ones orphaned on the last row.
+	 * At this point, only deal with arrangements of 3, 4 or 5 columns. */
+	y = G_MAXUINT;
+	for (x = 3; x <= 5; x++) {
+		if (gallery % x == 0 || x - gallery % x < y) {
+			y = x - gallery % x;
+			columns = x;
+
+			/* Have we found an optimal solution already? */
+			if (y == x)
+				break;
+		}
+	}
+
+	rows = ceil ((gfloat) gallery / (gfloat) columns);
+
+	PROGRESS_DEBUG ("Outputting as %u rows and %u columns.", rows, columns);
+
+	/* Take the screenshots and composite them into a pixbuf */
+	current_column = current_row = x = y = 0;
+	for (pos = screenshot_interval; pos <= stream_length; pos += screenshot_interval) {
+		if (pos == stream_length)
+			screenshot = capture_frame_at_time (app, pos - 1);
+		else
+			screenshot = capture_frame_at_time (app, pos);
+
+		if (pixbuf == NULL) {
+			screenshot_width = gdk_pixbuf_get_width (screenshot);
+			screenshot_height = gdk_pixbuf_get_height (screenshot);
+
+			/* Calculate a scaling factor so that screenshot_width -> output_size */
+			scale = (float) output_size / (float) screenshot_width;
+
+			x_padding = x = MAX (output_size * 0.05, 1);
+			y_padding = y = MAX (scale * screenshot_height * 0.05, 1);
+
+			PROGRESS_DEBUG ("Scaling each screenshot by %f.", scale);
+
+			/* Create our massive pixbuf */
+			pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8,
+						 columns * output_size + (columns + 1) * x_padding,
+						 (guint) (rows * scale * screenshot_height + (rows + 1) * y_padding));
+			gdk_pixbuf_fill (pixbuf, 0x000000ff);
+
+			PROGRESS_DEBUG ("Created output pixbuf (%ux%u).", gdk_pixbuf_get_width (pixbuf), gdk_pixbuf_get_height (pixbuf));
+		}
+
+		/* Composite the screenshot into our gallery */
+		gdk_pixbuf_composite (screenshot, pixbuf,
+				      x, y, output_size, scale * screenshot_height,
+				      (gdouble) x, (gdouble) y, scale, scale,
+				      GDK_INTERP_BILINEAR, 255);
+		g_object_unref (screenshot);
+
+		PROGRESS_DEBUG ("Composited screenshot from %" G_GINT64_FORMAT " milliseconds (address %u) at (%u,%u).",
+				pos, GPOINTER_TO_UINT (screenshot), x, y);
+
+		/* We print progress in the range 10% (MIN_PROGRESS) to 50% (MAX_PROGRESS - MIN_PROGRESS) / 2.0 */
+		PRINT_PROGRESS (MIN_PROGRESS + (current_row * columns + current_column) * (((MAX_PROGRESS - MIN_PROGRESS) / gallery) / 2.0));
+
+		current_column = (current_column + 1) % columns;
+		x += output_size + x_padding;
+		if (current_column == 0) {
+			x = x_padding;
+			y += scale * screenshot_height + y_padding;
+			current_row++;
+		}
+	}
+
+	PROGRESS_DEBUG ("Converting pixbuf to a Cairo surface.");
+
+	/* Load the pixbuf into a Cairo surface and overlay the text. The height is the height of
+	 * the gallery plus the necessary height for 3 lines of header (at ~18px each), plus some
+	 * extra padding. */
+	surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24, gdk_pixbuf_get_width (pixbuf),
+					      gdk_pixbuf_get_height (pixbuf) + GALLERY_HEADER_HEIGHT + y_padding);
+	cr = cairo_create (surface);
+	cairo_surface_destroy (surface);
+
+	/* First, copy across the gallery pixbuf */
+	gdk_cairo_set_source_pixbuf (cr, pixbuf, 0.0, GALLERY_HEADER_HEIGHT + y_padding);
+	cairo_rectangle (cr, 0.0, GALLERY_HEADER_HEIGHT + y_padding, gdk_pixbuf_get_width (pixbuf), gdk_pixbuf_get_height (pixbuf));
+	cairo_fill (cr);
+	g_object_unref (pixbuf);
+
+	/* Build the header information */
+	duration_text = totem_time_to_string (stream_length);
+	filename = NULL;
+	if (strstr (app->input, "://")) {
+		char *local;
+		local = g_filename_from_uri (app->input, NULL, NULL);
+		filename = g_path_get_basename (local);
+		g_free (local);
+	}
+	if (filename == NULL)
+		filename = g_path_get_basename (app->input);
+
+	/* Translators: The first string is "Filename" (as translated); the second is an actual filename.
+			The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
+			The sixth string is "Duration" (as translated); the seventh is the movie duration in words. */
+	header_text = g_markup_printf_escaped (_("<b>%s</b>: %s\n<b>%s</b>: %d\303\227%d\n<b>%s</b>: %s"),
+					       _("Filename"),
+					       filename,
+					       _("Resolution"),
+					       screenshot_width,
+					       screenshot_height,
+					       _("Duration"),
+					       duration_text);
+	g_free (duration_text);
+	g_free (filename);
+
+	PROGRESS_DEBUG ("Writing header text with Pango.");
+
+	/* Write out some header information */
+	layout = pango_cairo_create_layout (cr);
+	font_desc = pango_font_description_from_string ("Sans 18px");
+	pango_layout_set_font_description (layout, font_desc);
+	pango_font_description_free (font_desc);
+
+	pango_layout_set_markup (layout, header_text, -1);
+	g_free (header_text);
+
+	cairo_set_source_rgb (cr, 1.0, 1.0, 1.0); /* white */
+	cairo_move_to (cr, (gdouble) x_padding, (gdouble) y_padding);
+	pango_cairo_show_layout (cr, layout);
+
+	/* Go through each screenshot and write its timestamp */
+	current_column = current_row = 0;
+	x = x_padding + output_size;
+	y = y_padding * 2 + GALLERY_HEADER_HEIGHT + scale * screenshot_height;
+
+	font_desc = pango_font_description_from_string ("Sans 10px");
+	pango_layout_set_font_description (layout, font_desc);
+	pango_font_description_free (font_desc);
+
+	PROGRESS_DEBUG ("Writing screenshot timestamps with Pango.");
+
+	for (pos = screenshot_interval; pos <= stream_length; pos += screenshot_interval) {
+		gchar *timestamp_text;
+		gint layout_width, layout_height;
+
+		timestamp_text = totem_time_to_string (pos);
+
+		pango_layout_set_text (layout, timestamp_text, -1);
+		pango_layout_get_pixel_size (layout, &layout_width, &layout_height);
+
+		/* Display the timestamp in the bottom-right corner of the current screenshot */
+		cairo_move_to (cr, x - layout_width - 0.02 * output_size, y - layout_height - 0.02 * scale * screenshot_height);
+
+		/* We have to stroke the text so it's visible against screenshots of the same
+		 * foreground color. */
+		pango_cairo_layout_path (cr, layout);
+		cairo_set_source_rgb (cr, 0.0, 0.0, 0.0); /* black */
+		cairo_stroke_preserve (cr);
+		cairo_set_source_rgb (cr, 1.0, 1.0, 1.0); /* white */
+		cairo_fill (cr);
+
+		PROGRESS_DEBUG ("Writing timestamp \"%s\" at (%f,%f).", timestamp_text,
+				x - layout_width - 0.02 * output_size,
+				y - layout_height - 0.02 * scale * screenshot_height);
+
+		/* We print progress in the range 50% (MAX_PROGRESS - MIN_PROGRESS) / 2.0) to 90% (MAX_PROGRESS) */
+		PRINT_PROGRESS (MIN_PROGRESS + (MAX_PROGRESS - MIN_PROGRESS) / 2.0 + (current_row * columns + current_column) * (((MAX_PROGRESS - MIN_PROGRESS) / gallery) / 2.0));
+
+		g_free (timestamp_text);
+
+		current_column = (current_column + 1) % columns;
+		x += output_size + x_padding;
+		if (current_column == 0) {
+			x = x_padding + output_size;
+			y += scale * screenshot_height + y_padding;
+			current_row++;
+		}
+	}
+
+	g_object_unref (layout);
+
+	PROGRESS_DEBUG ("Converting Cairo surface back to pixbuf.");
+
+	/* Create a new pixbuf from the Cairo context */
+	pixbuf = cairo_surface_to_pixbuf (cairo_get_target (cr));
+	cairo_destroy (cr);
+
+	return pixbuf;
+}
+
 static const GOptionEntry entries[] = {
-	{ "size", 's', 0, G_OPTION_ARG_INT, &output_size, "Size of the thumbnail in pixels", NULL },
+	{ "jpeg", 'j',  0, G_OPTION_ARG_NONE, &jpeg_output, "Output the thumbnail as a JPEG instead of PNG", NULL },
+	{ "size", 's', 0, G_OPTION_ARG_INT, &output_size, "Size of the thumbnail in pixels (with --gallery sets the size of individual screenshots)", NULL },
 	{ "raw", 'r', 0, G_OPTION_ARG_NONE, &raw_output, "Output the raw picture of the video without scaling or adding borders", NULL },
 	{ "no-limit", 'l', G_OPTION_FLAG_REVERSE, G_OPTION_ARG_NONE, &time_limit, "Don't limit the thumbnailing time to 30 seconds", NULL },
 	{ "verbose", 'v', 0, G_OPTION_ARG_NONE, &verbose, "Output debug information", NULL },
-	{ "time", 't', 0, G_OPTION_ARG_INT64, &second_index, "Choose this time (in seconds) as the thumbnail", NULL },
+	{ "time", 't', 0, G_OPTION_ARG_INT64, &second_index, "Choose this time (in seconds) as the thumbnail (can't be used with --gallery)", NULL },
+	{ "g-fatal-warnings", 0, 0, G_OPTION_ARG_NONE, &g_fatal_warnings, "Make all warnings fatal", NULL },
+	{ "gallery", 'g', 0, G_OPTION_ARG_INT, &gallery, "Output a gallery of the given number (0 is default) of screenshots (can't be used with --time)", NULL },
 	{ "print-progress", 'p', 0, G_OPTION_ARG_NONE, &print_progress, "Only print progress updates (can't be used with --verbose)", NULL },
 	{ G_OPTION_REMAINING, '\0', 0, G_OPTION_ARG_FILENAME_ARRAY, &filenames, NULL, "[INPUT FILE] [OUTPUT FILE]" },
 	{ NULL }
@@ -623,15 +954,11 @@ int main (int argc, char *argv[])
 	const char *input, *output;
 	ThumbApp app;
 
-	setlocale (LC_ALL, "");
-	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
-	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
-	textdomain (GETTEXT_PACKAGE);
-
 	context = g_option_context_new ("Thumbnail movies");
 	options = gst_init_get_option_group ();
 	g_option_context_add_main_entries (context, entries, GETTEXT_PACKAGE);
 	g_option_context_add_group (context, options);
+	g_option_context_add_group (context, gtk_get_option_group (TRUE));
 
 	if (g_option_context_parse (context, &argc, &argv, &err) == FALSE) {
 		g_print ("couldn't parse command-line options: %s\n", err->message);
@@ -652,10 +979,19 @@ int main (int argc, char *argv[])
 		setbuf (stdout, NULL);
 	}
 
+	if (g_fatal_warnings) {
+		GLogLevelFlags fatal_mask;
+
+		fatal_mask = g_log_set_always_fatal (G_LOG_FATAL_MASK);
+		fatal_mask |= G_LOG_LEVEL_WARNING | G_LOG_LEVEL_CRITICAL;
+		g_log_set_always_fatal (fatal_mask);
+	}
+
 	if (raw_output == FALSE && output_size == -1)
 		output_size = DEFAULT_OUTPUT_SIZE;
 
 	if (filenames == NULL || g_strv_length (filenames) != 2 ||
+	    (second_index != -1 && gallery != -1) ||
 	    (print_progress == TRUE && verbose == TRUE)) {
 		char *help;
 		help = g_option_context_get_help (context, FALSE, NULL);
@@ -689,7 +1025,9 @@ int main (int argc, char *argv[])
 	}
 	thumb_app_set_error_handler (&app);
 
-	thumb_app_check_for_cover (&app);
+	/* We don't need covers when we're in gallery mode */
+	if (gallery == -1)
+		thumb_app_check_for_cover (&app);
 	if (thumb_app_get_has_video (&app) == FALSE) {
 		PROGRESS_DEBUG ("totem-video-thumbnailer couldn't find a video track in '%s'\n", input);
 		exit (1);
@@ -699,16 +1037,22 @@ int main (int argc, char *argv[])
 	PROGRESS_DEBUG("Opened video file: '%s'", input);
 	PRINT_PROGRESS (10.0);
 
-	/* If the user has told us to use a frame at a specific second
-	 * into the video, just use that frame no matter how boring it
-	 * is */
-	if (second_index != -1) {
-		assert_duration (&app);
-		pixbuf = capture_frame_at_time (&app, second_index * 1000);
+	if (gallery == -1) {
+		/* If the user has told us to use a frame at a specific second
+		 * into the video, just use that frame no matter how boring it
+		 * is */
+		if (second_index != -1) {
+			assert_duration (&app);
+			pixbuf = capture_frame_at_time (&app, second_index * 1000);
+		} else {
+			pixbuf = capture_interesting_frame (&app);
+		}
+		PRINT_PROGRESS (90.0);
 	} else {
-		pixbuf = capture_interesting_frame (&app);
+		assert_duration (&app);
+		/* We're producing a gallery of screenshots from throughout the file */
+		pixbuf = create_gallery (&app);
 	}
-	PRINT_PROGRESS (90.0);
 
 	/* Cleanup */
 	totem_resources_monitor_stop ();
@@ -720,7 +1064,7 @@ int main (int argc, char *argv[])
 		exit (1);
 	}
 
-	PROGRESS_DEBUG("Saving captured screenshot to %s", output);
+	PROGRESS_DEBUG("Saving captured screenshot");
 	save_pixbuf (pixbuf, output, input, output_size, FALSE);
 	g_object_unref (pixbuf);
 	PRINT_PROGRESS (100.0);

@@ -15,7 +15,8 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program; if not, see <http://www.gnu.org/licenses/>.
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
 # Parts from "Interactive Python-GTK Console" (stolen from epiphany's
 # console.py)
@@ -32,20 +33,12 @@
 # Monday 7th February 2005: Christian Schaller: Add exception clause.
 # See license_change file for details.
 
-import gettext
-import gi
+from console import PythonConsole
 
-gi.require_version('Gtk', '3.0')
-gi.require_version('Peas', '1.0')
-gi.require_version('Pango', '1.0')
-gi.require_version('Totem', '1.0')
+__all__ = ('PythonConsole', 'OutFile')
 
-from gi.repository import GObject, Peas, Gtk, Totem # pylint: disable=wrong-import-position,no-name-in-module
-from gi.repository import Gio # pylint: disable=wrong-import-position
-
-from console import PythonConsole, OutFile # pylint: disable=wrong-import-position
-
-__all__ = ('PythonConsolePlugin', 'PythonConsole', 'OutFile') # pylint: disable=E0603
+from gi.repository import GObject, Peas, Gtk, Totem # pylint: disable-msg=E0611
+from gi.repository import Gio # pylint: disable-msg=E0611
 
 try:
     import rpdb2
@@ -53,10 +46,24 @@ try:
 except ImportError:
     HAVE_RPDB2 = False
 
+import gettext
 gettext.textdomain ("totem")
 
 D_ = gettext.dgettext
 _ = gettext.gettext
+
+UI_STR = """
+<ui>
+  <menubar name="tmw-menubar">
+    <menu name="Python" action="Python">
+      <placeholder name="ToolsOps_5">
+        <menuitem name="PythonConsole" action="PythonConsole"/>
+        <menuitem name="PythonDebugger" action="PythonDebugger"/>
+      </placeholder>
+    </menu>
+  </menubar>
+</ui>
+"""
 
 class PythonConsolePlugin (GObject.Object, Peas.Activatable):
     __gtype_name__ = 'PythonConsolePlugin'
@@ -72,20 +79,41 @@ class PythonConsolePlugin (GObject.Object, Peas.Activatable):
     def do_activate (self):
         self.totem = self.object
 
-        action = Gio.SimpleAction.new ("python-console", None)
+        data = dict ()
+        manager = self.totem.get_ui_manager ()
+
+        data['action_group'] = Gtk.ActionGroup (name = 'Python')
+
+        action = Gtk.Action (name = 'Python', label = 'Python',
+                             tooltip = _(u'Python Console Menu'),
+                             stock_id = None)
+        data['action_group'].add_action (action)
+
+        action = Gtk.Action (name = 'PythonConsole',
+                             label = _(u'_Python Console'),
+                             tooltip = _(u"Show Totem's Python console"),
+                             stock_id = 'gnome-mime-text-x-python')
         action.connect ('activate', self._show_console)
-        self.totem.add_action (action)
+        data['action_group'].add_action (action)
 
-        menu = self.totem.get_menu_section ("python-console-placeholder")
-        menu.append (_('_Python Console'), "app.python-console")
-
+        action = Gtk.Action (name = 'PythonDebugger',
+                             label = _(u'Python Debugger'),
+                             tooltip = _(u"Enable remote Python debugging "\
+                                          "with rpdb2"),
+                             stock_id = None)
         if HAVE_RPDB2:
-            action = Gio.SimpleAction.new ("python-debugger", None)
             action.connect ('activate', self._enable_debugging)
-            self.totem.add_action (action)
-            menu.append (_('Python Debugger'), "app.python-debugger")
+        else:
+            action.set_visible (False)
+        data['action_group'].add_action (action)
 
-    def _show_console (self, parameter, _action): # pylint: disable=W0613
+        manager.insert_action_group (data['action_group'], 0)
+        data['ui_id'] = manager.add_ui_from_string (UI_STR)
+        manager.ensure_update ()
+
+        self.totem.PythonConsolePluginInfo = data
+
+    def _show_console (self, _action):
         if not self.window:
             console = PythonConsole (namespace = {
                 '__builtins__' : __builtins__,
@@ -93,12 +121,12 @@ class PythonConsolePlugin (GObject.Object, Peas.Activatable):
                 'totem_object' : self.totem
             }, destroy_cb = self._destroy_console)
 
-            console.set_size_request (600, 400) # pylint: disable=E1101
-            console.eval ('print("%s" %% totem_object)' % _("You can access "\
-                "the Totem.Object through “totem_object” :\\n%s"), False)
+            console.set_size_request (600, 400) # pylint: disable-msg=E1101
+            console.eval ('print "%s" %% totem_object' % _(u"You can access "\
+                "the Totem.Object through \'totem_object\' :\\n%s"), False)
 
             self.window = Gtk.Window ()
-            self.window.set_title (_('Totem Python Console'))
+            self.window.set_title (_(u'Totem Python Console'))
             self.window.add (console)
             self.window.connect ('destroy', self._destroy_console)
             self.window.show_all ()
@@ -107,11 +135,11 @@ class PythonConsolePlugin (GObject.Object, Peas.Activatable):
             self.window.grab_focus ()
 
     @classmethod
-    def _enable_debugging (cls, param, _action): # pylint: disable=W0613
-        msg = _("After you press OK, Totem will wait until you connect to it "\
+    def _enable_debugging (cls, _action):
+        msg = _(u"After you press OK, Totem will wait until you connect to it "\
                  "with winpdb or rpdb2. If you have not set a debugger "\
                  "password in DConf, it will use the default password "\
-                 "(“totem”).")
+                 "('totem').")
         dialog = Gtk.MessageDialog (None, 0, Gtk.MessageType.INFO,
                                     Gtk.ButtonsType.OK_CANCEL, msg)
         if dialog.run () == Gtk.ResponseType.OK:
@@ -125,12 +153,19 @@ class PythonConsolePlugin (GObject.Object, Peas.Activatable):
             GObject.idle_add (start_debugger, password)
         dialog.destroy ()
 
-    def _destroy_console (self, *_args): # pylint: disable=W0613
+    def _destroy_console (self, *_args):
         self.window.destroy ()
         self.window = None
 
     def do_deactivate (self):
-        self.totem.empty_menu_section ("python-console-placeholder") # pylint: disable=no-member
+        data = self.totem.PythonConsolePluginInfo
+
+        manager = self.totem.get_ui_manager ()
+        manager.remove_ui (data['ui_id'])
+        manager.remove_action_group (data['action_group'])
+        manager.ensure_update ()
+
+        self.totem.PythonConsolePluginInfo = None
 
         if self.window is not None:
             self.window.destroy ()

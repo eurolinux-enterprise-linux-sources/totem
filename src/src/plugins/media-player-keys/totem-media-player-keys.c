@@ -63,22 +63,27 @@ on_media_player_key_pressed (TotemObject *totem,
 			     const gchar *key)
 {
 	if (strcmp ("Play", key) == 0)
-		totem_object_play_pause (totem);
+		totem_action_play_pause (totem);
 	else if (strcmp ("Previous", key) == 0)
-		totem_object_seek_previous (totem);
+		totem_action_previous (totem);
 	else if (strcmp ("Next", key) == 0)
-		totem_object_seek_next (totem);
+		totem_action_next (totem);
 	else if (strcmp ("Stop", key) == 0)
-		totem_object_pause (totem);
+		totem_action_pause (totem);
 	else if (strcmp ("FastForward", key) == 0)
-		totem_object_remote_command (totem, TOTEM_REMOTE_COMMAND_SEEK_FORWARD, NULL);
+		totem_action_remote (totem, TOTEM_REMOTE_COMMAND_SEEK_FORWARD, NULL);
 	else if (strcmp ("Rewind", key) == 0)
-		totem_object_remote_command (totem, TOTEM_REMOTE_COMMAND_SEEK_BACKWARD, NULL);
+		totem_action_remote (totem, TOTEM_REMOTE_COMMAND_SEEK_BACKWARD, NULL);
 	else if (strcmp ("Repeat", key) == 0) {
 		gboolean value;
 
-		value = totem_object_remote_get_setting (totem, TOTEM_REMOTE_SETTING_REPEAT);
-		totem_object_remote_set_setting (totem, TOTEM_REMOTE_SETTING_REPEAT, !value);
+		value = totem_action_remote_get_setting (totem, TOTEM_REMOTE_SETTING_REPEAT);
+		totem_action_remote_set_setting (totem, TOTEM_REMOTE_SETTING_REPEAT, !value);
+	} else if (strcmp ("Shuffle", key) == 0) {
+		gboolean value;
+
+		value = totem_action_remote_get_setting (totem, TOTEM_REMOTE_SETTING_SHUFFLE);
+		totem_action_remote_set_setting (totem, TOTEM_REMOTE_SETTING_SHUFFLE, !value);
 	}
 }
 
@@ -204,7 +209,7 @@ name_appeared_cb (GDBusConnection            *connection,
 				  G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES |
 				  G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START,
 				  NULL,
-				  "org.gnome.SettingsDaemon.MediaKeys",
+				  "org.gnome.SettingsDaemon",
 				  "/org/gnome/SettingsDaemon/MediaKeys",
 				  "org.gnome.SettingsDaemon.MediaKeys",
 				  cancellable,
@@ -238,14 +243,14 @@ impl_activate (PeasActivatable *plugin)
 	GtkWindow *window;
 
 	pi->priv->watch_id = g_bus_watch_name (G_BUS_TYPE_SESSION,
-					       "org.gnome.SettingsDaemon.MediaKeys",
+					       "org.gnome.SettingsDaemon",
 					       G_BUS_NAME_WATCHER_FLAGS_NONE,
 					       (GBusNameAppearedCallback) name_appeared_cb,
 					       (GBusNameVanishedCallback) name_vanished_cb,
 					       g_object_ref (pi), (GDestroyNotify) g_object_unref);
 
 	totem = g_object_get_data (G_OBJECT (plugin), "object");
-	window = totem_object_get_main_window (totem);
+	window = totem_get_main_window (totem);
 	pi->priv->handler_id = g_signal_connect (G_OBJECT (window), "focus-in-event",
 						 G_CALLBACK (on_window_focus_in_event), pi);
 
@@ -275,7 +280,7 @@ impl_deactivate (PeasActivatable *plugin)
 		TotemObject *totem;
 
 		totem = g_object_get_data (G_OBJECT (plugin), "object");
-		window = totem_object_get_main_window (totem);
+		window = totem_get_main_window (totem);
 		if (window == NULL)
 			return;
 

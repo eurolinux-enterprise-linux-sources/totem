@@ -34,8 +34,6 @@
 #include <gst/pbutils/pbutils.h>
 #include <gst/pbutils/install-plugins.h>
 
-#include <gio/gdesktopappinfo.h>
-#include <glib/gi18n.h>
 #include <gtk/gtk.h>
 
 #ifdef GDK_WINDOWING_X11
@@ -238,186 +236,18 @@ on_plugin_installation_done (GstInstallPluginsReturn res, gpointer user_data)
 	bacon_video_widget_gst_codec_install_context_free (ctx);
 }
 
-static void
-set_startup_notification_id (GstInstallPluginsContext *install_ctx)
-{
-	gchar *startup_id;
-	guint32 timestamp;
-
-	timestamp = gtk_get_current_event_time ();
-	startup_id = g_strdup_printf ("_TIME%u", timestamp);
-	gst_install_plugins_context_set_startup_notification_id (install_ctx, startup_id);
-	g_free (startup_id);
-}
-
 static gboolean
-bacon_video_widget_start_plugin_installation (TotemCodecInstallContext *ctx,
-                                              gboolean                  confirm_search)
+bacon_video_widget_gst_on_missing_plugins_event (BaconVideoWidget *bvw, char **details,
+						 char **descriptions, gboolean playing,
+						 gpointer user_data)
 {
 	GstInstallPluginsContext *install_ctx;
+	TotemCodecInstallContext *ctx;
 	GstInstallPluginsReturn status;
+	guint i, num;
 #ifdef GDK_WINDOWING_X11
 	GdkDisplay *display;
 #endif
-
-	install_ctx = gst_install_plugins_context_new ();
-	gst_install_plugins_context_set_desktop_id (install_ctx, "org.gnome.Totem.desktop");
-	gst_install_plugins_context_set_confirm_search (install_ctx, confirm_search);
-	set_startup_notification_id (install_ctx);
-
-#ifdef GDK_WINDOWING_X11
-	display = gdk_display_get_default ();
-
-	if (GDK_IS_X11_DISPLAY (display) &&
-	    gtk_widget_get_window (GTK_WIDGET (ctx->bvw)) != NULL &&
-	    gtk_widget_get_realized (GTK_WIDGET (ctx->bvw)))
-	{
-		gulong xid = 0;
-
-		xid = bacon_video_widget_gst_get_toplevel (GTK_WIDGET (ctx->bvw));
-		gst_install_plugins_context_set_xid (install_ctx, xid);
-	}
-#endif /* GDK_WINDOWING_X11 */
-
-	status = gst_install_plugins_async ((const char * const*) ctx->details, install_ctx,
-	                                    on_plugin_installation_done,
-	                                    ctx);
-
-	gst_install_plugins_context_free (install_ctx);
-
-	GST_INFO ("gst_install_plugins_async() result = %d", status);
-
-	if (status != GST_INSTALL_PLUGINS_STARTED_OK)
-	{
-		if (status == GST_INSTALL_PLUGINS_HELPER_MISSING)
-		{
-			g_message ("Automatic missing codec installation not supported "
-			           "(helper script missing)");
-		} else {
-			g_warning ("Failed to start codec installation: %s",
-			           gst_install_plugins_return_get_name (status));
-		}
-		bacon_video_widget_gst_codec_install_context_free (ctx);
-		return FALSE;
-	}
-
-	return TRUE;
-}
-
-static void
-codec_confirmation_dialog_response_cb (GtkDialog       *dialog,
-                                       GtkResponseType  response_type,
-                                       gpointer         user_data)
-{
-	TotemCodecInstallContext *ctx = user_data;
-
-	switch (response_type) {
-	case GTK_RESPONSE_ACCEPT:
-		bacon_video_widget_start_plugin_installation (ctx, FALSE);
-		break;
-	case GTK_RESPONSE_CANCEL:
-	case GTK_RESPONSE_DELETE_EVENT:
-		break;
-	default:
-		g_assert_not_reached ();
-	}
-	gtk_widget_destroy (GTK_WIDGET (dialog));
-}
-
-static void
-show_codec_confirmation_dialog (TotemCodecInstallContext *ctx,
-                                const gchar              *install_helper_display_name)
-{
-	GtkWidget *button;
-	GtkWidget *dialog;
-	GtkWidget *toplevel;
-	gchar *button_text;
-	gchar *descriptions_text;
-	gchar *message_text;
-
-	toplevel = gtk_widget_get_toplevel (GTK_WIDGET (ctx->bvw));
-
-	dialog = gtk_message_dialog_new (GTK_WINDOW (toplevel),
-	                                 GTK_DIALOG_MODAL |
-	                                 GTK_DIALOG_DESTROY_WITH_PARENT,
-	                                 GTK_MESSAGE_ERROR,
-	                                 GTK_BUTTONS_CANCEL,
-	                                 _("Unable to play the file"));
-
-	descriptions_text = g_strjoinv (", ", ctx->descriptions);
-	message_text = g_strdup_printf (ngettext ("%s is required to play the file, but is not installed.",
-	                                          "%s are required to play the file, but are not installed.",
-	                                          g_strv_length (ctx->descriptions)),
-	                                descriptions_text);
-
-	/* TRANSLATORS: this is a button to launch a codec installer.
-	 * %s will be replaced with the software installer's name, e.g.
-	 * 'Software' in case of gnome-software. */
-	button_text = g_strdup_printf (_("_Find in %s"), install_helper_display_name);
-	gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog), "%s", message_text);
-	button = gtk_dialog_add_button (GTK_DIALOG (dialog),
-	                                button_text,
-	                                GTK_RESPONSE_ACCEPT);
-	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_ACCEPT);
-	gtk_style_context_add_class (gtk_widget_get_style_context (button), "suggested-action");
-	g_signal_connect (dialog, "response",
-	                  G_CALLBACK (codec_confirmation_dialog_response_cb),
-	                  ctx);
-
-	gtk_window_present (GTK_WINDOW (dialog));
-
-	g_free (button_text);
-	g_free (descriptions_text);
-	g_free (message_text);
-}
-
-static void
-on_packagekit_proxy_ready (GObject      *source_object,
-                           GAsyncResult *res,
-                           gpointer      user_data)
-{
-	TotemCodecInstallContext *ctx = (TotemCodecInstallContext *) user_data;
-	GDBusProxy *packagekit_proxy = NULL;
-	GVariant *property = NULL;
-	GError *error = NULL;
-
-	packagekit_proxy = g_dbus_proxy_new_for_bus_finish (res, &error);
-	if (packagekit_proxy == NULL &&
-	    g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED)) {
-		goto out;
-	}
-
-	if (packagekit_proxy != NULL) {
-		property = g_dbus_proxy_get_cached_property (packagekit_proxy, "DisplayName");
-		if (property != NULL) {
-			const gchar *display_name;
-
-			display_name = g_variant_get_string (property, NULL);
-			if (display_name != NULL && display_name[0] != '\0') {
-				show_codec_confirmation_dialog (ctx, display_name);
-				goto out;
-			}
-		}
-	}
-
-	/* If the above failed, fall back to immediately starting the codec installation */
-	bacon_video_widget_start_plugin_installation (ctx, TRUE);
-
-out:
-	g_clear_error (&error);
-	g_clear_pointer (&property, g_variant_unref);
-	g_clear_object (&packagekit_proxy);
-}
-
-static gboolean
-bacon_video_widget_gst_on_missing_plugins_event (BaconVideoWidget  *bvw,
-                                                 char             **details,
-                                                 char             **descriptions,
-                                                 gboolean           playing,
-                                                 gpointer           user_data)
-{
-	TotemCodecInstallContext *ctx;
-	guint i, num;
 
 	num = g_strv_length (details);
 	g_return_val_if_fail (num > 0 && g_strv_length (descriptions) == num, FALSE);
@@ -453,17 +283,43 @@ bacon_video_widget_gst_on_missing_plugins_event (BaconVideoWidget  *bvw,
 		return FALSE;
 	}
 
-	/* Get the PackageKit session interface proxy and continue with the
-	 * codec installation in the callback */
-	g_dbus_proxy_new_for_bus (G_BUS_TYPE_SESSION,
-	                          G_DBUS_PROXY_FLAGS_NONE,
-	                          NULL, /* g-interface-info */
-	                          "org.freedesktop.PackageKit",
-	                          "/org/freedesktop/PackageKit",
-	                          "org.freedesktop.PackageKit.Modify2",
-	                          g_object_get_data (G_OBJECT (bvw), "missing-plugins-cancellable"),
-	                          on_packagekit_proxy_ready,
-	                          ctx);
+	install_ctx = gst_install_plugins_context_new ();
+
+#ifdef GDK_WINDOWING_X11
+	display = gdk_display_get_default ();
+
+	if (GDK_IS_X11_DISPLAY (display) &&
+	    gtk_widget_get_window (GTK_WIDGET (bvw)) != NULL &&
+	    gtk_widget_get_realized (GTK_WIDGET (bvw)))
+	{
+		gulong xid = 0;
+
+		xid = bacon_video_widget_gst_get_toplevel (GTK_WIDGET (bvw));
+		gst_install_plugins_context_set_xid (install_ctx, xid);
+	}
+#endif /* GDK_WINDOWING_X11 */
+
+	status = gst_install_plugins_async (ctx->details, install_ctx,
+	                                    on_plugin_installation_done,
+	                                    ctx);
+
+	gst_install_plugins_context_free (install_ctx);
+
+	GST_INFO ("gst_install_plugins_async() result = %d", status);
+
+	if (status != GST_INSTALL_PLUGINS_STARTED_OK)
+	{
+		if (status == GST_INSTALL_PLUGINS_HELPER_MISSING)
+		{
+			g_message ("Automatic missing codec installation not supported "
+			           "(helper script missing)");
+		} else {
+			g_warning ("Failed to start codec installation: %s",
+			           gst_install_plugins_return_get_name (status));
+		}
+		bacon_video_widget_gst_codec_install_context_free (ctx);
+		return FALSE;
+	}
 
 	/* if we managed to start playing, pause playback, since some install
 	 * wizard should now take over in a second anyway and the user might not

@@ -86,6 +86,7 @@ typedef struct {
 
 #define TOTEM_IR_SETTING "setting_"
 #define TOTEM_IR_SETTING_TOGGLE_REPEAT "setting_repeat"
+#define TOTEM_IR_SETTING_TOGGLE_SHUFFLE "setting_shuffle"
 
 TOTEM_PLUGIN_REGISTER(TOTEM_TYPE_LIRC_PLUGIN, TotemLircPlugin, totem_lirc_plugin)
 
@@ -107,6 +108,8 @@ totem_lirc_to_setting (const gchar *str, char **url)
 {
 	if (strcmp (str, TOTEM_IR_SETTING_TOGGLE_REPEAT) == 0)
 		return TOTEM_REMOTE_SETTING_REPEAT;
+	else if (strcmp (str, TOTEM_IR_SETTING_TOGGLE_SHUFFLE) == 0)
+		return TOTEM_REMOTE_SETTING_SHUFFLE;
 	else
 		return -1;
 }
@@ -207,12 +210,12 @@ totem_lirc_read_code (GIOChannel *source, GIOCondition condition, TotemLircPlugi
 			if (setting >= 0) {
 				gboolean value;
 
-				value = totem_object_remote_get_setting (pi->priv->totem, setting);
-				totem_object_remote_set_setting (pi->priv->totem, setting, !value);
+				value = totem_action_remote_get_setting (pi->priv->totem, setting);
+				totem_action_remote_set_setting (pi->priv->totem, setting, !value);
 			}
 		} else {
 			cmd = totem_lirc_to_command (str, &url);
-			totem_object_remote_command (pi->priv->totem, cmd, url);
+			totem_action_remote (pi->priv->totem, cmd, url);
 		}
 		g_free (url);
 	} while (TRUE);
@@ -236,7 +239,7 @@ impl_activate (PeasActivatable *plugin)
 		//FIXME
 #if 0
 		g_set_error_literal (error, TOTEM_PLUGIN_ERROR, TOTEM_PLUGIN_ERROR_ACTIVATION,
-                                     _("Couldn’t initialize lirc."));
+                                     _("Couldn't initialize lirc."));
 		return FALSE;
 #endif
 	}
@@ -248,7 +251,7 @@ impl_activate (PeasActivatable *plugin)
 		//FIXME
 #if 0
 		g_set_error_literal (error, TOTEM_PLUGIN_ERROR, TOTEM_PLUGIN_ERROR_ACTIVATION,
-                                     _("Couldn’t read lirc configuration."));
+                                     _("Couldn't read lirc configuration."));
 #endif
 		close (fd);
 		return;

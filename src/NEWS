@@ -1,271 +1,31 @@
 New features and significant updates in version...
 
-Major changes in 3.26.2:
-- Fix OpenSubtitles dialogue not opening
-- Fix error early in build when vala is not available
+Major changes in 3.8.2:
+- Work-around problem with initial window size
+- Fix errors in gallery name print when filename contains "&"
+- Fix translations not being applied in nautilus' properties
+- Fix Python Console not working
+- Fix screenshot keyboard shortcut
 
-Major changes in 3.26.1:
-- Fix crash when properties tab is closed too fast
-- Thumbnail OPUS and M4B audio files
-- Fix thumbnailing on platforms with V4L M2M hardware decoders
-- Fix playing back MJPEG files
-- Fix Python Console menu not appearing
-- Build fixes:
-  - Remove dependency on Debian-specific pycompile utility
-  - Fix build with gtk-doc 1.26
-
-Major changes in 3.26.0:
-- Fix a possible build race
-- Fix lirc plugin compilation
-- Python console bug fixes
-- Install appdata in the new location
-- Translation updates
-
-Major changes in 3.25.90.1:
-- Build fixes
-
-Major changes in 3.25.90:
-- Move to meson build system
-- Fix media-player keys usage to match API documentation
-- Fix internal video widget API documentation
-- Remove unused totem-audio-preview
-- Split off video thumbnailer into thumbnailer and gallery maker
-- Blacklist bmcdec plugin in the thumbnailer
-
-Major changes in 3.24.0:
-- Translation updates
-- Add Flatpak build definition
-
-Major changes in 3.23.90:
-- Add keyboard shortcut to de-select all items
-- Fix possible crash on first run
-- Set a minimum width for the "Go" menu
-- Mark many audio and video mime-types as handled
-- Add more shortcuts to the keyboard shortcuts dialogue
-- Fix a small memory leak in thumbnailer
-- Fix missing plugins' startup notification on Wayland
-- Fix crash when network turns off
-- Port to non-obsoleted widgets
-- and build fixes
-
-Major changes in 3.22.0:
-- Fix symbolic icon not appearing in gnome-shell's top bar
-
-Major changes in 3.21.91:
-- Add variable rate playback menu
-- Build fixes
-- Fix thumbnailing of 4k videos
-
-Major changes in 3.20.1:
-- Make playback rate available to plugins
-- Add more shortcuts for the shortcuts help window
-- Fix a number of compilation warnings
-
-Major changes in 3.20.0:
-- Fix a theming regression in the play/pause button box
-- Translation updates
-
-Major changes in 3.19.92:
-- Fix regression from 3.18 which could cause none of the builtin
-  plugins to be activated
-
-Major changes in 3.19.91:
-- Change "Skip to" label in shortcuts
-- Make header popup translucent in fullscreen as per mockups
-- Fix totem-audio-preview translations
-- Add context to strings to translate in the shortcut window
-
-Major changes in 3.19.3:
-- Port to grilo 0.3.0
-- Add a shortcuts help window
-- Use new grl-video-title-parsing plugin
-- Move controls OSD to the bottom of the screen
-- Fix fullscreen toolbar not appearing in Wayland
-- Add Ctrl+W to quit
-- Add man page for totem-audio-preview
-- Fix GSettings changing on startup
-- A number of deprecation warning fixes
-
-Major changes in 3.18.1:
-- Make DVD menu navigation work again
+Major changes in 3.8.0:
 - Updated translations
 
-Major changes in 3.18.0:
-- Fix rendering bugs in the search entry
+Major changes in 3.7.93:
+- Fix incorrect Vala generated files getting in the release
 
-Major changes in 3.17.92:
-- None compared to 3.16.4
+Major changes in 3.7.92 from 3.6.3:
 
-Major changes in 3.16.4:
-- Fix selection not working after visiting Channels page
-- Fix MPRIS plugin following internal API changes
-- Revert Wayland compatibility changes, it's not a required
-  change in GNOME 3.16
+- Use yelp-tools instead of gnome-doc-utils
+- Add YouTube format configuration for grilo
+- Fix possible Unicode errors with MPRIS plugin
+- Use libgd's icon view for search results
+- Fix warnings for some files in the browse sidebar
+- Fix possible crashes in the chapters plugin
+- Fix playing audio CD tracks launched from Nautilus
+- Fix running when clutter-gst is in a different prefix
 
-Major changes in 3.16.3:
-- Fix ASF videos not being thumbnailed
-- Bring back video inside the window under Wayland
-- Fix Skip To dialogue not working
-- Fix thumbnailer with newer versions of gstreamer-vaapi installed
-- Update YouTube API key
-
-Major changes in 3.16.2:
-- Fix popup not showing up on touchscreens
-- Fix potential crash on 32-bit systems
-
-Major changes in 3.16.1:
-- Loads of performance fixes, related to thumbnailing
-  when a video is playing
-- Fix (again) doubling files added on the command-line
-- Don't monitor the tracker source, it adds incomplete
-  items to the view
-- Fix Videos icon not showing in volume control
-- Provide a symbolic variant of the app icon
-- Fix frames not getting applied for new thumbnails
-- Don't warn when video rotation is unset
-
-Major changes in 3.16.0:
-- Translation updates
-
-Major changes in 3.15.92:
-- Update thumbnail styling
-- Fix a crash on exit
-- Fix application icon not showing in volume control
-- Disable popover transitions for video menus
-- Fix downloading subtitles with newer Python versions
-- Translation updates
-
-Major changes in 3.15.91:
-- Build fixes
-- Internationalisation fixes
-- Update appdata file
-- Translation updates
-
-Major changes in 3.15.90:
-- Better missing plugins support with GNOME Software
-- Modify appearance of source icons
-- Make view switcher button homogeneous
-- Use intltool to translate GSettings schema files directly
-- Better translator comment for subtitle-encoding
-- Remove outdated helper script, which used Python 2
-
-Major changes in 3.15.4:
-- Remove spacing around preferences tabs
-- Stop thumbnailing when exiting, and when playback starts
-- Handle "Powerpoint" buttons on remotes
-- Keep the controls visible when seeking with the slider
-- Show controls when seeking with the keyboard
-- Use the theme's foreground color to render the symbolics
-- Only show videos longer than 5 seconds in the overview
-- Hide source which provide torrent URLs (for now)
-- Remove use of a number of deprecated properties
-- Require a newer cairo for hi-dpi support
-- Fix Totem doubling files added on the cmd line
-- Fix missing translation support in thumbnailer/gallery support
-
-Major changes in 3.14.1:
-- Fix lingering white line in fullscreen
-- Fix bug in MPRIS support when used via Rygel
-- Thumbnail bookmarked movies as well
-- Fix starting Totem via D-Bus (gnome-open)
-- Port from appdata-tools to appstream-glib
-- Add a keyboard shortcut for starting subtitles download
-
-Major changes in 3.14.0:
-- save-file: Handle an unset Videos directory
-- Fix popup disappearing when volume is being set
-- Remove border from error dialogue
-- Require newer versions of clutter-gtk and gst-plugins-base
-
-Major changes in 3.13.92:
-- Fix opening files following the D-Bus-ification
-- libgd updates to fix the appearance of check boxes and subtitle labels
-
-Major changes in 3.13.91:
-- Generate thumbnails for the videos in the main view when they're missing
-- Rename totem.desktop to org.gnome.Totem.desktop
-- Updated translations
-
-Major changes in 3.13.90:
-- Rename "Recent" section to "Videos"
-- Remove visualisation support
-- Remove browser plugin
-- Better error message for RTSP blocked by firewall
-- Automatically rotate mobile phone videos
-- Allow seeking past fill-level
-- Postpone loading library after playback
-- Fix headerbar title when playing search results
-- Fix crasher on startup with newer GTK+
-- Fix crash when browsing Euronews source
-- Use correct icon name for "gear" menu
-- Don't allow adding duplicate items to recent view
-- User new "audio-filter" property
-- Fix loading Audio CDs' Wave files
-- Fix potential data loss when removing multiple files
-- Reset loaded text subtitles when closing video
-- Fix hidden cursor with visible popup
-- Move the "un-fullscreen" button to the corner
-
-OpenSubtitles:
-- Don't throw an error when the language is unknown
-- Fix subtitles suffix when saving it
-- Add support for Basque
-
-Major changes in 3.12.1:
-- Bump required versions of grilo and GStreamer
-- Fix delete button's initial state
-- Switch to the player view quicker
-- Add support for starting a playlist paused
-- Escape selection mode when pressing Esc
-- Fix shuffled items starting to play in random order
-- Hide popups when leaving the window, but not when a popover
-  (volume, menus) is visible
-- Don't toggle popups on touchpad clicks, just on touchscreens
-- Fix scroll-wheel going forward 2 minutes instead of 1
-- Save the downloaded subtitles in the video directory
-- Re-add drag'n'drop support for the video widget
-
-Major changes in 3.12.0:
-- Fix artifacts caused by GtkPopovers
-- Don't add containers in the Recent view
-- Various opensubtitles plugin bug fixes
-- Translation updates
-
-Major changes in 3.11.91:
-- Use popovers for menus, and remove their shadows
-- Hide popups after 2 seconds not 5
-- Fix crashers when deleting items
-- Only resolve using the passed source
-- Remove stock icons usage
-- Don't offer to save file in ~/Videos subdirs
-- Fix empty window title in some cases
-- Fix handling of kbd shortcuts with multiple modifiers
-- Blacklist adult sources for now
-- Fix ngettext usage
-- Avoid queueing multiple thumbnail updates
-- Add names to timeouts and idles
-- Don't monitor the filesystem plugin
-- Translation updates
-
-Major changes in 3.11.90:
-- Add sideways swipe gestures to seek inside the window
-- Move Open/Add menu items to the "Add" button
-- Add drop support to the "Recent" section of the overview
-- Implement "Make Available Offline"
-- Maximise window by default
-- Make F10 show the gear menu
-- Make Ctrl+F toggle the search mode
-- Handle the "Play DVD" remote control key
-- Pause playback when the screensaver comes on
-- Correct spacing and title of the preferences window
-- Remove film strip by default from thumbnails, nautilus
-  will add them itself if necessary
-- Fix monitoring of Grilo sources
-- Show switcher buttons when turning on search
-- Ensure the buffering spinner gets removed when closing a file
-
-Major changes in 3.11.5:
-- Complete redesign :)
+Plugins:
+- Remove use of deprecated widgets in subtitles downloader
 
 Major changes in 3.5.90:
 

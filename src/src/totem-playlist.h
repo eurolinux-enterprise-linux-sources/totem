@@ -73,6 +73,8 @@ struct TotemPlaylistClass {
 	void (*item_activated) (TotemPlaylist *playlist);
 	void (*active_name_changed) (TotemPlaylist *playlist);
 	void (*current_removed) (TotemPlaylist *playlist);
+	void (*repeat_toggled) (TotemPlaylist *playlist, gboolean repeat);
+	void (*shuffle_toggled) (TotemPlaylist *playlist, gboolean toggled);
 	void (*subtitle_changed) (TotemPlaylist *playlist);
 	void (*item_added) (TotemPlaylist *playlist, const gchar *filename, const gchar *uri);
 	void (*item_removed) (TotemPlaylist *playlist, const gchar *filename, const gchar *uri);
@@ -93,11 +95,10 @@ void totem_playlist_add_mrl (TotemPlaylist *playlist,
                              GAsyncReadyCallback callback,
                              gpointer user_data);
 gboolean totem_playlist_add_mrl_finish (TotemPlaylist *playlist,
-                                        GAsyncResult  *result,
-                                        GError       **error);
+                                        GAsyncResult *result);
 gboolean totem_playlist_add_mrl_sync (TotemPlaylist *playlist,
                                       const char *mrl,
-                                      gint64 *starttime);
+                                      const char *display_name);
 
 typedef struct TotemPlaylistMrlData TotemPlaylistMrlData;
 
@@ -115,9 +116,10 @@ gboolean totem_playlist_add_mrls_finish (TotemPlaylist *self,
                                          GAsyncResult *result,
                                          GError **error);
 
-void totem_playlist_save_session_playlist (TotemPlaylist *playlist,
-					   GFile         *output,
-					   gint64         starttime);
+void totem_playlist_save_current_playlist (TotemPlaylist *playlist,
+					   const char *output);
+void totem_playlist_save_current_playlist_ext (TotemPlaylist *playlist,
+					   const char *output, TotemPlParserType type);
 void totem_playlist_select_subtitle_dialog (TotemPlaylist *playlist,
 					    TotemPlaylistSelectDialog mode);
 
@@ -148,6 +150,10 @@ void       totem_playlist_set_next (TotemPlaylist *playlist);
 
 gboolean   totem_playlist_get_repeat (TotemPlaylist *playlist);
 void       totem_playlist_set_repeat (TotemPlaylist *playlist, gboolean repeat);
+
+gboolean   totem_playlist_get_shuffle (TotemPlaylist *playlist);
+void       totem_playlist_set_shuffle (TotemPlaylist *playlist,
+				       gboolean shuffle);
 
 gboolean   totem_playlist_set_playing (TotemPlaylist *playlist, TotemPlaylistStatus state);
 TotemPlaylistStatus totem_playlist_get_playing (TotemPlaylist *playlist);

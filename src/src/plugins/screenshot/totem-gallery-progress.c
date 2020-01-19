@@ -98,13 +98,13 @@ totem_gallery_progress_new (GPid child_pid, const gchar *output_filename)
 	self->priv->output_filename = g_strdup (output_filename);
 
 	/* Set up the window */
-	gtk_window_set_title (GTK_WINDOW (self), _("Creating Gallery…"));
+	gtk_window_set_title (GTK_WINDOW (self), _("Creating Gallery..."));
 	gtk_window_set_resizable (GTK_WINDOW (self), FALSE);
-	gtk_dialog_add_button (GTK_DIALOG (self), _("_Cancel"), GTK_RESPONSE_CANCEL);
+	gtk_dialog_add_button (GTK_DIALOG (self), GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL);
 	gtk_dialog_set_default_response (GTK_DIALOG (self), GTK_RESPONSE_CANCEL);
 
 	/* Set the progress label */
-	label_text = g_strdup_printf (_("Saving gallery as “%s”"), output_filename);
+	label_text = g_strdup_printf (_("Saving gallery as \"%s\""), output_filename);
 	gtk_progress_bar_set_show_text (self->priv->progress_bar, TRUE);
 	gtk_progress_bar_set_text (self->priv->progress_bar, label_text);
 	g_free (label_text);

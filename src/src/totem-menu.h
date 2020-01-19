@@ -28,10 +28,13 @@
 G_BEGIN_DECLS
 
 void totem_app_menu_setup (Totem *totem);
-void totem_app_actions_setup (Totem *totem);
+
+void totem_ui_manager_setup (Totem *totem);
 
 void totem_sublang_update (Totem *totem);
 void totem_sublang_exit (Totem *totem);
+
+void totem_setup_recent (Totem *totem);
 
 G_END_DECLS
 

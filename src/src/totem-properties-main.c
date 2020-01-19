@@ -34,7 +34,6 @@
 #include <libnautilus-extension/nautilus-extension-types.h>
 #include <libnautilus-extension/nautilus-property-page-provider.h>
 
-#define WANT_MIME_TYPES 1
 #include "totem-mime-types.h"
 
 static GType tpp_type = 0;
@@ -83,45 +82,48 @@ static GList *
 totem_properties_get_pages (NautilusPropertyPageProvider *provider,
 			     GList *files)
 {
+	GList *pages = NULL;
 	NautilusFileInfo *file;
-	char *uri;
+	char *uri = NULL;
 	GtkWidget *page, *label;
 	NautilusPropertyPage *property_page;
 	guint i;
-	gboolean found;
+	gboolean found = FALSE;
 
 	/* only add properties page if a single file is selected */
 	if (files == NULL || files->next != NULL)
-		return NULL;
+		goto end;
 	file = files->data;
 
 	/* only add the properties page to these mime types */
-	found = FALSE;
-	for (i = 0; mime_types[i] != NULL; i++) {
-		if (nautilus_file_info_is_mime_type (file, mime_types[i])) {
+	for (i = 0; mime_types[i] != NULL; i++)
+	{
+		if (nautilus_file_info_is_mime_type (file, mime_types[i]))
+		{
 			found = TRUE;
 			break;
 		}
 	}
 	if (found == FALSE)
-		return NULL;
+		goto end;
 
 	/* okay, make the page, init'ing the backend first if necessary */
 	if (backend_inited == FALSE) {
 		gst_init (NULL, NULL);
 		backend_inited = TRUE;
 	}
-
 	uri = nautilus_file_info_get_uri (file);
 	label = gtk_label_new (_("Audio/Video"));
 	page = totem_properties_view_new (uri, label);
-	g_free (uri);
-
 	gtk_container_set_border_width (GTK_CONTAINER (page), 6);
 	property_page = nautilus_property_page_new ("video-properties",
 			label, page);
 
-	return g_list_prepend (NULL, property_page);
+	pages = g_list_prepend (pages, property_page);
+
+end:
+	g_free (uri);
+	return pages;
 }
 
 /* --- extension interface --- */

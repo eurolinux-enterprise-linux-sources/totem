@@ -119,8 +119,8 @@ totem_open_location_get_uri (TotemOpenLocation *open_location)
 
 	uri = g_strdup (gtk_entry_get_text (open_location->priv->uri_entry));
 
-	if (*uri == '\0')
-		g_clear_pointer (&uri, g_free);
+	if (strcmp (uri, "") == 0)
+		uri = NULL;
 
 	if (uri != NULL && g_strrstr (uri, "://") == NULL)
 	{
@@ -172,19 +172,18 @@ totem_open_location_new (void)
 	GtkTreeModel *model;
 	GList *recent_items, *streams_recent_items = NULL;
 
-	open_location = TOTEM_OPEN_LOCATION (g_object_new (TOTEM_TYPE_OPEN_LOCATION,
-							   "use-header-bar", 1, NULL));
+	open_location = TOTEM_OPEN_LOCATION (g_object_new (TOTEM_TYPE_OPEN_LOCATION, NULL));
 
 	if (open_location->priv->uri_container == NULL) {
 		g_object_unref (open_location);
 		return NULL;
 	}
 
-	gtk_window_set_title (GTK_WINDOW (open_location), _("Add Web Video"));
+	gtk_window_set_title (GTK_WINDOW (open_location), _("Open Location..."));
 	gtk_dialog_add_buttons (GTK_DIALOG (open_location),
-				_("_Cancel"), GTK_RESPONSE_CANCEL,
-				_("_Add"), GTK_RESPONSE_OK,
-				NULL);
+			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			GTK_STOCK_OPEN, GTK_RESPONSE_OK,
+			NULL);
 	gtk_dialog_set_response_sensitive (GTK_DIALOG (open_location), GTK_RESPONSE_OK, FALSE);
 	gtk_container_set_border_width (GTK_CONTAINER (open_location), 5);
 	gtk_dialog_set_default_response (GTK_DIALOG (open_location), GTK_RESPONSE_OK);

@@ -77,7 +77,6 @@ update_general (TotemPropertiesView *props,
 	};
 	guint i;
         GDate *date;
-	GstDateTime *datetime;
 	gchar *comment;
 
 	for (i = 0; i < G_N_ELEMENTS(items); i++) {
@@ -112,16 +111,7 @@ update_general (TotemPropertiesView *props,
 							 "year",
 							 string);
 		g_free (string);
-        } else if (gst_tag_list_get_date_time (list, GST_TAG_DATE_TIME, &datetime)) {
-		char *string;
-
-		string = g_strdup_printf ("%d", gst_date_time_get_year (datetime));
-		gst_date_time_unref (datetime);
-		bacon_video_widget_properties_set_label (props->priv->props,
-							 "year",
-							 string);
-		g_free (string);
-	}
+        }
 }
 
 static void
@@ -187,7 +177,7 @@ update_video (TotemPropertiesView    *props,
 
 	width = gst_discoverer_video_info_get_width (info);
 	height = gst_discoverer_video_info_get_height (info);
-	string = g_strdup_printf (N_("%d × %d"), width, height);
+	string = g_strdup_printf (N_("%d x %d"), width, height);
 	bacon_video_widget_properties_set_label (props->priv->props,
 						 "dimensions",
 						 string);
@@ -344,15 +334,16 @@ totem_properties_view_finalize (GObject *object)
 
 	props = TOTEM_PROPERTIES_VIEW (object);
 
-	if (props->priv != NULL) {
-		if (props->priv->disco) {
-			g_signal_handlers_disconnect_by_func (props->priv->disco,
-							      discovered_cb,
-							      props);
-			gst_discoverer_stop (props->priv->disco);
-			g_clear_object (&props->priv->disco);
+	if (props->priv != NULL)
+	{
+		if (props->priv->disco != NULL) {
+			g_object_unref (G_OBJECT (props->priv->disco));
+			props->priv->disco = NULL;
 		}
-		g_clear_object (&props->priv->label);
+		if (props->priv->label != NULL) {
+			g_object_unref (G_OBJECT (props->priv->label));
+			props->priv->label = NULL;
+		}
 		g_free (props->priv);
 	}
 	props->priv = NULL;
@@ -360,7 +351,20 @@ totem_properties_view_finalize (GObject *object)
 	G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-static void
+GtkWidget *
+totem_properties_view_new (const char *location, GtkWidget *label)
+{
+	TotemPropertiesView *self;
+
+	self = g_object_new (TOTEM_TYPE_PROPERTIES_VIEW, NULL);
+	g_object_ref (label);
+	self->priv->label = label;
+	totem_properties_view_set_location (self, location);
+
+	return GTK_WIDGET (self);
+}
+
+void
 totem_properties_view_set_location (TotemPropertiesView *props,
 				    const char          *location)
 {
@@ -381,15 +385,3 @@ totem_properties_view_set_location (TotemPropertiesView *props,
 	}
 }
 
-GtkWidget *
-totem_properties_view_new (const char *location, GtkWidget *label)
-{
-	TotemPropertiesView *self;
-
-	self = g_object_new (TOTEM_TYPE_PROPERTIES_VIEW, NULL);
-	g_object_ref (label);
-	self->priv->label = label;
-	totem_properties_view_set_location (self, location);
-
-	return GTK_WIDGET (self);
-}

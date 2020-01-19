@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <interface>
-  <requires lib="gtk+" version="3.11"/>
+  <requires lib="gtk+" version="3.0"/>
   <!-- interface-naming-policy toplevel-contextual -->
   <object class="GtkListStore" id="subtitle_model">
     <columns>
@@ -29,7 +29,6 @@
     <property name="default_width">400</property>
     <property name="default_height">400</property>
     <property name="type_hint">dialog</property>
-    <signal name="delete-event" handler="gtk_widget_hide_on_delete" swapped="no"/>
     <child>
       <object class="GtkBox" id="vbox1">
         <property name="orientation">vertical</property>
@@ -62,10 +61,10 @@
             </child>
             <child>
               <object class="GtkButton" id="find_button">
+                <property name="label">gtk-find</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="label">gtk-find</property>
                 <property name="use_stock">True</property>
               </object>
               <packing>
@@ -125,6 +124,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
+                    <property name="image">image_apply</property>
                     <property name="use_underline">True</property>
                   </object>
                   <packing>
@@ -135,13 +135,13 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="close_button">
-                    <property name="label" translatable="yes">_Close</property>
+                    <property name="label">gtk-close</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="can_default">True</property>
                     <property name="has_default">True</property>
                     <property name="receives_default">True</property>
-                    <property name="use_underline">True</property>
+                    <property name="use_stock">True</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -161,5 +161,9 @@
         </child>
       </object>
     </child>
+  </object>
+  <object class="GtkImage" id="image_apply">
+    <property name="visible">True</property>
+    <property name="stock">gtk-media-play</property>
   </object>
 </interface>

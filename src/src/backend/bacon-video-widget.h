@@ -129,8 +129,9 @@ GOptionGroup* bacon_video_widget_get_option_group (void);
 GtkWidget *bacon_video_widget_new		 (GError **error);
 
 /* Actions */
-void bacon_video_widget_open			 (BaconVideoWidget *bvw,
-						  const char *mrl);
+gboolean bacon_video_widget_open		 (BaconVideoWidget *bvw,
+						  const char *mrl,
+						  GError **error);
 gboolean bacon_video_widget_play                 (BaconVideoWidget *bvw,
 						  GError **error);
 void bacon_video_widget_pause			 (BaconVideoWidget *bvw);
@@ -171,6 +172,17 @@ void  bacon_video_widget_set_logo_mode		 (BaconVideoWidget *bvw,
 						  gboolean logo_mode);
 gboolean bacon_video_widget_get_logo_mode	 (BaconVideoWidget *bvw);
 
+void bacon_video_widget_set_fullscreen		 (BaconVideoWidget *bvw,
+						  gboolean fullscreen);
+
+void bacon_video_widget_set_show_cursor          (BaconVideoWidget *bvw,
+						  gboolean show_cursor);
+gboolean bacon_video_widget_get_show_cursor      (BaconVideoWidget *bvw);
+
+gboolean bacon_video_widget_get_auto_resize	 (BaconVideoWidget *bvw);
+void bacon_video_widget_set_auto_resize		 (BaconVideoWidget *bvw,
+						  gboolean auto_resize);
+
 void bacon_video_widget_set_subtitle_font	 (BaconVideoWidget *bvw,
 						  const char *font);
 void bacon_video_widget_set_subtitle_encoding	 (BaconVideoWidget *bvw,
@@ -185,9 +197,6 @@ void bacon_video_widget_set_referrer             (BaconVideoWidget *bvw,
 gboolean bacon_video_widget_set_rate		 (BaconVideoWidget *bvw,
 						  gfloat new_rate);
 gfloat bacon_video_widget_get_rate		 (BaconVideoWidget *bvw);
-
-void bacon_video_widget_set_fullscreen           (BaconVideoWidget *bvw,
-                                                  gboolean          fullscreen);
 
 /* Metadata */
 /**
@@ -244,6 +253,32 @@ typedef enum {
 void bacon_video_widget_get_metadata		 (BaconVideoWidget *bvw,
 						  BvwMetadataType type,
 						  GValue *value);
+
+/* Visualisation functions */
+/**
+ * BvwVisualizationQuality:
+ * @BVW_VISUALIZATION_SMALL: small size (240×15)
+ * @BVW_VISUALIZATION_NORMAL: normal size (320×25)
+ * @BVW_VISUALIZATION_LARGE: large size (480×25)
+ * @BVW_VISUALIZATION_EXTRA_LARGE: extra large size (600×30)
+ *
+ * The different visualisation sizes or qualities available for use
+ * with bacon_video_widget_set_visualization_quality().
+ **/
+typedef enum {
+	BVW_VISUALIZATION_SMALL = 0,
+	BVW_VISUALIZATION_NORMAL,
+	BVW_VISUALIZATION_LARGE,
+	BVW_VISUALIZATION_EXTRA_LARGE
+} BvwVisualizationQuality;
+
+void bacon_video_widget_set_show_visualizations	  (BaconVideoWidget *bvw,
+						   gboolean show_visualizations);
+GList *bacon_video_widget_get_visualization_list  (BaconVideoWidget *bvw);
+void bacon_video_widget_set_visualization	  (BaconVideoWidget *bvw,
+						   const char *name);
+void bacon_video_widget_set_visualization_quality (BaconVideoWidget *bvw,
+						   BvwVisualizationQuality quality);
 
 /* Picture settings */
 /**
@@ -321,6 +356,9 @@ void bacon_video_widget_set_aspect_ratio         (BaconVideoWidget *bvw,
 BvwAspectRatio bacon_video_widget_get_aspect_ratio
 						 (BaconVideoWidget *bvw);
 
+void bacon_video_widget_set_scale_ratio          (BaconVideoWidget *bvw,
+						  float ratio);
+
 void bacon_video_widget_set_zoom		 (BaconVideoWidget *bvw,
 						  BvwZoomMode       mode);
 BvwZoomMode bacon_video_widget_get_zoom		 (BaconVideoWidget *bvw);
@@ -386,13 +424,11 @@ GList *bacon_video_widget_get_languages          (BaconVideoWidget *bvw);
 int bacon_video_widget_get_language              (BaconVideoWidget *bvw);
 void bacon_video_widget_set_language             (BaconVideoWidget *bvw,
 		                                  int language);
-void bacon_video_widget_set_next_language        (BaconVideoWidget *bvw);
 
 GList *bacon_video_widget_get_subtitles          (BaconVideoWidget *bvw);
 int bacon_video_widget_get_subtitle              (BaconVideoWidget *bvw);
 void bacon_video_widget_set_subtitle             (BaconVideoWidget *bvw,
 		                                  int subtitle);
-void bacon_video_widget_set_next_subtitle        (BaconVideoWidget *bvw);
 
 gboolean bacon_video_widget_has_next_track	 (BaconVideoWidget *bvw);
 gboolean bacon_video_widget_has_previous_track	 (BaconVideoWidget *bvw);
@@ -429,14 +465,8 @@ void bacon_video_widget_set_audio_output_type    (BaconVideoWidget *bvw,
 						  BvwAudioOutputType type);
 
 /* OSD */
-void bacon_video_widget_show_popup                (BaconVideoWidget *bvw);
-void bacon_video_widget_mark_popup_busy           (BaconVideoWidget *bvw,
-						   const char       *reason);
-void bacon_video_widget_unmark_popup_busy         (BaconVideoWidget *bvw,
-						   const char       *reason);
-
-GObject * bacon_video_widget_get_controls_object  (BaconVideoWidget *bvw);
-GObject * bacon_video_widget_get_header_controls_object (BaconVideoWidget *bvw);
+void bacon_video_widget_popup_osd                 (BaconVideoWidget *bvw,
+						   const char       *icon_name);
 
 G_END_DECLS
 

@@ -1,48 +1,150 @@
 # translation of totem.help.HEAD.po to Español
 # Spanish translation for totem manual
 # Jorge González <jorgegonz@svn.gnome.org>, 2007, 200, 200, 2010.
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2012, 2013, 2014, 2017.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem.help.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-18 10:01+0000\n"
-"PO-Revision-Date: 2017-09-05 12:33+0200\n"
+"POT-Creation-Date: 2012-09-03 19:24+0000\n"
+"PO-Revision-Date: 2012-09-06 17:35+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
-"Language-Team: es <gnome-es-list@gnome.org>\n"
+"Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
+#| msgid "translator-credits"
 msgctxt "_"
 msgid "translator-credits"
 msgstr ""
-"Daniel Mustieles <daniel.mustieles@gmail.com>, 2012-2017\n"
+"Daniel Mustieles <daniel.mustieles@gmail.com>, 2012\n"
 "Jorge González <jorgegonz@svn.gnome.org>, 2007, 2009\n"
 "Francisco Javier F. Serrador <serrador@cvs.GNOME.org>, 2005"
 
-#. (itstool) path: articleinfo/title
-#: C/index.docbook:30
+#. This is a reference to an external file such as an image or video. When
+#. the file changes, the md5 hash will change to let you know you need to
+#. update your localized copy. The msgstr is not used at all. Set it to
+#. whatever you like once you have updated your copy of the file.
+#.
+#. This is a reference to an external file such as an image or video. When
+#. the file changes, the md5 hash will change to let you know you need to
+#. update your localized copy. The msgstr is not used at all. Set it to
+#. whatever you like once you have updated your copy of the file.
+#: C/index.docbook:258(imagedata)
+#| msgid ""
+#| "@@image: 'figures/totem_start_window.png'; "
+#| "md5=85daf6f6aaae9262482c8f1b0b6d67b0"
+msgctxt "_"
+msgid ""
+"external ref='figures/totem_start_window.png' "
+"md5='85daf6f6aaae9262482c8f1b0b6d67b0'"
+msgstr ""
+"external ref='figures/totem_start_window.png' "
+"md5='85daf6f6aaae9262482c8f1b0b6d67b0'"
+
+#. This is a reference to an external file such as an image or video. When
+#. the file changes, the md5 hash will change to let you know you need to
+#. update your localized copy. The msgstr is not used at all. Set it to
+#. whatever you like once you have updated your copy of the file.
+#.
+#. This is a reference to an external file such as an image or video. When
+#. the file changes, the md5 hash will change to let you know you need to
+#. update your localized copy. The msgstr is not used at all. Set it to
+#. whatever you like once you have updated your copy of the file.
+#: C/index.docbook:405(imagedata)
+#| msgid ""
+#| "@@image: 'figures/totem_pause_button.png'; "
+#| "md5=8af1d98e40e2ebda89cc2cd86550c5f2"
+msgctxt "_"
+msgid ""
+"external ref='figures/totem_pause_button.png' "
+"md5='8af1d98e40e2ebda89cc2cd86550c5f2'"
+msgstr ""
+"external ref='figures/totem_pause_button.png' "
+"md5='8af1d98e40e2ebda89cc2cd86550c5f2'"
+
+#. This is a reference to an external file such as an image or video. When
+#. the file changes, the md5 hash will change to let you know you need to
+#. update your localized copy. The msgstr is not used at all. Set it to
+#. whatever you like once you have updated your copy of the file.
+#.
+#. This is a reference to an external file such as an image or video. When
+#. the file changes, the md5 hash will change to let you know you need to
+#. update your localized copy. The msgstr is not used at all. Set it to
+#. whatever you like once you have updated your copy of the file.
+#: C/index.docbook:416(imagedata)
+#| msgid ""
+#| "@@image: 'figures/totem_play_button.png'; "
+#| "md5=feb4dec4237e6eb7ce571af2dbd0cf79"
+msgctxt "_"
+msgid ""
+"external ref='figures/totem_play_button.png' "
+"md5='feb4dec4237e6eb7ce571af2dbd0cf79'"
+msgstr ""
+"external ref='figures/totem_play_button.png' "
+"md5='feb4dec4237e6eb7ce571af2dbd0cf79'"
+
+#. This is a reference to an external file such as an image or video. When
+#. the file changes, the md5 hash will change to let you know you need to
+#. update your localized copy. The msgstr is not used at all. Set it to
+#. whatever you like once you have updated your copy of the file.
+#.
+#. This is a reference to an external file such as an image or video. When
+#. the file changes, the md5 hash will change to let you know you need to
+#. update your localized copy. The msgstr is not used at all. Set it to
+#. whatever you like once you have updated your copy of the file.
+#: C/index.docbook:493(imagedata)
+#| msgid ""
+#| "@@image: 'figures/totem_next_button.png'; "
+#| "md5=c7f9041dc1804edc6777cfe68456e703"
+msgctxt "_"
+msgid ""
+"external ref='figures/totem_next_button.png' "
+"md5='c7f9041dc1804edc6777cfe68456e703'"
+msgstr ""
+"external ref='figures/totem_next_button.png' "
+"md5='c7f9041dc1804edc6777cfe68456e703'"
+
+#. This is a reference to an external file such as an image or video. When
+#. the file changes, the md5 hash will change to let you know you need to
+#. update your localized copy. The msgstr is not used at all. Set it to
+#. whatever you like once you have updated your copy of the file.
+#.
+#. This is a reference to an external file such as an image or video. When
+#. the file changes, the md5 hash will change to let you know you need to
+#. update your localized copy. The msgstr is not used at all. Set it to
+#. whatever you like once you have updated your copy of the file.
+#: C/index.docbook:509(imagedata)
+#| msgid ""
+#| "@@image: 'figures/totem_previous_button.png'; "
+#| "md5=a966195040a035bf48daab94c9320afc"
+msgctxt "_"
+msgid ""
+"external ref='figures/totem_previous_button.png' "
+"md5='a966195040a035bf48daab94c9320afc'"
+msgstr ""
+"external ref='figures/totem_previous_button.png' "
+"md5='a966195040a035bf48daab94c9320afc'"
+
+#: C/index.docbook:30(articleinfo/title)
 msgid "<application>Totem Movie Player</application> Manual"
 msgstr "Manual del <application>Reproductor de películas Totem</application>"
 
-#. (itstool) path: articleinfo/copyright
-#: C/index.docbook:31
+#: C/index.docbook:31(articleinfo/copyright)
 msgid "<year>2003</year> <holder>Chee Bin HOH</holder>"
 msgstr "<year>2003</year> <holder>Chee Bin HOH</holder>"
 
-#. (itstool) path: articleinfo/copyright
-#: C/index.docbook:35
+#: C/index.docbook:35(articleinfo/copyright)
 msgid "<year>2009</year> <holder>Philip Withnall</holder>"
 msgstr "<year>2009</year> <holder>Philip Withnall</holder>"
 
-#. (itstool) path: abstract/para
-#: C/index.docbook:44
+#: C/index.docbook:44(abstract/para)
 msgid ""
 "<application>Totem Movie Player</application> is a media player for GNOME "
 "that runs on GStreamer by default, but can also be run on xine. It has "
@@ -55,14 +157,20 @@ msgstr ""
 "sonido y vídeo, incluyendo DVD entre muchos otros. Sus características "
 "incluyen salida de TV, pantalla completa, subtítulos y mucho más."
 
-#. (itstool) path: publisher/publishername
-#. (itstool) path: revdescription/para
-#: C/index.docbook:51 C/index.docbook:117 C/index.docbook:127
+#: C/index.docbook:51(publisher/publishername)
+#: C/index.docbook:117(revdescription/para)
+#: C/index.docbook:127(revdescription/para)
 msgid "GNOME Documentation Project"
 msgstr "Proyecto de Documentación de GNOME"
 
-#. (itstool) path: legalnotice/para
-#: C/index.docbook:2
+#: C/index.docbook:2(legalnotice/para)
+#| msgid ""
+#| "Permission is granted to copy, distribute and/or modify this document "
+#| "under the terms of the GNU Free Documentation License (GFDL), Version 1.1 "
+#| "or any later version published by the Free Software Foundation with no "
+#| "Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts. You "
+#| "can find a copy of the GFDL at this <ulink type=\"help\" url=\"ghelp:fdl"
+#| "\">link</ulink> or in the file COPYING-DOCS distributed with this manual."
 msgid ""
 "Permission is granted to copy, distribute and/or modify this document under "
 "the terms of the GNU Free Documentation License (GFDL), Version 1.1 or any "
@@ -79,8 +187,7 @@ msgstr ""
 "\"ghelp:fdl\">enlace</ulink> o en el archivo COPYING-DOCS distribuido con "
 "este manual."
 
-#. (itstool) path: legalnotice/para
-#: C/index.docbook:12 C/legal.xml:12
+#: C/index.docbook:12(legalnotice/para) C/legal.xml:12(legalnotice/para)
 msgid ""
 "This manual is part of a collection of GNOME manuals distributed under the "
 "GFDL. If you want to distribute this manual separately from the collection, "
@@ -92,8 +199,7 @@ msgstr ""
 "puede hacerlo añadiendo una copia de la licencia al manual, tal como se "
 "describe en la sección 6 de la licencia."
 
-#. (itstool) path: legalnotice/para
-#: C/index.docbook:19 C/legal.xml:19
+#: C/index.docbook:19(legalnotice/para) C/legal.xml:19(legalnotice/para)
 msgid ""
 "Many of the names used by companies to distinguish their products and "
 "services are claimed as trademarks. Where those names appear in any GNOME "
@@ -107,8 +213,7 @@ msgstr ""
 "proyecto de documentación reconozcan dichas marcas comerciales, dichos "
 "nombres se imprimen en mayúsculas o iniciales mayúsculas."
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:35 C/legal.xml:35
+#: C/index.docbook:35(listitem/para) C/legal.xml:35(listitem/para)
 msgid ""
 "DOCUMENT IS PROVIDED ON AN \"AS IS\" BASIS, WITHOUT WARRANTY OF ANY KIND, "
 "EITHER EXPRESSED OR IMPLIED, INCLUDING, WITHOUT LIMITATION, WARRANTIES THAT "
@@ -137,8 +242,7 @@ msgstr ""
 "O VERSIÓN MODIFICADA DEL MISMO SI NO ES CON SUJECIÓN A ESTA LIMITACIÓN DE "
 "LAS GARANTÍAS; Y"
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:55 C/legal.xml:55
+#: C/index.docbook:55(listitem/para) C/legal.xml:55(listitem/para)
 msgid ""
 "UNDER NO CIRCUMSTANCES AND UNDER NO LEGAL THEORY, WHETHER IN TORT (INCLUDING "
 "NEGLIGENCE), CONTRACT, OR OTHERWISE, SHALL THE AUTHOR, INITIAL WRITER, ANY "
@@ -164,8 +268,11 @@ msgstr ""
 "ELLO, INCLUSO SI SE HABÍA COMUNICADO A AQUELLA PARTE LA POSIBILIDAD DE TALES "
 "DAÑOS."
 
-#. (itstool) path: legalnotice/para
-#: C/index.docbook:28 C/legal.xml:28
+#: C/index.docbook:28(legalnotice/para) C/legal.xml:28(legalnotice/para)
+#| msgid ""
+#| "DOCUMENT AND MODIFIED VERSIONS OF THE DOCUMENT ARE PROVIDED UNDER THE "
+#| "TERMS OF THE GNU FREE DOCUMENTATION LICENSE WITH THE FURTHER "
+#| "UNDERSTANDING THAT: <placeholder-1/>"
 msgid ""
 "DOCUMENT AND MODIFIED VERSIONS OF THE DOCUMENT ARE PROVIDED UNDER THE TERMS "
 "OF THE GNU FREE DOCUMENTATION LICENSE WITH THE FURTHER UNDERSTANDING THAT: "
@@ -175,8 +282,7 @@ msgstr ""
 "SUJECIÓN A LOS TÉRMINOS DE LA GFDL, QUEDANDO BIEN ENTENDIDO, ADEMÁS, QUE: "
 "<placeholder-1/>"
 
-#. (itstool) path: authorgroup/author
-#: C/index.docbook:60
+#: C/index.docbook:60(authorgroup/author)
 msgid ""
 "<firstname>Chee Bin</firstname> <surname>HOH</surname> <affiliation> "
 "<orgname>GNOME Documentation Project</orgname> </affiliation> "
@@ -186,8 +292,7 @@ msgstr ""
 "<orgname>Proyecto de documentación de GNOME</orgname> </affiliation> "
 "<email>cbhoh@gnome.org</email>"
 
-#. (itstool) path: authorgroup/author
-#: C/index.docbook:68
+#: C/index.docbook:68(authorgroup/author)
 msgid ""
 "<firstname>Baptiste</firstname> <surname>Mille-Mathias</surname> "
 "<affiliation> <orgname>GNOME Documentation project</orgname> </affiliation> "
@@ -199,8 +304,7 @@ msgstr ""
 "affiliation> <contrib>Actualizar la documentación</contrib> <email>baptiste."
 "millemathias@gmail.org</email>"
 
-#. (itstool) path: authorgroup/author
-#: C/index.docbook:77
+#: C/index.docbook:77(authorgroup/author)
 msgid ""
 "<firstname>Philip</firstname> <surname>Withnall</surname> <contrib>Update "
 "documentation</contrib> <email>philip@tecnocode.co.uk</email>"
@@ -209,13 +313,11 @@ msgstr ""
 "<contrib>Actualizar la documentación</contrib> <email>philip@tecnocode.co."
 "uk</email>"
 
-#. (itstool) path: revdescription/para
-#: C/index.docbook:114
+#: C/index.docbook:114(revdescription/para)
 msgid "Chee Bin HOH <email>cbhoh@gnome.org</email>"
 msgstr "Chee Bin HOH <email>cbhoh@GNOME.org</email>"
 
-#. (itstool) path: revhistory/revision
-#: C/index.docbook:110
+#: C/index.docbook:110(revhistory/revision)
 msgid ""
 "<revnumber>Totem Movie Player Manual V2.0</revnumber> <date>August 2006</"
 "date> <_:revdescription-1/>"
@@ -223,13 +325,11 @@ msgstr ""
 "<revnumber>Versión 2.0 del manual del reproductor de películas Totem</"
 "revnumber> <date>agosto de 2006</date> <_:revdescription-1/>"
 
-#. (itstool) path: revdescription/para
-#: C/index.docbook:124
+#: C/index.docbook:124(revdescription/para)
 msgid "Philip Withnall <email>philip@tecnocode.co.uk</email>"
 msgstr "Philip Withnall <email>philip@tecnocode.co.uk</email>"
 
-#. (itstool) path: revhistory/revision
-#: C/index.docbook:120
+#: C/index.docbook:120(revhistory/revision)
 msgid ""
 "<revnumber>Totem Movie Player Manual V3.0</revnumber> <date>February 2009</"
 "date> <_:revdescription-1/>"
@@ -237,104 +337,90 @@ msgstr ""
 "<revnumber>Versión 3.0 del manual del reproductor de películas Totem</"
 "revnumber> <date>febrero de 2006</date> <_:revdescription-1/>"
 
-#. (itstool) path: articleinfo/releaseinfo
-#: C/index.docbook:132
+#: C/index.docbook:132(articleinfo/releaseinfo)
 msgid "This manual describes version 2.26 of Totem Movie Player."
 msgstr ""
 "Este manual describe la versión 2.26 del Reproductor de películas Totem."
 
-#. (itstool) path: legalnotice/title
-#: C/index.docbook:135
+#: C/index.docbook:135(legalnotice/title)
 msgid "Feedback"
 msgstr "Comentarios"
 
-#. (itstool) path: legalnotice/para
-#: C/index.docbook:136
+#: C/index.docbook:136(legalnotice/para) C/index.docbook:1100(sect1/para)
 #| msgid ""
 #| "To report a bug or make a suggestion regarding the <application>Totem "
 #| "Movie Player</application> application or this manual, follow the "
-#| "directions in the <ulink url=\"help:user-guide#feedback\" type=\"help"
+#| "directions in the <ulink url=\"ghelp:user-guide#feedback\" type=\"help"
 #| "\">GNOME Feedback Page</ulink>."
 msgid ""
 "To report a bug or make a suggestion regarding the <application>Totem Movie "
 "Player</application> application or this manual, follow the directions in "
-"the <ulink url=\"help:gnome-help/more-help\" type=\"help\">GNOME Feedback "
+"the <ulink url=\"help:user-guide#feedback\" type=\"help\">GNOME Feedback "
 "Page</ulink>."
 msgstr ""
 "Para informar de un error o hacer alguna sugerencia concerniente a la "
 "aplicación <application>Reproductor de películas Totem</application> o este "
-"manual, siga las directrices en <ulink url=\"help:gnome-help/more-help\" "
-"type=\"help\">la página de comentarios de GNOME</ulink>."
+"manual, siga las directrices en <ulink url=\"help:user-guide#feedback\" type="
+"\"help\">la página de comentarios de GNOME</ulink>."
 
-#. (itstool) path: article/indexterm
-#: C/index.docbook:143
+#: C/index.docbook:143(article/indexterm)
+#| msgid "About <application>Totem Movie Player</application>"
 msgid "<primary>Totem Movie Player</primary>"
 msgstr "<primary>Reproductor de películas Totem</primary>"
 
-#. (itstool) path: article/indexterm
-#: C/index.docbook:146
+#: C/index.docbook:146(article/indexterm)
 msgid "<primary>totem</primary>"
 msgstr "<primary>totem</primary>"
 
-#. (itstool) path: sect1/title
-#: C/index.docbook:156
+#: C/index.docbook:156(sect1/title)
 msgid "Introduction"
 msgstr "Introducción"
 
-#. (itstool) path: sect1/para
-#: C/index.docbook:157
+#: C/index.docbook:157(sect1/para)
 msgid ""
 "The <application>Totem Movie Player</application> application is a movie "
 "player for the GNOME desktop based on the GStreamer framework and xine "
 "library, and enables you to play movies or songs."
 msgstr ""
 "La aplicación <application>Reproductor de películas Totem</application> es "
-"un reproductor de películas para el escritorio GNOME basado en el "
-"«framework» GStreamer y en la biblioteca xine, y le permite reproducir "
-"películas o canciones."
+"un reproductor de películas para el escritorio GNOME basado en el «framework» "
+"GStreamer y en la biblioteca xine, y le permite reproducir películas o "
+"canciones."
 
-#. (itstool) path: sect1/para
-#: C/index.docbook:160
+#: C/index.docbook:160(sect1/para)
 msgid ""
 "<application>Totem Movie Player</application> provides the following "
 "features:"
 msgstr ""
 "<application>Totem</application> proporciona las características siguientes:"
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:163
+#: C/index.docbook:163(listitem/para)
 msgid "Support for a variety of video and audio files."
 msgstr "Soporta una variedad de archivos y sonido y vídeo."
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:166
+#: C/index.docbook:166(listitem/para)
 msgid "A variety of zoom levels and aspect ratios, and a fullscreen view."
 msgstr ""
 "Proporciona varios niveles de ampliación y proporciones, y una vista a "
 "pantalla completa."
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:169
+#: C/index.docbook:169(listitem/para)
 msgid "Seek and volume controls."
 msgstr "Controles de búsqueda y volumen."
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:172
+#: C/index.docbook:172(listitem/para)
 msgid "A playlist."
 msgstr "Una lista de reproducción."
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:175
+#: C/index.docbook:175(listitem/para)
 msgid "Subtitle support."
 msgstr "Soporte de subtítulos."
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:178
+#: C/index.docbook:178(listitem/para)
 msgid "Complete keyboard navigation."
 msgstr "Navegación completa a través del teclado."
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:181
+#: C/index.docbook:181(listitem/para)
 msgid ""
 "Comprehensive set of plugins, including a subtitle downloader, YouTube "
 "browser, and disc burner."
@@ -342,8 +428,7 @@ msgstr ""
 "Conjunto exhaustivo de complementos incluyendo un descargador de subtítulos, "
 "un examinador de YouTube y un grabador de discos."
 
-#. (itstool) path: note/para
-#: C/index.docbook:185
+#: C/index.docbook:185(note/para)
 msgid ""
 "<application>Totem Movie Player</application> also comes with additional "
 "functionality such as:"
@@ -351,41 +436,41 @@ msgstr ""
 "El <application>Reproductor de películas Totem</application> también viene "
 "con funcionalidades adicionales como:"
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:189
+#: C/index.docbook:189(listitem/para)
 msgid "Video thumbnailer for GNOME."
 msgstr "Miniaturizador de vídeo para GNOME."
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:192
+#: C/index.docbook:192(listitem/para)
+msgid "Audio preview application for GNOME."
+msgstr "Aplicación de previsualización de sonido para GNOME."
+
+#: C/index.docbook:195(listitem/para)
 msgid "Nautilus properties tab."
 msgstr "Pestaña de propiedades de Nautilus."
 
-#. (itstool) path: sect1/title
-#: C/index.docbook:209
+#: C/index.docbook:212(sect1/title)
 msgid "Getting Started"
 msgstr "Inicio de la aplicación"
 
-#. (itstool) path: sect2/title
-#: C/index.docbook:212
+#: C/index.docbook:215(sect2/title)
 msgid "To Start <application>Totem Movie Player</application>"
 msgstr "Iniciar el <application>Reproductor de películas Totem</application>"
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:213
+#: C/index.docbook:216(sect2/para)
 msgid ""
 "You can start <application>Totem Movie Player</application> in the following "
 "ways:"
 msgstr ""
 "Puede iniciar <application>Totem</application> de las formas siguientes:"
 
-#. (itstool) path: varlistentry/term
-#: C/index.docbook:217
+#: C/index.docbook:220(varlistentry/term)
 msgid "<guimenu>Applications</guimenu> menu"
 msgstr "Menú <guimenu>Aplicaciones</guimenu>"
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:219
+#: C/index.docbook:222(listitem/para)
+#| msgid ""
+#| "Choose <menuchoice><guisubmenu>Sound &amp; Video</"
+#| "guisubmenu><guimenuitem>Movie Player</guimenuitem></menuchoice>."
 msgid ""
 "Choose <menuchoice> <guisubmenu>Sound &amp; Video</guisubmenu> "
 "<guimenuitem>Movie Player</guimenuitem> </menuchoice>."
@@ -393,13 +478,11 @@ msgstr ""
 "Elija <menuchoice><guisubmenu>Sonido y vídeo</"
 "guisubmenu><guimenuitem>Reproductor de películas</guimenuitem></menuchoice>."
 
-#. (itstool) path: varlistentry/term
-#: C/index.docbook:228
+#: C/index.docbook:231(varlistentry/term)
 msgid "Command line"
 msgstr "Línea de comandos"
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:230
+#: C/index.docbook:233(listitem/para)
 msgid ""
 "To start <application>Totem Movie Player</application> from a command line, "
 "type the following command, then press <keycap>Return</keycap>:"
@@ -407,13 +490,11 @@ msgstr ""
 "Para iniciar <application>Totem</application> desde una línea de comandos, "
 "teclee el comando siguiente, y después pulse <keycap>Retorno</keycap>:"
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:232
+#: C/index.docbook:235(listitem/para)
 msgid "<command>totem</command>"
 msgstr "<command>totem</command>"
 
-#. (itstool) path: tip/para
-#: C/index.docbook:236
+#: C/index.docbook:239(tip/para)
 msgid ""
 "To view other command line options that are available, type <command>totem --"
 "help</command>, then press <keycap>Return</keycap>."
@@ -422,14 +503,12 @@ msgstr ""
 "teclee <command>totem --help</command>, y después pulse <keycap>Intro</"
 "keycap>."
 
-#. (itstool) path: sect2/title
-#: C/index.docbook:246
+#: C/index.docbook:249(sect2/title)
 msgid "When You Start <application>Totem Movie Player</application>"
 msgstr ""
 "Al iniciar el <application>Reproductor de películas Totem</application>"
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:247
+#: C/index.docbook:250(sect2/para)
 msgid ""
 "When you start <application>Totem Movie Player</application>, the following "
 "window is displayed."
@@ -437,29 +516,17 @@ msgstr ""
 "Al iniciarse <application>Totem</application>, se muestra la ventana "
 "siguiente."
 
-#. (itstool) path: figure/title
-#: C/index.docbook:251
+#: C/index.docbook:254(figure/title)
 msgid "<application>Totem Movie Player</application> Start Up Window"
 msgstr ""
 "Ventana de inicio del <application>Reproductor de películas Totem</"
 "application>"
 
-#. (itstool) path: imageobject/imagedata
-#. This is a reference to an external file such as an image or video. When
-#. the file changes, the md5 hash will change to let you know you need to
-#. update your localized copy. The msgstr is not used at all. Set it to
-#. whatever you like once you have updated your copy of the file.
-#: C/index.docbook:255
-msgctxt "_"
-msgid ""
-"external ref='figures/totem_start_window.png' "
-"md5='85daf6f6aaae9262482c8f1b0b6d67b0'"
-msgstr ""
-"external ref='figures/totem_start_window.png' "
-"md5='85daf6f6aaae9262482c8f1b0b6d67b0'"
-
-#. (itstool) path: screenshot/mediaobject
-#: C/index.docbook:253
+#: C/index.docbook:256(screenshot/mediaobject)
+#| msgid ""
+#| "Shows <placeholder-1/> main window with sidebar opened on playlist. "
+#| "Contains menubar, display area, sidebar, elapsed time slider, seek "
+#| "control buttons, volume slider and statusbar."
 msgid ""
 "<imageobject> <imagedata fileref=\"figures/totem_start_window.png\" format="
 "\"PNG\"/> </imageobject> <textobject> <phrase>Shows <application>Totem Movie "
@@ -475,8 +542,7 @@ msgstr ""
 "transcurrido, botones de control de búsqueda, deslizador de volumen y barra "
 "de estado. </phrase> </textobject>"
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:271
+#: C/index.docbook:274(sect2/para)
 msgid ""
 "The <application>Totem Movie Player</application> window contains the "
 "following elements:"
@@ -484,13 +550,11 @@ msgstr ""
 "La ventana de <application>Totem</application> contiene los siguientes "
 "elementos:"
 
-#. (itstool) path: varlistentry/term
-#: C/index.docbook:275
+#: C/index.docbook:278(varlistentry/term)
 msgid "Menubar."
 msgstr "Barra de menú."
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:277
+#: C/index.docbook:280(listitem/para)
 msgid ""
 "The menus on the menubar contain all of the commands you need to use in "
 "<application>Totem Movie Player</application>."
@@ -498,26 +562,22 @@ msgstr ""
 "Los menús de la barra de menú contienen todos los comandos que necesita usar "
 "en <application>Totem</application>."
 
-#. (itstool) path: varlistentry/term
-#: C/index.docbook:282
+#: C/index.docbook:285(varlistentry/term)
 msgid "Display area."
 msgstr "Área de visualización."
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:284
+#: C/index.docbook:287(listitem/para)
 msgid ""
 "The display area displays the movie or a visualization of the current song."
 msgstr ""
 "El área de visualización muestra la película o una visualización de la "
 "canción actual."
 
-#. (itstool) path: varlistentry/term
-#: C/index.docbook:289
+#: C/index.docbook:292(varlistentry/term)
 msgid "Sidebar."
 msgstr "Barra lateral."
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:291
+#: C/index.docbook:294(listitem/para)
 msgid ""
 "The sidebar displays properties of the file played and acts as playlist. It "
 "can also be used by various plugins, such as the MythTV, YouTube and Video "
@@ -529,13 +589,11 @@ msgstr ""
 "tales como MythTV, YouTube y Búsqueda de vídeos. Se pueden seleccionar "
 "pulsando en el menú desplegable en la parte superior de la barra lateral."
 
-#. (itstool) path: varlistentry/term
-#: C/index.docbook:298
+#: C/index.docbook:301(varlistentry/term)
 msgid "Elapsed time slider."
 msgstr "Deslizador de tiempo transcurrido."
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:300
+#: C/index.docbook:303(listitem/para)
 msgid ""
 "The elapsed time slider displays the elapsed time of the movie or song that "
 "is playing. It also enables you to skip forward or backward in a movie or "
@@ -547,13 +605,11 @@ msgstr ""
 "en una película o canción arrastrando el manejador a lo largo de la barra, o "
 "pulsando en un punto de la barra."
 
-#. (itstool) path: varlistentry/term
-#: C/index.docbook:307
+#: C/index.docbook:310(varlistentry/term)
 msgid "Seek control buttons."
 msgstr "Botones de control de búsqueda."
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:309
+#: C/index.docbook:312(listitem/para)
 msgid ""
 "The seek control buttons enable you to move to the next or previous track, "
 "and to pause or play a movie or song."
@@ -561,23 +617,19 @@ msgstr ""
 "Los controles de búsqueda le permiten moverse a la siguiente o anterior "
 "pista, y pausar o reproducir una película o canción."
 
-#. (itstool) path: varlistentry/term
-#: C/index.docbook:315
+#: C/index.docbook:318(varlistentry/term)
 msgid "Volume button."
 msgstr "Botón de volumen."
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:317
+#: C/index.docbook:320(listitem/para)
 msgid "The volume button enables you to adjust the volume."
 msgstr "El botón de volumen le permite ajustar el volumen."
 
-#. (itstool) path: varlistentry/term
-#: C/index.docbook:321
+#: C/index.docbook:324(varlistentry/term)
 msgid "Statusbar."
 msgstr "Barra de estado."
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:323
+#: C/index.docbook:326(listitem/para)
 msgid ""
 "The statusbar displays status information about the movie or song that is "
 "playing."
@@ -585,18 +637,22 @@ msgstr ""
 "La barra de estado muestra la información de estado acerca de la película o "
 "canción que se está reproduciendo."
 
-#. (itstool) path: sect1/title
-#: C/index.docbook:335
+#: C/index.docbook:338(sect1/title)
 msgid "Usage"
 msgstr "Uso"
 
-#. (itstool) path: sect2/title
-#: C/index.docbook:339
+#: C/index.docbook:342(sect2/title)
 msgid "To Open a File"
 msgstr "Para abrir un archivo"
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:340
+#: C/index.docbook:343(sect2/para)
+#| msgid ""
+#| "To open a video or an audio file, choose "
+#| "<menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>O</keycap></"
+#| "keycombo></shortcut><guimenu>Movie</guimenu><guisubmenu>Open</"
+#| "guisubmenu></menuchoice>. The <application>Select Movies or Playlists</"
+#| "application> dialog is displayed. Select the file or files you want to "
+#| "open, then click <guibutton>OK</guibutton>."
 msgid ""
 "To open a video or an audio file, choose <menuchoice> "
 "<shortcut><keycombo><keycap>Ctrl</keycap><keycap>O</keycap></keycombo></"
@@ -612,8 +668,7 @@ msgstr ""
 "películas o listas de reproducción</guilabel>. Seleccione el archivo que "
 "quiere abrir y pulse <guibutton>Aceptar</guibutton>."
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:350
+#: C/index.docbook:353(sect2/para)
 msgid ""
 "You can drag a file from another application such as a file manager to the "
 "<application>Totem Movie Player</application> window. If you drag the file "
@@ -637,26 +692,23 @@ msgstr ""
 "la barra de título de la ventana y en la lista de reproducción de la barra "
 "lateral."
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:358
+#: C/index.docbook:361(sect2/para)
 msgid ""
 "If you try to open a file format that <application>Totem Movie Player</"
 "application> does not recognize, the application displays an error message. "
 "This error is most often encountered if you do not have the correct codecs "
 "installed. Information on getting codecs working can be found on the <ulink "
-"url=\"https://wiki.gnome.org/Apps/Videos/Codecs\" type=\"http"
+"url=\"http://projects.gnome.org/totem/#codecs\" type=\"http"
 "\"><application>Totem Movie Player</application> website</ulink>."
 msgstr ""
 "Si intenta abrir un formato de archivo que el <application>Reproductor de "
 "películas Totem</application> no reconoce, la aplicación mostrará un mensaje "
 "de error. Este error sucede habitualmente si no tiene los códecs correctos "
 "instalados. Se puede obtener información para que los códecs funcionen en la "
-"<ulink url=\"https://wiki.gnome.org/Apps/Videos/Codecs\" type=\"http"
-"\">Página web del <application>Reproductor de películas Totem</application></"
-"ulink>."
+"<ulink url=\"http://projects.gnome.org/totem/#codecs\">Página web del "
+"<application>Reproductor de películas Totem</application></ulink>."
 
-#. (itstool) path: tip/para
-#: C/index.docbook:364
+#: C/index.docbook:367(tip/para)
 msgid ""
 "You can double-click on a video or an audio file in the "
 "<application>Nautilus</application> file manager to open it in the "
@@ -666,13 +718,20 @@ msgstr ""
 "archivos <application>Nautilus</application> para abrirlo en la ventana del "
 "<application>Reproductor de películas Totem</application>."
 
-#. (itstool) path: sect2/title
-#: C/index.docbook:371
+#: C/index.docbook:374(sect2/title)
 msgid "To Open a Location"
 msgstr "Para abrir una dirección"
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:372
+#: C/index.docbook:375(sect2/para)
+#| msgid ""
+#| "To open a file by URI (location), choose "
+#| "<menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>L</keycap></"
+#| "keycombo></shortcut><guimenu>Movie</guimenu><guimenuitem>Open Location</"
+#| "guimenuitem></menuchoice>. The <application>Open Location</application> "
+#| "dialog is displayed. Use the drop-down combination box to specify the URI "
+#| "you would like to open (it lists URIs which have previously been opened) "
+#| "– or type one in directly – then click on the <guibutton>Open</guibutton> "
+#| "button."
 msgid ""
 "To open a file by URI (location), choose <menuchoice> "
 "<shortcut><keycombo><keycap>Ctrl</keycap><keycap>L</keycap></keycombo></"
@@ -691,8 +750,7 @@ msgstr ""
 "direcciones URI que se han abierto previamente) ─o escriba una directamente─ "
 "y después pulse en el botón <guibutton>Abrir</guibutton>."
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:381
+#: C/index.docbook:384(sect2/para)
 msgid ""
 "If you have a URI in the clipboard already, it will automatically be pasted "
 "into the combination box."
@@ -700,13 +758,15 @@ msgstr ""
 "Si ya tiene un URI en el portapapeles se pegará automáticamente en la caja "
 "de combinación."
 
-#. (itstool) path: sect2/title
-#: C/index.docbook:385
+#: C/index.docbook:388(sect2/title)
 msgid "To Play a Movie (DVD or VCD)"
 msgstr "Reproducir una película (DVD o VCD)"
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:386
+#: C/index.docbook:389(sect2/para)
+#| msgid ""
+#| "Insert the disc in the optical device of your computer, then choose "
+#| "<menuchoice><guimenu>Movie</guimenu><guimenuitem>Play Disc</guimenuitem></"
+#| "menuchoice>."
 msgid ""
 "Insert the disc in the optical device of your computer, then choose "
 "<menuchoice><guimenu>Movie</guimenu><guimenuitem>Play Disc</guimenuitem> </"
@@ -716,8 +776,12 @@ msgstr ""
 "<menuchoice><guimenu>Película</guimenu><guimenuitem>Reproducir disco</"
 "guimenuitem></menuchoice>."
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:389
+#: C/index.docbook:392(sect2/para)
+#| msgid ""
+#| "To eject a DVD or VCD, choose "
+#| "<menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>E</keycap></"
+#| "keycombo></shortcut><guimenu>Movie</guimenu><guimenuitem>Eject</"
+#| "guimenuitem></menuchoice>."
 msgid ""
 "To eject a DVD or VCD, choose <menuchoice> <shortcut><keycombo><keycap>Ctrl</"
 "keycap><keycap>E</keycap></keycombo></shortcut> <guimenu>Movie</guimenu> "
@@ -728,27 +792,17 @@ msgstr ""
 "keycombo></shortcut><guimenu>Película</guimenu><guimenuitem>Expulsar</"
 "guimenuitem></menuchoice>."
 
-#. (itstool) path: sect2/title
-#: C/index.docbook:399
+#: C/index.docbook:402(sect2/title)
 msgid "To Pause a Movie or Song"
 msgstr "Para pausar una película o canción"
 
-#. (itstool) path: imageobject/imagedata
-#. This is a reference to an external file such as an image or video. When
-#. the file changes, the md5 hash will change to let you know you need to
-#. update your localized copy. The msgstr is not used at all. Set it to
-#. whatever you like once you have updated your copy of the file.
-#: C/index.docbook:402
-msgctxt "_"
-msgid ""
-"external ref='figures/totem_pause_button.png' "
-"md5='8af1d98e40e2ebda89cc2cd86550c5f2'"
-msgstr ""
-"external ref='figures/totem_pause_button.png' "
-"md5='8af1d98e40e2ebda89cc2cd86550c5f2'"
-
-#. (itstool) path: sect2/para
-#: C/index.docbook:400
+#: C/index.docbook:403(sect2/para)
+#| msgid ""
+#| "To pause a movie or song that is playing, click on the <placeholder-1/> "
+#| "button, or choose <menuchoice><shortcut><keycombo><keycap>Ctrl</"
+#| "keycap><keycap>Space</keycap></keycombo></shortcut><guimenu>Movie</"
+#| "guimenu><guimenuitem>Play / Pause</guimenuitem></menuchoice>. You may "
+#| "also use the <keycap>P</keycap> key to pause or play a movie."
 msgid ""
 "To pause a movie or song that is playing, click on the <inlinemediaobject> "
 "<imageobject><imagedata fileref=\"figures/totem_pause_button.png\" format="
@@ -769,22 +823,12 @@ msgstr ""
 "También puede usar la tecla <keycap>P</keycap> para pausar o reproducir una "
 "película"
 
-#. (itstool) path: imageobject/imagedata
-#. This is a reference to an external file such as an image or video. When
-#. the file changes, the md5 hash will change to let you know you need to
-#. update your localized copy. The msgstr is not used at all. Set it to
-#. whatever you like once you have updated your copy of the file.
-#: C/index.docbook:413
-msgctxt "_"
-msgid ""
-"external ref='figures/totem_play_button.png' "
-"md5='feb4dec4237e6eb7ce571af2dbd0cf79'"
-msgstr ""
-"external ref='figures/totem_play_button.png' "
-"md5='feb4dec4237e6eb7ce571af2dbd0cf79'"
-
-#. (itstool) path: sect2/para
-#: C/index.docbook:411
+#: C/index.docbook:414(sect2/para)
+#| msgid ""
+#| "To resume playing a movie or song, click on the <placeholder-1/> button "
+#| "again, or choose <menuchoice><shortcut><keycombo><keycap>Ctrl</"
+#| "keycap><keycap>Space</keycap></keycombo></shortcut><guimenu>Movie</"
+#| "guimenu><guimenuitem>Play / Pause</guimenuitem></menuchoice>."
 msgid ""
 "To resume playing a movie or song, click on the <inlinemediaobject> "
 "<imageobject><imagedata fileref=\"figures/totem_play_button.png\" format="
@@ -803,13 +847,16 @@ msgstr ""
 "keycombo></shortcut> <guimenu>Película</guimenu> <guimenuitem>Reproducir / "
 "Pausar</guimenuitem> </menuchoice>."
 
-#. (itstool) path: sect2/title
-#: C/index.docbook:425
+#: C/index.docbook:428(sect2/title)
 msgid "To View Properties of a Movie or Song"
 msgstr "Para ver las propiedades de una película o canción"
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:426
+#: C/index.docbook:429(sect2/para)
+#| msgid ""
+#| "To view the properties of a movie or song, choose "
+#| "<menuchoice><guimenu>View</guimenu><guimenuitem>Sidebar</guimenuitem></"
+#| "menuchoice> to make the sidebar appear, and choose <guimenu>Properties</"
+#| "guimenu> in the drop-down list at the top of the sidebar."
 msgid ""
 "To view the properties of a movie or song, choose <menuchoice> "
 "<guimenu>View</guimenu> <guimenuitem>Sidebar</guimenuitem></menuchoice> to "
@@ -822,25 +869,25 @@ msgstr ""
 "<guimenu>Propiedades</guimenu> de la lista desplegable en la parte superior "
 "de la barra lateral."
 
-#. (itstool) path: sect2/title
-#: C/index.docbook:434
+#: C/index.docbook:437(sect2/title)
 msgid "To Seek Through Movies or Songs"
 msgstr "Buscar a lo largo de películas o canciones"
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:435
+#: C/index.docbook:438(sect2/para)
 msgid "To seek through movies or songs, you can use the following methods:"
 msgstr ""
 "Para buscar a lo largo de películas o canciones, puede usar los métodos "
 "siguientes:"
 
-#. (itstool) path: varlistentry/term
-#: C/index.docbook:439
+#: C/index.docbook:442(varlistentry/term)
 msgid "To skip forward"
 msgstr "Saltar adelante"
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:441
+#: C/index.docbook:444(listitem/para)
+#| msgid ""
+#| "To skip forward through a movie or song, choose "
+#| "<menuchoice><shortcut><keycap>Right</keycap></shortcut><guimenu>Go</"
+#| "guimenu><guimenuitem>Skip Forward</guimenuitem></menuchoice>."
 msgid ""
 "To skip forward through a movie or song, choose <menuchoice> "
 "<shortcut><keycap>Right</keycap></shortcut> <guimenu>Go</guimenu> "
@@ -850,13 +897,15 @@ msgstr ""
 "<menuchoice><shortcut><keycap>Derecha</keycap></shortcut><guimenu>Ir</"
 "guimenu> <guimenuitem>Saltar adelante</guimenuitem> </menuchoice>."
 
-#. (itstool) path: varlistentry/term
-#: C/index.docbook:451
+#: C/index.docbook:454(varlistentry/term)
 msgid "To skip backward"
 msgstr "Saltar atrás"
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:453
+#: C/index.docbook:456(listitem/para)
+#| msgid ""
+#| "To skip backwards through a movie or song, choose "
+#| "<menuchoice><shortcut><keycap>Left</keycap></shortcut><guimenu>Go</"
+#| "guimenu><guimenuitem>Skip Backwards</guimenuitem></menuchoice>."
 msgid ""
 "To skip backwards through a movie or song, choose <menuchoice> "
 "<shortcut><keycap>Left</keycap></shortcut> <guimenu>Go</guimenu> "
@@ -866,13 +915,18 @@ msgstr ""
 "<menuchoice><shortcut><keycap>Izquierda</keycap></shortcut><guimenu>Ir</"
 "guimenu> <guimenuitem>Saltar atrás</guimenuitem></menuchoice>."
 
-#. (itstool) path: varlistentry/term
-#: C/index.docbook:463
+#: C/index.docbook:466(varlistentry/term)
 msgid "To skip to a time"
 msgstr "Saltar a un tiempo específico"
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:465
+#: C/index.docbook:468(listitem/para)
+#| msgid ""
+#| "To skip to a specific elapsed time in the movie or song, choose "
+#| "<menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>K</keycap></"
+#| "keycombo></shortcut><guimenu>Go</guimenu><guimenuitem>Skip to</"
+#| "guimenuitem></menuchoice>. The <application>Skip to</application> dialog "
+#| "is displayed. Use the spin box to specify the elapsed time (in seconds) "
+#| "to skip to, then click <guibutton>OK</guibutton>."
 msgid ""
 "To skip to a specific elapsed time in the movie or song, choose <menuchoice> "
 "<shortcut><keycombo><keycap>Ctrl</keycap><keycap>K</keycap></keycombo></"
@@ -889,38 +943,27 @@ msgstr ""
 "transcurrido (en segundos) para saltar, después pulse <guibutton>Aceptar</"
 "guibutton>."
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:474
+#: C/index.docbook:477(listitem/para)
 msgid ""
 "The spin box also allows more natural language to be used. You can enter a "
 "time in the formats \"hh:mm:ss\", \"mm:ss\" or \"ss\"; where \"hh\" is the "
 "hour, \"mm\" is the minute and \"ss\" is the second to skip to."
 msgstr ""
 "La caja incrementable también permite usar un lenguaje más natural. Puede "
-"introducir tiempos en el formato «hh:mm:ss», «mm:ss» o «ss», donde «hh» es "
-"la hora, «mm» es el minuto y «ss» el segundo al que saltar."
+"introducir tiempos en el formato «hh:mm:ss», «mm:ss» o «ss», donde «hh» es la "
+"hora, «mm» es el minuto y «ss» el segundo al que saltar."
 
-#. (itstool) path: varlistentry/term
-#: C/index.docbook:481
+#: C/index.docbook:484(varlistentry/term)
 msgid "To move to the next movie or song"
 msgstr "Moverse a la siguiente película o canción"
 
-#. (itstool) path: imageobject/imagedata
-#. This is a reference to an external file such as an image or video. When
-#. the file changes, the md5 hash will change to let you know you need to
-#. update your localized copy. The msgstr is not used at all. Set it to
-#. whatever you like once you have updated your copy of the file.
-#: C/index.docbook:490
-msgctxt "_"
-msgid ""
-"external ref='figures/totem_next_button.png' "
-"md5='c7f9041dc1804edc6777cfe68456e703'"
-msgstr ""
-"external ref='figures/totem_next_button.png' "
-"md5='c7f9041dc1804edc6777cfe68456e703'"
-
-#. (itstool) path: listitem/para
-#: C/index.docbook:483
+#: C/index.docbook:486(listitem/para)
+#| msgid ""
+#| "To move to the next movie or song, choose "
+#| "<menuchoice><shortcut><keycombo><keycap>Alt</keycap><keycap>Right</"
+#| "keycap></keycombo></shortcut><guimenu>Go</guimenu><guimenuitem>Next "
+#| "Chapter/Movie</guimenuitem></menuchoice> or click on the <placeholder-1/> "
+#| "button."
 msgid ""
 "To move to the next movie or song, choose <menuchoice> "
 "<shortcut><keycombo><keycap>Alt</keycap><keycap>Right</keycap></keycombo></"
@@ -939,27 +982,17 @@ msgstr ""
 "<textobject><phrase>muestra un botón para ir al siguiente capítulo</phrase></"
 "textobject> </inlinemediaobject>."
 
-#. (itstool) path: varlistentry/term
-#: C/index.docbook:497
+#: C/index.docbook:500(varlistentry/term)
 msgid "To move to the previous movie or song"
 msgstr "Ir a la película o canción anterior"
 
-#. (itstool) path: imageobject/imagedata
-#. This is a reference to an external file such as an image or video. When
-#. the file changes, the md5 hash will change to let you know you need to
-#. update your localized copy. The msgstr is not used at all. Set it to
-#. whatever you like once you have updated your copy of the file.
-#: C/index.docbook:506
-msgctxt "_"
-msgid ""
-"external ref='figures/totem_previous_button.png' "
-"md5='a966195040a035bf48daab94c9320afc'"
-msgstr ""
-"external ref='figures/totem_previous_button.png' "
-"md5='a966195040a035bf48daab94c9320afc'"
-
-#. (itstool) path: listitem/para
-#: C/index.docbook:499
+#: C/index.docbook:502(listitem/para)
+#| msgid ""
+#| "To move to the previous movie or song, choose "
+#| "<menuchoice><shortcut><keycombo><keycap>Alt</keycap><keycap>Left</"
+#| "keycap></keycombo></shortcut><guimenu>Go</guimenu><guimenuitem>Previous "
+#| "Chapter/Movie</guimenuitem></menuchoice> or click on the <placeholder-1/> "
+#| "button."
 msgid ""
 "To move to the previous movie or song, choose <menuchoice> "
 "<shortcut><keycombo><keycap>Alt</keycap><keycap>Left</keycap></keycombo></"
@@ -978,18 +1011,15 @@ msgstr ""
 "<textobject><phrase>Muestra un botón para ir al capítulo anterior</phrase></"
 "textobject> </inlinemediaobject>."
 
-#. (itstool) path: sect2/title
-#: C/index.docbook:516
+#: C/index.docbook:519(sect2/title)
 msgid "To Change the Zoom Factor"
 msgstr "Cambiar el factor de ampliación"
 
-#. (itstool) path: sect3/title
-#: C/index.docbook:518
+#: C/index.docbook:521(sect3/title)
 msgid "To Change the Video Size"
 msgstr "Cambiar el tamaño del vídeo"
 
-#. (itstool) path: sect3/para
-#: C/index.docbook:519
+#: C/index.docbook:522(sect3/para)
 msgid ""
 "To change the zoom factor of the display area, you can use the following "
 "methods:"
@@ -997,8 +1027,14 @@ msgstr ""
 "Para cambiar el factor de ampliación del área de visualización puede usar "
 "los siguientes métodos:"
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:524
+#: C/index.docbook:527(listitem/para)
+#| msgid ""
+#| "To zoom to fullscreen mode, choose <menuchoice><shortcut><keycap>F11</"
+#| "keycap></shortcut><guimenu>View</guimenu><guimenuitem>Fullscreen</"
+#| "guimenuitem></menuchoice>. You can also use the <keycap>F</keycap> key to "
+#| "toggle fullscreen mode. To exit fullscreen mode, click on the "
+#| "<guibutton>Leave Fullscreen</guibutton> button or press <keycap>Esc</"
+#| "keycap>, <keycap>F11</keycap> or <keycap>F</keycap>."
 msgid ""
 "To zoom to fullscreen mode, choose <menuchoice><shortcut><keycap>F11</"
 "keycap></shortcut> <guimenu>View</guimenu><guimenuitem>Fullscreen</"
@@ -1015,8 +1051,12 @@ msgstr ""
 "<guibutton>Salir de pantalla completa</guibutton>, <keycap>Esc</keycap>, "
 "<keycap>F11</keycap> o <keycap>F</keycap>."
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:534
+#: C/index.docbook:537(listitem/para)
+#| msgid ""
+#| "To change the size of the original movie or visualization, choose "
+#| "<menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>0</keycap></"
+#| "keycombo></shortcut><guimenu>View</guimenu><guimenuitem>Fit Window to "
+#| "Movie</guimenuitem></menuchoice> and choose a scale ratio."
 msgid ""
 "To change the size of the original movie or visualization, choose "
 "<menuchoice> <shortcut><keycombo><keycap>Ctrl</keycap><keycap>0</keycap></"
@@ -1028,13 +1068,15 @@ msgstr ""
 "keycombo></shortcut><guimenu>Ver</guimenu><guimenuitem>Ajustar ventana a la "
 "película</guimenuitem></menuchoice> y elija una proporción de escala."
 
-#. (itstool) path: sect3/title
-#: C/index.docbook:545
+#: C/index.docbook:548(sect3/title)
 msgid "To Change the Video Aspect Ratio"
 msgstr "Cambiar el la proporción del vídeo"
 
-#. (itstool) path: sect3/para
-#: C/index.docbook:546
+#: C/index.docbook:549(sect3/para)
+#| msgid ""
+#| "To switch between different aspect ratios, choose "
+#| "<menuchoice><shortcut><keycap>A</keycap></shortcut><guimenu>View</"
+#| "guimenu><guisubmenu>Aspect Ratio</guisubmenu></menuchoice>."
 msgid ""
 "To switch between different aspect ratios, choose <menuchoice> "
 "<shortcut><keycap>A</keycap></shortcut> <guimenu>View</guimenu> "
@@ -1044,13 +1086,17 @@ msgstr ""
 "<shortcut><keycap>A</keycap></shortcut><guimenu>Ver</"
 "guimenu><guisubmenu>Proporción</guisubmenu></menuchoice>."
 
-#. (itstool) path: sect2/title
-#: C/index.docbook:556
+#: C/index.docbook:559(sect2/title)
 msgid "To Adjust the Volume"
 msgstr "Ajustar el volumen"
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:557
+#: C/index.docbook:560(sect2/para)
+#| msgid ""
+#| "To increase the volume, choose <menuchoice><shortcut><keycap>Up</keycap></"
+#| "shortcut><guimenu>Sound</guimenu><guimenuitem>Volume Up</guimenuitem></"
+#| "menuchoice>. To decrease the volume, choose "
+#| "<menuchoice><shortcut><keycap>Down</keycap></shortcut><guimenu>Sound</"
+#| "guimenu><guimenuitem>Volume Down</guimenuitem></menuchoice>."
 msgid ""
 "To increase the volume, choose <menuchoice> <shortcut><keycap>Up</keycap></"
 "shortcut> <guimenu>Sound</guimenu> <guimenuitem>Volume Up</guimenuitem> </"
@@ -1064,8 +1110,7 @@ msgstr ""
 "<menuchoice><shortcut><keycap>Abajo</keycap></shortcut><guimenu>Sonido</"
 "guimenu> <guimenuitem>Bajar volumen</guimenuitem></menuchoice>."
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:570
+#: C/index.docbook:573(sect2/para)
 msgid ""
 "You can also use the volume button: click on the volume button and choose "
 "the volume level with the slider."
@@ -1073,13 +1118,19 @@ msgstr ""
 "También puede usar el botón de volumen: pulse el botón de volumen y elija el "
 "nivel de volumen con el deslizador."
 
-#. (itstool) path: sect2/title
-#: C/index.docbook:574
+#: C/index.docbook:577(sect2/title)
 msgid "To Make the Window Always on Top"
 msgstr "Hacer que la ventana siempre esté encima"
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:575
+#: C/index.docbook:578(sect2/para)
+#| msgid ""
+#| "To make the <application>Totem Movie Player</application> window always "
+#| "on top of other application windows, choose <menuchoice><guimenu>Edit</"
+#| "guimenu><guimenuitem>Plugins</guimenuitem></menuchoice>. Select the "
+#| "<guilabel>Always on Top</guilabel> plugin to enable it. The "
+#| "<application>Totem Movie Player</application> window will now stay on top "
+#| "of all other windows while a movie is playing, but not while audio or "
+#| "visualizations are playing."
 msgid ""
 "To make the <application>Totem Movie Player</application> window always on "
 "top of other application windows, choose <menuchoice> <guimenu>Edit</"
@@ -1098,8 +1149,7 @@ msgstr ""
 "ventanas cuando se esté reproduciendo una película, pero no cuando se esté "
 "reproduciendo sonido o una visualización."
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:583
+#: C/index.docbook:586(sect2/para)
 msgid ""
 "To stop the window from always being on top, disable the <guilabel>Always on "
 "Top</guilabel> plugin again. See <xref linkend=\"totem-plugins-always-on-top"
@@ -1109,13 +1159,21 @@ msgstr ""
 "complemento <guilabel>Siempre encima</guilabel> de nuevo. Para obtener más "
 "información consulte la <xref linkend=\"totem-plugins-always-on-top\"/>."
 
-#. (itstool) path: sect2/title
-#: C/index.docbook:588
+#: C/index.docbook:591(sect2/title)
 msgid "To Show or Hide Controls"
 msgstr "Mostrar u ocultar los controles"
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:589
+#: C/index.docbook:592(sect2/para)
+#| msgid ""
+#| "To show or hide the <application>Totem Movie Player</application> window "
+#| "controls, choose <menuchoice><shortcut><keycombo><keycap>Ctrl</"
+#| "keycap><keycap>H</keycap></keycombo></shortcut><guimenu>View</"
+#| "guimenu><guimenuitem>Show Controls</guimenuitem></menuchoice>, or press "
+#| "the <keycap>H</keycap> key. You can also right-click on the "
+#| "<application>Totem Movie Player</application> window, then choose "
+#| "<menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>H</keycap></"
+#| "keycombo></shortcut><guimenuitem>Show Controls</guimenuitem></menuchoice> "
+#| "from the popup menu."
 msgid ""
 "To show or hide the <application>Totem Movie Player</application> window "
 "controls, choose <menuchoice> <shortcut><keycombo><keycap>Ctrl</"
@@ -1138,8 +1196,7 @@ msgstr ""
 "keycombo></shortcut><guimenuitem>Mostrar controles</guimenuitem></"
 "menuchoice> desde el menú emergente."
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:601
+#: C/index.docbook:604(sect2/para)
 msgid ""
 "If the <guilabel>Show Controls</guilabel> option is selected, "
 "<application>Totem Movie Player</application> will show the menubar, elapsed "
@@ -1154,18 +1211,20 @@ msgstr ""
 "opción <guilabel>Mostrar controles</guilabel> está deseleccionada, la "
 "aplicación ocultará estos controles y mostrará sólo el área de visualización."
 
-#. (itstool) path: sect2/title
-#: C/index.docbook:610
+#: C/index.docbook:613(sect2/title)
 msgid "To Manage the Playlist"
 msgstr "Gestionar la lista de reproducción"
 
-#. (itstool) path: sect3/title
-#: C/index.docbook:613
+#: C/index.docbook:616(sect3/title)
 msgid "To Show or Hide the Playlist"
 msgstr "Para mostrar u ocultar la lista de reproducción"
 
-#. (itstool) path: sect3/para
-#: C/index.docbook:614
+#: C/index.docbook:617(sect3/para)
+#| msgid ""
+#| "To show or hide the playlist, choose <menuchoice><guimenu>View</"
+#| "guimenu><guimenuitem>Sidebar</guimenuitem></menuchoice> or click on the "
+#| "<guibutton>Sidebar</guibutton> button, and choose <guimenu>Playlist</"
+#| "guimenu> on the top of the sidebar."
 msgid ""
 "To show or hide the playlist, choose <menuchoice> <guimenu>View</"
 "guimenu><guimenuitem>Sidebar</guimenuitem> </menuchoice> or click on the "
@@ -1178,18 +1237,15 @@ msgstr ""
 "<guimenu>Lista de reproducción</guimenu> en la parte superior de la barra "
 "lateral."
 
-#. (itstool) path: sect3/title
-#: C/index.docbook:623
+#: C/index.docbook:626(sect3/title)
 msgid "Manage a Playlist"
 msgstr "Administrar una lista de reproducción"
 
-#. (itstool) path: varlistentry/term
-#: C/index.docbook:627
+#: C/index.docbook:630(varlistentry/term)
 msgid "To add a track or movie"
 msgstr "Añadir una pista o película"
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:629
+#: C/index.docbook:632(listitem/para)
 msgid ""
 "To add a track or movie to the playlist, click on the <guibutton>Add</"
 "guibutton> button. The <application>Select Movies or Playlists</application> "
@@ -1202,13 +1258,11 @@ msgstr ""
 "quiera añadir a la lista de reproducción, después pulse <guibutton>Añadir</"
 "guibutton>."
 
-#. (itstool) path: varlistentry/term
-#: C/index.docbook:636
+#: C/index.docbook:639(varlistentry/term)
 msgid "To remove a track or movie"
 msgstr "Para eliminar una pista o película"
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:638
+#: C/index.docbook:641(listitem/para)
 msgid ""
 "To remove a track or movie from the playlist, select the item or items to "
 "remove from the playlist, then click on the <guibutton>Remove</guibutton> "
@@ -1218,13 +1272,11 @@ msgstr ""
 "los elementos que quiere quitar de la lista, después pulse el botón "
 "<guibutton>Quitar</guibutton>."
 
-#. (itstool) path: varlistentry/term
-#: C/index.docbook:644
+#: C/index.docbook:647(varlistentry/term)
 msgid "To save the playlist to a file"
 msgstr "Guardar una lista de reproducción en un archivo"
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:646
+#: C/index.docbook:649(listitem/para)
 msgid ""
 "To save the playlist to a file, click on the <guibutton>Save Playlist</"
 "guibutton> button. The <application>Save Playlist</application> dialog is "
@@ -1237,13 +1289,11 @@ msgstr ""
 "del archivo que quiere usar para guardar la lista de reproducción y después "
 "pulse <guibutton>Guardar</guibutton>."
 
-#. (itstool) path: varlistentry/term
-#: C/index.docbook:653
+#: C/index.docbook:656(varlistentry/term)
 msgid "To move a track or movie up the playlist"
 msgstr "Mover una pista o película de la lista de reproducción"
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:655
+#: C/index.docbook:658(listitem/para)
 msgid ""
 "To move a track or movie up the playlist, select the item from the playlist, "
 "then click on the <guibutton>Move Up</guibutton> button."
@@ -1252,13 +1302,11 @@ msgstr ""
 "elemento de la lista de reproducción y después pulse en el botón "
 "<guibutton>Subir</guibutton>."
 
-#. (itstool) path: varlistentry/term
-#: C/index.docbook:661
+#: C/index.docbook:664(varlistentry/term)
 msgid "To move a track or movie down the playlist"
 msgstr "Bajar una pista o película en la lista de reproducción"
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:663
+#: C/index.docbook:666(listitem/para)
 msgid ""
 "To move a track or movie down the playlist, select the item from the "
 "playlist, then click on the <guibutton>Move Down</guibutton> button."
@@ -1267,8 +1315,10 @@ msgstr ""
 "elemento de la a lista de reproducción y después pulse en el botón "
 "<guibutton>Bajar</guibutton>."
 
-#. (itstool) path: sect3/para
-#: C/index.docbook:624
+#: C/index.docbook:627(sect3/para)
+#| msgid ""
+#| "You can use the <application>Playlist</application> dialog to do the "
+#| "following: <placeholder-1/>"
 msgid ""
 "You can use the <application>Playlist</application> dialog to do the "
 "following: <_:variablelist-1/>"
@@ -1276,13 +1326,11 @@ msgstr ""
 "Puede usar el diálogo <guilabel>Lista de reproducción</guilabel> para hacer "
 "lo siguiente: <_:variablelist-1/>"
 
-#. (itstool) path: sect3/title
-#: C/index.docbook:672
+#: C/index.docbook:675(sect3/title)
 msgid "To Select or Unselect Repeat Mode"
 msgstr "Para seleccionar o deseleccionar el modo de repetición"
 
-#. (itstool) path: sect3/para
-#: C/index.docbook:673
+#: C/index.docbook:676(sect3/para)
 msgid ""
 "To enable or disable repeat mode, choose <menuchoice><guimenu>Edit</"
 "guimenu><guimenuitem>Repeat Mode</guimenuitem></menuchoice>."
@@ -1291,13 +1339,11 @@ msgstr ""
 "<menuchoice><guimenu>Editar</guimenu><guimenuitem>Modo de repetición</"
 "guimenuitem></menuchoice>."
 
-#. (itstool) path: sect3/title
-#: C/index.docbook:678
+#: C/index.docbook:681(sect3/title)
 msgid "To Select or Unselect Shuffle Mode"
 msgstr "Para seleccionar o deseleccionar el modo aleatorio"
 
-#. (itstool) path: sect3/para
-#: C/index.docbook:679
+#: C/index.docbook:682(sect3/para)
 msgid ""
 "To enable or disable shuffle mode, choose <menuchoice><guimenu>Edit</"
 "guimenu><guimenuitem>Shuffle Mode</guimenuitem></menuchoice>."
@@ -1306,13 +1352,11 @@ msgstr ""
 "<menuchoice><guimenu>Editar</guimenu><guimenuitem>Modo aleatorio</"
 "guimenuitem></menuchoice>."
 
-#. (itstool) path: sect2/title
-#: C/index.docbook:687
+#: C/index.docbook:690(sect2/title)
 msgid "To Choose Subtitles"
 msgstr "Para elegir un subtítulo"
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:688
+#: C/index.docbook:691(sect2/para)
 msgid ""
 "To choose the language of the subtitles, select <menuchoice><guimenu>View</"
 "guimenu><guisubmenu>Subtitles</guisubmenu></menuchoice> and choose the "
@@ -1322,8 +1366,7 @@ msgstr ""
 "<menuchoice><guimenu>Ver</guimenu><guisubmenu>Subtítulos</guisubmenu></"
 "menuchoice> y elija el idioma de los subtítulos que quiera mostrar."
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:692
+#: C/index.docbook:695(sect2/para)
 msgid ""
 "To disable the display of subtitles, select <menuchoice><guimenu>View</"
 "guimenu><guisubmenu>Subtitles</guisubmenu><guimenuitem>None</guimenuitem></"
@@ -1333,8 +1376,7 @@ msgstr ""
 "<menuchoice><guisubmenu>Ver</guisubmenu><guisubmenu>Subtítulos</"
 "guisubmenu><guimenuitem>Ninguno</guimenuitem></menuchoice>."
 
-#. (itstool) path: note/para
-#: C/index.docbook:694
+#: C/index.docbook:697(note/para)
 msgid ""
 "By default, <application>Totem Movie Player</application> will choose the "
 "same language for the subtitles as the one you normally use on your computer."
@@ -1343,8 +1385,7 @@ msgstr ""
 "application> elegirá el mismo idioma para los subtítulos que el que esté "
 "usando en su equipo."
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:696
+#: C/index.docbook:699(sect2/para)
 msgid ""
 "<application>Totem Movie Player</application> will automatically load and "
 "display subtitles for a video if it finds a subtitle file with the same name "
@@ -1363,8 +1404,7 @@ msgstr ""
 "<filename class=\"extension\">ssa</filename> o <filename class=\"extension"
 "\">ass</filename>."
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:701
+#: C/index.docbook:704(sect2/para)
 msgid ""
 "If the file containing the subtitles has a different name from the video "
 "being played, you can right-click on the video in the playlist and choose "
@@ -1381,8 +1421,7 @@ msgstr ""
 "seleccionando <menuchoice><guimenu>Ver</guimenu><guimenuitem>Seleccionar "
 "subtítulos de texto...</guimenuitem></menuchoice>."
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:705
+#: C/index.docbook:708(sect2/para)
 msgid ""
 "Using the <guilabel>Subtitle Downloader</guilabel> plugin, you can also "
 "download subtitles from the OpenSubtitles service. See <xref linkend=\"totem-"
@@ -1392,13 +1431,18 @@ msgstr ""
 "puede descargar subtítulos del servicio OpenSubtitles. Para obtener más "
 "información consulte la <xref linkend=\"totem-plugins-opensubtitles\"/>."
 
-#. (itstool) path: sect2/title
-#: C/index.docbook:710
+#: C/index.docbook:713(sect2/title)
 msgid "To Take a Screenshot"
 msgstr "Tomar una captura de pantalla"
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:711
+#: C/index.docbook:714(sect2/para)
+#| msgid ""
+#| "To take a screenshot of the movie or visualization that is playing, "
+#| "choose <menuchoice><guimenu>Edit</guimenu><guimenuitem>Take Screenshot</"
+#| "guimenuitem></menuchoice>. The <application>Save Screenshot</application> "
+#| "dialog is displayed. Choose a location and insert the filename as which "
+#| "you want to save the screenshot, then click on the <guibutton>Save</"
+#| "guibutton> button to save the screenshot."
 msgid ""
 "To take a screenshot of the movie or visualization that is playing, choose "
 "<menuchoice> <guimenu>Edit</guimenu> <guimenuitem>Take Screenshot</"
@@ -1415,8 +1459,7 @@ msgstr ""
 "captura de pantalla, después pulse el botón <guibutton>Guardar</guibutton> "
 "para guardar la captura de pantalla."
 
-#. (itstool) path: tip/para
-#: C/index.docbook:719
+#: C/index.docbook:722(tip/para)
 msgid ""
 "<application>Totem Movie Player</application> will display a preview of the "
 "screenshot which is to be saved on the left-hand side of the "
@@ -1426,13 +1469,18 @@ msgstr ""
 "vista previa en la parte izquierda del diálogo <guilabel>Guardar la captura</"
 "guilabel>, de la captura de pantalla que se guardará."
 
-#. (itstool) path: sect2/title
-#: C/index.docbook:723
+#: C/index.docbook:726(sect2/title)
 msgid "To Create a Screenshot Gallery"
 msgstr "Crear una galería de capturas de pantalla"
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:724
+#: C/index.docbook:727(sect2/para)
+#| msgid ""
+#| "To create a gallery of screenshots of the movie or visualization that is "
+#| "playing, choose <menuchoice><guimenu>Edit</guimenu><guimenuitem>Create "
+#| "Screenshot Gallery</guimenuitem></menuchoice>. The <application>Save "
+#| "Gallery</application> dialog is displayed. Choose a location and insert "
+#| "the filename as which you want to save the gallery image, then click on "
+#| "the <guibutton>Save</guibutton> button to save the screenshot."
 msgid ""
 "To create a gallery of screenshots of the movie or visualization that is "
 "playing, choose <menuchoice> <guimenu>Edit</guimenu> <guimenuitem>Create "
@@ -1449,8 +1497,7 @@ msgstr ""
 "que quiere guardar la galerías de capturas de pantalla, después pulse el "
 "botón <guibutton>Guardar</guibutton> para guardar la captura de pantalla."
 
-#. (itstool) path: tip/para
-#: C/index.docbook:732
+#: C/index.docbook:735(tip/para)
 msgid ""
 "You may specify the width of the individual screenshots in the gallery using "
 "the <guilabel>Screenshot width</guilabel> entry. The default width is 128 "
@@ -1460,8 +1507,7 @@ msgstr ""
 "usando la entrada <guilabel>Anchura de la captura</guilabel>. La anchura "
 "predeterminada es de 128 píxeles."
 
-#. (itstool) path: tip/para
-#: C/index.docbook:734
+#: C/index.docbook:737(tip/para)
 msgid ""
 "You may also specify the number of screenshots to be put in the gallery. By "
 "default, this is calculated based on the length of the movie; however, this "
@@ -1471,18 +1517,16 @@ msgid ""
 msgstr ""
 "También puede especificar el número de capturas de pantalla que poner en la "
 "galería. De forma predeterminada esto se calcula en base a la duración de la "
-"película; no obstante, esto se puede sobrescribir deseleccionando la casilla "
-"de verificación <guilabel>Calcular el número de capturas</guilabel> e "
-"introduciendo un número nuevo en la caja incremental <guilabel>Número de "
+"película; no obstante, esto se puede sobreescribir deseleccionando la "
+"casilla de verificación <guilabel>Calcular el número de capturas</guilabel> "
+"e introduciendo un número nuevo en la caja incremental <guilabel>Número de "
 "capturas:</guilabel>."
 
-#. (itstool) path: sect1/title
-#: C/index.docbook:742
+#: C/index.docbook:745(sect1/title)
 msgid "Plugins"
 msgstr "Complementos"
 
-#. (itstool) path: sect1/para
-#: C/index.docbook:743
+#: C/index.docbook:746(sect1/para)
 msgid ""
 "<application>Totem Movie Player</application> has many features which are "
 "present in the form of plugins — pieces of the software which are only "
@@ -1492,13 +1536,11 @@ msgstr ""
 "características presentes en forma de complementos; partes del software que "
 "sólo se cargan si es necesario."
 
-#. (itstool) path: sect2/title
-#: C/index.docbook:746
+#: C/index.docbook:749(sect2/title)
 msgid "To Enable a Plugin"
 msgstr "Activar un complemento"
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:747
+#: C/index.docbook:750(sect2/para)
 msgid ""
 "To view the list of installed plugins, choose <menuchoice><guimenu>Edit</"
 "guimenu><guimenuitem>Plugins</guimenuitem></menuchoice>. The "
@@ -1517,8 +1559,7 @@ msgstr ""
 "que tienen opciones que se pueden cambiar tendrán un botón "
 "<guibutton>Configurar</guibutton> activo en la parte derecha."
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:751
+#: C/index.docbook:754(sect2/para)
 msgid ""
 "To enable a plugin, simply select the checkbox to the left of its name in "
 "the plugin list, and the plugin will be loaded immediately. If there is any "
@@ -1529,8 +1570,7 @@ msgstr ""
 "cargará inmediatamente el complemento. Si hay algún error al cargar el "
 "complemento, se mostrará inmediatamente un diálogo de error."
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:753
+#: C/index.docbook:756(sect2/para)
 msgid ""
 "To disable a plugin again, deselect its checkbox. Plugins will remain "
 "enabled or disabled as set even when <application>Totem Movie Player</"
@@ -1541,13 +1581,11 @@ msgstr ""
 "incluso cuando cierre el <application>Reproductor de películas Totem</"
 "application>."
 
-#. (itstool) path: sect2/title
-#: C/index.docbook:757
+#: C/index.docbook:760(sect2/title)
 msgid "Always on Top"
 msgstr "Siempre encima"
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:758
+#: C/index.docbook:761(sect2/para)
 msgid ""
 "When enabled, the <guilabel>Always on Top</guilabel> plugin will force the "
 "main <application>Totem Movie Player</application> window to be on top of "
@@ -1561,13 +1599,11 @@ msgstr ""
 "una película pero no mientras se reproduce sonido o una visualización. Para "
 "hacer que la ventana deje de estar siempre encima, desactive el complemento."
 
-#. (itstool) path: sect2/title
-#: C/index.docbook:763
+#: C/index.docbook:766(sect2/title)
 msgid "Coherence DLNA/UPnP Client"
 msgstr "Cliente de DLNA/UPnP Coherence"
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:764
+#: C/index.docbook:767(sect2/para)
 msgid ""
 "The <guilabel>Coherence DLNA/UPnP Client</guilabel> plugin allows "
 "<application>Totem Movie Player</application> to play multimedia content "
@@ -1578,8 +1614,7 @@ msgstr ""
 "contenido multimedia de servidores de medios UPnP (tales como servidores "
 "Coherence) en la red local."
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:766
+#: C/index.docbook:769(sect2/para)
 msgid ""
 "With the <guilabel>Coherence DLNA/UPnP Client</guilabel> plugin enabled, "
 "choose <menuchoice><shortcut><keycap>F9</keycap></shortcut><guimenu>View</"
@@ -1598,8 +1633,7 @@ msgstr ""
 "barra lateral para mostrar la barra lateral del <guilabel>Cliente de DLNA/"
 "UPnP Coherence</guilabel>."
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:770
+#: C/index.docbook:773(sect2/para)
 msgid ""
 "The tree view in the sidebar will list the available media servers. Clicking "
 "on one will expand it to show the types of media it can serve, and clicking "
@@ -1622,8 +1656,7 @@ msgstr ""
 "el archivo inmediatamente o añadirlo a la lista de reproducción, "
 "respectivamente."
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:775
+#: C/index.docbook:778(sect2/para)
 msgid ""
 "If the media server allows it, choosing <menuchoice><guimenuitem>Delete</"
 "guimenuitem></menuchoice> from a file's context menu allows you to delete "
@@ -1634,13 +1667,11 @@ msgstr ""
 "contextual de un archivo le permitirá borrar ese archivo del servidor de "
 "medios."
 
-#. (itstool) path: sect2/title
-#: C/index.docbook:779
+#: C/index.docbook:782(sect2/title)
 msgid "Gromit Annotations"
 msgstr "Anotaciones Gromit"
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:780
+#: C/index.docbook:783(sect2/para)
 msgid ""
 "The <guilabel>Gromit Annotations</guilabel> plugin allows you to draw on top "
 "of movies as they are played using <ulink type=\"http\" url=\"http://www."
@@ -1656,8 +1687,7 @@ msgstr ""
 "poder activar el complemento; consulte la documentación de su sistema "
 "operativo para obtener información de cómo hacer esto."
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:784
+#: C/index.docbook:787(sect2/para)
 msgid ""
 "With the plugin enabled, press <keycombo><keycap>Ctrl</keycap><keycap>D</"
 "keycap></keycombo> to toggle <application>Gromit</application> on or off. "
@@ -1676,8 +1706,7 @@ msgstr ""
 "<keycombo><keycap>Ctrl</keycap><keycap>D</keycap></keycombo> de nuevo para "
 "desactivar <application>Gromit</application>."
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:788
+#: C/index.docbook:791(sect2/para)
 msgid ""
 "To clear the screen of annotations, press <keycombo><keycap>Ctrl</"
 "keycap><keycap>E</keycap></keycombo>, or close <application>Totem Movie "
@@ -1687,13 +1716,11 @@ msgstr ""
 "keycap><keycap>E</keycap></keycombo> o cierre el <application>Reproductor de "
 "películas Totem</application>."
 
-#. (itstool) path: sect2/title
-#: C/index.docbook:792
+#: C/index.docbook:795(sect2/title)
 msgid "Jamendo"
 msgstr "Jamendo"
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:793
+#: C/index.docbook:796(sect2/para)
 msgid ""
 "The <guilabel>Jamendo</guilabel> plugin allows you to listen to the "
 "collection of Creative Commons-licensed music on the <ulink type=\"http\" "
@@ -1703,13 +1730,11 @@ msgstr ""
 "de música licenciada con Creative Commons en el servicio <ulink type=\"http"
 "\" url=\"http://www.jamendo.com/en/\">Jamendo</ulink>."
 
-#. (itstool) path: sect3/title
-#: C/index.docbook:796 C/index.docbook:847
+#: C/index.docbook:799(sect3/title) C/index.docbook:850(sect3/title)
 msgid "To Configure the Plugin"
 msgstr "Configurar el complemento"
 
-#. (itstool) path: sect3/para
-#: C/index.docbook:797
+#: C/index.docbook:800(sect3/para)
 msgid ""
 "The <guilabel>Jamendo</guilabel> plugin can be configured. Click on the "
 "<guibutton>Configure</guibutton> button when enabling the plugin, and the "
@@ -1727,19 +1752,16 @@ msgstr ""
 "número de álbumes que obtener al realizar una búsqueda (elija más álbumes si "
 "tiene una conexión a Internet rápida)."
 
-#. (itstool) path: sect3/para
-#: C/index.docbook:801
+#: C/index.docbook:804(sect3/para)
 msgid "Once you're done, click <guibutton>OK</guibutton>."
 msgstr ""
 "Una vez que haya terminado pulse el botón <guibutton>Aceptar</guibutton>."
 
-#. (itstool) path: sect3/title
-#: C/index.docbook:804
+#: C/index.docbook:807(sect3/title)
 msgid "To Display the Jamendo Sidebar"
 msgstr "Mostrar la barra lateral de Jamendo"
 
-#. (itstool) path: sect3/para
-#: C/index.docbook:805
+#: C/index.docbook:808(sect3/para)
 msgid ""
 "With the <guilabel>Jamendo</guilabel> plugin enabled, choose "
 "<menuchoice><shortcut><keycap>F9</keycap></shortcut><guimenu>View</"
@@ -1756,13 +1778,11 @@ msgstr ""
 "superior de la barra lateral para mostrar la barra lateral del "
 "<guilabel>Jamendo</guilabel>."
 
-#. (itstool) path: sect3/title
-#: C/index.docbook:811
+#: C/index.docbook:814(sect3/title)
 msgid "To Search for Music"
 msgstr "Buscar música"
 
-#. (itstool) path: sect3/para
-#: C/index.docbook:812
+#: C/index.docbook:815(sect3/para)
 msgid ""
 "Enter your search terms in the search entry at the top of the "
 "<guilabel>Jamendo</guilabel> sidebar. You can search by either artist or by "
@@ -1773,8 +1793,7 @@ msgstr ""
 "buscar por artista o etiquetas. Pulse el botón de búsqueda para comenzar su "
 "búsqueda."
 
-#. (itstool) path: sect3/para
-#: C/index.docbook:814
+#: C/index.docbook:817(sect3/para)
 msgid ""
 "Search results will be displayed in the tree view in the <guilabel>Search "
 "Results</guilabel> page of the sidebar, and can be browsed through using the "
@@ -1788,8 +1807,7 @@ msgstr ""
 "barra lateral. Los álbumes se listan y si pulsa sobre un álbum, se listarán "
 "sus pistas debajo. Pulse de nuevo para ocultar las pistas del álbum."
 
-#. (itstool) path: sect3/para
-#: C/index.docbook:817
+#: C/index.docbook:820(sect3/para)
 msgid ""
 "With an artist selected, you can click on the <guibutton>Jamendo Album Page</"
 "guibutton> button to open that album's page on the Jamendo website. Double-"
@@ -1809,13 +1827,11 @@ msgstr ""
 "pista individual reemplazará su lista de reproducción con esa pista "
 "únicamente."
 
-#. (itstool) path: sect3/title
-#: C/index.docbook:823
+#: C/index.docbook:826(sect3/title)
 msgid "Popular Albums and Latest Releases"
 msgstr "Álbumes populares y últimas publicaciones"
 
-#. (itstool) path: sect3/para
-#: C/index.docbook:824
+#: C/index.docbook:827(sect3/para)
 msgid ""
 "Viewing the <guilabel>Popular</guilabel> page in the <guilabel>Jamendo</"
 "guilabel> sidebar will load a list of the most popular albums on Jamendo at "
@@ -1829,13 +1845,11 @@ msgstr ""
 "búsqueda. Ver la página <guilabel>Últimas publicaciones</guilabel> cargará "
 "igualmente una lista de los últimos álbumes publicados en Jamendo."
 
-#. (itstool) path: sect2/title
-#: C/index.docbook:830
+#: C/index.docbook:833(sect2/title)
 msgid "Local Search"
 msgstr "Búsqueda local"
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:831
+#: C/index.docbook:834(sect2/para)
 msgid ""
 "The <guilabel>Local Search</guilabel> plugin allows you to search for "
 "playable movies and audio files on your computer from within "
@@ -1856,8 +1870,7 @@ msgstr ""
 "la lista desplegable en la parte superior de la barra lateral para mostrar "
 "la barra lateral <guilabel>Búsqueda local</guilabel>."
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:836
+#: C/index.docbook:839(sect2/para)
 msgid ""
 "To perform a search, enter your search terms in the search entry at the top "
 "of the sidebar and click <guibutton>Find</guibutton>. Your search terms may "
@@ -1873,8 +1886,7 @@ msgstr ""
 "ejemplo, la búsqueda <userinput>*.mpg</userinput> buscará todas las "
 "películas con la extensión <filename class=\"extension\">.mpg</filename>."
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:839
+#: C/index.docbook:842(sect2/para)
 msgid ""
 "Search results may be browsed using the <guibutton>Back</guibutton> and "
 "<guibutton>Forward</guibutton> buttons at the bottom of the sidebar, and you "
@@ -1885,13 +1897,11 @@ msgstr ""
 "inferior de la barra lateral, y puede saltar a una página de resultados "
 "específicos introduciendo su número en el botón incrementable."
 
-#. (itstool) path: sect2/title
-#: C/index.docbook:843
+#: C/index.docbook:846(sect2/title)
 msgid "Publish Playlist"
 msgstr "Publicar listas de reproducción"
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:844
+#: C/index.docbook:847(sect2/para)
 msgid ""
 "The <guilabel>Publish Playlist</guilabel> plugin allows you to publish "
 "playlists on your local network to allow other computers to access and play "
@@ -1901,13 +1911,11 @@ msgstr ""
 "permite publicar listas de reproducción en su red local y permitir que otros "
 "equipos accedan a ellas y las reproduzcan."
 
-#. (itstool) path: varlistentry/term
-#: C/index.docbook:853
+#: C/index.docbook:856(varlistentry/term)
 msgid "<literal>%a</literal>"
 msgstr "<literal>%a</literal>"
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:854
+#: C/index.docbook:857(listitem/para)
 msgid ""
 "Replaced with the program's name: <application>Totem Movie Player</"
 "application>."
@@ -1915,48 +1923,45 @@ msgstr ""
 "Reemplazado con el nombre del programa: <application>Reproductor de "
 "películas Totem</application>."
 
-#. (itstool) path: varlistentry/term
-#: C/index.docbook:857
+#: C/index.docbook:860(varlistentry/term)
 msgid "<literal>%h</literal>"
 msgstr "<literal>%h</literal>"
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:858
+#: C/index.docbook:861(listitem/para)
 msgid "Replaced with your computer's host name."
 msgstr "Reemplazado con el nombre de su equipo."
 
-#. (itstool) path: varlistentry/term
-#: C/index.docbook:861
+#: C/index.docbook:864(varlistentry/term)
 msgid "<literal>%u</literal>"
 msgstr "<literal>%u</literal>"
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:862
+#: C/index.docbook:865(listitem/para)
 msgid "Replaced with your username."
 msgstr "Reemplazado con su nombre de usuario."
 
-#. (itstool) path: varlistentry/term
-#: C/index.docbook:865
+#: C/index.docbook:868(varlistentry/term)
 msgid "<literal>%U</literal>"
 msgstr "<literal>%U</literal>"
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:866
+#: C/index.docbook:869(listitem/para)
 msgid "Replaced with your real name."
 msgstr "Reemplazado con su nombre real."
 
-#. (itstool) path: varlistentry/term
-#: C/index.docbook:869
+#: C/index.docbook:872(varlistentry/term)
 msgid "<literal>%%</literal>"
 msgstr "<literal>%%</literal>"
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:870
+#: C/index.docbook:873(listitem/para)
 msgid "Replaced with a literal percent sign."
 msgstr "Reemplazado con un símbolo literal de porcentaje."
 
-#. (itstool) path: sect3/para
-#: C/index.docbook:848
+#: C/index.docbook:851(sect3/para)
+#| msgid ""
+#| "The <guilabel>Publish Playlist</guilabel> plugin can be configured. Click "
+#| "on the <guibutton>Configure</guibutton> button when enabling the plugin, "
+#| "and the configuration dialog will be displayed. Here, you can change the "
+#| "name which will appear for your playlist share. The following strings "
+#| "will be replaced when playlists are published: <placeholder-1/>"
 msgid ""
 "The <guilabel>Publish Playlist</guilabel> plugin can be configured. Click on "
 "the <guibutton>Configure</guibutton> button when enabling the plugin, and "
@@ -1971,8 +1976,7 @@ msgstr ""
 "siguientes cadenas se pueden reemplazar al publicar listas de reproducción: "
 "<_:variablelist-1/>"
 
-#. (itstool) path: sect3/para
-#: C/index.docbook:874
+#: C/index.docbook:877(sect3/para)
 msgid ""
 "You can also select the <guilabel>Use encrypted transport protocol</"
 "guilabel> checkbox if you wish to encrypt the shared playlists when they're "
@@ -1982,19 +1986,16 @@ msgstr ""
 "protocolo de transporte cifrado (HTTPS)</guilabel> si quiere cifrar las "
 "listas de reproducción compartidas al transmitirlas sobre la red."
 
-#. (itstool) path: sect3/para
-#: C/index.docbook:876
+#: C/index.docbook:879(sect3/para)
 msgid "Once you're done, click <guibutton>Close</guibutton>."
 msgstr ""
 "Una vez que haya terminado pulse el botón <guibutton>Aceptar</guibutton>."
 
-#. (itstool) path: sect3/title
-#: C/index.docbook:879
+#: C/index.docbook:882(sect3/title)
 msgid "To Publish Playlists"
 msgstr "Publicar listas de reproducción"
 
-#. (itstool) path: sect3/para
-#: C/index.docbook:880
+#: C/index.docbook:883(sect3/para)
 msgid ""
 "With the plugin enabled, you do not need to explicitly publish playlists; "
 "they are automatically made available on the network as a Zeroconf website."
@@ -2003,13 +2004,11 @@ msgstr ""
 "explícitamente; están disponibles en la red automáticamente como un sitio "
 "web sin configuración."
 
-#. (itstool) path: sect3/title
-#: C/index.docbook:884
+#: C/index.docbook:887(sect3/title)
 msgid "To Browse your Neighborhood"
 msgstr "Buscar en su vecindario"
 
-#. (itstool) path: sect3/para
-#: C/index.docbook:885
+#: C/index.docbook:888(sect3/para)
 msgid ""
 "To view the shared playlists of others on your network, select "
 "<guilabel>Neighborhood</guilabel> from the drop-down list at the top of the "
@@ -2022,13 +2021,11 @@ msgstr ""
 "publicado en la red, se listará aquí. Pulse dos veces sobre una lista de "
 "reproducción para cargarla y reproducirla en su equipo."
 
-#. (itstool) path: sect2/title
-#: C/index.docbook:891
+#: C/index.docbook:894(sect2/title)
 msgid "Subtitle Downloader"
 msgstr "Descargador de subtítulos"
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:892
+#: C/index.docbook:895(sect2/para)
 msgid ""
 "The <guilabel>Subtitle Downloader</guilabel> plugin allows you to find and "
 "download subtitle files from the <ulink type=\"http\" url=\"http://www."
@@ -2038,26 +2035,23 @@ msgstr ""
 "buscar y descargar subtítulos del servicio <ulink type=\"http\" url=\"http://"
 "www.opensubtitles.org/es\">OpenSubtitles</ulink>."
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:894
+#: C/index.docbook:897(sect2/para)
 msgid ""
 "Subtitles can only be downloaded for local movies; not audio files, DVDs, "
 "DVB streams, VCDs or HTTP streams. To search for subtitles for the currently "
-"playing movie, choose <menuchoice> <shortcut><keycombo><keycap>Ctrl</"
-"keycap><keycap>Shift</keycap><keycap>s</keycap></keycombo></shortcut> "
-"<guimenu>View</guimenu><guimenuitem>Download Movie Subtitles</guimenuitem></"
-"menuchoice>, which will display the <application>Download Movie Subtitles</"
-"application> dialog."
+"playing movie, choose <menuchoice><guimenu>View</"
+"guimenu><guimenuitem>Download Movie Subtitles</guimenuitem></menuchoice>, "
+"which will display the <application>Download Movie Subtitles</application> "
+"dialog."
 msgstr ""
-"Los subtítulos sólo se pueden descargar para películas locales; no para "
-"archivos <menuchoice> <shortcut><keycombo><keycap>Ctrl</"
-"keycap><keycap>Mayús</keycap><keycap>s</keycap></keycombo></shortcut> "
-"<guimenu>Ver</guimenu><guimenuitem>Descargar subtítulos para la película</"
-"guimenuitem></menuchoice>, que mostrará el diálogo <application>Descargar "
-"subtítulos para la película</application>."
+" Los subtítulos sólo se pueden descargar para películas locales; no para "
+"archivos de sonido, DVD, flujos DVB, VCD o flujos HTTP. Para buscar "
+"subtítulos para la película actualmente en reproducción, elija "
+"<menuchoice><guimenu>Ver</guimenu><guimenuitem>Descargar subtítulos para la "
+"película</guimenuitem></menuchoice>, que mostrará el diálogo "
+"<application>Descargar subtítulos para la película</application>."
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:900
+#: C/index.docbook:900(sect2/para)
 msgid ""
 "Select the language in which you wish to have your subtitles from the drop-"
 "down list at the top of the dialog, then click on the <guibutton>Find</"
@@ -2071,8 +2065,7 @@ msgstr ""
 "actual. Los subtítulos se buscan en función del contenido de la película, en "
 "lugar del nombre de archivo o de etiquetas."
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:903
+#: C/index.docbook:903(sect2/para)
 msgid ""
 "Search results are listed in the tree view in the middle of the dialog. "
 "Currently, subtitles can only be used with a movie by <emphasis>reloading</"
@@ -2087,8 +2080,7 @@ msgstr ""
 "pulse el botón <guibutton>Reproducir con subtítulos</guibutton> para "
 "descargar los subtítulos y recargar la película."
 
-#. (itstool) path: note/para
-#: C/index.docbook:906
+#: C/index.docbook:906(note/para)
 msgid ""
 "Downloaded subtitle files are cached (in <filename>~/.cache/totem/subtitles</"
 "filename>, by default) so that they do not need to be downloaded again when "
@@ -2101,13 +2093,11 @@ msgstr ""
 "subtítulos para una película, se borrará cualquier otro subtítulo descargado "
 "para esa película."
 
-#. (itstool) path: sect2/title
-#: C/index.docbook:910
+#: C/index.docbook:910(sect2/title)
 msgid "Thumbnail"
 msgstr "Miniatura"
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:911
+#: C/index.docbook:911(sect2/para)
 msgid ""
 "The <guilabel>Thumbnail</guilabel> plugin sets <application>Totem Movie "
 "Player</application>'s main window icon to a thumbnail of the current movie, "
@@ -2118,8 +2108,7 @@ msgstr ""
 "application> a una miniatura de la película actual, y actualiza el icono "
 "cuando se cargan películas nuevas."
 
-#. (itstool) path: note/para
-#: C/index.docbook:913
+#: C/index.docbook:913(note/para)
 msgid ""
 "If a thumbnail doesn't exist for the current movie (or if you're playing an "
 "audio file), the main window icon will be reset to the <application>Totem "
@@ -2129,13 +2118,11 @@ msgstr ""
 "un archivo de sonido, se restablecerá el icono de la ventana principal al "
 "logotipo del <application>Reproductor de películas Totem</application>."
 
-#. (itstool) path: sect2/title
-#: C/index.docbook:917
+#: C/index.docbook:917(sect2/title)
 msgid "Video Disc Recorder"
 msgstr "Grabador de discos de vídeo"
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:918
+#: C/index.docbook:918(sect2/para)
 msgid ""
 "The <guilabel>Video Disc Recorder</guilabel> plugin allows you to burn the "
 "current playlist to a DVD or VCD using <application>Brasero</application>."
@@ -2144,8 +2131,14 @@ msgstr ""
 "grabar la lista de reproducción actual a un DVD o VCD usando "
 "<application>Brasero</application>."
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:919
+#: C/index.docbook:919(sect2/para)
+#| msgid ""
+#| "To burn the current playlist, choose <menuchoice><guimenu>Movie</"
+#| "guimenu><guimenuitem>Create Video Disc</guimenuitem></menuchoice>. A "
+#| "<application>Brasero</application> dialog will be displayed, giving "
+#| "options for converting the movies to the appropriate format and burning "
+#| "them to disc. For more information, see the <ulink type=\"help\" url="
+#| "\"ghelp:brasero?brasero-new-project-video\">Brasero documentation</ulink>."
 msgid ""
 "To burn the current playlist, choose <menuchoice><guimenu>Movie</"
 "guimenu><guimenuitem>Create Video Disc</guimenuitem></menuchoice>. A "
@@ -2162,13 +2155,11 @@ msgstr ""
 "<ulink type=\"help\" url=\"help:brasero/brasero-new-project-video"
 "\">Documentación de Brasero</ulink>."
 
-#. (itstool) path: sect2/title
-#: C/index.docbook:924
+#: C/index.docbook:924(sect2/title)
 msgid "YouTube Browser"
 msgstr "Examinador de YouTube"
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:925
+#: C/index.docbook:925(sect2/para)
 msgid ""
 "The <guilabel>YouTube Browser</guilabel> plugin allows you to search and "
 "browse <ulink type=\"http\" url=\"http://www.youtube.com/\">YouTube</ulink>, "
@@ -2191,8 +2182,7 @@ msgstr ""
 "guilabel> de la lista desplegable en la parte superior de la barra lateral "
 "para mostrar la barra lateral <guilabel>YouTube</guilabel>."
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:931
+#: C/index.docbook:931(sect2/para)
 msgid ""
 "To search for a YouTube video, enter your search terms in the entry at the "
 "top of the sidebar, then click <guibutton>Find</guibutton>. The search "
@@ -2205,8 +2195,7 @@ msgstr ""
 "la vista de árbol inferior. Automáticamente se cargarán más resultados según "
 "descienda sobre la lista."
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:933
+#: C/index.docbook:933(sect2/para)
 msgid ""
 "To play a video, double-click it in the results list, or choose "
 "<menuchoice><guimenuitem>Add to Playlist</guimenuitem></menuchoice> from its "
@@ -2221,8 +2210,7 @@ msgstr ""
 "página <guilabel>Vídeos relacionados</guilabel> de la barra lateral de "
 "<guilabel>YouTube</guilabel>."
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:936
+#: C/index.docbook:936(sect2/para)
 msgid ""
 "YouTube videos can be opened in a web browser by choosing "
 "<menuchoice><guimenuitem>Open in Web Browser</guimenuitem></menuchoice> from "
@@ -2234,13 +2222,11 @@ msgstr ""
 "menuchoice> del menú contextual. Esto abrirá el vídeo en su ubicación "
 "original en el sitio web de YouTube."
 
-#. (itstool) path: sect2/title
-#: C/index.docbook:940
+#: C/index.docbook:940(sect2/title)
 msgid "D-Bus Service"
 msgstr "Servicio D-Bus"
 
-#. (itstool) path: sect2/para
-#: C/index.docbook:941
+#: C/index.docbook:941(sect2/para)
 msgid ""
 "The <guilabel>D-Bus Service</guilabel> plugin broadcasts notifications of "
 "which track is playing in <application>Totem Movie Player</application> on "
@@ -2258,13 +2244,15 @@ msgstr ""
 "vídeo que se está reproduciendo actualmente en el <application>Reproductor "
 "de películas Totem</application>."
 
-#. (itstool) path: sect1/title
-#: C/index.docbook:952
+#: C/index.docbook:952(sect1/title)
 msgid "Preferences"
 msgstr "Preferencias"
 
-#. (itstool) path: sect1/para
-#: C/index.docbook:953
+#: C/index.docbook:953(sect1/para)
+#| msgid ""
+#| "To modify the preferences of <application>Totem Movie Player</"
+#| "application>, choose <menuchoice><guimenu>Edit</"
+#| "guimenu><guimenuitem>Preferences</guimenuitem></menuchoice>."
 msgid ""
 "To modify the preferences of <application>Totem Movie Player</application>, "
 "choose <menuchoice> <guimenu>Edit</guimenu> <guimenuitem>Preferences</"
@@ -2274,18 +2262,15 @@ msgstr ""
 "Totem</application>, elija <menuchoice><guimenu>Editar</"
 "guimenu><guimenuitem>Preferencias</guimenuitem></menuchoice>."
 
-#. (itstool) path: sect2/title
-#: C/index.docbook:960
+#: C/index.docbook:960(sect2/title)
 msgid "General"
 msgstr "General"
 
-#. (itstool) path: varlistentry/term
-#: C/index.docbook:963
+#: C/index.docbook:963(varlistentry/term)
 msgid "Networking"
 msgstr "Red"
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:965
+#: C/index.docbook:965(listitem/para)
 msgid ""
 "Select network connection speed from the <guilabel>Connection speed</"
 "guilabel> drop-down list."
@@ -2293,13 +2278,11 @@ msgstr ""
 "Seleccione la velocidad de la conexión de red de la lista desplegable "
 "<guilabel>Velocidad de conexión</guilabel>."
 
-#. (itstool) path: varlistentry/term
-#: C/index.docbook:971
+#: C/index.docbook:971(varlistentry/term)
 msgid "Text Subtitles"
 msgstr "Subtítulos"
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:975
+#: C/index.docbook:975(listitem/para)
 msgid ""
 "<guilabel>Automatically load subtitle files</guilabel>: select this option "
 "to automatically load any subtitle files with the same filename as a movie "
@@ -2310,8 +2293,7 @@ msgstr ""
 "cualquier archivo de subtítulos con el mismo nombre que la película al "
 "cargar la película."
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:979
+#: C/index.docbook:979(listitem/para)
 msgid ""
 "<guilabel>Font</guilabel>: select this option to change the font used to "
 "display subtitles."
@@ -2319,8 +2301,7 @@ msgstr ""
 "<guilabel>Tipografía</guilabel>: seleccione esta opción para cambiar la "
 "tipografía que se usa para mostrar los subtítulos."
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:983
+#: C/index.docbook:983(listitem/para)
 msgid ""
 "<guilabel>Encoding</guilabel>: select this option to change the encoding "
 "used to display subtitles."
@@ -2328,14 +2309,11 @@ msgstr ""
 "<guilabel>Codificación</guilabel>: seleccione esta opción para cambiar la "
 "codificación que se usa para mostrar los subtítulos."
 
-#. (itstool) path: sect2/title
-#. (itstool) path: varlistentry/term
-#: C/index.docbook:992 C/index.docbook:995
+#: C/index.docbook:992(sect2/title) C/index.docbook:995(varlistentry/term)
 msgid "Display"
 msgstr "Área de visualización"
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:999
+#: C/index.docbook:999(listitem/para)
 msgid ""
 "Select the resize option if you want <application>Totem Movie Player</"
 "application> to automatically resize the window to the size of the video "
@@ -2345,8 +2323,7 @@ msgstr ""
 "<application>Reproductor de películas Totem</application> redimensione "
 "automáticamente la ventana cuando se cargue un vídeo nuevo."
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:1004
+#: C/index.docbook:1004(listitem/para)
 msgid ""
 "Select the screensaver option if you want to allow the screensaver to "
 "activate when playing audio files. Some monitors with integrated speakers "
@@ -2357,13 +2334,11 @@ msgstr ""
 "altavoces integrados pueden dejar de reproducir música si se activa el "
 "salvapantallas."
 
-#. (itstool) path: varlistentry/term
-#: C/index.docbook:1011
+#: C/index.docbook:1011(varlistentry/term)
 msgid "Visual Effects"
 msgstr "Efectos visuales"
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:1015
+#: C/index.docbook:1015(listitem/para)
 msgid ""
 "<guilabel>Visual</guilabel>: select this option to show visual effects while "
 "an audio file is playing."
@@ -2371,8 +2346,7 @@ msgstr ""
 "<guilabel>visual</guilabel>: seleccione esta opción para mostrar efectos "
 "visuales mientras se está reproduciendo un archivo de sonido."
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:1020
+#: C/index.docbook:1020(listitem/para)
 msgid ""
 "<guilabel>Type of visualization</guilabel>: select type of visualization "
 "from the drop-down list."
@@ -2380,8 +2354,7 @@ msgstr ""
 "<guilabel>Tipo de visualización</guilabel>: seleccione el tipo de "
 "visualización de la lista desplegable."
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:1025
+#: C/index.docbook:1025(listitem/para)
 msgid ""
 "<guilabel>Visualization size</guilabel>: select visualization size from the "
 "drop-down list."
@@ -2389,13 +2362,11 @@ msgstr ""
 "<guilabel>Tamaño de visualización</guilabel>: seleccione el tamaño de "
 "visualización de la lista desplegable."
 
-#. (itstool) path: varlistentry/term
-#: C/index.docbook:1033
+#: C/index.docbook:1033(varlistentry/term)
 msgid "Color balance"
 msgstr "Balance de color"
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:1037
+#: C/index.docbook:1037(listitem/para)
 msgid ""
 "<guilabel>Brightness</guilabel>: use the slider to specify the level of "
 "brightness."
@@ -2403,8 +2374,7 @@ msgstr ""
 "<guilabel>Brillo</guilabel>: use el selector para especificar el nivel de "
 "brillo."
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:1040
+#: C/index.docbook:1040(listitem/para)
 msgid ""
 "<guilabel>Contrast</guilabel>: use the slider to specify the level of "
 "contrast."
@@ -2412,8 +2382,7 @@ msgstr ""
 "<guilabel>Contraste</guilabel>: use el selector para especificar el nivel de "
 "contraste."
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:1043
+#: C/index.docbook:1043(listitem/para)
 msgid ""
 "<guilabel>Saturation</guilabel>: use the slider to specify the level of "
 "saturation."
@@ -2421,14 +2390,12 @@ msgstr ""
 "<guilabel>Saturación</guilabel>: use el deslizador para especificar el nivel "
 "de saturación."
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:1047
+#: C/index.docbook:1047(listitem/para)
 msgid "<guilabel>Hue</guilabel>: use the slider to specify the level of hue."
 msgstr ""
 "<guilabel>Tono</guilabel>: use el selector para especificar el nivel de tono."
 
-#. (itstool) path: tip/para
-#: C/index.docbook:1051
+#: C/index.docbook:1051(tip/para)
 msgid ""
 "You may use the <guilabel>Reset to Defaults</guilabel> button to reset the "
 "color balance controls to their default positions."
@@ -2437,18 +2404,15 @@ msgstr ""
 "restablecer los controles de balance de color a sus posiciones "
 "predeterminadas."
 
-#. (itstool) path: sect2/title
-#: C/index.docbook:1058
+#: C/index.docbook:1058(sect2/title)
 msgid "Audio"
 msgstr "Sonido"
 
-#. (itstool) path: varlistentry/term
-#: C/index.docbook:1061
+#: C/index.docbook:1061(varlistentry/term)
 msgid "Audio Output"
 msgstr "Salida de sonido"
 
-#. (itstool) path: listitem/para
-#: C/index.docbook:1063
+#: C/index.docbook:1063(listitem/para)
 msgid ""
 "Select audio output type from the <guilabel>Audio output type</guilabel> "
 "drop-down list."
@@ -2456,20 +2420,18 @@ msgstr ""
 "Seleccione el tipo de salida de sonido desde la lista desplegable "
 "<guilabel>Tipo de salida de sonido</guilabel>."
 
-#. (itstool) path: sect1/title
-#: C/index.docbook:1091
+#: C/index.docbook:1091(sect1/title)
 msgid "About <application>Totem Movie Player</application>"
 msgstr "Acerca del <application>Reproductor de películas Totem</application>"
 
-#. (itstool) path: sect1/para
-#: C/index.docbook:1092
+#: C/index.docbook:1092(sect1/para)
 msgid ""
 "<application>Totem Movie Player</application> is written by Bastien Nocera "
 "(<email>hadess@hadess.net</email>), Julien Moutte (<email>julien@moutte.net</"
 "email>) for the GStreamer backend, and Guenter Bartsch (<email>guenter@users."
 "sourceforge.net</email>). To find more information about <application>Totem "
-"Movie Player</application>, please visit the <ulink url=\"https://wiki.gnome."
-"org/Apps/Videos\" type=\"http\"><application>Totem Movie Player</"
+"Movie Player</application>, please visit the <ulink url=\"http://projects."
+"gnome.org/totem/\" type=\"http\"><application>Totem Movie Player</"
 "application> website</ulink>."
 msgstr ""
 "Bastien Nocera (<email>hadess@hadess.net</email>), Julien Moutte "
@@ -2477,25 +2439,18 @@ msgstr ""
 "Bartsch (<email>guenter@users.sourceforge.net</email>) escribieron el "
 "<application>Reproductor de películas Totem</application>. Para obtener más "
 "información acerca del <application>Reproductor de películas Totem</"
-"application>, visite la <ulink url=\"https://wiki.gnome.org/Apps/Videos\" "
-"type=\"http\">Página web del <application>Reproductor de películas Totem</"
+"application>, visite la <ulink url=\"http://projects.gnome.org/totem/\" type="
+"\"http\">Página web del <application>Reproductor de películas Totem</"
 "application></ulink>."
 
-#. (itstool) path: sect1/para
-#: C/index.docbook:1100
-msgid ""
-"To report a bug or make a suggestion regarding the <application>Totem Movie "
-"Player</application> application or this manual, follow the directions in "
-"the <ulink url=\"help:user-guide#feedback\" type=\"help\">GNOME Feedback "
-"Page</ulink>."
-msgstr ""
-"Para informar de un error o hacer alguna sugerencia concerniente a la "
-"aplicación <application>Reproductor de películas Totem</application> o este "
-"manual, siga las directrices en <ulink url=\"help:user-guide#feedback\" type="
-"\"help\">la página de comentarios de GNOME</ulink>."
-
-#. (itstool) path: sect1/para
-#: C/index.docbook:1105
+#: C/index.docbook:1105(sect1/para)
+#| msgid ""
+#| "This program is distributed under the terms of the GNU General Public "
+#| "license as published by the Free Software Foundation; either version 2 of "
+#| "the License, or (at your option) any later version. A copy of this "
+#| "license can be found at this <ulink url=\"ghelp:gpl\" type=\"help\">link</"
+#| "ulink>, or in the file COPYING included with the source code of this "
+#| "program."
 msgid ""
 "This program is distributed under the terms of the GNU General Public "
 "license as published by the Free Software Foundation; either version 2 of "
@@ -2510,13 +2465,18 @@ msgstr ""
 "\"help\">enlace</ulink>, o en el archivo COPYING incluido con el código "
 "fuente de este programa."
 
-#. (itstool) path: para/ulink
-#: C/legal.xml:9
+#: C/legal.xml:9(para/ulink)
 msgid "link"
 msgstr "enlace"
 
-#. (itstool) path: legalnotice/para
-#: C/legal.xml:2
+#: C/legal.xml:2(legalnotice/para)
+#| msgid ""
+#| "Permission is granted to copy, distribute and/or modify this document "
+#| "under the terms of the GNU Free Documentation License (GFDL), Version 1.1 "
+#| "or any later version published by the Free Software Foundation with no "
+#| "Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts. You "
+#| "can find a copy of the GFDL at this <ulink type=\"help\" url=\"ghelp:fdl"
+#| "\">link</ulink> or in the file COPYING-DOCS distributed with this manual."
 msgid ""
 "Permission is granted to copy, distribute and/or modify this document under "
 "the terms of the GNU Free Documentation License (GFDL), Version 1.1 or any "
@@ -2531,9 +2491,6 @@ msgstr ""
 "Secciones invariantes, Textos de portada y Textos de contraportada. "
 "Encontrará una copia de la GFDL en este <_:ulink-1/> o en el archivo COPYING-"
 "DOCS distribuido con este manual."
-
-#~ msgid "Audio preview application for GNOME."
-#~ msgstr "Aplicación de previsualización de sonido para GNOME."
 
 #~ msgid "2003"
 #~ msgstr "2003"

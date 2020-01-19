@@ -30,15 +30,23 @@
 #include <unistd.h>
 #include <gio/gio.h>
 
-#define WANT_MIME_TYPES 1
-#define WANT_AUDIO_MIME_TYPES 1
-#define WANT_VIDEO_MIME_TYPES 1
 #include "totem-mime-types.h"
 #include "totem-uri.h"
 #include "totem-private.h"
 
+/* 5 minute threshold. We don't want to save the position within a 3
+ * minute song for example. */
+#define SAVE_POSITION_THRESHOLD 5 * 60 * 1000
+/* Don't save the position of a stream if we're within 5% of the beginning or end so that,
+ * for example, we don't save if the user exits when they reach the credits of a film */
+#define SAVE_POSITION_END_THRESHOLD 0.05
+/* The GIO file attribute used to store the position in a stream */
+#define SAVE_POSITION_FILE_ATTRIBUTE "metadata::totem::position"
+
 static GtkFileFilter *filter_all = NULL;
 static GtkFileFilter *filter_subs = NULL;
+static GtkFileFilter *filter_supported = NULL;
+static GtkFileFilter *filter_audio = NULL;
 static GtkFileFilter *filter_video = NULL;
 
 gboolean
@@ -100,7 +108,12 @@ totem_data_dot_dir (void)
 char *
 totem_pictures_dir (void)
 {
-	return g_strdup (g_get_user_special_dir (G_USER_DIRECTORY_PICTURES));
+	const char *dir;
+
+	dir = g_get_user_special_dir (G_USER_DIRECTORY_PICTURES);
+	if (dir == NULL)
+		return NULL;
+	return g_strdup (dir);
 }
 
 static GMount *
@@ -155,7 +168,8 @@ totem_get_mount_for_dvd (const char *uri)
 			}
 			g_free (id);
 		}
-		g_list_free_full (volumes, (GDestroyNotify) g_object_unref);
+		g_list_foreach (volumes, (GFunc) g_object_unref, NULL);
+		g_list_free (volumes);
 	} else {
 		mount = totem_get_mount_for_uri (path);
 		g_free (path);
@@ -258,7 +272,7 @@ totem_create_full_path (const char *path)
 }
 
 static void
-totem_object_on_unmount (GVolumeMonitor *volume_monitor,
+totem_action_on_unmount (GVolumeMonitor *volume_monitor,
 			 GMount *mount,
 			 Totem *totem)
 {
@@ -272,11 +286,11 @@ totem_setup_file_monitoring (Totem *totem)
 
 	g_signal_connect (G_OBJECT (totem->monitor),
 			  "mount-pre-unmount",
-			  G_CALLBACK (totem_object_on_unmount),
+			  G_CALLBACK (totem_action_on_unmount),
 			  totem);
 	g_signal_connect (G_OBJECT (totem->monitor),
 			  "mount-removed",
-			  G_CALLBACK (totem_object_on_unmount),
+			  G_CALLBACK (totem_action_on_unmount),
 			  totem);
 }
 
@@ -330,13 +344,31 @@ totem_setup_file_filters (void)
 	gtk_file_filter_add_pattern (filter_all, "*");
 	g_object_ref_sink (filter_all);
 
+	filter_supported = gtk_file_filter_new ();
+	gtk_file_filter_set_name (filter_supported, _("Supported files"));
+	for (i = 0; mime_types[i] != NULL; i++) {
+		gtk_file_filter_add_mime_type (filter_supported, mime_types[i]);
+	}
+
+	/* Add the special Disc-as-files formats */
+	gtk_file_filter_add_mime_type (filter_supported, "application/x-cd-image");
+	gtk_file_filter_add_mime_type (filter_supported, "application/x-cue");
+	g_object_ref_sink (filter_supported);
+
+	/* Audio files */
+	filter_audio = gtk_file_filter_new ();
+	gtk_file_filter_set_name (filter_audio, _("Audio files"));
+	for (i = 0; audio_mime_types[i] != NULL; i++) {
+		gtk_file_filter_add_mime_type (filter_audio, audio_mime_types[i]);
+	}
+	g_object_ref_sink (filter_audio);
+
 	/* Video files */
 	filter_video = gtk_file_filter_new ();
 	gtk_file_filter_set_name (filter_video, _("Video files"));
 	for (i = 0; video_mime_types[i] != NULL; i++) {
 		gtk_file_filter_add_mime_type (filter_video, video_mime_types[i]);
 	}
-	/* Add the special Disc-as-files formats */
 	gtk_file_filter_add_mime_type (filter_video, "application/x-cd-image");
 	gtk_file_filter_add_mime_type (filter_video, "application/x-cue");
 	g_object_ref_sink (filter_video);
@@ -360,6 +392,8 @@ totem_destroy_file_filters (void)
 	if (filter_all != NULL) {
 		g_object_unref (filter_all);
 		filter_all = NULL;
+		g_object_unref (filter_supported);
+		g_object_unref (filter_audio);
 		g_object_unref (filter_video);
 		g_object_unref (filter_subs);
 	}
@@ -396,11 +430,13 @@ totem_add_subtitle (GtkWindow *parent, const char *uri)
 	fs = gtk_file_chooser_dialog_new (_("Select Text Subtitles"), 
 					  parent,
 					  GTK_FILE_CHOOSER_ACTION_OPEN,
-					  _("_Cancel"), GTK_RESPONSE_CANCEL,
-					  _("_Open"), GTK_RESPONSE_ACCEPT,
+					  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+					  GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
 					  NULL);
 	gtk_dialog_set_default_response (GTK_DIALOG (fs), GTK_RESPONSE_ACCEPT);
 	gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (fs), FALSE);
+	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (fs), filter_all);
+	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (fs), filter_subs);
 	gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (fs), filter_subs);
 
 	settings = g_settings_new (TOTEM_GSETTINGS_SCHEMA);
@@ -444,6 +480,8 @@ totem_add_subtitle (GtkWindow *parent, const char *uri)
 	return subtitle;
 }
 
+#define OPEN_DIRECTORY_RESPONSE 1
+
 GSList *
 totem_add_files (GtkWindow *parent, const char *path)
 {
@@ -454,13 +492,18 @@ totem_add_files (GtkWindow *parent, const char *path)
 	GSettings *settings;
 	gboolean set_folder;
 
-	fs = gtk_file_chooser_dialog_new (_("Add Videos"),
+	fs = gtk_file_chooser_dialog_new (_("Select Movies or Playlists"),
 					  parent,
 					  GTK_FILE_CHOOSER_ACTION_OPEN,
-					  _("_Cancel"), GTK_RESPONSE_CANCEL,
-					  _("_Add"), GTK_RESPONSE_ACCEPT,
+					  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+					  _("Add Directory"), OPEN_DIRECTORY_RESPONSE,
+					  GTK_STOCK_ADD, GTK_RESPONSE_ACCEPT,
 					  NULL);
-	gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (fs), filter_video);
+	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (fs), filter_all);
+	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (fs), filter_supported);
+	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (fs), filter_audio);
+	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (fs), filter_video);
+	gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (fs), filter_supported);
 	gtk_dialog_set_default_response (GTK_DIALOG (fs), GTK_RESPONSE_ACCEPT);
 	gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER (fs), TRUE);
 	gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (fs), FALSE);
@@ -489,8 +532,10 @@ totem_add_files (GtkWindow *parent, const char *path)
 	response = gtk_dialog_run (GTK_DIALOG (fs));
 
 	filenames = NULL;
-	if (response == GTK_RESPONSE_ACCEPT)
+	if (response == OPEN_DIRECTORY_RESPONSE ||
+	    response == GTK_RESPONSE_ACCEPT) {
 		filenames = gtk_file_chooser_get_uris (GTK_FILE_CHOOSER (fs));
+	}
 
 	if (filenames == NULL) {
 		gtk_widget_destroy (fs);
@@ -509,4 +554,93 @@ totem_add_files (GtkWindow *parent, const char *path)
 	g_object_unref (settings);
 
 	return filenames;
+}
+
+void
+totem_save_position (Totem *totem)
+{
+	gint64 stream_length, position;
+	char *pos_str;
+	GFile *file;
+	GError *error = NULL;
+
+	if (totem->remember_position == FALSE)
+		return;
+	if (totem->mrl == NULL)
+		return;
+
+	stream_length = bacon_video_widget_get_stream_length (totem->bvw);
+	position = bacon_video_widget_get_current_time (totem->bvw);
+
+	file = g_file_new_for_uri (totem->mrl);
+
+	/* Don't save if it's:
+	 *  - a live stream
+	 *  - too short to make saving useful
+	 *  - too close to the beginning or end to make saving useful
+	 */
+	if (stream_length < SAVE_POSITION_THRESHOLD ||
+	    (stream_length - position) < stream_length * SAVE_POSITION_END_THRESHOLD ||
+	    position < stream_length * SAVE_POSITION_END_THRESHOLD) {
+		g_debug ("not saving position because the video/track is too short");
+
+		/* Remove the attribute if it is currently set on the file; this ensures that if we start watching a stream and save the position
+		 * half-way through, then later continue watching it to the end, the mid-way saved position will be removed when we finish the
+		 * stream. Only do this for non-live streams. */
+		if (stream_length > 0) {
+			g_file_set_attribute_string (file, SAVE_POSITION_FILE_ATTRIBUTE, "", G_FILE_QUERY_INFO_NONE, NULL, &error);
+			if (error != NULL) {
+				g_warning ("g_file_set_attribute_string failed: %s", error->message);
+				g_error_free (error);
+			}
+		}
+
+		g_object_unref (file);
+		return;
+	}
+
+	g_debug ("saving position: %"G_GINT64_FORMAT, position);
+
+	/* Save the position in the stream as a file attribute */
+	pos_str = g_strdup_printf ("%"G_GINT64_FORMAT, position);
+	g_file_set_attribute_string (file, SAVE_POSITION_FILE_ATTRIBUTE, pos_str, G_FILE_QUERY_INFO_NONE, NULL, &error);
+	g_free (pos_str);
+
+	if (error != NULL) {
+		g_warning ("g_file_set_attribute_string failed: %s", error->message);
+		g_error_free (error);
+	}
+	g_object_unref (file);
+}
+
+void
+totem_try_restore_position (Totem *totem, const char *mrl)
+{
+	GFile *file;
+	GFileInfo *file_info;
+	const char *seek_str;
+
+	if (totem->remember_position == FALSE)
+		return;
+
+	if (mrl == NULL)
+		return;
+
+	file = g_file_new_for_uri (mrl);
+	g_debug ("trying to restore position of: %s", mrl);
+
+	/* Get the file attribute containing the position */
+	file_info = g_file_query_info (file, SAVE_POSITION_FILE_ATTRIBUTE, G_FILE_QUERY_INFO_NONE, NULL, NULL);
+	g_object_unref (file);
+
+	if (file_info == NULL)
+		return;
+
+	seek_str = g_file_info_get_attribute_string (file_info, SAVE_POSITION_FILE_ATTRIBUTE);
+	g_debug ("seek time: %s", seek_str);
+
+	if (seek_str != NULL)
+		totem->seek_to = g_ascii_strtoull (seek_str, NULL, 0);
+
+	g_object_unref (file_info);
 }
