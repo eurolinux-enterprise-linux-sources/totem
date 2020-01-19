@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Totem Reference Manual: TotemObject</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<title>TotemObject: Totem Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets Vsnapshot">
 <link rel="home" href="index.html" title="Totem Reference Manual">
 <link rel="up" href="core-api.html" title="Core API">
 <link rel="prev" href="core-api.html" title="Core API">
 <link rel="next" href="totem-Interface.html" title="Interface">
-<meta name="generator" content="GTK-Doc V1.21 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.25.1 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -54,7 +54,7 @@ mentioned in the release notes for the affected release.
 </div>
 <div class="refsect1">
 <a name="TotemObject.functions"></a><h2>Functions</h2>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="functions_return">
 <col class="functions_name">
@@ -190,7 +190,7 @@ mentioned in the release notes for the affected release.
 </tr>
 <tr>
 <td class="function_type">
-<a href="http://developer.gnome.org/gtk2/GtkWindow.html"><span class="returnvalue">GtkWindow</span></a> *
+<span class="returnvalue">GtkWindow</span> *
 </td>
 <td class="function_name">
 <a class="link" href="TotemObject.html#totem-object-get-main-window" title="totem_object_get_main_window ()">totem_object_get_main_window</a> <span class="c_punctuation">()</span>
@@ -206,7 +206,7 @@ mentioned in the release notes for the affected release.
 </tr>
 <tr>
 <td class="function_type">
-<a href="http://developer.gnome.org/gtk2/GtkWidget.html"><span class="returnvalue">GtkWidget</span></a> *
+<span class="returnvalue">GtkWidget</span> *
 </td>
 <td class="function_name">
 <a class="link" href="TotemObject.html#totem-object-get-video-widget" title="totem_object_get_video_widget ()">totem_object_get_video_widget</a> <span class="c_punctuation">()</span>
@@ -253,22 +253,6 @@ mentioned in the release notes for the affected release.
 </td>
 </tr>
 <tr>
-<td class="function_type">
-<span class="returnvalue">void</span>
-</td>
-<td class="function_name">
-<a class="link" href="TotemObject.html#totem-object-add-sidebar-page" title="totem_object_add_sidebar_page ()">totem_object_add_sidebar_page</a> <span class="c_punctuation">()</span>
-</td>
-</tr>
-<tr>
-<td class="function_type">
-<span class="returnvalue">void</span>
-</td>
-<td class="function_name">
-<a class="link" href="TotemObject.html#totem-object-remove-sidebar-page" title="totem_object_remove_sidebar_page ()">totem_object_remove_sidebar_page</a> <span class="c_punctuation">()</span>
-</td>
-</tr>
-<tr>
 <td class="function_type">const <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> * const *
 </td>
 <td class="function_name">
@@ -282,12 +266,28 @@ mentioned in the release notes for the affected release.
 <a class="link" href="TotemObject.html#totem-object-get-supported-uri-schemes" title="totem_object_get_supported_uri_schemes ()">totem_object_get_supported_uri_schemes</a> <span class="c_punctuation">()</span>
 </td>
 </tr>
+<tr>
+<td class="function_type">
+<span class="returnvalue">float</span>
+</td>
+<td class="function_name">
+<a class="link" href="TotemObject.html#totem-object-get-rate" title="totem_object_get_rate ()">totem_object_get_rate</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
+<tr>
+<td class="function_type">
+<a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+</td>
+<td class="function_name">
+<a class="link" href="TotemObject.html#totem-object-set-rate" title="totem_object_set_rate ()">totem_object_set_rate</a> <span class="c_punctuation">()</span>
+</td>
+</tr>
 </tbody>
 </table></div>
 </div>
 <div class="refsect1">
 <a name="TotemObject.properties"></a><h2>Properties</h2>
-<div class="informaltable"><table border="0">
+<div class="informaltable"><table class="informaltable" border="0">
 <colgroup>
 <col width="150px" class="properties_type">
 <col width="300px" class="properties_name">
@@ -342,7 +342,7 @@ mentioned in the release notes for the affected release.
 </div>
 <div class="refsect1">
 <a name="TotemObject.signals"></a><h2>Signals</h2>
-<div class="informaltable"><table border="0">
+<div class="informaltable"><table class="informaltable" border="0">
 <colgroup>
 <col width="150px" class="signals_return">
 <col width="300px" class="signals_name">
@@ -352,41 +352,41 @@ mentioned in the release notes for the affected release.
 <tr>
 <td class="signal_type"><span class="returnvalue">void</span></td>
 <td class="signal_name"><a class="link" href="TotemObject.html#TotemObject-file-closed" title="The “file-closed” signal">file-closed</a></td>
-<td class="signal_flags">Run Last</td>
+<td class="signal_flags"><a href="https://developer.gnome.org/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></td>
 </tr>
 <tr>
 <td class="signal_type"><span class="returnvalue">void</span></td>
 <td class="signal_name"><a class="link" href="TotemObject.html#TotemObject-file-has-played" title="The “file-has-played” signal">file-has-played</a></td>
-<td class="signal_flags">Run Last</td>
+<td class="signal_flags"><a href="https://developer.gnome.org/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></td>
 </tr>
 <tr>
 <td class="signal_type"><span class="returnvalue">void</span></td>
 <td class="signal_name"><a class="link" href="TotemObject.html#TotemObject-file-opened" title="The “file-opened” signal">file-opened</a></td>
-<td class="signal_flags">Run Last</td>
+<td class="signal_flags"><a href="https://developer.gnome.org/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></td>
 </tr>
 <tr>
 <td class="signal_type">
 <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a>*</td>
 <td class="signal_name"><a class="link" href="TotemObject.html#TotemObject-get-text-subtitle" title="The “get-text-subtitle” signal">get-text-subtitle</a></td>
-<td class="signal_flags">Run Last</td>
+<td class="signal_flags"><a href="https://developer.gnome.org/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></td>
 </tr>
 <tr>
 <td class="signal_type">
 <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a>*</td>
 <td class="signal_name"><a class="link" href="TotemObject.html#TotemObject-get-user-agent" title="The “get-user-agent” signal">get-user-agent</a></td>
-<td class="signal_flags">Run Last</td>
+<td class="signal_flags"><a href="https://developer.gnome.org/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></td>
 </tr>
 <tr>
 <td class="signal_type"><span class="returnvalue">void</span></td>
 <td class="signal_name"><a class="link" href="TotemObject.html#TotemObject-metadata-updated" title="The “metadata-updated” signal">metadata-updated</a></td>
-<td class="signal_flags">Run Last</td>
+<td class="signal_flags"><a href="https://developer.gnome.org/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <div class="refsect1">
 <a name="TotemObject.other"></a><h2>Types and Values</h2>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="name">
 <col class="description">
@@ -417,9 +417,9 @@ mentioned in the release notes for the affected release.
 </div>
 <div class="refsect1">
 <a name="TotemObject.object-hierarchy"></a><h2>Object Hierarchy</h2>
-<pre class="screen">    <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
-    <span class="lineart">╰──</span> <a href="https://developer.gnome.org/gio/unstable/GApplication.html">GApplication</a>
-        <span class="lineart">╰──</span> <a href="http://developer.gnome.org/gtk2/GtkApplication.html">GtkApplication</a>
+<pre class="screen">    <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObject-struct">GObject</a>
+    <span class="lineart">╰──</span> <a href="https://developer.gnome.org/gio/unstable/GApplication.html#GApplication-struct">GApplication</a>
+        <span class="lineart">╰──</span> GtkApplication
             <span class="lineart">╰──</span> TotemObject
 </pre>
 </div>
@@ -427,7 +427,7 @@ mentioned in the release notes for the affected release.
 <a name="TotemObject.implemented-interfaces"></a><h2>Implemented Interfaces</h2>
 <p>
 TotemObject implements
- <a href="https://developer.gnome.org/gio/unstable/GActionGroup.html">GActionGroup</a> and  <a href="https://developer.gnome.org/gio/unstable/GActionMap.html">GActionMap</a>.</p>
+ <a href="https://developer.gnome.org/gio/unstable/GActionGroup.html#GActionGroup-struct">GActionGroup</a> and  <a href="https://developer.gnome.org/gio/unstable/GActionMap.html#GActionMap-struct">GActionMap</a>.</p>
 </div>
 <div class="refsect1">
 <a name="TotemObject.includes"></a><h2>Includes</h2>
@@ -451,8 +451,8 @@ given <em class="parameter"><code>title</code></em>
  and <em class="parameter"><code>reason</code></em>
 .</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.2.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-object-show-error.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -485,8 +485,8 @@ given <em class="parameter"><code>title</code></em>
 totem_object_exit (<em class="parameter"><code><a class="link" href="TotemObject.html" title="TotemObject"><span class="type">TotemObject</span></a> *totem</code></em>);</pre>
 <p>Closes Totem.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.3.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-object-exit.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -508,8 +508,8 @@ totem_object_play (<em class="parameter"><code><a class="link" href="TotemObject
 <p>Plays the current stream. If Totem is already playing, it continues
 to play. If the stream cannot be played, and error dialog is displayed.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.4.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-object-play.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -531,8 +531,8 @@ totem_object_play_pause (<em class="parameter"><code><a class="link" href="Totem
 <p>Gets the current MRL from the playlist and attempts to play it.
 If the stream is already playing, playback is paused.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.5.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-object-play-pause.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -553,8 +553,8 @@ If the stream is already playing, playback is paused.</p>
 totem_object_stop (<em class="parameter"><code><a class="link" href="TotemObject.html" title="TotemObject"><span class="type">TotemObject</span></a> *totem</code></em>);</pre>
 <p>Stops the current stream.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.6.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-object-stop.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -576,8 +576,8 @@ totem_object_seek_next (<em class="parameter"><code><a class="link" href="TotemO
 <p>If a DVD is being played, goes to the next chapter. If a normal stream
 is being played, plays the next entry in the playlist.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.7.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-object-seek-next.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -600,8 +600,8 @@ totem_object_seek_previous (<em class="parameter"><code><a class="link" href="To
 is being played, goes to the start of the stream if possible. If seeking is
 not possible, plays the previous entry in the playlist.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.8.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-object-seek-previous.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -624,8 +624,8 @@ totem_object_remote_get_setting (<em class="parameter"><code><a class="link" hre
 <p>Returns the value of <em class="parameter"><code>setting</code></em>
  for this instance of Totem.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.9.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-object-remote-get-setting.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -646,9 +646,8 @@ totem_object_remote_get_setting (<em class="parameter"><code><a class="link" hre
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.12.9.6"></a><h4>Returns</h4>
+<a name="totem-object-remote-get-setting.returns"></a><h4>Returns</h4>
 <p> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the setting is enabled, <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -662,8 +661,8 @@ totem_object_remote_set_setting (<em class="parameter"><code><a class="link" hre
  to <em class="parameter"><code>value</code></em>
  on this instance of Totem.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.10.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-object-remote-set-setting.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -699,8 +698,8 @@ totem_object_seek_time (<em class="parameter"><code><a class="link" href="TotemO
 <p>Seeks to an absolute time in the stream, or displays an
 error dialog if that's not possible.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.11.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-object-seek-time.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -737,8 +736,8 @@ totem_object_seek_relative (<em class="parameter"><code><a class="link" href="To
  from the current position in the stream,
 or displays an error dialog if that's not possible.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.12.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-object-seek-relative.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -772,8 +771,8 @@ totem_object_set_volume (<em class="parameter"><code><a class="link" href="Totem
                          <em class="parameter"><code><span class="type">double</span> volume</code></em>);</pre>
 <p>Sets the volume, with <code class="code">1.0</code> being the maximum, and <code class="code">0.0</code> being the minimum level.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.13.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-object-set-volume.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -810,8 +809,8 @@ otherwise.</p>
 <p>If Totem's fullscreened and the operation is executed correctly,
 the controls will appear as if the user had moved the mouse.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.14.6"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-object-remote-command.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -844,8 +843,8 @@ the controls will appear as if the user had moved the mouse.</p>
 totem_object_is_playing (<em class="parameter"><code><a class="link" href="TotemObject.html" title="TotemObject"><span class="type">TotemObject</span></a> *totem</code></em>);</pre>
 <p>Returns <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if Totem is playing a stream.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.15.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-object-is-playing.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -859,9 +858,8 @@ totem_object_is_playing (<em class="parameter"><code><a class="link" href="Totem
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.12.15.6"></a><h4>Returns</h4>
+<a name="totem-object-is-playing.returns"></a><h4>Returns</h4>
 <p> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if Totem is playing a stream</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -871,8 +869,8 @@ totem_object_is_playing (<em class="parameter"><code><a class="link" href="Totem
 totem_object_is_paused (<em class="parameter"><code><a class="link" href="TotemObject.html" title="TotemObject"><span class="type">TotemObject</span></a> *totem</code></em>);</pre>
 <p>Returns <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if playback is paused.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.16.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-object-is-paused.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -886,9 +884,8 @@ totem_object_is_paused (<em class="parameter"><code><a class="link" href="TotemO
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.12.16.6"></a><h4>Returns</h4>
+<a name="totem-object-is-paused.returns"></a><h4>Returns</h4>
 <p> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if playback is paused, <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -898,8 +895,8 @@ totem_object_is_paused (<em class="parameter"><code><a class="link" href="TotemO
 totem_object_is_seekable (<em class="parameter"><code><a class="link" href="TotemObject.html" title="TotemObject"><span class="type">TotemObject</span></a> *totem</code></em>);</pre>
 <p>Returns <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the current stream is seekable.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.17.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-object-is-seekable.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -913,20 +910,19 @@ totem_object_is_seekable (<em class="parameter"><code><a class="link" href="Tote
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.12.17.6"></a><h4>Returns</h4>
+<a name="totem-object-is-seekable.returns"></a><h4>Returns</h4>
 <p> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the current stream is seekable</p>
-<p></p>
 </div>
 </div>
 <hr>
 <div class="refsect2">
 <a name="totem-object-get-main-window"></a><h3>totem_object_get_main_window ()</h3>
-<pre class="programlisting"><a href="http://developer.gnome.org/gtk2/GtkWindow.html"><span class="returnvalue">GtkWindow</span></a> *
+<pre class="programlisting"><span class="returnvalue">GtkWindow</span> *
 totem_object_get_main_window (<em class="parameter"><code><a class="link" href="TotemObject.html" title="TotemObject"><span class="type">TotemObject</span></a> *totem</code></em>);</pre>
 <p>Gets Totem's main window and increments its reference count.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.18.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-object-get-main-window.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -940,7 +936,7 @@ totem_object_get_main_window (<em class="parameter"><code><a class="link" href="
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.12.18.6"></a><h4>Returns</h4>
+<a name="totem-object-get-main-window.returns"></a><h4>Returns</h4>
 <p> Totem's main window. </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
@@ -953,8 +949,8 @@ totem_object_get_current_mrl (<em class="parameter"><code><a class="link" href="
 <p>Get the MRL of the current stream, or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if nothing's playing.
 Free with <a href="https://developer.gnome.org/glib/unstable/glib-Memory-Allocation.html#g-free"><code class="function">g_free()</code></a>.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.19.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-object-get-current-mrl.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -968,20 +964,19 @@ Free with <a href="https://developer.gnome.org/glib/unstable/glib-Memory-Allocat
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.12.19.6"></a><h4>Returns</h4>
+<a name="totem-object-get-current-mrl.returns"></a><h4>Returns</h4>
 <p> a newly-allocated string containing the MRL of the current stream</p>
-<p></p>
 </div>
 </div>
 <hr>
 <div class="refsect2">
 <a name="totem-object-get-video-widget"></a><h3>totem_object_get_video_widget ()</h3>
-<pre class="programlisting"><a href="http://developer.gnome.org/gtk2/GtkWidget.html"><span class="returnvalue">GtkWidget</span></a> *
+<pre class="programlisting"><span class="returnvalue">GtkWidget</span> *
 totem_object_get_video_widget (<em class="parameter"><code><a class="link" href="TotemObject.html" title="TotemObject"><span class="type">TotemObject</span></a> *totem</code></em>);</pre>
 <p>Gets Totem's video widget and increments its reference count.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.20.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-object-get-video-widget.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -995,7 +990,7 @@ totem_object_get_video_widget (<em class="parameter"><code><a class="link" href=
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.12.20.6"></a><h4>Returns</h4>
+<a name="totem-object-get-video-widget.returns"></a><h4>Returns</h4>
 <p> Totem's video widget. </p>
 <p><span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span></p>
 </div>
@@ -1010,8 +1005,8 @@ totem_object_set_current_subtitle (<em class="parameter"><code><a class="link" h
  subtitle file to the playlist, setting it as the subtitle for the current
 playlist entry.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.21.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-object-set-current-subtitle.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1039,8 +1034,8 @@ playlist entry.</p>
 totem_object_get_playlist_length (<em class="parameter"><code><a class="link" href="TotemObject.html" title="TotemObject"><span class="type">TotemObject</span></a> *totem</code></em>);</pre>
 <p>Returns the length of the current playlist.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.22.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-object-get-playlist-length.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1054,9 +1049,8 @@ totem_object_get_playlist_length (<em class="parameter"><code><a class="link" hr
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.12.22.6"></a><h4>Returns</h4>
+<a name="totem-object-get-playlist-length.returns"></a><h4>Returns</h4>
 <p> the playlist length</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -1067,8 +1061,8 @@ totem_object_get_playlist_pos (<em class="parameter"><code><a class="link" href=
 <p>Returns the <code class="code">0</code>-based index of the current entry in the playlist. If
 there is no current entry in the playlist, <code class="code">-1</code> is returned.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.23.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-object-get-playlist-pos.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1082,9 +1076,8 @@ there is no current entry in the playlist, <code class="code">-1</code> is retur
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.12.23.6"></a><h4>Returns</h4>
+<a name="totem-object-get-playlist-pos.returns"></a><h4>Returns</h4>
 <p> the index of the current playlist entry, or <code class="code">-1</code></p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -1097,8 +1090,8 @@ totem_object_get_title_at_playlist_pos
 <p>Gets the title of the playlist entry at <em class="parameter"><code>index</code></em>
 .</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.24.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-object-get-title-at-playlist-pos.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1119,10 +1112,9 @@ totem_object_get_title_at_playlist_pos
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.12.24.6"></a><h4>Returns</h4>
+<a name="totem-object-get-title-at-playlist-pos.returns"></a><h4>Returns</h4>
 <p> the entry title at <em class="parameter"><code>index</code></em>
 , or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>; free with <a href="https://developer.gnome.org/glib/unstable/glib-Memory-Allocation.html#g-free"><code class="function">g_free()</code></a></p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -1132,8 +1124,8 @@ totem_object_get_title_at_playlist_pos
 totem_object_get_volume (<em class="parameter"><code><a class="link" href="TotemObject.html" title="TotemObject"><span class="type">TotemObject</span></a> *totem</code></em>);</pre>
 <p>Gets the current volume level, as a value between <code class="code">0.0</code> and <code class="code">1.0</code>.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.25.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-object-get-volume.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1147,90 +1139,8 @@ totem_object_get_volume (<em class="parameter"><code><a class="link" href="Totem
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.12.25.6"></a><h4>Returns</h4>
+<a name="totem-object-get-volume.returns"></a><h4>Returns</h4>
 <p> the volume level</p>
-<p></p>
-</div>
-</div>
-<hr>
-<div class="refsect2">
-<a name="totem-object-add-sidebar-page"></a><h3>totem_object_add_sidebar_page ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>
-totem_object_add_sidebar_page (<em class="parameter"><code><a class="link" href="TotemObject.html" title="TotemObject"><span class="type">TotemObject</span></a> *totem</code></em>,
-                               <em class="parameter"><code>const <span class="type">char</span> *page_id</code></em>,
-                               <em class="parameter"><code>const <span class="type">char</span> *title</code></em>,
-                               <em class="parameter"><code><a href="http://developer.gnome.org/gtk2/GtkWidget.html"><span class="type">GtkWidget</span></a> *main_widget</code></em>);</pre>
-<p>Adds a sidebar page to Totem's sidebar with the given <em class="parameter"><code>page_id</code></em>
-.
-<em class="parameter"><code>main_widget</code></em>
- is added into the page and shown automatically, while
-<em class="parameter"><code>title</code></em>
- is displayed as the page's title in the tab bar.</p>
-<div class="refsect3">
-<a name="id-1.3.2.12.26.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
-<colgroup>
-<col width="150px" class="parameters_name">
-<col class="parameters_description">
-<col width="200px" class="parameters_annotations">
-</colgroup>
-<tbody>
-<tr>
-<td class="parameter_name"><p>totem</p></td>
-<td class="parameter_description"><p>a <a class="link" href="TotemObject.html" title="TotemObject"><span class="type">TotemObject</span></a></p></td>
-<td class="parameter_annotations"> </td>
-</tr>
-<tr>
-<td class="parameter_name"><p>page_id</p></td>
-<td class="parameter_description"><p>a string used to identify the page</p></td>
-<td class="parameter_annotations"> </td>
-</tr>
-<tr>
-<td class="parameter_name"><p>title</p></td>
-<td class="parameter_description"><p>the page's title</p></td>
-<td class="parameter_annotations"> </td>
-</tr>
-<tr>
-<td class="parameter_name"><p>main_widget</p></td>
-<td class="parameter_description"><p>the main widget for the page</p></td>
-<td class="parameter_annotations"> </td>
-</tr>
-</tbody>
-</table></div>
-</div>
-</div>
-<hr>
-<div class="refsect2">
-<a name="totem-object-remove-sidebar-page"></a><h3>totem_object_remove_sidebar_page ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>
-totem_object_remove_sidebar_page (<em class="parameter"><code><a class="link" href="TotemObject.html" title="TotemObject"><span class="type">TotemObject</span></a> *totem</code></em>,
-                                  <em class="parameter"><code>const <span class="type">char</span> *page_id</code></em>);</pre>
-<p>Removes the page identified by <em class="parameter"><code>page_id</code></em>
- from Totem's sidebar.
-If <em class="parameter"><code>page_id</code></em>
- doesn't exist in the sidebar, this function does
-nothing.</p>
-<div class="refsect3">
-<a name="id-1.3.2.12.27.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
-<colgroup>
-<col width="150px" class="parameters_name">
-<col class="parameters_description">
-<col width="200px" class="parameters_annotations">
-</colgroup>
-<tbody>
-<tr>
-<td class="parameter_name"><p>totem</p></td>
-<td class="parameter_description"><p>a <a class="link" href="TotemObject.html" title="TotemObject"><span class="type">TotemObject</span></a></p></td>
-<td class="parameter_annotations"> </td>
-</tr>
-<tr>
-<td class="parameter_name"><p>page_id</p></td>
-<td class="parameter_description"><p>a string used to identify the page</p></td>
-<td class="parameter_annotations"> </td>
-</tr>
-</tbody>
-</table></div>
 </div>
 </div>
 <hr>
@@ -1241,11 +1151,11 @@ totem_object_get_supported_content_types
                                (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
 <p>Get the full list of file content types which Totem supports playing.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.28.5"></a><h4>Returns</h4>
+<a name="totem-object-get-supported-content-types.returns"></a><h4>Returns</h4>
 <p> a <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>-terminated array of the content types Totem supports. </p>
 <p><span class="annotation">[<acronym title="Parameter points to an array of items."><span class="acronym">array</span></acronym> zero-terminated=1][<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
 </div>
-<p class="since">Since 3.1.5</p>
+<p class="since">Since: <a class="link" href="ix05.html#api-index-3.1.5">3.1.5</a></p>
 </div>
 <hr>
 <div class="refsect2">
@@ -1255,11 +1165,71 @@ totem_object_get_supported_uri_schemes
                                (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
 <p>Get the full list of URI schemes which Totem supports accessing.</p>
 <div class="refsect3">
-<a name="id-1.3.2.12.29.5"></a><h4>Returns</h4>
+<a name="totem-object-get-supported-uri-schemes.returns"></a><h4>Returns</h4>
 <p> a <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>-terminated array of the URI schemes Totem supports. </p>
 <p><span class="annotation">[<acronym title="Parameter points to an array of items."><span class="acronym">array</span></acronym> zero-terminated=1][<acronym title="Don't free data after the code is done."><span class="acronym">transfer none</span></acronym>]</span></p>
 </div>
-<p class="since">Since 3.1.5</p>
+<p class="since">Since: <a class="link" href="ix05.html#api-index-3.1.5">3.1.5</a></p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="totem-object-get-rate"></a><h3>totem_object_get_rate ()</h3>
+<pre class="programlisting"><span class="returnvalue">float</span>
+totem_object_get_rate (<em class="parameter"><code><a class="link" href="TotemObject.html" title="TotemObject"><span class="type">TotemObject</span></a> *totem</code></em>);</pre>
+<p>Gets the current playback rate, with <code class="literal">1.0</code> being the normal playback rate.</p>
+<div class="refsect3">
+<a name="totem-object-get-rate.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody><tr>
+<td class="parameter_name"><p>totem</p></td>
+<td class="parameter_description"><p>a <a class="link" href="TotemObject.html" title="TotemObject"><span class="type">TotemObject</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="totem-object-get-rate.returns"></a><h4>Returns</h4>
+<p> the volume level</p>
+</div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="totem-object-set-rate"></a><h3>totem_object_set_rate ()</h3>
+<pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
+totem_object_set_rate (<em class="parameter"><code><a class="link" href="TotemObject.html" title="TotemObject"><span class="type">TotemObject</span></a> *totem</code></em>,
+                       <em class="parameter"><code><span class="type">float</span> rate</code></em>);</pre>
+<p>Sets the playback rate, with <code class="literal">1.0</code> being the normal playback rate.</p>
+<div class="refsect3">
+<a name="totem-object-set-rate.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
+<colgroup>
+<col width="150px" class="parameters_name">
+<col class="parameters_description">
+<col width="200px" class="parameters_annotations">
+</colgroup>
+<tbody>
+<tr>
+<td class="parameter_name"><p>totem</p></td>
+<td class="parameter_description"><p>a <a class="link" href="TotemObject.html" title="TotemObject"><span class="type">TotemObject</span></a></p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+<tr>
+<td class="parameter_name"><p>rate</p></td>
+<td class="parameter_description"><p>the new absolute playback rate</p></td>
+<td class="parameter_annotations"> </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="refsect3">
+<a name="totem-object-set-rate.returns"></a><h4>Returns</h4>
+<p> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> on success, <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> on failure.</p>
+</div>
 </div>
 </div>
 <div class="refsect1">
@@ -1281,8 +1251,8 @@ totem_object_get_supported_uri_schemes
 <a name="TotemRemoteCommand"></a><h3>enum TotemRemoteCommand</h3>
 <p>Represents a command which can be sent to a running Totem instance remotely.</p>
 <div class="refsect3">
-<a name="id-1.3.2.13.4.4"></a><h4>Members</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="TotemRemoteCommand.members"></a><h4>Members</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="300px" class="enum_members_name">
 <col class="enum_members_description">
@@ -1494,8 +1464,8 @@ totem_object_get_supported_uri_schemes
 <a name="TotemRemoteSetting"></a><h3>enum TotemRemoteSetting</h3>
 <p>Represents a boolean setting or preference on a remote Totem instance.</p>
 <div class="refsect3">
-<a name="id-1.3.2.13.5.4"></a><h4>Members</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="TotemRemoteSetting.members"></a><h4>Members</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="300px" class="enum_members_name">
 <col class="enum_members_description">
@@ -1594,8 +1564,8 @@ user_function (<a class="link" href="TotemObject.html" title="TotemObject"><span
                <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>     user_data)</pre>
 <p>The <a class="link" href="TotemObject.html#TotemObject-file-closed" title="The “file-closed” signal"><span class="type">“file-closed”</span></a> signal is emitted when Totem closes a stream.</p>
 <div class="refsect3">
-<a name="id-1.3.2.15.2.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="TotemObject-file-closed.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1615,7 +1585,7 @@ user_function (<a class="link" href="TotemObject.html" title="TotemObject"><span
 </tbody>
 </table></div>
 </div>
-<p>Flags: Run Last</p>
+<p>Flags: <a href="https://developer.gnome.org/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></p>
 </div>
 <hr>
 <div class="refsect2">
@@ -1626,8 +1596,8 @@ user_function (<a class="link" href="TotemObject.html" title="TotemObject"><span
                <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>     user_data)</pre>
 <p>The <a class="link" href="TotemObject.html#TotemObject-file-has-played" title="The “file-has-played” signal"><span class="type">“file-has-played”</span></a> signal is emitted when a new stream has started playing in Totem.</p>
 <div class="refsect3">
-<a name="id-1.3.2.15.3.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="TotemObject-file-has-played.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1652,7 +1622,7 @@ user_function (<a class="link" href="TotemObject.html" title="TotemObject"><span
 </tbody>
 </table></div>
 </div>
-<p>Flags: Run Last</p>
+<p>Flags: <a href="https://developer.gnome.org/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></p>
 </div>
 <hr>
 <div class="refsect2">
@@ -1663,8 +1633,8 @@ user_function (<a class="link" href="TotemObject.html" title="TotemObject"><span
                <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>     user_data)</pre>
 <p>The <a class="link" href="TotemObject.html#TotemObject-file-opened" title="The “file-opened” signal"><span class="type">“file-opened”</span></a> signal is emitted when a new stream is opened by Totem.</p>
 <div class="refsect3">
-<a name="id-1.3.2.15.4.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="TotemObject-file-opened.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1689,7 +1659,7 @@ user_function (<a class="link" href="TotemObject.html" title="TotemObject"><span
 </tbody>
 </table></div>
 </div>
-<p>Flags: Run Last</p>
+<p>Flags: <a href="https://developer.gnome.org/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></p>
 </div>
 <hr>
 <div class="refsect2">
@@ -1701,8 +1671,8 @@ user_function (<a class="link" href="TotemObject.html" title="TotemObject"><span
 <p>The <a class="link" href="TotemObject.html#TotemObject-get-text-subtitle" title="The “get-text-subtitle” signal"><span class="type">“get-text-subtitle”</span></a> signal is emitted before opening a stream, so that plugins
 have the opportunity to detect or download text subtitles for the stream if necessary.</p>
 <div class="refsect3">
-<a name="id-1.3.2.15.5.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="TotemObject-get-text-subtitle.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1728,12 +1698,11 @@ have the opportunity to detect or download text subtitles for the stream if nece
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.15.5.6"></a><h4>Returns</h4>
+<a name="TotemObject-get-text-subtitle.returns"></a><h4>Returns</h4>
 <p> allocated string representing the URI of the subtitle to use for <em class="parameter"><code>mrl</code></em>
 </p>
-<p></p>
 </div>
-<p>Flags: Run Last</p>
+<p>Flags: <a href="https://developer.gnome.org/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></p>
 </div>
 <hr>
 <div class="refsect2">
@@ -1745,8 +1714,8 @@ user_function (<a class="link" href="TotemObject.html" title="TotemObject"><span
 <p>The <a class="link" href="TotemObject.html#TotemObject-get-user-agent" title="The “get-user-agent” signal"><span class="type">“get-user-agent”</span></a> signal is emitted before opening a stream, so that plugins
 have the opportunity to return the user-agent to be set.</p>
 <div class="refsect3">
-<a name="id-1.3.2.15.6.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="TotemObject-get-user-agent.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1772,12 +1741,11 @@ have the opportunity to return the user-agent to be set.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.3.2.15.6.6"></a><h4>Returns</h4>
+<a name="TotemObject-get-user-agent.returns"></a><h4>Returns</h4>
 <p> allocated string representing the user-agent to use for <em class="parameter"><code>mrl</code></em>
 </p>
-<p></p>
 </div>
-<p>Flags: Run Last</p>
+<p>Flags: <a href="https://developer.gnome.org/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></p>
 </div>
 <hr>
 <div class="refsect2">
@@ -1792,8 +1760,8 @@ user_function (<a class="link" href="TotemObject.html" title="TotemObject"><span
 <p>The <a class="link" href="TotemObject.html#TotemObject-metadata-updated" title="The “metadata-updated” signal"><span class="type">“metadata-updated”</span></a> signal is emitted when the metadata of a stream is updated, typically
 when it's being loaded.</p>
 <div class="refsect3">
-<a name="id-1.3.2.15.7.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="TotemObject-metadata-updated.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1833,12 +1801,11 @@ when it's being loaded.</p>
 </tbody>
 </table></div>
 </div>
-<p>Flags: Run Last</p>
+<p>Flags: <a href="https://developer.gnome.org/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></p>
 </div>
 </div>
 </div>
 <div class="footer">
-<hr>
-          Generated by GTK-Doc V1.21</div>
+<hr>Generated by GTK-Doc V1.25.1</div>
 </body>
 </html>

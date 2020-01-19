@@ -205,8 +205,6 @@ BACKEND_TEST_LIBS = @BACKEND_TEST_LIBS@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
-CHAPTERS_CFLAGS = @CHAPTERS_CFLAGS@
-CHAPTERS_LIBS = @CHAPTERS_LIBS@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
 CXX = @CXX@
@@ -293,6 +291,7 @@ LIPO = @LIPO@
 LIRC_LIBS = @LIRC_LIBS@
 LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
+LT_SYS_LIBRARY_PATH = @LT_SYS_LIBRARY_PATH@
 MAINT = @MAINT@
 MAKEINFO = @MAKEINFO@
 MANIFEST_TOOL = @MANIFEST_TOOL@
@@ -431,7 +430,7 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-SUBDIRS = 16x16 22x22 24x24 32x32 48x48 256x256 scalable
+SUBDIRS = 16x16 22x22 24x24 32x32 48x48 256x256 symbolic
 EXTRA_DIST = totem.svg
 all: all-recursive
 

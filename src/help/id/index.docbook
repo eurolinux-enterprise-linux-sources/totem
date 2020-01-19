@@ -116,7 +116,9 @@
       
         <year>2013</year>
       
-        <year>2014.</year>
+        <year>2014</year>
+      
+        <year>2016.</year>
       
       <holder>Andika Triwidada</holder>
     </copyright>
@@ -333,10 +335,7 @@
 	  <term>Untuk melompat ke suatu waktu</term>
 	  <listitem>
 	    <para>Untuk melompat ke waktu putar tertentu dalam film atau lagu, pilih <menuchoice> <shortcut><keycombo><keycap>Ctrl</keycap><keycap>K</keycap></keycombo></shortcut> <guimenu>Pergi</guimenu> <guimenuitem>Lompat ke</guimenuitem> </menuchoice>. Dialog <application>Lompat ke</application> ditampilkan. Gunakan kotak spin untuk menyatakan lompatan ke waktu putar (dalam detik), lalu klik <guibutton>OK</guibutton>.</para>
-            <para lang="en">The spin box also allows more natural language to be used. You can enter a time in the
-            formats "hh:mm:ss", "mm:ss" or "ss"; where "hh" is the hour, "mm" is the minute and "ss" is the
-            second to skip to.
-            </para>
+            <para>Kotak gasing juga memungkinkan dipakainya bahasa yang lebih alami. Anda dapat memasukkan waktu dalam format "jj:mm:dd", "mm:dd", atau "dd"; dimana "jj" adalah jam, "mm" adalah menit, dan "dd" adalah detik tempat tujuan melompat.</para>
           </listitem>
         </varlistentry>
 	<varlistentry>
@@ -452,37 +451,20 @@
 	  <note><para>Secara baku, <application>Totem Pemutar Film</application> akan memilih bahasa yang sama untuk subtitel dengan yang biasanya Anda pakai pada komputer Anda.</para></note>
 	  <para><application>Totem Movie Player</application> akan otomatis memuat dan menampilkan subjudul untuk suatu video bila menemukan berkas subjudul yang bernama sama dengan video yang sedang diputar, dengan ekstensi <filename class="extension">asc</filename>, <filename class="extension">txt</filename>, <filename class="extension">sub</filename>, <filename class="extension">srt</filename>, <filename class="extension">smi</filename>, <filename class="extension">ssa</filename>, atau <filename class="extension">ass</filename>.</para>
 	  <para>Bila berkas yang memuat subjudul memiliki nama berbeda dengan video yang sedang diputar, Anda dapat mengklik kanan pada video dalam daftar putar dan memilih <menuchoice><guimenuitem>Pilih Teks Subjudul</guimenuitem></menuchoice> dari menu popup untuk memuat berkas subjudul yang benar. Anda juga mungkin memilih subjudul dengan memilih <menuchoice><guimenu>Tilik</guimenu><guimenuitem>Pilih Teks Subjudul</guimenuitem></menuchoice>.</para>
-	  <para lang="en">Using the <guilabel>Subtitle Downloader</guilabel> plugin, you can also download subtitles from the OpenSubtitles service. See
-	  <xref linkend="totem-plugins-opensubtitles"/> for more information.</para>
+	  <para>Memakai pengaya <guilabel>Pengunduh Subtitel</guilabel>, Anda juga dapat mengunduh subtitel dari layanan OpenSubtitles. Lihat <xref linkend="totem-plugins-opensubtitles"/> untuk informasi lebih lanjut.</para>
 	</sect2>
 
     <sect2 id="totem-usage-take-screenshot">
       <title>Mengambil Cuplikan Layar</title>
-      <para lang="en">To take a screenshot of the movie or visualization that is playing, choose
-        <menuchoice>
-          <guimenu>Edit</guimenu>
-          <guimenuitem>Take Screenshot</guimenuitem>
-        </menuchoice>. The <application>Save Screenshot</application> dialog is displayed. Choose a location and
-	insert the filename as which you want to save the screenshot, then click on the <guibutton>Save</guibutton> button
-	to save the screenshot.
-      </para>
+      <para>Untuk mengambil cuplikan layar dari film atau visualisasi yang sedang diputar, pilih <menuchoice> <guimenu>Edit</guimenu> <guimenuitem>Ambil Cuplikan Layar</guimenuitem> </menuchoice>. Dialog <application>Simpan Cuplikan Layar</application> ditampilkan. Pilih suatu lokasi dan sisipkan nama berkas yang Anda inginkan untuk menyimpan cuplikan layar, lalu klik pada tombol <guibutton>Simpan</guibutton> untuk menyimpan cuplikan layar.</para>
       <tip><para><application>Totem Movie Player</application> akan menampilkan pratinjau dari cuplikan layar yang akan disimpan di sisi kiri dialog <application>Simpan Cuplikan Layar</application>.</para></tip>
     </sect2>
 
     <sect2 id="totem-usage-create-screenshot-gallery">
       <title>Membuat Galeri Cuplikan Layar</title>
-      <para lang="en">To create a gallery of screenshots of the movie or visualization that is playing, choose
-        <menuchoice>
-          <guimenu>Edit</guimenu>
-          <guimenuitem>Create Screenshot Gallery</guimenuitem>
-        </menuchoice>. The <application>Save Gallery</application> dialog is displayed. Choose a location and
-	insert the filename as which you want to save the gallery image, then click on the <guibutton>Save</guibutton> button
-	to save the screenshot.
-      </para>
+      <para>Untuk membuat galeri cuplikan layar dari film atau visualisasi yang diputar, pilih <menuchoice> <guimenu>Sunting</guimenu> <guimenuitem>Nuat Galeri Cuplikan Layar</guimenuitem> </menuchoice>. Dialog <application>Simpan Galeri</application> ditampilkan. Pilih lokasi dan masukkan nama berkas yang Anda inginkan tempat menyimpan citra galeri, lalu klik tombol <guibutton>Simpan</guibutton> untuk menyimpan cuplikan layar.</para>
       <tip><para>Anda boleh menyatakan lebar masing-masing cuplikan layar dalam galeri memakai entri <guilabel>Lebar cuplikan layar</guilabel>. Lebar baku adalah 128 piksel.</para>
-      <para lang="en">You may also specify the number of screenshots to be put in the gallery. By default, this is calculated based on the length of the movie;
-      however, this may be overridden by deselecting the <guilabel>Calculate the number of screenshots</guilabel> checkbox and entering the new
-      number in the <guilabel>Number of screenshots</guilabel> spin box.</para></tip>
+      <para>Anda juga dapat menyatakan banyaknya cuplikan layar yang akan diletakkan dalam galeri. Secara baku, ini dihitung dari panjang film; namun ini bisa ditimpa dengan membuang pilihan kotak contreng <guilabel>Hitung cacah cuplikan layar</guilabel> dan memasukkan angka baru dalam kotak gasing <guilabel>Banyaknya cuplikan layar</guilabel>.</para></tip>
     </sect2>
   </sect1>
 
@@ -492,40 +474,25 @@
     <para><application>Totem Pemutar Film</application> memiliki banyak fitur yang ada dalam bentuk pengaya - potongan perangkat lunak yang hanya dimuat bila diperlukan.</para>
     <sect2 id="totem-plugins-load">
       <title>Memfungsikan Pengaya</title>
-      <para lang="en">To view the list of installed plugins, choose <menuchoice><guimenu>Edit</guimenu><guimenuitem>Plugins</guimenuitem></menuchoice>. The
-        <application>Configure Plugins</application> dialog is displayed. On the left is a list of all the plugins you have installed, while on the right is
-        a description of the currently selected plugin. Plugins which have options which can be changed will have a sensitive <guibutton>Configure</guibutton>
-        button on the right.</para>
+      <para>Untuk melihat daftar pengaya yang terpasang, pilih <menuchoice><guimenu>Sunting</guimenu><guimenuitem>Pengaya</guimenuitem></menuchoice>. Dialog <application>Tata Pengaya</application> ditampilkan. Di kiri adalah dafta dari semua pengaya yang telah Anda pasang, sedangkan di kanan adalah keterangan dari pengaya yang sedang dipilih. Pengaya yang punya opsi yang dapat diubah akan punya tombol <guibutton>Tata</guibutton> yang peka di kanan.</para>
       <para>Untuk memfungsikan suatu pengaya, cukup pilih kotak contreng di sebelah kiri namanya dalam daftar pengaya, dan pengaya akan dimuat seketika. Bila ada sebarang kesalahan saat memuat pengaya, suatu dialog galat juga akan ditampilkan seketika.</para>
       <para>Untuk menonaktifkan lagi suatu pengaya, lepas pilihan pada kotak contreng. Pengaya akan tetap difungsikan atau dinonaktifkan seperti yang ditata walaupun <application>Totem Pemutar Film</application> ditutup.</para>
     </sect2>
     <sect2 id="totem-plugins-always-on-top">
       <title>Selalu di Puncak</title>
-      <para lang="en">When enabled, the <guilabel>Always on Top</guilabel> plugin will force the main <application>Totem Movie Player</application> window to be on top of
-        all other windows while a movie is playing, but not while audio or visualizations are playing. To stop the window being on top, disable
-        the plugin again.</para>
+      <para>Ketika difungsikan, pengaya <guilabel>Selalu Paling Atas</guilabel> akan memaksa jendela <application>Totem Pemutar Film</application> di atas semua jendela lain ketika sebuah film sedang diputar, namun tidak ketika audio atau visualisasi yang diputar. Untuk menghentikan meletakkan jendela paling atas, nonaktifkan pengaya lagi.</para>
     </sect2>
     <sect2 id="totem-plugins-coherence">
       <title>Klien DLNA/UPnP Coherence</title>
       <para>Pengaya <guilabel>Klien DLNA/UPnP Coherence</guilabel> memungkinkan <application>Totem Pemutar Film</application> memainkan isi multimedia dari server media UPnP (seperti misalnya server Coherence) pada jaringan lokal.</para>
-      <para lang="en">With the <guilabel>Coherence DLNA/UPnP Client</guilabel> plugin enabled, choose
-        <menuchoice><shortcut><keycap>F9</keycap></shortcut><guimenu>View</guimenu><guimenuitem>Sidebar</guimenuitem></menuchoice> or click on the
-        <guibutton>Sidebar</guibutton> button to show the sidebar. Select <guilabel>Coherence DLNA/UPnP Client</guilabel> from the drop-down list at the
-        top of the sidebar to display the <guilabel>Coherence DLNA/UPnP Client</guilabel> sidebar.</para>
-      <para lang="en">The tree view in the sidebar will list the available media servers. Clicking on one will expand it to show the types of media it can serve,
-        and clicking on a media folder will expand it to list the media files available. Double-clicking on a media file will add it to
-        <application>Totem Movie Player</application>'s playlist and play it. You may alternatively right-click on a file and choose
-        <menuchoice><guimenuitem>Play</guimenuitem></menuchoice> or <menuchoice><guimenuitem>Enqueue</guimenuitem></menuchoice> to play the file
-        immediately or add it to the playlist, respectively.</para>
+      <para>Dengan pengaya <guilabel>Klien DLNA/UPnP Coherence</guilabel> difungsikan, pilih <menuchoice><shortcut><keycap>F9</keycap></shortcut><guimenu>Tilik</guimenu><guimenuitem>Bilah Sisi</guimenuitem></menuchoice> atau klik pada tombol <guibutton>Bilah Sisi</guibutton> untuk menampilkan bilah sisi. Pilih <guilabel>Klien DLNA/UPnP Coherence</guilabel> dari daftar drop-down di puncak bilah sisi untuk menampilkan bilah sisi <guilabel>Klien DLNA/UPnP Coherence</guilabel>.</para>
+      <para>Tilikan pohon dalam bilah sisi akan menampilkan daftar server media yang tersedia. Mengklik salah satu akan mengembangkannya untuk menampilkan tipe media yang dapat dilayaninya, dan mengklik pada folder media akan mengembangkannya untuk menampilkan daftar berkas media yang tersedia. Klik ganda pada sebuah berkas media akan menambahkannya ke daftar putar <application>Totem Pemutar Film</application> dan memainkannya. Sebagai alternatif Anda dapat mengklik kanan pada suatu berkas dan memilih <menuchoice><guimenuitem>Putar</guimenuitem></menuchoice> atau <menuchoice><guimenuitem>Antrikan</guimenuitem></menuchoice> untuk memutar berkas seketika atau menambahkannya ke daftar putar.</para>
       <para>Bila server media mengijinkannya, memilih <menuchoice><guimenuitem>Hapus</guimenuitem></menuchoice> dari menu konteks suatu berkas memungkinkan Anda menghapus berkas tersebut dari server media.</para>
     </sect2>
     <sect2 id="totem-plugins-gromit">
       <title>Anotasi Gromit</title>
       <para>Pengaya <guilabel>Anotasi Gromit</guilabel> memungkinkan Anda menggambar di atas film yang sedang diputar memakai <ulink type="http" url="http://www.home.unix-ag.org/simon/gromit/"><application>Gromit</application></ulink>. Anda mesti memasang <application>Gromit</application> sebelum Anda dapat memfungsikan pengaya - pelajarilah dokumentasi sistem operasi Anda untuk informasi tentang bagaimana melakukan ini.</para>
-      <para lang="en">With the plugin enabled, press <keycombo><keycap>Ctrl</keycap><keycap>D</keycap></keycombo> to toggle <application>Gromit</application>
-        on or off. When <application>Gromit</application> is enabled, your pointer will change to a crosshair. To draw on the screen, hold down your
-        mouse button and drag your pointer around, before releasing your mouse button. Press <keycombo><keycap>Ctrl</keycap><keycap>D</keycap></keycombo>
-        again to toggle <application>Gromit</application> off.</para>
+      <para>Dengan pengaya difungsikan, tekan <keycombo><keycap>Ctrl</keycap><keycap>D</keycap></keycombo> untuk menjungkitkan <application>Gromit</application> menyala atau mati. Ketika <application>Gromit</application> difungsikan, penunjuk Anda akan berubah menjadi bidik silang. Untuk menggambar di layar, tahan tombol tetikus Anda dan seret penunjuk, sebelum melepas tombol tetikus Anda. Tekan <keycombo><keycap>Ctrl</keycap><keycap>D</keycap></keycombo> lagi untuk mematikan <application>Gromit</application>.</para>
       <para>Untuk membersihkan layar anotasi, tekan <keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>, atau tutup <application>Totem Pemutar Film</application>.</para>
     </sect2>
     <sect2 id="totem-plugins-jamendo">
@@ -533,27 +500,18 @@
       <para>Pengaya <guilabel>Jamendo</guilabel> memungkinkan Anda mendengarkan koleksi musik berlisensi Creative Commons pada layanan <ulink type="http" url="http://www.jamendo.com/en/">Jamendo</ulink>.</para>
       <sect3 id="totem-plugins-jamendo-configuration">
         <title>Menata Pengaya</title>
-        <para lang="en">The <guilabel>Jamendo</guilabel> plugin can be configured. Click on the <guibutton>Configure</guibutton> button when enabling the plugin,
-          and the <application>Jamendo Plugin Configuration</application> dialog will be displayed. Here, you can choose whether to download songs in Ogg or
-          MP3 format (Ogg is preferred due to its open-source nature); and the number of albums to retrieve when doing a search (choose more albums if
-          you have a faster Internet connection).</para>
+        <para>Pengaya <guilabel>Jamendo</guilabel> dapat ditata. Klik tombol <guibutton>Tata</guibutton> ketika memfungsikan pengaya, dan dialog <application>Konfigurasi Pengaya Jamendo</application> akan ditampilkan. Di sini Anda dapat memilih apakah mengunduh lagu dalam format Ogg atau MP3 (Ogg lebih disukai karena sifatnya yang open-source); dan banyaknya album yang diambil ketika melakukan pencarian (pilih lebih banyak album bila Anda punya koneksi Internet yang lebih cepat).</para>
         <para>Setelah Anda selesai, klik <guibutton>OK</guibutton>.</para>
       </sect3>
       <sect3 id="totem-plugins-jamendo-setup">
         <title>Menampilkan Bilah Sisi Jamendo</title>
-        <para lang="en">With the <guilabel>Jamendo</guilabel> plugin enabled, choose
-          <menuchoice><shortcut><keycap>F9</keycap></shortcut><guimenu>View</guimenu><guimenuitem>Sidebar</guimenuitem></menuchoice> or click on the
-          <guibutton>Sidebar</guibutton> button to show the sidebar. Select <guilabel>Jamendo</guilabel> from the drop-down list at the top of the sidebar
-          to display the <guilabel>Jamendo</guilabel> sidebar.</para>
+        <para>Dengan pengaya <guilabel>Jamendo</guilabel> difungsikan, pilih <menuchoice><shortcut><keycap>F9</keycap></shortcut><guimenu>Tilik</guimenu><guimenuitem>Bilah Sisi</guimenuitem></menuchoice> atau klik pada tombol <guibutton>Bilah Sisi</guibutton> untuk menampilkan bilah samping. Pilih <guilabel>Jamendo</guilabel> dari daftar drop-down di puncak bilah samping untuk menampilkan bilah sisi <guilabel>Jamendo</guilabel>.</para>
       </sect3>
       <sect3 id="totem-plugins-jamendo-search">
         <title>Mencari Musik</title>
         <para>Masukkan istilah pencarian dalam entri pencarian di puncak bilah sisi <guilabel>Jamendo</guilabel>. Anda dapat mencari berdasarkan artis atau berdasarkan tag. Klik pada tombol cari untuk memulai pencarian.</para>
         <para>Hasil pencarian akan ditampilkan dalam tilikan pohon dalam halaman <guilabel>Hasil Pencarian</guilabel> bilah sisi, dan dapat diramban memakai tombol panah di dasar bilah sisi. Album-album ditampilkan daftarnya, dan bila Anda mengklik suatu album, treknya akan ditampilkan di bawahnya. Klik lagi untuk menyembunyikan trek album.</para>
-        <para lang="en">With an artist selected, you can click on the <guibutton>Jamendo Album Page</guibutton> button to open that album's page on the
-          Jamendo website. Double-clicking an album, or choosing <menuchoice><guimenuitem>Add to Playlist</guimenuitem></menuchoice> from the album's
-          context menu, will replace your playlist with all the tracks on that album and begin streaming the first track from Jamendo's website.
-          Double-clicking an individual track will replace your playlist with just that track.</para>
+        <para>Ketika suatu artis dipilih, Anda dapat mengklik tombol <guibutton>Halaman Album Jamendo</guibutton> untuk membuka halaman album tersebut pada situs web Jamendo. Klik ganda pada album, atau memilih <menuchoice><guimenuitem>Tambahkan ke Daftar Putar</guimenuitem></menuchoice> dari menu konteks album akan mengganti daftar putar Anda dengan semua trek pada album itu dan mulai streaming trek pertama dari situs web Jamendo. Klik ganda suatu trek akan mengganti daftar putar Anda dengan hanya trek tersebut.</para>
       </sect3>
       <sect3 id="totem-plugins-jamendo-popular">
         <title>Album Populer dan Rilis Terbaru</title>
@@ -564,48 +522,37 @@
     </sect2>
     <sect2 id="totem-plugins-tracker">
       <title>Pencarian Lokal</title>
-      <para lang="en">The <guilabel>Local Search</guilabel> plugin allows you to search for playable movies and audio files on your computer from within
-        <application>Totem Movie Player</application>. With the plugin enabled, choose
-        <menuchoice><shortcut><keycap>F9</keycap></shortcut><guimenu>View</guimenu><guimenuitem>Sidebar</guimenuitem></menuchoice> or click on the
-        <guibutton>Sidebar</guibutton> button to show the sidebar. Select <guilabel>Local Search</guilabel> from the drop-down list at the top of the
-        sidebar to display the <guilabel>Local Search</guilabel> sidebar.</para>
-      <para lang="en">To perform a search, enter your search terms in the search entry at the top of the sidebar and click <guibutton>Find</guibutton>. Your
-        search terms may include wildcards such as <literal>*</literal>, which will match any character. For example, the search
-        <userinput>*.mpg</userinput> will find all movies with the <filename class="extension">.mpg</filename> file extension.</para>
+      <para>Pengaya <guilabel>Pencarian Lokal</guilabel> memungkinkan Anda mencari berkas film dan audio yang dapat dimainkan pada komputer Anda dari dalam <application>Totem Pemutar Film</application>. Dengan pengaya difungsikan, pilih <menuchoice><shortcut><keycap>F9</keycap></shortcut><guimenu>Tilik</guimenu><guimenuitem>Bilah Sisi</guimenuitem></menuchoice> atau klik tombol <guibutton>Bilah Sisi</guibutton> untuk menampilkan bilah samping. Pilih <guilabel>Pencarian Lokal</guilabel> dari daftar drop-down di puncak bilah samping untuk menampilkan bilah sisi <guilabel>Pencarian Lokal</guilabel>.</para>
+      <para>Untuk melakukan pencarian, masukkan kata yang Anda cari pada entri pencarian di puncak bilah sisi dan klik <guibutton>Cari</guibutton>. Istilah cari Anda boleh mengandung wildcard seperti misalnya <literal>*</literal>, yang akan cocok dengan sebarang karakter. Sebagai contoh, mencari <userinput>*.mpg</userinput> akan menemukan semua film dengan ekstensi berkas <filename class="extension">.mpg</filename>.</para>
       <para>Hasil pencarian dapat diramban memakai tombol <guibutton>Mundur</guibutton> dan <guibutton>Maju</guibutton> di dasar bilah sisi, dan Anda bisa melompat ke halaman hasil tertentu dengan memasukkan nomornya dalam kotak spin.</para>
     </sect2>
     <sect2 id="totem-plugins-publish">
       <title>Mempublikasikan Daftar Putar</title>
-      <para lang="en">The <guilabel>Publish Playlist</guilabel> plugin allows you to publish playlists on your local network to allow other computers to access
-        and play them.</para>
+      <para>Pengaya <guilabel>Terbitkan Daftar Putar</guilabel> memungkinkan Anda menerbitkan daftar putar pada jaringan lokal Anda agar komputer lain bisa mengakses dan memainkan mereka.</para>
       <sect3 id="totem-plugins-publish-configuration">
         <title>Menata Pengaya</title>
-        <para lang="en">The <guilabel>Publish Playlist</guilabel> plugin can be configured. Click on the <guibutton>Configure</guibutton> button when enabling the
-          plugin, and the configuration dialog will be displayed. Here, you can change the name which will appear for your playlist share. The following
-          strings will be replaced when playlists are published:
-          <variablelist>
+        <para>Pengaya <guilabel>Terbitkan Daftar Putar</guilabel> dapat ditata. Klik tombol <guibutton>Tata</guibutton> ketika memfungsikan pengaya, dan dialog konfigurasi akan ditampilkan. Di sini Anda dapat mengubah nama yang akan muncul bagi daftar putar Anda yang dibagikan. Kalimat berikut akan digantikan ketika daftar putar dipublikasikan: <variablelist>
 	    <varlistentry>
-	      <term lang="en"><literal>%a</literal></term>
-	      <listitem><para lang="en">Replaced with the program's name: <application>Totem Movie Player</application>.</para></listitem>
+	      <term><literal>%a</literal></term>
+	      <listitem><para>Digantikan dengan nama program: <application>Totem Pemutar Film</application>.</para></listitem>
 	    </varlistentry>
 	    <varlistentry>
-	      <term lang="en"><literal>%h</literal></term>
-	      <listitem><para lang="en">Replaced with your computer's host name.</para></listitem>
+	      <term><literal>%h</literal></term>
+	      <listitem><para>Digantikan dengan nama host komputer Anda.</para></listitem>
 	    </varlistentry>
 	    <varlistentry>
-	      <term lang="en"><literal>%u</literal></term>
-	      <listitem><para lang="en">Replaced with your username.</para></listitem>
+	      <term><literal>%u</literal></term>
+	      <listitem><para>Digantikan dengan nama pengguna Anda.</para></listitem>
 	    </varlistentry>
 	    <varlistentry>
-	      <term lang="en"><literal>%U</literal></term>
-	      <listitem><para lang="en">Replaced with your real name.</para></listitem>
+	      <term><literal>%U</literal></term>
+	      <listitem><para>Digantikan dengan nama Anda sebenarnya.</para></listitem>
 	    </varlistentry>
 	    <varlistentry>
-	      <term lang="en"><literal>%%</literal></term>
-	      <listitem><para lang="en">Replaced with a literal percent sign.</para></listitem>
+	      <term><literal>%%</literal></term>
+	      <listitem><para>Digantikan dengan tanda persen literal.</para></listitem>
 	    </varlistentry>
-	  </variablelist>
-	</para>
+	  </variablelist></para>
 	<para>Anda juga dapat memilih kotak contreng <guilabel>Gunakan protokol transport terenkripsi</guilabel> bila Anda hendak mengenkripsi daftar putar bersama ketika mereka ditransmisikan melalui jaringan.</para>
         <para>Setelah Anda selesai, klik <guibutton>Tutup</guibutton>.</para>
       </sect3>
@@ -620,42 +567,28 @@
     </sect2>
     <sect2 id="totem-plugins-opensubtitles">
       <title>Pengunduh Subjudul</title>
-      <para lang="en">The <guilabel>Subtitle Downloader</guilabel> plugin allows you to find and download subtitle files from the
-        <ulink type="http" url="http://www.opensubtitles.org/en">OpenSubtitles</ulink> service.</para>
-      <para lang="en">Subtitles can only be downloaded for local movies; not audio files, DVDs, DVB streams, VCDs or HTTP streams. To search for subtitles for
-        the currently playing movie, choose
-        <menuchoice>
-          <shortcut><keycombo><keycap>Ctrl</keycap><keycap>Shift</keycap><keycap>s</keycap></keycombo></shortcut>
-          <guimenu>View</guimenu><guimenuitem>Download Movie Subtitles</guimenuitem></menuchoice>,
-        which will display the <application>Download Movie Subtitles</application> dialog.</para>
+      <para>Pengaya <guilabel>Pengunduh Subtitel</guilabel> memungkinkan Anda mencari dan mengunduh berkas subtitel dari layanan <ulink type="http" url="http://www.opensubtitles.org/en">OpenSubtitles</ulink>.</para>
+      <para>Subtitel hanya bisa diunduh bagi film yang berada di mesin lokal; bukan berkas audio, DVD, arus DVB, VCD, atau arus HTTP. Untuk mencari subtitel bagi film yang sedang diputar, pilih <menuchoice> <shortcut><keycombo><keycap>Ctrl</keycap><keycap>Shift</keycap><keycap>s</keycap></keycombo></shortcut> <guimenu>Tilik</guimenu><guimenuitem>Unduh Subtitel Film</guimenuitem></menuchoice>, yang akan menampilkan dialog <application>Unduh Subtitel Film</application>.</para>
       <para>Pilih bahasa subtitel yang Anda kehendaki dari daftar drop down di puncak dialog, lalu klik pada tombol <guibutton>Cari</guibutton> untuk mencari subtitel bagi film saat ini. Subtitel ditemukan berlandaskan pada isi film, bukan dari nama berkasnya atau tagnya.</para>
       <para>Hasil pencarian ditampilkan dalam tilikan pohon di tengah dialog. Saat ini, subtitel hanya dapat dipakai dengan suatu film dengan <emphasis>memuat ulang</emphasis> film dengan subtitel, sehingga setelah memilih berkas subtitel yang hendak Anda unduh, klik pada tombol <guibutton>Putar dengan Subtitel</guibutton> untuk mengunduh subtitel dan memuat ulang film.</para>
         <note><para>Berkas subtitel yang diunduh disinggahkan (dalam <filename>~/.cache/totem/subtitles</filename>, secara baku) sehingga mereka tak perlu diunduh lagi ketika memutar film itu lagi. Ketika mengunduh subtitel baru bagi suatu film, sebarang subtitel yang sebelumnya diunduh untuk film tersebut dihapus.</para></note>
     </sect2>
     <sect2 id="totem-plugins-thumbnail">
       <title>Gambar mini</title>
-      <para lang="en">The <guilabel>Thumbnail</guilabel> plugin sets <application>Totem Movie Player</application>'s main window icon to a thumbnail of the current movie,
-        and updates the icon when new movies are loaded.</para>
+      <para>Pengaya <guilabel>Gambar Mini</guilabel> menata ikon jendela utama <application>Totem Pemutar Film</application> menjadi gambar mini dari film saat ini, dan memutakhirkan ikon ketika film baru dimuat.</para>
       <note><para>Bila suatu gambar mini tak ada untuk film saat ini (atau bila Anda memutar berkas audio), ikon jendela utama akan kembali ke logo <application>Totem Pemutar Film</application>.</para></note>
     </sect2>
     <sect2 id="totem-plugins-brasero">
       <title>Perekam Cakram Video</title>
-      <para lang="en">The <guilabel>Video Disc Recorder</guilabel> plugin allows you to burn the current playlist to a DVD or VCD using <application>Brasero</application>.</para>
+      <para>Pengaya <guilabel>Perekam Cakram Video</guilabel> memungkinkan Anda membakar daftar putar saat ini ke DVD atau VCD memakai <application>Brasero</application>.</para>
       <para>Untuk membakar daftar putar saat ini, pilih <menuchoice><guimenu>Film</guimenu><guimenuitem>Buat Cakram Video</guimenuitem></menuchoice>. Suatu dialog <application>Brasero</application> akan ditampilkan, memberi opsi untuk mengonversi film ke format yang sesuai dan membakar mereka ke cakram. Untuk informasi lebih lanjut, lihat <ulink type="help" url="help:brasero/brasero-new-project-video">dokumentasi Brasero</ulink>.</para>
     </sect2>
     <sect2 id="totem-plugins-youtube">
       <title>Peramban YouTube</title>
-      <para lang="en">The <guilabel>YouTube Browser</guilabel> plugin allows you to search and browse
-        <ulink type="http" url="http://www.youtube.com/">YouTube</ulink>, and play YouTube videos directly in
-        <application>Totem Movie Player</application>. With the plugin enabled, choose
-        <menuchoice><shortcut><keycap>F9</keycap></shortcut><guimenu>View</guimenu><guimenuitem>Sidebar</guimenuitem></menuchoice> or click on the
-        <guibutton>Sidebar</guibutton> button to show the sidebar. Select <guilabel>YouTube</guilabel> from the drop-down list at the top of the
-        sidebar to display the <guilabel>YouTube</guilabel> sidebar.</para>
-      <para lang="en">To search for a YouTube video, enter your search terms in the entry at the top of the sidebar, then click <guibutton>Find</guibutton>.
-        The search results will be listed in the tree view below. More results will be loaded automatically as you scroll down the list.</para>
+      <para>Pengaya <guilabel>Peramban YouTube</guilabel> memungkinkan Anda mencari dan meramban <ulink type="http" url="http://www.youtube.com/">YouTube</ulink>, dan memutar video YouTube secara langsung dalam <application>Totem Pemutar Film</application>. Dengan pengaya difungsikan, pilih choose <menuchoice><shortcut><keycap>F9</keycap></shortcut><guimenu>Tilik</guimenu><guimenuitem>Bilah Sisi</guimenuitem></menuchoice> atau klik tombol <guibutton>Bilah Sisi</guibutton> untuk menampilkan bilah samping. Pilih <guilabel>YouTube</guilabel> dari daftar drop-down di puncak bilah sisi untuk menampilkan bilah sisi <guilabel>YouTube</guilabel>.</para>
+      <para>Untuk mecari video YouTube, masukkan kata yang Anda cari dalam entri di puncak bilah sisi, lalu klik <guibutton>Cari</guibutton>. Hasil pencarian akan ditampilkan dalam tilikan pohon di bawah. Lebih banyak hasil akan dimuat secara otomatis ketika Anda menggulir turun daftar.</para>
       <para>Untuk memutar suatu video, klik ganda itu dalam daftar hasil, atau pilih <menuchoice><guimenuitem>Tambah ke Daftar Putar</guimenuitem></menuchoice> dari menu konteksnya. Ketika sebuah video diputar, suatu daftar dari video yang berhubungan akan dimuat secara otomatis dalam halaman <guilabel>Video Terkait</guilabel> dari bilah sisi <guilabel>YouTube</guilabel>.</para>
-      <para lang="en">YouTube videos can be opened in a web browser by choosing <menuchoice><guimenuitem>Open in Web Browser</guimenuitem></menuchoice> from
-        their context menu. This will open the video in its original location on the YouTube website.</para>
+      <para>Video YouTube dapat dibuka dengan memilih <menuchoice><guimenuitem>Buka dalam Peramban Web</guimenuitem></menuchoice> dari menu konteks mereka. Ini akan membuka video dalam lokasi aslinya pada situs web YouTube.</para>
     </sect2>
     <sect2 id="totem-plugins-dbus-service">
       <title>Layanan D-Bus</title>
@@ -668,11 +601,7 @@
      application. -->
   <sect1 id="totem-prefs">
     <title>Preferensi</title>
-    <para lang="en">To modify the preferences of <application>Totem Movie Player</application>, choose
-      <menuchoice>
-        <guimenu>Edit</guimenu>
-	<guimenuitem>Preferences</guimenuitem>
-      </menuchoice>.</para>
+    <para>Untuk mengubah preferensi dari <application>Totem Pemutar Film</application>, pilih <menuchoice> <guimenu>Sunting</guimenu> <guimenuitem>Preferensi</guimenuitem> </menuchoice>.</para>
 
     <sect2 id="totem-prefs-general">
       <title>Umum</title>

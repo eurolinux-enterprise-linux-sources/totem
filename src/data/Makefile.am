@@ -3,13 +3,8 @@ SUBDIRS = icons appdata
 EXTRA_DIST =
 CLEANFILES =
 
-# Bug reporting information script
-bugreportdir = $(libexecdir)/totem
-bugreport_SCRIPTS = totem-bugreport.py
-EXTRA_DIST += $(bugreport_SCRIPTS)
-
 # Man pages
-man_MANS = totem.1 totem-video-thumbnailer.1
+man_MANS = totem.1 totem-video-thumbnailer.1 totem-audio-preview.1
 totem-video-thumbnailer.1: totem-video-thumbnailer.pod
 	$(AM_V_GEN) pod2man -c "" -s 1 -q none -n totem-video-thumbnailer -r GNOME $< > $@
 EXTRA_DIST += \
@@ -24,7 +19,8 @@ stuff_DATA =				\
 	preferences.ui			\
 	properties.ui			\
 	uri.ui				\
-	controls.ui
+	controls.ui			\
+	shortcuts.ui
 EXTRA_DIST += $(stuff_DATA)
 
 # Icons
@@ -116,9 +112,6 @@ CLEANFILES += \
 gsettings_ENUM_NAMESPACE = org.gnome.totem
 gsettings_ENUM_FILES = $(top_srcdir)/src/*.h $(top_srcdir)/src/backend/*.h
 gsettings_SCHEMAS = org.gnome.totem.gschema.xml
-CLEANFILES += $(gsettings_SCHEMAS)
-
-@INTLTOOL_XML_NOMERGE_RULE@
 @GSETTINGS_RULES@
 
 convertdir = $(datadir)/GConf/gsettings

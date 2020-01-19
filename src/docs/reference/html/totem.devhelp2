@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
-<!DOCTYPE book PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "">
-<book xmlns="http://www.devhelp.net/book" title="Totem Reference Manual" link="index.html" author="" name="totem" version="2" language="c">
+<book xmlns="http://www.devhelp.net/book" title="Totem Reference Manual" link="index.html" author="" name="totem" version="2" language="c" online="http://library.gnome.org/devel/totem/">
   <chapters>
     <sub name="Tutorials" link="tutorials.html">
       <sub name="Writing Totem Plugins" link="totem-plugins.html"/>
@@ -22,9 +21,6 @@
     </sub>
   </chapters>
   <functions>
-    <keyword type="" name="Locations" link="totem-plugins.html#id-1.2.2.3.3"/>
-    <keyword type="" name="The .plugin File" link="totem-plugins.html#id-1.2.2.3.4"/>
-    <keyword type="" name="Writing a Plugin" link="totem-plugins.html#id-1.2.2.3.5"/>
     <keyword type="function" name="totem_object_show_error ()" link="TotemObject.html#totem-object-show-error"/>
     <keyword type="function" name="totem_object_exit ()" link="TotemObject.html#totem-object-exit"/>
     <keyword type="function" name="totem_object_play ()" link="TotemObject.html#totem-object-play"/>
@@ -49,10 +45,10 @@
     <keyword type="function" name="totem_object_get_playlist_pos ()" link="TotemObject.html#totem-object-get-playlist-pos"/>
     <keyword type="function" name="totem_object_get_title_at_playlist_pos ()" link="TotemObject.html#totem-object-get-title-at-playlist-pos"/>
     <keyword type="function" name="totem_object_get_volume ()" link="TotemObject.html#totem-object-get-volume"/>
-    <keyword type="function" name="totem_object_add_sidebar_page ()" link="TotemObject.html#totem-object-add-sidebar-page"/>
-    <keyword type="function" name="totem_object_remove_sidebar_page ()" link="TotemObject.html#totem-object-remove-sidebar-page"/>
     <keyword type="function" name="totem_object_get_supported_content_types ()" link="TotemObject.html#totem-object-get-supported-content-types" since="3.1.5"/>
     <keyword type="function" name="totem_object_get_supported_uri_schemes ()" link="TotemObject.html#totem-object-get-supported-uri-schemes" since="3.1.5"/>
+    <keyword type="function" name="totem_object_get_rate ()" link="TotemObject.html#totem-object-get-rate"/>
+    <keyword type="function" name="totem_object_set_rate ()" link="TotemObject.html#totem-object-set-rate"/>
     <keyword type="typedef" name="Totem" link="TotemObject.html#Totem"/>
     <keyword type="struct" name="TotemObject" link="TotemObject.html#TotemObject-struct"/>
     <keyword type="enum" name="enum TotemRemoteCommand" link="TotemObject.html#TotemRemoteCommand"/>
@@ -175,5 +171,108 @@
     <keyword type="signal" name="The “tick” signal" link="BaconVideoWidget.html#BaconVideoWidget-tick"/>
     <keyword type="signal" name="The “track-skip-requested” signal" link="BaconVideoWidget.html#BaconVideoWidget-track-skip-requested"/>
     <keyword type="signal" name="The “volume-change-requested” signal" link="BaconVideoWidget.html#BaconVideoWidget-volume-change-requested"/>
+    <keyword type="constant" name="TOTEM_REMOTE_COMMAND_UNKNOWN" link="TotemObject.html#TOTEM-REMOTE-COMMAND-UNKNOWN:CAPS"/>
+    <keyword type="constant" name="TOTEM_REMOTE_COMMAND_PLAY" link="TotemObject.html#TOTEM-REMOTE-COMMAND-PLAY:CAPS"/>
+    <keyword type="constant" name="TOTEM_REMOTE_COMMAND_PAUSE" link="TotemObject.html#TOTEM-REMOTE-COMMAND-PAUSE:CAPS"/>
+    <keyword type="constant" name="TOTEM_REMOTE_COMMAND_STOP" link="TotemObject.html#TOTEM-REMOTE-COMMAND-STOP:CAPS"/>
+    <keyword type="constant" name="TOTEM_REMOTE_COMMAND_PLAYPAUSE" link="TotemObject.html#TOTEM-REMOTE-COMMAND-PLAYPAUSE:CAPS"/>
+    <keyword type="constant" name="TOTEM_REMOTE_COMMAND_NEXT" link="TotemObject.html#TOTEM-REMOTE-COMMAND-NEXT:CAPS"/>
+    <keyword type="constant" name="TOTEM_REMOTE_COMMAND_PREVIOUS" link="TotemObject.html#TOTEM-REMOTE-COMMAND-PREVIOUS:CAPS"/>
+    <keyword type="constant" name="TOTEM_REMOTE_COMMAND_SEEK_FORWARD" link="TotemObject.html#TOTEM-REMOTE-COMMAND-SEEK-FORWARD:CAPS"/>
+    <keyword type="constant" name="TOTEM_REMOTE_COMMAND_SEEK_BACKWARD" link="TotemObject.html#TOTEM-REMOTE-COMMAND-SEEK-BACKWARD:CAPS"/>
+    <keyword type="constant" name="TOTEM_REMOTE_COMMAND_VOLUME_UP" link="TotemObject.html#TOTEM-REMOTE-COMMAND-VOLUME-UP:CAPS"/>
+    <keyword type="constant" name="TOTEM_REMOTE_COMMAND_VOLUME_DOWN" link="TotemObject.html#TOTEM-REMOTE-COMMAND-VOLUME-DOWN:CAPS"/>
+    <keyword type="constant" name="TOTEM_REMOTE_COMMAND_FULLSCREEN" link="TotemObject.html#TOTEM-REMOTE-COMMAND-FULLSCREEN:CAPS"/>
+    <keyword type="constant" name="TOTEM_REMOTE_COMMAND_QUIT" link="TotemObject.html#TOTEM-REMOTE-COMMAND-QUIT:CAPS"/>
+    <keyword type="constant" name="TOTEM_REMOTE_COMMAND_ENQUEUE" link="TotemObject.html#TOTEM-REMOTE-COMMAND-ENQUEUE:CAPS"/>
+    <keyword type="constant" name="TOTEM_REMOTE_COMMAND_REPLACE" link="TotemObject.html#TOTEM-REMOTE-COMMAND-REPLACE:CAPS"/>
+    <keyword type="constant" name="TOTEM_REMOTE_COMMAND_SHOW" link="TotemObject.html#TOTEM-REMOTE-COMMAND-SHOW:CAPS"/>
+    <keyword type="constant" name="TOTEM_REMOTE_COMMAND_UP" link="TotemObject.html#TOTEM-REMOTE-COMMAND-UP:CAPS"/>
+    <keyword type="constant" name="TOTEM_REMOTE_COMMAND_DOWN" link="TotemObject.html#TOTEM-REMOTE-COMMAND-DOWN:CAPS"/>
+    <keyword type="constant" name="TOTEM_REMOTE_COMMAND_LEFT" link="TotemObject.html#TOTEM-REMOTE-COMMAND-LEFT:CAPS"/>
+    <keyword type="constant" name="TOTEM_REMOTE_COMMAND_RIGHT" link="TotemObject.html#TOTEM-REMOTE-COMMAND-RIGHT:CAPS"/>
+    <keyword type="constant" name="TOTEM_REMOTE_COMMAND_SELECT" link="TotemObject.html#TOTEM-REMOTE-COMMAND-SELECT:CAPS"/>
+    <keyword type="constant" name="TOTEM_REMOTE_COMMAND_DVD_MENU" link="TotemObject.html#TOTEM-REMOTE-COMMAND-DVD-MENU:CAPS"/>
+    <keyword type="constant" name="TOTEM_REMOTE_COMMAND_ZOOM_UP" link="TotemObject.html#TOTEM-REMOTE-COMMAND-ZOOM-UP:CAPS"/>
+    <keyword type="constant" name="TOTEM_REMOTE_COMMAND_ZOOM_DOWN" link="TotemObject.html#TOTEM-REMOTE-COMMAND-ZOOM-DOWN:CAPS"/>
+    <keyword type="constant" name="TOTEM_REMOTE_COMMAND_EJECT" link="TotemObject.html#TOTEM-REMOTE-COMMAND-EJECT:CAPS"/>
+    <keyword type="constant" name="TOTEM_REMOTE_COMMAND_PLAY_DVD" link="TotemObject.html#TOTEM-REMOTE-COMMAND-PLAY-DVD:CAPS"/>
+    <keyword type="constant" name="TOTEM_REMOTE_COMMAND_MUTE" link="TotemObject.html#TOTEM-REMOTE-COMMAND-MUTE:CAPS"/>
+    <keyword type="constant" name="TOTEM_REMOTE_COMMAND_TOGGLE_ASPECT" link="TotemObject.html#TOTEM-REMOTE-COMMAND-TOGGLE-ASPECT:CAPS"/>
+    <keyword type="constant" name="TOTEM_REMOTE_SETTING_REPEAT" link="TotemObject.html#TOTEM-REMOTE-SETTING-REPEAT:CAPS"/>
+    <keyword type="constant" name="BVW_RATIO_AUTO" link="BaconVideoWidget.html#BVW-RATIO-AUTO:CAPS"/>
+    <keyword type="constant" name="BVW_RATIO_SQUARE" link="BaconVideoWidget.html#BVW-RATIO-SQUARE:CAPS"/>
+    <keyword type="constant" name="BVW_RATIO_FOURBYTHREE" link="BaconVideoWidget.html#BVW-RATIO-FOURBYTHREE:CAPS"/>
+    <keyword type="constant" name="BVW_RATIO_ANAMORPHIC" link="BaconVideoWidget.html#BVW-RATIO-ANAMORPHIC:CAPS"/>
+    <keyword type="constant" name="BVW_RATIO_DVB" link="BaconVideoWidget.html#BVW-RATIO-DVB:CAPS"/>
+    <keyword type="constant" name="BVW_AUDIO_SOUND_STEREO" link="BaconVideoWidget.html#BVW-AUDIO-SOUND-STEREO:CAPS"/>
+    <keyword type="constant" name="BVW_AUDIO_SOUND_4CHANNEL" link="BaconVideoWidget.html#BVW-AUDIO-SOUND-4CHANNEL:CAPS"/>
+    <keyword type="constant" name="BVW_AUDIO_SOUND_41CHANNEL" link="BaconVideoWidget.html#BVW-AUDIO-SOUND-41CHANNEL:CAPS"/>
+    <keyword type="constant" name="BVW_AUDIO_SOUND_5CHANNEL" link="BaconVideoWidget.html#BVW-AUDIO-SOUND-5CHANNEL:CAPS"/>
+    <keyword type="constant" name="BVW_AUDIO_SOUND_51CHANNEL" link="BaconVideoWidget.html#BVW-AUDIO-SOUND-51CHANNEL:CAPS"/>
+    <keyword type="constant" name="BVW_AUDIO_SOUND_AC3PASSTHRU" link="BaconVideoWidget.html#BVW-AUDIO-SOUND-AC3PASSTHRU:CAPS"/>
+    <keyword type="constant" name="BVW_DVD_ROOT_MENU" link="BaconVideoWidget.html#BVW-DVD-ROOT-MENU:CAPS"/>
+    <keyword type="constant" name="BVW_DVD_TITLE_MENU" link="BaconVideoWidget.html#BVW-DVD-TITLE-MENU:CAPS"/>
+    <keyword type="constant" name="BVW_DVD_SUBPICTURE_MENU" link="BaconVideoWidget.html#BVW-DVD-SUBPICTURE-MENU:CAPS"/>
+    <keyword type="constant" name="BVW_DVD_AUDIO_MENU" link="BaconVideoWidget.html#BVW-DVD-AUDIO-MENU:CAPS"/>
+    <keyword type="constant" name="BVW_DVD_ANGLE_MENU" link="BaconVideoWidget.html#BVW-DVD-ANGLE-MENU:CAPS"/>
+    <keyword type="constant" name="BVW_DVD_CHAPTER_MENU" link="BaconVideoWidget.html#BVW-DVD-CHAPTER-MENU:CAPS"/>
+    <keyword type="constant" name="BVW_DVD_NEXT_CHAPTER" link="BaconVideoWidget.html#BVW-DVD-NEXT-CHAPTER:CAPS"/>
+    <keyword type="constant" name="BVW_DVD_PREV_CHAPTER" link="BaconVideoWidget.html#BVW-DVD-PREV-CHAPTER:CAPS"/>
+    <keyword type="constant" name="BVW_DVD_NEXT_TITLE" link="BaconVideoWidget.html#BVW-DVD-NEXT-TITLE:CAPS"/>
+    <keyword type="constant" name="BVW_DVD_PREV_TITLE" link="BaconVideoWidget.html#BVW-DVD-PREV-TITLE:CAPS"/>
+    <keyword type="constant" name="BVW_DVD_ROOT_MENU_UP" link="BaconVideoWidget.html#BVW-DVD-ROOT-MENU-UP:CAPS"/>
+    <keyword type="constant" name="BVW_DVD_ROOT_MENU_DOWN" link="BaconVideoWidget.html#BVW-DVD-ROOT-MENU-DOWN:CAPS"/>
+    <keyword type="constant" name="BVW_DVD_ROOT_MENU_LEFT" link="BaconVideoWidget.html#BVW-DVD-ROOT-MENU-LEFT:CAPS"/>
+    <keyword type="constant" name="BVW_DVD_ROOT_MENU_RIGHT" link="BaconVideoWidget.html#BVW-DVD-ROOT-MENU-RIGHT:CAPS"/>
+    <keyword type="constant" name="BVW_DVD_ROOT_MENU_SELECT" link="BaconVideoWidget.html#BVW-DVD-ROOT-MENU-SELECT:CAPS"/>
+    <keyword type="constant" name="BVW_INFO_TITLE" link="BaconVideoWidget.html#BVW-INFO-TITLE:CAPS"/>
+    <keyword type="constant" name="BVW_INFO_ARTIST" link="BaconVideoWidget.html#BVW-INFO-ARTIST:CAPS"/>
+    <keyword type="constant" name="BVW_INFO_YEAR" link="BaconVideoWidget.html#BVW-INFO-YEAR:CAPS"/>
+    <keyword type="constant" name="BVW_INFO_COMMENT" link="BaconVideoWidget.html#BVW-INFO-COMMENT:CAPS"/>
+    <keyword type="constant" name="BVW_INFO_ALBUM" link="BaconVideoWidget.html#BVW-INFO-ALBUM:CAPS"/>
+    <keyword type="constant" name="BVW_INFO_DURATION" link="BaconVideoWidget.html#BVW-INFO-DURATION:CAPS"/>
+    <keyword type="constant" name="BVW_INFO_TRACK_NUMBER" link="BaconVideoWidget.html#BVW-INFO-TRACK-NUMBER:CAPS"/>
+    <keyword type="constant" name="BVW_INFO_COVER" link="BaconVideoWidget.html#BVW-INFO-COVER:CAPS"/>
+    <keyword type="constant" name="BVW_INFO_CONTAINER" link="BaconVideoWidget.html#BVW-INFO-CONTAINER:CAPS"/>
+    <keyword type="constant" name="BVW_INFO_HAS_VIDEO" link="BaconVideoWidget.html#BVW-INFO-HAS-VIDEO:CAPS"/>
+    <keyword type="constant" name="BVW_INFO_DIMENSION_X" link="BaconVideoWidget.html#BVW-INFO-DIMENSION-X:CAPS"/>
+    <keyword type="constant" name="BVW_INFO_DIMENSION_Y" link="BaconVideoWidget.html#BVW-INFO-DIMENSION-Y:CAPS"/>
+    <keyword type="constant" name="BVW_INFO_VIDEO_BITRATE" link="BaconVideoWidget.html#BVW-INFO-VIDEO-BITRATE:CAPS"/>
+    <keyword type="constant" name="BVW_INFO_VIDEO_CODEC" link="BaconVideoWidget.html#BVW-INFO-VIDEO-CODEC:CAPS"/>
+    <keyword type="constant" name="BVW_INFO_FPS" link="BaconVideoWidget.html#BVW-INFO-FPS:CAPS"/>
+    <keyword type="constant" name="BVW_INFO_HAS_AUDIO" link="BaconVideoWidget.html#BVW-INFO-HAS-AUDIO:CAPS"/>
+    <keyword type="constant" name="BVW_INFO_AUDIO_BITRATE" link="BaconVideoWidget.html#BVW-INFO-AUDIO-BITRATE:CAPS"/>
+    <keyword type="constant" name="BVW_INFO_AUDIO_CODEC" link="BaconVideoWidget.html#BVW-INFO-AUDIO-CODEC:CAPS"/>
+    <keyword type="constant" name="BVW_INFO_AUDIO_SAMPLE_RATE" link="BaconVideoWidget.html#BVW-INFO-AUDIO-SAMPLE-RATE:CAPS"/>
+    <keyword type="constant" name="BVW_INFO_AUDIO_CHANNELS" link="BaconVideoWidget.html#BVW-INFO-AUDIO-CHANNELS:CAPS"/>
+    <keyword type="constant" name="BVW_ROTATION_R_ZERO" link="BaconVideoWidget.html#BVW-ROTATION-R-ZERO:CAPS"/>
+    <keyword type="constant" name="BVW_ROTATION_R_90R" link="BaconVideoWidget.html#BVW-ROTATION-R-90R:CAPS"/>
+    <keyword type="constant" name="BVW_ROTATION_R_180" link="BaconVideoWidget.html#BVW-ROTATION-R-180:CAPS"/>
+    <keyword type="constant" name="BVW_ROTATION_R_90L" link="BaconVideoWidget.html#BVW-ROTATION-R-90L:CAPS"/>
+    <keyword type="constant" name="BVW_VIDEO_BRIGHTNESS" link="BaconVideoWidget.html#BVW-VIDEO-BRIGHTNESS:CAPS"/>
+    <keyword type="constant" name="BVW_VIDEO_CONTRAST" link="BaconVideoWidget.html#BVW-VIDEO-CONTRAST:CAPS"/>
+    <keyword type="constant" name="BVW_VIDEO_SATURATION" link="BaconVideoWidget.html#BVW-VIDEO-SATURATION:CAPS"/>
+    <keyword type="constant" name="BVW_VIDEO_HUE" link="BaconVideoWidget.html#BVW-VIDEO-HUE:CAPS"/>
+    <keyword type="constant" name="BVW_ZOOM_NONE" link="BaconVideoWidget.html#BVW-ZOOM-NONE:CAPS"/>
+    <keyword type="constant" name="BVW_ZOOM_EXPAND" link="BaconVideoWidget.html#BVW-ZOOM-EXPAND:CAPS"/>
+    <keyword type="constant" name="BVW_ERROR_NO_PLUGIN_FOR_FILE" link="BaconVideoWidget.html#BVW-ERROR-NO-PLUGIN-FOR-FILE:CAPS"/>
+    <keyword type="constant" name="BVW_ERROR_BROKEN_FILE" link="BaconVideoWidget.html#BVW-ERROR-BROKEN-FILE:CAPS"/>
+    <keyword type="constant" name="BVW_ERROR_FILE_GENERIC" link="BaconVideoWidget.html#BVW-ERROR-FILE-GENERIC:CAPS"/>
+    <keyword type="constant" name="BVW_ERROR_FILE_PERMISSION" link="BaconVideoWidget.html#BVW-ERROR-FILE-PERMISSION:CAPS"/>
+    <keyword type="constant" name="BVW_ERROR_FILE_ENCRYPTED" link="BaconVideoWidget.html#BVW-ERROR-FILE-ENCRYPTED:CAPS"/>
+    <keyword type="constant" name="BVW_ERROR_FILE_NOT_FOUND" link="BaconVideoWidget.html#BVW-ERROR-FILE-NOT-FOUND:CAPS"/>
+    <keyword type="constant" name="BVW_ERROR_DVD_ENCRYPTED" link="BaconVideoWidget.html#BVW-ERROR-DVD-ENCRYPTED:CAPS"/>
+    <keyword type="constant" name="BVW_ERROR_INVALID_DEVICE" link="BaconVideoWidget.html#BVW-ERROR-INVALID-DEVICE:CAPS"/>
+    <keyword type="constant" name="BVW_ERROR_UNKNOWN_HOST" link="BaconVideoWidget.html#BVW-ERROR-UNKNOWN-HOST:CAPS"/>
+    <keyword type="constant" name="BVW_ERROR_NETWORK_UNREACHABLE" link="BaconVideoWidget.html#BVW-ERROR-NETWORK-UNREACHABLE:CAPS"/>
+    <keyword type="constant" name="BVW_ERROR_CONNECTION_REFUSED" link="BaconVideoWidget.html#BVW-ERROR-CONNECTION-REFUSED:CAPS"/>
+    <keyword type="constant" name="BVW_ERROR_INVALID_LOCATION" link="BaconVideoWidget.html#BVW-ERROR-INVALID-LOCATION:CAPS"/>
+    <keyword type="constant" name="BVW_ERROR_GENERIC" link="BaconVideoWidget.html#BVW-ERROR-GENERIC:CAPS"/>
+    <keyword type="constant" name="BVW_ERROR_CODEC_NOT_HANDLED" link="BaconVideoWidget.html#BVW-ERROR-CODEC-NOT-HANDLED:CAPS"/>
+    <keyword type="constant" name="BVW_ERROR_CANNOT_CAPTURE" link="BaconVideoWidget.html#BVW-ERROR-CANNOT-CAPTURE:CAPS"/>
+    <keyword type="constant" name="BVW_ERROR_READ_ERROR" link="BaconVideoWidget.html#BVW-ERROR-READ-ERROR:CAPS"/>
+    <keyword type="constant" name="BVW_ERROR_PLUGIN_LOAD" link="BaconVideoWidget.html#BVW-ERROR-PLUGIN-LOAD:CAPS"/>
+    <keyword type="constant" name="BVW_ERROR_EMPTY_FILE" link="BaconVideoWidget.html#BVW-ERROR-EMPTY-FILE:CAPS"/>
   </functions>
 </book>

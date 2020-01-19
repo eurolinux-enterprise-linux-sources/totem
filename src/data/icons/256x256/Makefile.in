@@ -175,8 +175,6 @@ BACKEND_TEST_LIBS = @BACKEND_TEST_LIBS@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
-CHAPTERS_CFLAGS = @CHAPTERS_CFLAGS@
-CHAPTERS_LIBS = @CHAPTERS_LIBS@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
 CXX = @CXX@
@@ -263,6 +261,7 @@ LIPO = @LIPO@
 LIRC_LIBS = @LIRC_LIBS@
 LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
+LT_SYS_LIBRARY_PATH = @LT_SYS_LIBRARY_PATH@
 MAINT = @MAINT@
 MAKEINFO = @MAKEINFO@
 MANIFEST_TOOL = @MANIFEST_TOOL@
@@ -402,7 +401,7 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 icondir = $(datadir)/icons/hicolor/256x256/apps
-icon_DATA = totem.png
+icon_DATA = org.gnome.Totem.png
 EXTRA_DIST = $(icon_DATA)
 all: all-am
 

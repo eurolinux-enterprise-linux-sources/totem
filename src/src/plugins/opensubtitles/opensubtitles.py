@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 
+import gi
+gi.require_version('Peas', '1.0')
+gi.require_version('Gtk', '3.0')
+gi.require_version('Totem', '1.0')
 from gi.repository import GLib, GObject # pylint: disable-msg=E0611
 from gi.repository import Peas, Gtk, Gdk # pylint: disable-msg=E0611
 from gi.repository import Gio, Pango, Totem # pylint: disable-msg=E0611
@@ -344,6 +348,7 @@ class OpenSubtitlesModel (object):
         (log_in_success, log_in_message) = self._log_in ()
 
         if log_in_success:
+            result = None
             try:
                 result = self._server.DownloadSubtitles (self._token,
                                                          [subtitle_id])
@@ -373,7 +378,7 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
                      Peas.Activatable):
     __gtype_name__ = 'OpenSubtitles'
 
-    object = GObject.property (type = GObject.Object)
+    object = GObject.Property (type = GObject.Object)
 
     def __init__ (self):
         GObject.Object.__init__ (self)
@@ -493,7 +498,6 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
         # Set up signals
 
         combobox.connect ('changed', self.__on_combobox__changed)
-        self._dialog.connect ('delete-event', self._dialog.hide_on_delete)
         self._dialog.set_transient_for (self._totem.get_main_window ())
         self._dialog.set_position (Gtk.WindowPosition.CENTER_ON_PARENT)
 
@@ -602,10 +606,10 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
 
             thread = DownloadThread (self._model, subtitle_id)
             thread.start ()
-            GObject.idle_add (self._save_subtitles, thread, subtitle_format)
+            GLib.idle_add (self._save_subtitles, thread, subtitle_format)
 
             self._progress.set_text (_(u'Downloading the subtitles…'))
-            GObject.timeout_add (350, self._progress_bar_increment, thread)
+            GLib.timeout_add (350, self._progress_bar_increment, thread)
         else:
             #warn user!
             pass
@@ -625,6 +629,7 @@ class OpenSubtitles (GObject.Object, # pylint: disable-msg=R0902
             return True
 
         subtitles = download_thread.get_subtitles ()
+        suburi = None
         if subtitles:
             subtitle_file = Gio.file_new_for_uri (self._filename)
             movie_name = subtitle_file.get_basename ().rpartition ('.')[0]

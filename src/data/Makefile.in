@@ -15,7 +15,6 @@
 @SET_MAKE@
 
 
-
 VPATH = @srcdir@
 am__is_gnu_make = { \
   if test -z '$(MAKELEVEL)'; then \
@@ -102,41 +101,9 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 DIST_COMMON = $(srcdir)/Makefile.am $(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
-CONFIG_CLEAN_FILES = org.gnome.totem.gschema.xml.in \
+CONFIG_CLEAN_FILES = org.gnome.totem.gschema.xml \
 	org.gnome.Totem.desktop.in.in totem.pc
 CONFIG_CLEAN_VPATH_FILES =
-am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
-am__vpath_adj = case $$p in \
-    $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
-    *) f=$$p;; \
-  esac;
-am__strip_dir = f=`echo $$p | sed -e 's|^.*/||'`;
-am__install_max = 40
-am__nobase_strip_setup = \
-  srcdirstrip=`echo "$(srcdir)" | sed 's/[].[^$$\\*|]/\\\\&/g'`
-am__nobase_strip = \
-  for p in $$list; do echo "$$p"; done | sed -e "s|$$srcdirstrip/||"
-am__nobase_list = $(am__nobase_strip_setup); \
-  for p in $$list; do echo "$$p $$p"; done | \
-  sed "s| $$srcdirstrip/| |;"' / .*\//!s/ .*/ ./; s,\( .*\)/[^/]*$$,\1,' | \
-  $(AWK) 'BEGIN { files["."] = "" } { files[$$2] = files[$$2] " " $$1; \
-    if (++n[$$2] == $(am__install_max)) \
-      { print $$2, files[$$2]; n[$$2] = 0; files[$$2] = "" } } \
-    END { for (dir in files) print dir, files[dir] }'
-am__base_list = \
-  sed '$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;s/\n/ /g' | \
-  sed '$$!N;$$!N;$$!N;$$!N;s/\n/ /g'
-am__uninstall_files_from_dir = { \
-  test -z "$$files" \
-    || { test ! -d "$$dir" && test ! -f "$$dir" && test ! -r "$$dir"; } \
-    || { echo " ( cd '$$dir' && rm -f" $$files ")"; \
-         $(am__cd) "$$dir" && rm -f $$files; }; \
-  }
-am__installdirs = "$(DESTDIR)$(bugreportdir)" "$(DESTDIR)$(man1dir)" \
-	"$(DESTDIR)$(convertdir)" "$(DESTDIR)$(desktopdir)" \
-	"$(DESTDIR)$(pkgconfigdir)" "$(DESTDIR)$(servicedir)" \
-	"$(DESTDIR)$(stuffdir)" "$(DESTDIR)$(thumbnailerdir)"
-SCRIPTS = $(bugreport_SCRIPTS)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -164,7 +131,38 @@ am__can_run_installinfo = \
     n|no|NO) false;; \
     *) (install-info --version) >/dev/null 2>&1;; \
   esac
+am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
+am__vpath_adj = case $$p in \
+    $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
+    *) f=$$p;; \
+  esac;
+am__strip_dir = f=`echo $$p | sed -e 's|^.*/||'`;
+am__install_max = 40
+am__nobase_strip_setup = \
+  srcdirstrip=`echo "$(srcdir)" | sed 's/[].[^$$\\*|]/\\\\&/g'`
+am__nobase_strip = \
+  for p in $$list; do echo "$$p"; done | sed -e "s|$$srcdirstrip/||"
+am__nobase_list = $(am__nobase_strip_setup); \
+  for p in $$list; do echo "$$p $$p"; done | \
+  sed "s| $$srcdirstrip/| |;"' / .*\//!s/ .*/ ./; s,\( .*\)/[^/]*$$,\1,' | \
+  $(AWK) 'BEGIN { files["."] = "" } { files[$$2] = files[$$2] " " $$1; \
+    if (++n[$$2] == $(am__install_max)) \
+      { print $$2, files[$$2]; n[$$2] = 0; files[$$2] = "" } } \
+    END { for (dir in files) print dir, files[dir] }'
+am__base_list = \
+  sed '$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;s/\n/ /g' | \
+  sed '$$!N;$$!N;$$!N;$$!N;s/\n/ /g'
+am__uninstall_files_from_dir = { \
+  test -z "$$files" \
+    || { test ! -d "$$dir" && test ! -f "$$dir" && test ! -r "$$dir"; } \
+    || { echo " ( cd '$$dir' && rm -f" $$files ")"; \
+         $(am__cd) "$$dir" && rm -f $$files; }; \
+  }
 man1dir = $(mandir)/man1
+am__installdirs = "$(DESTDIR)$(man1dir)" "$(DESTDIR)$(convertdir)" \
+	"$(DESTDIR)$(desktopdir)" "$(DESTDIR)$(pkgconfigdir)" \
+	"$(DESTDIR)$(servicedir)" "$(DESTDIR)$(stuffdir)" \
+	"$(DESTDIR)$(thumbnailerdir)"
 NROFF = nroff
 MANS = $(man_MANS)
 DATA = $(convert_DATA) $(desktop_DATA) $(pkgconfig_DATA) \
@@ -200,8 +198,7 @@ CTAGS = ctags
 DIST_SUBDIRS = $(SUBDIRS)
 am__DIST_COMMON = $(srcdir)/Makefile.in \
 	$(srcdir)/org.gnome.Totem.desktop.in.in.in \
-	$(srcdir)/org.gnome.totem.gschema.xml.in.in \
-	$(srcdir)/totem.pc.in
+	$(srcdir)/org.gnome.totem.gschema.xml.in $(srcdir)/totem.pc.in
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 am__relativize = \
   dir0=`pwd`; \
@@ -250,8 +247,6 @@ BACKEND_TEST_LIBS = @BACKEND_TEST_LIBS@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
-CHAPTERS_CFLAGS = @CHAPTERS_CFLAGS@
-CHAPTERS_LIBS = @CHAPTERS_LIBS@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
 CXX = @CXX@
@@ -338,6 +333,7 @@ LIPO = @LIPO@
 LIRC_LIBS = @LIRC_LIBS@
 LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
+LT_SYS_LIBRARY_PATH = @LT_SYS_LIBRARY_PATH@
 MAINT = @MAINT@
 MAKEINFO = @MAKEINFO@
 MANIFEST_TOOL = @MANIFEST_TOOL@
@@ -477,23 +473,18 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 SUBDIRS = icons appdata
-EXTRA_DIST = $(bugreport_SCRIPTS) $(man_MANS) \
-	totem-video-thumbnailer.pod $(stuff_DATA) desktop.sh \
-	org.gnome.Totem.service.in $(thumbnailer_in_files) \
+EXTRA_DIST = $(man_MANS) totem-video-thumbnailer.pod $(stuff_DATA) \
+	desktop.sh org.gnome.Totem.service.in $(thumbnailer_in_files) \
 	thumbnailer.sh mime-type-imports.sh mime-type-include.sh \
 	mime-type-list.txt uri-scheme-include.sh uri-schemes-list.txt \
 	mime-functions.sh $(convert_DATA)
 CLEANFILES = $(desktop_in_files) $(desktop_DATA) $(service_DATA) \
 	$(thumbnailer_DATA) totem-mime-types.h totem-uri-schemes.h \
 	nautilus-video-mime-types.h totem-uri-schemes.h \
-	totemMimeTypes.js $(gsettings_SCHEMAS)
-
-# Bug reporting information script
-bugreportdir = $(libexecdir)/totem
-bugreport_SCRIPTS = totem-bugreport.py
+	totemMimeTypes.js
 
 # Man pages
-man_MANS = totem.1 totem-video-thumbnailer.1
+man_MANS = totem.1 totem-video-thumbnailer.1 totem-audio-preview.1
 
 # UI files and images
 stuffdir = $(pkgdatadir)
@@ -503,7 +494,8 @@ stuff_DATA = \
 	preferences.ui			\
 	properties.ui			\
 	uri.ui				\
-	controls.ui
+	controls.ui			\
+	shortcuts.ui
 
 
 # Icons
@@ -570,47 +562,12 @@ $(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
-org.gnome.totem.gschema.xml.in: $(top_builddir)/config.status $(srcdir)/org.gnome.totem.gschema.xml.in.in
+org.gnome.totem.gschema.xml: $(top_builddir)/config.status $(srcdir)/org.gnome.totem.gschema.xml.in
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 org.gnome.Totem.desktop.in.in: $(top_builddir)/config.status $(srcdir)/org.gnome.Totem.desktop.in.in.in
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 totem.pc: $(top_builddir)/config.status $(srcdir)/totem.pc.in
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
-install-bugreportSCRIPTS: $(bugreport_SCRIPTS)
-	@$(NORMAL_INSTALL)
-	@list='$(bugreport_SCRIPTS)'; test -n "$(bugreportdir)" || list=; \
-	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(bugreportdir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(bugreportdir)" || exit 1; \
-	fi; \
-	for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  if test -f "$$d$$p"; then echo "$$d$$p"; echo "$$p"; else :; fi; \
-	done | \
-	sed -e 'p;s,.*/,,;n' \
-	    -e 'h;s|.*|.|' \
-	    -e 'p;x;s,.*/,,;$(transform)' | sed 'N;N;N;s,\n, ,g' | \
-	$(AWK) 'BEGIN { files["."] = ""; dirs["."] = 1; } \
-	  { d=$$3; if (dirs[d] != 1) { print "d", d; dirs[d] = 1 } \
-	    if ($$2 == $$4) { files[d] = files[d] " " $$1; \
-	      if (++n[d] == $(am__install_max)) { \
-		print "f", d, files[d]; n[d] = 0; files[d] = "" } } \
-	    else { print "f", d "/" $$4, $$1 } } \
-	  END { for (d in files) print "f", d, files[d] }' | \
-	while read type dir files; do \
-	     if test "$$dir" = .; then dir=; else dir=/$$dir; fi; \
-	     test -z "$$files" || { \
-	       echo " $(INSTALL_SCRIPT) $$files '$(DESTDIR)$(bugreportdir)$$dir'"; \
-	       $(INSTALL_SCRIPT) $$files "$(DESTDIR)$(bugreportdir)$$dir" || exit $$?; \
-	     } \
-	; done
-
-uninstall-bugreportSCRIPTS:
-	@$(NORMAL_UNINSTALL)
-	@list='$(bugreport_SCRIPTS)'; test -n "$(bugreportdir)" || exit 0; \
-	files=`for p in $$list; do echo "$$p"; done | \
-	       sed -e 's,.*/,,;$(transform)'`; \
-	dir='$(DESTDIR)$(bugreportdir)'; $(am__uninstall_files_from_dir)
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -943,10 +900,10 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-recursive
-all-am: Makefile $(SCRIPTS) $(MANS) $(DATA) $(HEADERS)
+all-am: Makefile $(MANS) $(DATA) $(HEADERS)
 installdirs: installdirs-recursive
 installdirs-am:
-	for dir in "$(DESTDIR)$(bugreportdir)" "$(DESTDIR)$(man1dir)" "$(DESTDIR)$(convertdir)" "$(DESTDIR)$(desktopdir)" "$(DESTDIR)$(pkgconfigdir)" "$(DESTDIR)$(servicedir)" "$(DESTDIR)$(stuffdir)" "$(DESTDIR)$(thumbnailerdir)"; do \
+	for dir in "$(DESTDIR)$(man1dir)" "$(DESTDIR)$(convertdir)" "$(DESTDIR)$(desktopdir)" "$(DESTDIR)$(pkgconfigdir)" "$(DESTDIR)$(servicedir)" "$(DESTDIR)$(stuffdir)" "$(DESTDIR)$(thumbnailerdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-recursive
@@ -1000,9 +957,9 @@ info: info-recursive
 
 info-am:
 
-install-data-am: install-bugreportSCRIPTS install-convertDATA \
-	install-desktopDATA install-man install-pkgconfigDATA \
-	install-serviceDATA install-stuffDATA install-thumbnailerDATA
+install-data-am: install-convertDATA install-desktopDATA install-man \
+	install-pkgconfigDATA install-serviceDATA install-stuffDATA \
+	install-thumbnailerDATA
 	@$(NORMAL_INSTALL)
 	$(MAKE) $(AM_MAKEFLAGS) install-data-hook
 install-dvi: install-dvi-recursive
@@ -1047,10 +1004,9 @@ ps: ps-recursive
 
 ps-am:
 
-uninstall-am: uninstall-bugreportSCRIPTS uninstall-convertDATA \
-	uninstall-desktopDATA uninstall-man uninstall-pkgconfigDATA \
-	uninstall-serviceDATA uninstall-stuffDATA \
-	uninstall-thumbnailerDATA
+uninstall-am: uninstall-convertDATA uninstall-desktopDATA \
+	uninstall-man uninstall-pkgconfigDATA uninstall-serviceDATA \
+	uninstall-stuffDATA uninstall-thumbnailerDATA
 	@$(NORMAL_INSTALL)
 	$(MAKE) $(AM_MAKEFLAGS) uninstall-hook
 uninstall-man: uninstall-man1
@@ -1062,20 +1018,20 @@ uninstall-man: uninstall-man1
 	check-am clean clean-generic clean-libtool cscopelist-am ctags \
 	ctags-am distclean distclean-generic distclean-libtool \
 	distclean-tags distdir dvi dvi-am html html-am info info-am \
-	install install-am install-bugreportSCRIPTS \
-	install-convertDATA install-data install-data-am \
-	install-data-hook install-desktopDATA install-dvi \
-	install-dvi-am install-exec install-exec-am install-html \
-	install-html-am install-info install-info-am install-man \
-	install-man1 install-pdf install-pdf-am install-pkgconfigDATA \
-	install-ps install-ps-am install-serviceDATA install-strip \
-	install-stuffDATA install-thumbnailerDATA installcheck \
-	installcheck-am installdirs installdirs-am maintainer-clean \
+	install install-am install-convertDATA install-data \
+	install-data-am install-data-hook install-desktopDATA \
+	install-dvi install-dvi-am install-exec install-exec-am \
+	install-html install-html-am install-info install-info-am \
+	install-man install-man1 install-pdf install-pdf-am \
+	install-pkgconfigDATA install-ps install-ps-am \
+	install-serviceDATA install-strip install-stuffDATA \
+	install-thumbnailerDATA installcheck installcheck-am \
+	installdirs installdirs-am maintainer-clean \
 	maintainer-clean-generic mostlyclean mostlyclean-generic \
 	mostlyclean-libtool pdf pdf-am ps ps-am tags tags-am uninstall \
-	uninstall-am uninstall-bugreportSCRIPTS uninstall-convertDATA \
-	uninstall-desktopDATA uninstall-hook uninstall-man \
-	uninstall-man1 uninstall-pkgconfigDATA uninstall-serviceDATA \
+	uninstall-am uninstall-convertDATA uninstall-desktopDATA \
+	uninstall-hook uninstall-man uninstall-man1 \
+	uninstall-pkgconfigDATA uninstall-serviceDATA \
 	uninstall-stuffDATA uninstall-thumbnailerDATA
 
 .PRECIOUS: Makefile
@@ -1114,8 +1070,6 @@ totemMimeTypes.js: mime-type-imports.sh mime-type-list.txt mime-functions.sh
 	$(AM_V_GEN) $(srcdir)/mime-type-imports.sh $(srcdir)/mime-type-list.txt	> $@
 totem-uri-schemes.h: mime-type-include.sh mime-type-list.txt mime-functions.sh
 	$(AM_V_GEN) $(srcdir)/uri-scheme-include.sh $(srcdir)/uri-schemes-list.txt > $@
-
-@INTLTOOL_XML_NOMERGE_RULE@
 @GSETTINGS_RULES@
 
 -include $(top_srcdir)/git.mk

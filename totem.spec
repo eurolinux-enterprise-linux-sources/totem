@@ -1,68 +1,62 @@
-Summary: Movie player for GNOME
+%global gst_plugins_base_version 1.6.0
+%global gtk3_version 3.19.4
+
 Name: totem
-Version: 3.14.3
-Release: 6%{?dist}
+Version: 3.22.1
+Release: 1%{?dist}
 Epoch: 1
+Summary: Movie player for GNOME
+
 License: GPLv2+ with exceptions
-Group: Applications/Multimedia
-URL: http://projects.gnome.org/totem/
-Source0: http://download.gnome.org/sources/totem/3.14/totem-%{version}.tar.xz
+URL: https://wiki.gnome.org/Apps/Videos
+Source0: https://download.gnome.org/sources/%{name}/3.22/%{name}-%{version}.tar.xz
 
-Patch0: totem-translations-3.14.patch
-Patch1: 0001-Disable-pylint-BR.patch
-Patch2: 0001-grilo-Update-YouTube-API-key.patch
-Patch3: totem-3.14.3-EL7.3_translations.patch
+BuildRequires: pkgconfig(cairo)
+BuildRequires: pkgconfig(clutter-1.0)
+BuildRequires: pkgconfig(clutter-gst-3.0)
+BuildRequires: pkgconfig(clutter-gtk-1.0)
+BuildRequires: pkgconfig(gnome-desktop-3.0)
+BuildRequires: pkgconfig(gsettings-desktop-schemas)
+BuildRequires: pkgconfig(gstreamer-1.0)
+BuildRequires: pkgconfig(gstreamer-base-1.0)
+BuildRequires: pkgconfig(gstreamer-plugins-base-1.0) >= %{gst_plugins_base_version}
+BuildRequires: pkgconfig(gstreamer-audio-1.0)
+BuildRequires: pkgconfig(gstreamer-tag-1.0)
+BuildRequires: pkgconfig(gstreamer-video-1.0)
+BuildRequires: pkgconfig(gtk+-3.0) >= %{gtk3_version}
+BuildRequires: pkgconfig(libpeas-gtk-1.0)
+BuildRequires: pkgconfig(totem-plparser)
 
-# For all the Python plugins
-Requires: pygobject3
-
-Requires: iso-codes
-Requires: gstreamer1
-Requires: gstreamer1-plugins-base
-Requires: gstreamer1-plugins-good
-Requires: gstreamer1-plugins-bad-free
-Requires: gvfs-fuse
-# Disabled until ported to GStreamer 1.0
-# Requires: gnome-dvb-daemon
-Requires: grilo-plugins
-Requires: gsettings-desktop-schemas
-
-BuildRequires: gnome-desktop3-devel
-BuildRequires: gstreamer1-devel
-BuildRequires: gstreamer1-plugins-bad-free-devel
-BuildRequires: gstreamer1-plugins-base-devel
+# Needed for the videoscale element.
 BuildRequires: gstreamer1-plugins-good
-BuildRequires: libpeas-devel
 
-BuildRequires: gcc-c++, pkgconfig, gettext
-BuildRequires: perl(XML::Parser) intltool
-BuildRequires: gsettings-desktop-schemas-devel
+BuildRequires: gcc-c++, gettext
+BuildRequires: intltool
 BuildRequires: itstool
-BuildRequires: libXtst-devel
-BuildRequires: libXi-devel
-BuildRequires: libXt-devel
-BuildRequires: totem-pl-parser-devel
-BuildRequires: clutter-gst2-devel
-BuildRequires: clutter-gtk-devel
 BuildRequires: vala
+BuildRequires: /usr/bin/appstream-util
 
 # For the nautilus extension
-BuildRequires: nautilus-devel
+BuildRequires: pkgconfig(libnautilus-extension)
 
 # Work-around for fontconfig bug https://bugzilla.redhat.com/show_bug.cgi?id=480928
 BuildRequires: liberation-sans-fonts
 
-# For autoreconf
-BuildRequires: autoconf automake libtool gnome-common libappstream-glib-devel yelp-tools
-
 # For plugins
-%if 0%{?rhel} == 0
-BuildRequires: lirc-devel
-BuildRequires: libzeitgeist-devel
-%endif
-BuildRequires: libgdata-devel
-BuildRequires: grilo-devel >= 0.2.0
+BuildRequires: pkgconfig(grilo-0.3)
+BuildRequires: pkgconfig(grilo-pls-0.3)
 
+Requires: iso-codes
+Requires: gstreamer1%{?_isa}
+Requires: gstreamer1-plugins-base%{?_isa} >= %{gst_plugins_base_version}
+Requires: gstreamer1-plugins-good%{?_isa}
+Requires: gstreamer1-plugins-bad-free%{?_isa}
+Requires: gvfs-fuse%{?_isa}
+# Disabled until ported to GStreamer 1.0
+# Requires: gnome-dvb-daemon
+Requires: grilo-plugins%{?_isa}
+Requires: gsettings-desktop-schemas%{?_isa}
+Requires: gtk3%{?_isa} >= %{gtk3_version}
 
 # The mythtv sub-package was removed
 # (obsoleted by -upnp then by grilo in main)
@@ -95,19 +89,8 @@ a pretty complete keyboard navigation.
 
 Totem is extensible through a plugin system.
 
-%if 0%{?fedora}
-%package lirc
-Summary: LIRC (Infrared remote) plugin for Totem
-Group: Applications/Multimedia
-Requires: %{name}%{?_isa} = %{epoch}:%{version}-%{release}
-
-%description lirc
-This package provides a plugin to add LIRC (Infrared remote) support to Totem.
-%endif
-
 %package devel
 Summary: Plugin writer's documentation for totem
-Group: Development/Libraries
 Requires: %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 
 %description devel
@@ -116,7 +99,6 @@ developing developing plugins for %{name}.
 
 %package nautilus
 Summary: Video and Audio Properties tab for Nautilus
-Group: Applications/Multimedia
 Requires: %{name}%{?_isa} = %{epoch}:%{version}-%{release}
 
 %description nautilus
@@ -125,23 +107,17 @@ audio and video files in the properties dialog.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 %build
-
-autoreconf -f
 %configure \
   --enable-nautilus \
-  --disable-static  \
+  --disable-static \
   --disable-python
 
 make %{?_smp_mflags}
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
+%make_install
 %find_lang %{name} --with-gnome
 
 #nuke the .la file(s)
@@ -156,6 +132,11 @@ echo X-RHEL-AliasOf=org.gnome.Totem >> $RPM_BUILD_ROOT%{_datadir}/applications/t
 rm -rf $RPM_BUILD_ROOT%{_libdir}/totem/plugins/dbus/		\
 	$RPM_BUILD_ROOT%{_libdir}/totem/plugins/opensubtitles/	\
 	$RPM_BUILD_ROOT%{_libdir}/totem/plugins/pythonconsole/
+
+%check
+appstream-util validate-relax --nonet $RPM_BUILD_ROOT/%{_datadir}/appdata/*.appdata.xml
+desktop-file-validate $RPM_BUILD_ROOT/%{_datadir}/applications/org.gnome.Totem.desktop
+
 
 %post
 /sbin/ldconfig
@@ -177,7 +158,8 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 
 
 %files -f %{name}.lang
-%doc AUTHORS COPYING NEWS README TODO
+%doc AUTHORS NEWS README TODO
+%license COPYING
 %{_bindir}/%{name}
 %{_bindir}/%{name}-video-thumbnailer
 %{_bindir}/%{name}-audio-preview
@@ -191,17 +173,14 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_datadir}/totem/playlist.ui
 %{_datadir}/totem/preferences.ui
 %{_datadir}/totem/properties.ui
+%{_datadir}/totem/shortcuts.ui
 %{_datadir}/totem/totem.ui
 %{_datadir}/totem/uri.ui
-%dir %{_libexecdir}/totem
-%{_libexecdir}/totem/totem-bugreport.py
-%exclude %{_libexecdir}/totem/totem-bugreport.py[co]
 %dir %{_libdir}/totem
 %dir %{_libdir}/totem/plugins
 %{_libdir}/totem/plugins/apple-trailers
 %{_libdir}/totem/plugins/autoload-subtitles
 %{_libdir}/totem/plugins/brasero-disc-recorder
-%{_libdir}/totem/plugins/chapters
 %{_libdir}/totem/plugins/gromit
 %{_libdir}/totem/plugins/im-status
 %{_libdir}/totem/plugins/ontop
@@ -213,26 +192,19 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_libdir}/totem/plugins/media-player-keys
 %{_libdir}/totem/plugins/screenshot
 %{_libdir}/totem/plugins/save-file
+%{_libdir}/totem/plugins/variable-rate
 %{_libdir}/totem/plugins/vimeo
-%if 0%{?fedora}
-%{_libdir}/totem/plugins/zeitgeist-dp
-%endif
-%{_datadir}/icons/hicolor/*/apps/totem.png
-%{_datadir}/icons/hicolor/*/devices/totem-tv.png
-%{_datadir}/icons/hicolor/scalable/devices/totem-tv.svg
+%{_datadir}/icons/hicolor/*/apps/org.gnome.Totem.png
+%{_datadir}/icons/hicolor/symbolic/apps/org.gnome.Totem-symbolic.svg
 %{_mandir}/man1/%{name}.1*
-%{_mandir}/man1/totem-video-thumbnailer.1.gz
+%{_mandir}/man1/totem-audio-preview.1*
+%{_mandir}/man1/totem-video-thumbnailer.1*
 %{_datadir}/GConf/gsettings/*.convert
 %{_datadir}/glib-2.0/schemas/*.xml
 %{_datadir}/thumbnailers/totem.thumbnailer
 
 %files nautilus
 %{_libdir}/nautilus/extensions-3.0/*.so*
-
-%if 0%{?fedora}
-%files lirc
-%{_libdir}/totem/plugins/lirc
-%endif
 
 %files devel
 %{_datadir}/gtk-doc/html/totem
@@ -242,6 +214,11 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_datadir}/gir-1.0/Totem-1.0.gir
 
 %changelog
+* Fri Mar 03 2017 Bastien Nocera <bnocera@redhat.com> - 3.22.1-1
++ totem-3.22.1-1
+- Update to 3.22.1
+Resolves: #1387048, #1412335
+
 * Thu Jun 30 2016 Bastien Nocera <bnocera@redhat.com> - 3.14.3-6
 - Update translations
 Resolves: #1273060

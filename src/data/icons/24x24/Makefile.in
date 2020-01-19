@@ -148,8 +148,8 @@ am__uninstall_files_from_dir = { \
     || { echo " ( cd '$$dir' && rm -f" $$files ")"; \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
-am__installdirs = "$(DESTDIR)$(icondir)" "$(DESTDIR)$(tvicondir)"
-DATA = $(icon_DATA) $(tvicon_DATA)
+am__installdirs = "$(DESTDIR)$(icondir)"
+DATA = $(icon_DATA)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 am__DIST_COMMON = $(srcdir)/Makefile.in
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -175,8 +175,6 @@ BACKEND_TEST_LIBS = @BACKEND_TEST_LIBS@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
-CHAPTERS_CFLAGS = @CHAPTERS_CFLAGS@
-CHAPTERS_LIBS = @CHAPTERS_LIBS@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
 CXX = @CXX@
@@ -263,6 +261,7 @@ LIPO = @LIPO@
 LIRC_LIBS = @LIRC_LIBS@
 LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
+LT_SYS_LIBRARY_PATH = @LT_SYS_LIBRARY_PATH@
 MAINT = @MAINT@
 MAKEINFO = @MAKEINFO@
 MANIFEST_TOOL = @MANIFEST_TOOL@
@@ -402,10 +401,8 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 icondir = $(datadir)/icons/hicolor/24x24/apps
-icon_DATA = totem.png
-tvicondir = $(datadir)/icons/hicolor/24x24/devices/
-tvicon_DATA = totem-tv.png
-EXTRA_DIST = $(icon_DATA) $(tvicon_DATA)
+icon_DATA = org.gnome.Totem.png
+EXTRA_DIST = $(icon_DATA)
 all: all-am
 
 .SUFFIXES:
@@ -465,27 +462,6 @@ uninstall-iconDATA:
 	@list='$(icon_DATA)'; test -n "$(icondir)" || list=; \
 	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
 	dir='$(DESTDIR)$(icondir)'; $(am__uninstall_files_from_dir)
-install-tviconDATA: $(tvicon_DATA)
-	@$(NORMAL_INSTALL)
-	@list='$(tvicon_DATA)'; test -n "$(tvicondir)" || list=; \
-	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(tvicondir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(tvicondir)" || exit 1; \
-	fi; \
-	for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  echo "$$d$$p"; \
-	done | $(am__base_list) | \
-	while read files; do \
-	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(tvicondir)'"; \
-	  $(INSTALL_DATA) $$files "$(DESTDIR)$(tvicondir)" || exit $$?; \
-	done
-
-uninstall-tviconDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(tvicon_DATA)'; test -n "$(tvicondir)" || list=; \
-	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(tvicondir)'; $(am__uninstall_files_from_dir)
 tags TAGS:
 
 ctags CTAGS:
@@ -527,7 +503,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(DATA)
 installdirs:
-	for dir in "$(DESTDIR)$(icondir)" "$(DESTDIR)$(tvicondir)"; do \
+	for dir in "$(DESTDIR)$(icondir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -580,7 +556,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-iconDATA install-tviconDATA
+install-data-am: install-iconDATA
 
 install-dvi: install-dvi-am
 
@@ -624,7 +600,7 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-iconDATA uninstall-tviconDATA
+uninstall-am: uninstall-iconDATA
 
 .MAKE: install-am install-strip
 
@@ -635,11 +611,10 @@ uninstall-am: uninstall-iconDATA uninstall-tviconDATA
 	install-dvi-am install-exec install-exec-am install-html \
 	install-html-am install-iconDATA install-info install-info-am \
 	install-man install-pdf install-pdf-am install-ps \
-	install-ps-am install-strip install-tviconDATA installcheck \
-	installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-generic \
-	mostlyclean-libtool pdf pdf-am ps ps-am tags-am uninstall \
-	uninstall-am uninstall-iconDATA uninstall-tviconDATA
+	install-ps-am install-strip installcheck installcheck-am \
+	installdirs maintainer-clean maintainer-clean-generic \
+	mostlyclean mostlyclean-generic mostlyclean-libtool pdf pdf-am \
+	ps ps-am tags-am uninstall uninstall-am uninstall-iconDATA
 
 .PRECIOUS: Makefile
 

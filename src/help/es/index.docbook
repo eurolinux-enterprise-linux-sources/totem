@@ -583,12 +583,7 @@
     <sect2 id="totem-plugins-opensubtitles">
       <title>Descargador de subtítulos</title>
       <para>El complemento <guilabel>Descargador de subtítulos</guilabel> le permite buscar y descargar subtítulos del servicio <ulink type="http" url="http://www.opensubtitles.org/es">OpenSubtitles</ulink>.</para>
-      <para lang="en">Subtitles can only be downloaded for local movies; not audio files, DVDs, DVB streams, VCDs or HTTP streams. To search for subtitles for
-        the currently playing movie, choose
-        <menuchoice>
-          <shortcut><keycombo><keycap>Ctrl</keycap><keycap>Shift</keycap><keycap>s</keycap></keycombo></shortcut>
-          <guimenu>View</guimenu><guimenuitem>Download Movie Subtitles</guimenuitem></menuchoice>,
-        which will display the <application>Download Movie Subtitles</application> dialog.</para>
+      <para>Los subtítulos sólo se pueden descargar para películas locales; no para archivos <menuchoice> <shortcut><keycombo><keycap>Ctrl</keycap><keycap>Mayús</keycap><keycap>s</keycap></keycombo></shortcut> <guimenu>Ver</guimenu><guimenuitem>Descargar subtítulos para la película</guimenuitem></menuchoice>, que mostrará el diálogo <application>Descargar subtítulos para la película</application>.</para>
       <para>Seleccione el idioma en el que quiere tener los subtítulos desde la lista desplegable en la parte superior del diálogo, después pulse el botón <guibutton>Buscar</guibutton> para buscar los subtítulos para la película actual. Los subtítulos se buscan en función del contenido de la película, en lugar del nombre de archivo o de etiquetas.</para>
       <para>Los resultados de búsqueda se listan en la vista de árbol en el medio del diálogo. Actualmente los subtítulos sólo se pueden usar en una película <emphasis>recargando</emphasis> la película con los subtítulos, de tal forma que después de seleccionar el archivo de subtítulo que quiere descargar, pulse el botón <guibutton>Reproducir con subtítulos</guibutton> para descargar los subtítulos y recargar la película.</para>
         <note><para>Los archivos de subtítulos descargados se cachean (de forma predeterminada en <filename>~/.cache/totem/subtitles</filename>), así no se necesitan descargar de nuevo al reproducir la película otra vez. Al descargar los subtítulos para una película, se borrará cualquier otro subtítulo descargado para esa película.</para></note>

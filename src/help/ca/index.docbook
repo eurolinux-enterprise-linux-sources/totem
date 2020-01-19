@@ -188,7 +188,7 @@
 	  <para>Miniaturitzador de vídeos pel GNOME.</para>
         </listitem>
         <listitem>
-	  <para>Previsualització d'àudio pel GNOME</para>
+	  <para>Previsualització d'àudio pel GNOME.</para>
         </listitem>
 	<listitem>
 	  <para>Pestanya de propietats del Nautilus.</para>
@@ -275,7 +275,7 @@
 	  </listitem>
         </varlistentry>
         <varlistentry>
-          <term>Botons de control del progrés</term>
+          <term>Botons de control del progrés.</term>
           <listitem>
             <para>Els botons de control del progrés us permeten anar a la pista següent o anterior, fer una pausa o reproduir una pel·lícula o cançó.</para>
 	  </listitem>
@@ -332,7 +332,7 @@
 
     <sect2 id="totem-usage-pause">
       <title>Per fer una pausa en una pel·lícula o cançó</title>
-      <para>Per fer una pausa en una pel·lícula o una cançó que s'està reproduint, feu clic en el botó <inlinemediaobject> <imageobject><imagedata fileref="figures/totem_pause_button.png" format="PNG"/></imageobject> <textobject><phrase>Mostra el botó de fes una pausa.</phrase></textobject> </inlinemediaobject>, o trieu <menuchoice> <shortcut><keycombo><keycap>Ctrl</keycap><keycap>barra espaiadora</keycap></keycombo></shortcut> <guimenu>Pel·lícula</guimenu> <guimenuitem>Reprodueix / Fes una pausa</guimenuitem> </menuchoice>. També podeu utilitzar la tecla <keycap>P</keycap> per fer una pausa o reproduir una pel·licula.</para>
+      <para>Per fer una pausa en una pel·lícula o una cançó que s'està reproduint, feu clic en el botó <inlinemediaobject> <imageobject><imagedata fileref="figures/totem_pause_button.png" format="PNG"/></imageobject> <textobject><phrase>Mostra el botó de fes una pausa.</phrase></textobject> </inlinemediaobject>, o trieu <menuchoice> <shortcut><keycombo><keycap>Ctrl</keycap><keycap>barra espaiadora</keycap></keycombo></shortcut> <guimenu>Pel·lícula</guimenu> <guimenuitem>Reprodueix / Fes una pausa</guimenuitem> </menuchoice>. També podeu utilitzar la tecla <keycap>P</keycap> per fer una pausa o reproduir una pel·lícula.</para>
       <para>Per continuar la reproducció d'una pel·lícula o cançó, feu de nou clic en el botó <inlinemediaobject> <imageobject><imagedata fileref="figures/totem_play_button.png" format="PNG"/></imageobject> <textobject><phrase>Mostra el botó reprodueix.</phrase></textobject> </inlinemediaobject>, o trieu <menuchoice> <shortcut><keycombo><keycap>Ctrl</keycap><keycap>barra espaiadora</keycap></keycombo></shortcut> <guimenu>Pel·lícula</guimenu> <guimenuitem>Reprodueix / Fes una pausa</guimenuitem> </menuchoice>.</para>
     </sect2>
 
@@ -474,7 +474,7 @@
 	  <title>Per triar els subtítols</title>
 	  <para>Per triar l'idioma dels subtítols, seleccioneu <menuchoice><guimenu>Visualitza</guimenu><guisubmenu>Subtítols</guisubmenu></menuchoice> i trieu l'idioma en què voleu que es mostrin els subtítols.</para>
 	  <para>Per inhabilitar la visualització dels subtítols, trieu <menuchoice><guimenu>Visualitza</guimenu><guisubmenu>Subtítols</guisubmenu><guimenuitem>Cap</guimenuitem></menuchoice>.</para>
-	  <note><para>Per defecte, el <application>reproductor de pel·lícules Totem</application> utilitzarà el mateix idioma en que s'està utilitzant l'ordinador per mostrar els subtítols.</para></note>
+	  <note><para>Per defecte, el <application>reproductor de pel·lícules Totem</application> utilitzarà el mateix idioma en què s'està utilitzant l'ordinador per mostrar els subtítols.</para></note>
 	  <para>El <application>reproductor de pel·lícules Totem</application> carregarà i mostrarà automàticament els subtítols si el nom del fitxer del vídeo i dels subtítols tenen el mateix nom i l'extensió dels subtítols és <filename class="extension">asc</filename>, <filename class="extension">txt</filename>, <filename class="extension">sub</filename>, <filename class="extension">srt</filename>, <filename class="extension">smi</filename>, <filename class="extension">ssa</filename> o <filename class="extension">ass</filename>.</para>
 	  <para>Si el fitxer dels subtítols té un nom diferent del fitxer de vídeo, feu clic amb el botó secundari damunt del nom del fitxer de vídeo a la llista de reproducció i trieu <menuchoice><guimenuitem>Seleccioneu els subtítols de text</guimenuitem></menuchoice> en el menú emergent per carregar el fitxer de subtítols correcte. També podeu seleccionar els subtítols des de <menuchoice><guimenu>Visualitza</guimenu><guimenuitem>Seleccioneu els subtítols de text</guimenuitem></menuchoice>.</para>
 	  <para>Podeu baixar els subtítols des del servei d'OpenSubtitles si utilitzeu el connector <guilabel>Baixador de subtítols</guilabel>. Vegeu més informació a <xref linkend="totem-plugins-opensubtitles"/>.</para>
@@ -536,7 +536,7 @@
       <sect3 id="totem-plugins-jamendo-search">
         <title>Per cercar música</title>
         <para>Escriviu els termes que busqueu al quadre de cerca a la part superior de la barra lateral del <guilabel>Jamendo</guilabel>. Podeu cercar per artista o per etiquetes. Per iniciar la cerca feu clic en el botó «Cerca».</para>
-        <para>Els resultats de la cerca es mostraran en una visualització en arbre a la pestanya <guilabel>Resultats de la cerca</guilabel> de la barra lateral i es poden explorar si utilitzeu el botons de desplaçament de la part inferior de la barra. Es llistaran els àlbums i si feu clic en un àlbum, es llistaran les cançons a sota. Si voleu amagar les cançons, torneu a fer clic en l'àlbum.</para>
+        <para>Els resultats de la cerca es mostraran en una visualització en arbre a la pestanya <guilabel>Resultats de la cerca</guilabel> de la barra lateral i es poden explorar si utilitzeu els botons de desplaçament de la part inferior de la barra. Es llistaran els àlbums i si feu clic en un àlbum, es llistaran les cançons a sota. Si voleu amagar les cançons, torneu a fer clic en l'àlbum.</para>
         <para>Si seleccioneu un artista, podeu fer clic en el botó <guibutton>Pàgina a Jamendo de l'àlbum</guibutton> per obrir la pàgina de l'àlbum al lloc web del Jamendo. Si feu doble clic en un àlbum o trieu <menuchoice><guimenuitem>Afegeix a la llista de reproducció</guimenuitem></menuchoice> del menú contextual de l'àlbum, reemplaçareu la vostra llista de reproducció amb totes les cançons de l'àlbum i començareu a reproduir en temps real la primera cançó des del lloc web del Jamendo. Si feu doble clic en una cançó, reemplaçareu la vostra llista de reproducció només amb aquesta cançó.</para>
       </sect3>
       <sect3 id="totem-plugins-jamendo-popular">

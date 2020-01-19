@@ -601,12 +601,7 @@
     <sect2 id="totem-plugins-opensubtitles">
       <title>Téléchargement de sous-titres</title>
       <para>Le greffon <guilabel>Téléchargement de sous-titres</guilabel> vous permet de chercher ou de télécharger des sous-titres via le service <ulink type="http" url="http://www.opensubtitles.org/fr">OpenSubtitles</ulink>.</para>
-      <para lang="en">Subtitles can only be downloaded for local movies; not audio files, DVDs, DVB streams, VCDs or HTTP streams. To search for subtitles for
-        the currently playing movie, choose
-        <menuchoice>
-          <shortcut><keycombo><keycap>Ctrl</keycap><keycap>Shift</keycap><keycap>s</keycap></keycombo></shortcut>
-          <guimenu>View</guimenu><guimenuitem>Download Movie Subtitles</guimenuitem></menuchoice>,
-        which will display the <application>Download Movie Subtitles</application> dialog.</para>
+      <para>Les sous-titres ne peuvent être téléchargés que pour des films stockés localement ; pas pour des fichiers audio, des DVD, des flux DVB, des VCD ou des flux HTTP. Pour rechercher des sous-titres pour le film en cours de visionnement, choisissez <menuchoice> <shortcut><keycombo><keycap>Ctrl</keycap><keycap>Maj</keycap><keycap>s</keycap></keycombo></shortcut> <guimenu>Affichage</guimenu><guimenuitem>Télécharger les sous-titres du film</guimenuitem></menuchoice>, ce qui provoque l'affichage de la boîte de dialogue de téléchargement des sous-titres.</para>
       <para>Choisissez dans la liste déroulante au sommet du panneau latéral la langue dans laquelle vous souhaitez obtenir les sous-titres, puis cliquez sur le bouton <guibutton>Rechercher</guibutton> pour lancer la recherche de sous-titres pour le film actuel. La recherche s'effectue sur la base du contenu du film et non pas sur le nom de fichier ou les étiquettes.</para>
       <para>Les résultats de recherche apparaissent au centre de la boîte de dialogue. Actuellement, les sous-titres ne peuvent être affichés avec un film qu'en <emphasis>rechargeant</emphasis> le film avec les sous-titres. Après avoir sélectionné le fichier de sous-titres à télécharger, cliquez sur le bouton <guibutton>Lire avec les sous-titres</guibutton> pour télécharger les sous-titres et recharger le film.</para>
         <note><para>Les fichiers de sous-titrage téléchargés sont enregistrés dans un endroit temporaire (dans <filename>~/.cache/totem/subtitles</filename>, par défaut) afin qu'ils ne soient pas téléchargés à nouveau lorsque vous regardez le film une nouvelle fois. Si vous téléchargez de nouveaux sous-titres pour un film, tout fichier de sous-titres précédemment téléchargé pour ce film sera supprimé.</para></note>

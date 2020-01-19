@@ -51,7 +51,6 @@ CFILE_GLOB=$(top_srcdir)/src/*.c
 # e.g. IGNORE_HFILES=gtkdebug.h gtkintl.h
 IGNORE_HFILES = \
 	totem-private.h			\
-	ev-sidebar.h			\
 	eggdesktopfile.h		\
 	eggfileformatchooser.h		\
 	egg-macros.h			\
@@ -75,7 +74,6 @@ IGNORE_HFILES = \
 	totem-properties-view.h				\
 	totem-open-location.h				\
 	totem-statusbar.h				\
-	totem-sidebar.h					\
 	totem-session.h					\
 	totem-resources.h				\
 	totem-plugins-engine.h				\
@@ -105,7 +103,19 @@ IGNORE_HFILES = \
 	totem-search-entry.h		\
 	gd-tagged-entry.h		\
 	gd-fullscreen-filter.h		\
-	screenshot-filename-builder.h
+	screenshot-filename-builder.h	\
+	clock.h				\
+	bacon-video-spinner-actor.h	\
+	bacon-video-controls-actor.h	\
+	totem-time-label.h		\
+	totem-selection-toolbar.h	\
+	totem-main-toolbar.h		\
+	totem-grilo.h			\
+	icon-helpers.h			\
+	bacon-time-label.h		\
+	totem-gst-pixbuf-helpers.h	\
+	totem-time-helpers.h		\
+	$(NULL)
 
 # Images to copy into HTML directory.
 # e.g. HTML_IMAGES=$(top_srcdir)/gtk/stock-icons/stock_about_24.png

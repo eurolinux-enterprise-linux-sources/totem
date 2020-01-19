@@ -7,7 +7,7 @@
 #include <glib-object.h>
 
 G_BEGIN_DECLS
-/* enumerations from "./bacon-video-widget.h" */
+/* enumerations from "/home/hadess/Projects/jhbuild/totem-tmp/src/backend/bacon-video-widget.h" */
 GType bvw_error_get_type (void) G_GNUC_CONST;
 #define BVW_TYPE_ERROR (bvw_error_get_type())
 GType bvw_metadata_type_get_type (void) G_GNUC_CONST;

@@ -212,10 +212,8 @@ error_handler (GstBus *bus,
 	case GST_MESSAGE_RESET_TIME:
 	case GST_MESSAGE_STREAM_START:
 	case GST_MESSAGE_ANY:
-#if GST_CHECK_VERSION (1, 1, 3)
 	case GST_MESSAGE_NEED_CONTEXT:
 	case GST_MESSAGE_HAVE_CONTEXT:
-#endif
 	default:
 		/* Ignored */
 		;;
@@ -238,6 +236,7 @@ thumb_app_set_error_handler (ThumbApp *app)
 
 	bus = gst_element_get_bus (app->play);
 	gst_bus_set_sync_handler (bus, (GstBusSyncHandler) error_handler, app->play, NULL);
+	g_object_unref (bus);
 }
 
 static void
@@ -367,10 +366,8 @@ thumb_app_start (ThumbApp *app)
 		case GST_MESSAGE_RESET_TIME:
 		case GST_MESSAGE_STREAM_START:
 		case GST_MESSAGE_ANY:
-#if GST_CHECK_VERSION (1, 1, 3)
 		case GST_MESSAGE_NEED_CONTEXT:
 		case GST_MESSAGE_HAVE_CONTEXT:
-#endif
 		default:
 			/* Ignore */
 			;;
@@ -395,7 +392,17 @@ thumb_app_setup_play (ThumbApp *app)
 	GstElement *play;
 	GstElement *audio_sink, *video_sink;
 	GstRegistry *registry;
-	GstPluginFeature *feature;
+        const char *blacklisted_plugins[] = {
+          "vaapidecodebin",
+          "vaapidecode",
+          "vaapimpeg2dec",
+          "vaapih264dec",
+          "vaapivc1dec",
+          "vaapivp8dec",
+          "vaapivp9dec",
+          "vaapih265dec"
+        };
+        guint i;
 
 	play = gst_element_factory_make ("playbin", "play");
 	audio_sink = gst_element_factory_make ("fakesink", "audio-fake-sink");
@@ -412,14 +419,18 @@ thumb_app_setup_play (ThumbApp *app)
 
 	/* Disable the vaapi plugin as it will not work with the
 	 * fakesink we use:
-	 * See: https://bugzilla.gnome.org/show_bug.cgi?id=700186 */
+	 * See: https://bugzilla.gnome.org/show_bug.cgi?id=700186 and
+	 * https://bugzilla.gnome.org/show_bug.cgi?id=749605 */
 	registry = gst_registry_get ();
-	feature = gst_registry_find_feature (registry,
-					     "vaapidecode",
-					     GST_TYPE_ELEMENT_FACTORY);
-	if (!feature)
-		return;
-	gst_registry_remove_feature (registry, feature);
+
+	for (i = 0; i < G_N_ELEMENTS (blacklisted_plugins); i++) {
+		GstPluginFeature *feature =
+			gst_registry_find_feature (registry,
+						   blacklisted_plugins[i],
+						   GST_TYPE_ELEMENT_FACTORY);
+		if (feature)
+			gst_registry_remove_feature (registry, feature);
+	}
 }
 
 static void

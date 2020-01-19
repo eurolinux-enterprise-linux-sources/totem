@@ -24,14 +24,8 @@
 <!-- appropriate code -->
   <articleinfo>
     <title>Manual do <application>Reprodutor de filmes Totem</application></title>
-    <copyright lang="en">
-      <year>2003</year>
-      <holder>Chee Bin HOH</holder>
-    </copyright>
-    <copyright lang="en">
-      <year>2009</year>
-      <holder>Philip Withnall</holder>
-    </copyright>
+    <copyright><year>2003</year> <holder>Chee Bin HOH</holder></copyright>
+    <copyright><year>2009</year> <holder>Philip Withnall</holder></copyright>
     <releaseinfo revision="2.26" role="final">
     	<ulink type="peerreview" url="http://bugzilla.gnome.org/show_bug.cgi?id=574524"/>
     </releaseinfo>
@@ -45,66 +39,19 @@
     </publisher>
 
       <legalnotice id="legalnotice">
-	<para lang="en">
-	  Permission is granted to copy, distribute and/or modify this
-	  document under the terms of the GNU Free Documentation
-	  License (GFDL), Version 1.1 or any later version published
-	  by the Free Software Foundation with no Invariant Sections,
-	  no Front-Cover Texts, and no Back-Cover Texts.  You can find
-	  a copy of the GFDL at this <ulink type="help" url="help:fdl">link</ulink> or in the file COPYING-DOCS
-	  distributed with this manual.
-         </para>
+	<para>Pode copiar, distribuír e modificar este documento baixo os termos da Licenza de Documentación Libre GNU (GFDL) na súa versión 1.1 ou posterior, publicada pola Free Software Foundation, sen seccións invariantes e sen textos de portada ou de contraportada. Pode atopar unha copia da GFDL en <ulink type="help" url="help:fdl">link</ulink> ou no ficheiro COPYING-DOCS distribuído xunto con este manual.</para>
          <para>Este manual é parte da colección de manuais de GNOME que se distribúe baixo os termos da GFDL. Se desexa distribuír este manual de forma separada da colección pode facelo engadindo unha copia da licenza ao manual, tal como se describe na sección 6 da licenza.</para>
 
 	<para>Moitos dos nomes que empregan as compañías para distinguir os seus produtos e servizos son marcas comerciais. Os membros do Proxecto de documentación de GNOME coñecen os lugares na documentación de GNOME onde aparecen ditos nomes e as marcas comerciais involucradas. Cando ditos nomes aparecen sempre están escritos con maiúscula inicial ou totalmente en maiúsculas.</para>
 
-	<para lang="en">
-	  DOCUMENT AND MODIFIED VERSIONS OF THE DOCUMENT ARE PROVIDED
-	  UNDER  THE TERMS OF THE GNU FREE DOCUMENTATION LICENSE
-	  WITH THE FURTHER UNDERSTANDING THAT:
-
-	  <orderedlist>
+	<para>O DOCUMENTO E VERSIÓNS MODIFICADAS FORNÉCENSE BAIXO OS TERMOS DA LICENZA LIBRE DE DOCUMENTACIÓ DE GNU E TENDO EN CONTA QUE: <orderedlist>
 		<listitem>
-		  <para lang="en">DOCUMENT IS PROVIDED ON AN "AS IS" BASIS,
-                    WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR
-                    IMPLIED, INCLUDING, WITHOUT LIMITATION, WARRANTIES
-                    THAT THE DOCUMENT OR MODIFIED VERSION OF THE
-                    DOCUMENT IS FREE OF DEFECTS MERCHANTABLE, FIT FOR
-                    A PARTICULAR PURPOSE OR NON-INFRINGING. THE ENTIRE
-                    RISK AS TO THE QUALITY, ACCURACY, AND PERFORMANCE
-                    OF THE DOCUMENT OR MODIFIED VERSION OF THE
-                    DOCUMENT IS WITH YOU. SHOULD ANY DOCUMENT OR
-                    MODIFIED VERSION PROVE DEFECTIVE IN ANY RESPECT,
-                    YOU (NOT THE INITIAL WRITER, AUTHOR OR ANY
-                    CONTRIBUTOR) ASSUME THE COST OF ANY NECESSARY
-                    SERVICING, REPAIR OR CORRECTION. THIS DISCLAIMER
-                    OF WARRANTY CONSTITUTES AN ESSENTIAL PART OF THIS
-                    LICENSE. NO USE OF ANY DOCUMENT OR MODIFIED
-                    VERSION OF THE DOCUMENT IS AUTHORIZED HEREUNDER
-                    EXCEPT UNDER THIS DISCLAIMER; AND
-		  </para>
+		  <para>O DOCUMENTO FORNÉCENSE "TAL CAL" SEN GARANTÍAS DE NINGÚN TIPO, NIN EXPRESAS NIN IMPLÍCITAS, INCLUÍNDO, SEN LIMITACIÓN, CALQUERA GARANTÍA DE QUE O DOCUMENTO OU UNHA VERSIÓN MODIFICADA DO MESMO CAREZA DE DEFECTOS, SEXA COMERCIALIZÁBEL, ADAPTACIÓN A UNHA FINALIDADE DETERMINADA OU QUE NON CONSTITÚA NINGUNHA INFRACCIÓN. TODO O RISCO EN RELACIÓN Á CALIDADE, PRECISIÓN E RENDEMENTO DO DOCUMENTO OU VERSIÓN MODIFICADA DO MESMO CORRESPÓNDELLE A VOSTEDE. EN CASO DE QUE CALQUERA DOCUMENTO OU VERSIÓN MODIFICADA RESULTARA DEFECTUOSA EN CALQUERA SENTIDO, SERÁ VOSTEDE (E NON O REDACTOR INICIAL, NIN O AUTOR NIN CALQUERA PERSOA QUE TEÑA CONTRIBUIDO) QUEN ASUMIRÁ O CUSTO DE CALQUERA SERVIZO TÉCNICO, REPARACIÓN OU CORRECCIÓN PRECISOS. ESTA LIMITACIÓN DAS GARANTÍAS CONSTITÚE UNHA PARTE ESENCIAL DESTA LICENZA. NON SE AUTORIZA NINGÚN USO DE CALQUERA DOCUMENTO OU VERSIÓN MODIFICADA DO MESMO SE NON É CON SUXECCIÓN A ESTA LIMITACIÓN DE GARANTÍAS; E</para>
 		</listitem>
 		<listitem>
-		  <para lang="en">UNDER NO CIRCUMSTANCES AND UNDER NO LEGAL
-                       THEORY, WHETHER IN TORT (INCLUDING NEGLIGENCE),
-                       CONTRACT, OR OTHERWISE, SHALL THE AUTHOR,
-                       INITIAL WRITER, ANY CONTRIBUTOR, OR ANY
-                       DISTRIBUTOR OF THE DOCUMENT OR MODIFIED VERSION
-                       OF THE DOCUMENT, OR ANY SUPPLIER OF ANY OF SUCH
-                       PARTIES, BE LIABLE TO ANY PERSON FOR ANY
-                       DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR
-                       CONSEQUENTIAL DAMAGES OF ANY CHARACTER
-                       INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS
-                       OF GOODWILL, WORK STOPPAGE, COMPUTER FAILURE OR
-                       MALFUNCTION, OR ANY AND ALL OTHER DAMAGES OR
-                       LOSSES ARISING OUT OF OR RELATING TO USE OF THE
-                       DOCUMENT AND MODIFIED VERSIONS OF THE DOCUMENT,
-                       EVEN IF SUCH PARTY SHALL HAVE BEEN INFORMED OF
-                       THE POSSIBILITY OF SUCH DAMAGES.
-		  </para>
+		  <para>EN NINGUNHA CIRCUNSTANCIA NIN SEGUNDO NINGÚN ARGUMENTO LEGAL, SEXA POR MOTIVOS CULPOSOS (INCLUÍDA A NEGLIXENCIA), CONTRACTUAIS OU DE OUTRO TIPO, NIN O AUTOR, NIN O REDACTOR INICIAL, NIN CALQUERA COLABORADOR, NIN CALQUERA DISTRIBUIDOR DO DOCUMENTO OU VERSIÓN MODIFICADA DO MESMO, NIN CALQUERA FORNECEDOR DE CALQUERA DE DITAS PARATES, SERÁN RESPONSÁBEIS, ANTE NINGÚN TERCEIRO, DE NINGÚN DANO OU PERXUIZO DIRECTO, INDIRECTO, ESPECIAL, INCIDENTAL OU CONSIGUIENTE DE NINGÚN TIPO, INCLUÍDOS, SEN LIMITACIÓN, OS DANOS POR PERDA DE FONDO DE COMERCIO, INTERRUPCIÓN DO TRABALLO, FALLO OU MAL FUNCIONAMENTO INFORMÁTICO, NIN CALQUERA OUTRO DANO OU PERDA DERIVADA DO USO DO DOCUMENTO E AS VERSIÓNS MODIFICADAS DO MESMO, OU RELACIONADO CON ILO, INCLUSO SE SE COMUNICOU A AQUELA PARTE A POSIBILIDADE DE TALES DANOS.	</para>
 		</listitem>
-	  </orderedlist>
-	</para>
+	  </orderedlist></para>
   </legalnotice>
 
 
@@ -113,29 +60,9 @@
 	 any of this. -->
 
     <authorgroup>
-      <author role="maintainer" lang="en">
-	<firstname>Chee Bin</firstname>
-	<surname>HOH</surname>
-	<affiliation>
-  	  <orgname>GNOME Documentation Project</orgname>
-	</affiliation>
-	<email>cbhoh@gnome.org</email>
-      </author>
-      <author lang="en">
-	<firstname>Baptiste</firstname>
-	<surname>Mille-Mathias</surname>
-	<affiliation>
-          <orgname>GNOME Documentation project</orgname>
-        </affiliation>
-        <contrib>Update documentation</contrib>
-        <email>baptiste.millemathias@gmail.org</email>
-      </author>
-       <author lang="en">
-	<firstname>Philip</firstname>
-	<surname>Withnall</surname>
-        <contrib>Update documentation</contrib>
-	<email>philip@tecnocode.co.uk</email>
-      </author>
+      <author role="maintainer"><firstname>Chee Bin</firstname> <surname>HOH</surname> <affiliation> <orgname>Proxecto de documentación de GNOME</orgname> </affiliation> <email>cbhoh@gnome.org</email></author>
+      <author><firstname>Baptiste</firstname> <surname>Mille-Mathias</surname> <affiliation> <orgname>Proxecto de documentación de GNOME</orgname> </affiliation> <contrib>Actualización da documentación</contrib> <email>baptiste.millemathias@gmail.org</email></author>
+       <author><firstname>Philip</firstname> <surname>Withnall</surname> <contrib>Actualización da documentación</contrib> <email>philip@tecnocode.co.uk</email></author>
 
 <!-- This is appropriate place for other contributors: translators,
      maintainers,  etc. Commented out by default.
@@ -163,44 +90,51 @@
 <!-- When the desktop release version changes to V3.x, the revision number of the manual changes -->
 <!-- to V3.0, and so on. -->
     <revhistory>
-      <revision lang="en">
-        <revnumber>Totem Movie Player Manual V2.0</revnumber>
-	<date>August 2006</date>
-	<revdescription>
-	  <para role="author" lang="en">Chee Bin HOH
-	    <email>cbhoh@gnome.org</email>
-	  </para>
-	  <para role="publisher" lang="en">GNOME Documentation Project</para>
-        </revdescription>
-      </revision>
-      <revision lang="en">
-        <revnumber>Totem Movie Player Manual V3.0</revnumber>
-	<date>February 2009</date>
-	<revdescription>
-	  <para role="author" lang="en">Philip Withnall
-	    <email>philip@tecnocode.co.uk</email>
-	  </para>
-	  <para role="publisher" lang="en">GNOME Documentation Project</para>
-        </revdescription>
-      </revision>
+      <revision><revnumber>Totem Movie Player Manual V2.0</revnumber> <date>Agosto de 2006</date> <revdescription>
+	  <para role="author">Chee Bin HOH <email>cbhoh@gnome.org</email></para>
+	  <para role="publisher">Proxecto de documentación de GNOME</para>
+        </revdescription></revision>
+      <revision><revnumber>Manual do reprodutor de filmes Totem V3.0</revnumber> <date>Febreiro 2009</date> <revdescription>
+	  <para role="author">Philip Withnall <email>philip@tecnocode.co.uk</email></para>
+	  <para role="publisher">Proxecto de documentación de GNOME</para>
+        </revdescription></revision>
     </revhistory>
 
     <releaseinfo>Este manual describe a versión 2.26 do Reprodutor de filmes Totem.</releaseinfo>
     <legalnotice>
       <title>Comentarios e suxestións</title>
-      <para lang="en">To report a bug or make a suggestion regarding the <application>Totem Movie Player</application> application or
-        this manual, follow the directions in the
-        <ulink url="help:user-guide#feedback" type="help">GNOME Feedback Page</ulink>.
-      </para>
+      <para>Para informar dun erro ou facer unha suxestión referente ao aplicativo <application>Reprodutor de filmes Totem</application> ou a este manual, siga as indicacións da <ulink url="help:user-guide#feedback" type="help">Páxina de comentarios e suxestións de GNOME</ulink>.</para>
     </legalnotice>
+  
+    <othercredit class="translator">
+      <personname>
+        <firstname>Fran Diegeuz</firstname>
+      </personname>
+      <email>frandieguez@gnome.org</email>
+    </othercredit>
+    <copyright>
+      
+        <year>2015.</year>
+      
+      <holder>Fran Diegeuz</holder>
+    </copyright>
+  
+    <othercredit class="translator">
+      <personname>
+        <firstname>Leandro Regueiro</firstname>
+      </personname>
+      <email>leandro.regueiro@gmail.com</email>
+    </othercredit>
+    <copyright>
+      
+        <year>2011.</year>
+      
+      <holder>Leandro Regueiro</holder>
+    </copyright>
   </articleinfo>
 
-  <indexterm zone="index" lang="en">
-    <primary>Totem Movie Player</primary>
-  </indexterm>
-  <indexterm zone="index" lang="en">
-    <primary>totem</primary>
-  </indexterm>
+  <indexterm zone="index"><primary>Reprodutor de filmes Totem</primary></indexterm>
+  <indexterm zone="index"><primary>totem</primary></indexterm>
 
 
 <!-- ============= Document Body ============================= -->
@@ -270,21 +204,14 @@
 	<varlistentry>
 	  <term>Mediante o menú <guimenu>Aplicativos</guimenu></term>
 	  <listitem>
-	    <para lang="en">Choose
-              <menuchoice>
-		<guisubmenu>Sound &amp; Video</guisubmenu>
-		<guimenuitem>Movie Player</guimenuitem>
-	      </menuchoice>.
-            </para>
+	    <para>Seleccione <menuchoice> <guisubmenu>Son e vídeo</guisubmenu> <guimenuitem>Reprodutor de filmes</guimenuitem> </menuchoice>.</para>
 	  </listitem>
 	</varlistentry>
 	<varlistentry>
 	  <term>Mediante a liña de ordes</term>
 	  <listitem>
 	    <para>Para iniciar o <application>reprodutor de filmes Totem</application> desde a liña de ordes, escriba a seguinte orde, e prema <keycap>Intro</keycap>:</para>
-	    <para lang="en">
-            <command>totem</command>
-            </para>
+	    <para><command>totem</command></para>
 	    <tip>
 	      <para>Para ver as diferentes opcións de liña de ordes dispoñíbeis escriba <command>totem --help</command> e prema <keycap>Intro</keycap>.</para>
 	    </tip>
@@ -468,39 +395,19 @@
 	<varlistentry>
 	  <term>Saltar cara adiante</term>
 	  <listitem>
-	    <para lang="en">To skip forward through a movie or song, choose
-              <menuchoice>
-		<shortcut><keycap>Right</keycap></shortcut>
-                <guimenu>Go</guimenu>
-		<guimenuitem>Skip Forward</guimenuitem>
-              </menuchoice>.
-            </para>
+	    <para>Para saltar cara adiante nun filme ou canción, seleccione<menuchoice> <shortcut><keycap>Frecha dereita</keycap> </shortcut> <guimenu>Ir</guimenu> <guimenuitem>Saltar cara adiante</guimenuitem> </menuchoice>.</para>
           </listitem>
         </varlistentry>
 	<varlistentry>
 	  <term>Saltar cara atrás</term>
 	  <listitem>
-	    <para lang="en">To skip backwards through a movie or song, choose
-              <menuchoice>
-		<shortcut><keycap>Left</keycap></shortcut>
-                <guimenu>Go</guimenu>
-		<guimenuitem>Skip Backwards</guimenuitem>
-              </menuchoice>.
-             </para>
+	    <para>Para saltar cara atrás nun filme ou canción, seleccione<menuchoice> <shortcut><keycap>Frecha esquerda</keycap></shortcut> <guimenu>Ir</guimenu><guimenuitem>Saltar cara atrás</guimenuitem> </menuchoice>.</para>
           </listitem>
         </varlistentry>
 	<varlistentry>
 	  <term>Saltar a un tempo específico</term>
 	  <listitem>
-	    <para lang="en">To skip to a specific elapsed time in the movie or song, choose
-              <menuchoice>
-		<shortcut><keycombo><keycap>Ctrl</keycap><keycap>K</keycap></keycombo></shortcut>
-                <guimenu>Go</guimenu>
-		<guimenuitem>Skip to</guimenuitem>
-              </menuchoice>. The <application>Skip to</application> dialog is displayed. Use the
-              spin box to specify the elapsed time (in seconds) to skip to, then
-              click <guibutton>OK</guibutton>.
-            </para>
+	    <para>Para saltar a un tempo transcorrido específico no filme ou canción, seleccione<menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>K</keycap></keycombo></shortcut> <guimenu>Ir</guimenu><guimenuitem>Saltar a</guimenuitem> </menuchoice>. Móstrase a caixa de diálogo <application>Saltar a</application>. Use o selector numérico para especificar o tempo transcorrido (en segundos) ao que saltar, e despois prema en <guibutton>Aceptar</guibutton>.</para>
             <para>O selector numérico tamén permite empregalo dun xeito máis natural. Por exemplo pode introducir un tempo co formato "hh:mm:ss", "mm:ss" ou "ss", onde "hh" é a hora, "mm" é o minuto e "ss" é o segundo ao que hai que saltar.</para>
           </listitem>
         </varlistentry>
@@ -997,24 +904,8 @@
       manual, this is the place to put it. Alternatively, you can put this information in the title page.-->
   <sect1 id="totem-about">
     <title>Sobre o <application>reprodutor de filmes Totem</application></title>
-    <para lang="en"><application>Totem Movie Player</application> is written by
-      Bastien Nocera (<email>hadess@hadess.net</email>),
-      Julien Moutte (<email>julien@moutte.net</email>) for the GStreamer backend,
-      and Guenter Bartsch (<email>guenter@users.sourceforge.net</email>).
-      To find more information about <application>Totem Movie Player</application>, please visit the
-      <ulink url="https://wiki.gnome.org/Apps/Videos" type="http"><application>Totem Movie Player</application>
-      website</ulink>.
-    </para>
-    <para lang="en">
-      To report a bug or make a suggestion regarding the <application>Totem Movie Player</application> application or
-      this manual, follow the directions in the
-      <ulink url="help:user-guide#feedback" type="help">GNOME Feedback Page</ulink>.
-    </para>
-    <para lang="en"> This program is distributed under the terms of the GNU
-      General Public license as published by the Free Software
-      Foundation; either version 2 of the License, or (at your option)
-      any later version. A copy of this license can be found at this
-      <ulink url="help:gpl" type="help">link</ulink>, or in the file
-      COPYING included with the source code of this program. </para>
+    <para>O <application>Reprodutor de filmes Totem</application> foi escrito por Bastien Nocera (<email>hadess@hadess.net</email>), Julien Moutte (<email>julien@moutte.net</email>) para a infraestrutura GStreamer, e Guenter Bartsch (<email>guenter@users.sourceforge.net</email>). Para obter máis información sobre o <application>Reprodutor de filmes Totem</application> visite o <ulink url="https://wiki.gnome.org/Apps/Videos" type="http">sitio web do <application>Reprodutor de filmes Totem</application></ulink>.</para>
+    <para>Para informar dun erro ou facer unha suxestión referente ao aplicativo <application>Reprodutor de filmes Totem</application> ou a este manual, siga as indicacións da <ulink url="help:user-guide#feedback" type="help">Páxina de comentarios e suxestións de GNOME</ulink>.</para>
+    <para>Este programa distribúese baixo os temos da Licenza Pública Xeral GNU tal como a publica a Free Software Foundation; en calquera das versións 2 da licenza ou (á súa elección) calquera versión posterior. Pode atopar unha copia desta licenza nesta <ulink url="help:gpl" type="help">ligazón</ulink>, ou no ficheiro COPYING incluído co código fonte deste programa.</para>
   </sect1>
 </article>

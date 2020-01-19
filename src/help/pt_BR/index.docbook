@@ -478,7 +478,7 @@
 	    <varlistentry>
 	      <term>Salvar a lista de reprodução em um arquivo</term>
 	      <listitem>
-		<para>Para salvar a lista de reprodução em um arquivo, clique no botão <guibutton>Salvar lista de reprodução</guibutton>. O diálogo <application>Salvar lista de reprodução</application> será exibido. Especifique o nome desejado para o arquivo que será salvo a lista de reprodução e clique no botão <guibutton>Salvar</guibutton></para>
+		<para>Para salvar a lista de reprodução em um arquivo, clique no botão <guibutton>Salvar lista de reprodução</guibutton>. O diálogo <application>Salvar lista de reprodução</application> será exibido. Especifique o nome desejado para o arquivo que será salvo a lista de reprodução e clique no botão <guibutton>Salvar</guibutton>.</para>
               </listitem>
 	    </varlistentry>
 	    <varlistentry>
@@ -627,15 +627,10 @@
     <sect2 id="totem-plugins-opensubtitles">
       <title>Buscador de legendas</title>
       <para>O plug-in <guilabel>Buscador de legendas</guilabel> permite que você localize e baixe arquivos de legenda do serviço <ulink type="http" url="http://www.opensubtitles.org/pb">OpenSubtitles</ulink>.</para>
-      <para lang="en">Subtitles can only be downloaded for local movies; not audio files, DVDs, DVB streams, VCDs or HTTP streams. To search for subtitles for
-        the currently playing movie, choose
-        <menuchoice>
-          <shortcut><keycombo><keycap>Ctrl</keycap><keycap>Shift</keycap><keycap>s</keycap></keycombo></shortcut>
-          <guimenu>View</guimenu><guimenuitem>Download Movie Subtitles</guimenuitem></menuchoice>,
-        which will display the <application>Download Movie Subtitles</application> dialog.</para>
+      <para>Legendas podem apenas ser baixadas para vídeos locais e não para arquivos de música, DVDs, fluxos DVB, VCDs ou fluxos HTTP. Para pesquisar por legendas para o filme que está sendo reproduzido, use <menuchoice><shortcut><keycombo><keycap>Ctrl</keycap><keycap>Shift</keycap><keycap>S</keycap></keycombo></shortcut> <guimenu>Ver</guimenu><guimenuitem>Baixar legendas de filmes…</guimenuitem></menuchoice>, que exibirá a janela <application>Baixar legendas de filmes</application>.</para>
       <para>Selecione o idioma que você deseja para suas legendas na lista suspensa no topo do diálogo, e então clique no botão <guibutton>Localizar</guibutton> para pesquisar por legendas para o filme atual. Legendas são encontradas com base no conteúdo do filme, em preferência ao seu nome de arquivo ou etiquetas.</para>
       <para>Os resultados de pesquisa são listados na visão em árvore no meio do diálogo. Atualmente, legendas podem apenas serem usadas com um filme após <emphasis>recarregar</emphasis>-lo com as legendas, assim após selecionar o arquivo de legenda que você deseja baixar, clique no botão <guibutton>Reproduzir com legenda</guibutton> para baixar as legendas e recarregar o filme.</para>
-        <note><para>Arquivos de legenda baixados são guardados no cache (em <filename>~ /.cache/totem/subtitles</filename>, por padrão), de modo que não necessitem ser baixados novamente ao reproduzir o filme novamente. Ao baixar novas legendas para um filme,  quaisquer legendas baixadas anteriormente para o filme são excluídas.</para></note>
+        <note><para>Arquivos de legenda baixados são guardados no cache (em <filename>~/.cache/totem/subtitles</filename>, por padrão), de modo que não necessitem ser baixados novamente ao reproduzir o filme novamente. Ao baixar novas legendas para um filme, quaisquer legendas baixadas anteriormente para o filme são excluídas.</para></note>
     </sect2>
     <sect2 id="totem-plugins-thumbnail">
       <title>Miniatura</title>
@@ -783,6 +778,6 @@
     <title>Sobre o <application>Reprodutor de filmes Totem</application></title>
     <para>O <application>Reprodutor de filmes Totem</application> é escrito por Bastien Nocera (<email>hadess@hadess.net</email>), Julien Moutte (<email>julien@moutte.net</email>) para a base GStreamer e Guenter Bartsch (<email>guenter@users.sourceforge.net</email>). Para encontrar mais informações sobre o <application>Reprodutor de filmes Totem</application>, por favor, visite a página do <ulink url="https://wiki.gnome.org/Apps/Videos" type="http"><application>Reprodutor de filmes Totem</application></ulink> (em inglês).</para>
     <para>Para informar um erro ou fazer uma sugestão a respeito do aplicativo <application>Reprodutor de filmes Totem</application> ou este manual, visite <ulink url="help:user-guide#feedback" type="help">Página de feedback do GNOME</ulink>.</para>
-    <para>Este programa é distribuído sob os termos da Licença Pública Geral GNU publicada pela Free Software Foundation; tanto a versão 2 dessa licença, como (a seu critério) qualquer uma mais nova. Uma cópia dessa licença pode ser encontrada neste  <ulink url="help:gpl" type="help">link</ulink> ou no arquivo COPYING incluso no código fonte deste programa.</para>
+    <para>Este programa é distribuído sob os termos da Licença Pública Geral GNU publicada pela Free Software Foundation; tanto a versão 2 dessa licença, como (a seu critério) qualquer uma mais nova. Uma cópia dessa licença pode ser encontrada neste <ulink url="help:gpl" type="help">link</ulink> ou no arquivo COPYING incluso no código fonte deste programa.</para>
   </sect1>
 </article>

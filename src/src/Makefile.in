@@ -92,7 +92,9 @@ build_triplet = @build@
 host_triplet = @host@
 bin_PROGRAMS = totem$(EXEEXT) totem-video-thumbnailer$(EXEEXT) \
 	totem-audio-preview$(EXEEXT)
-@HAVE_NAUTILUS_TRUE@noinst_PROGRAMS = test-properties-page$(EXEEXT)
+@HAVE_NAUTILUS_FALSE@noinst_PROGRAMS = test-icons$(EXEEXT)
+@HAVE_NAUTILUS_TRUE@noinst_PROGRAMS = test-properties-page$(EXEEXT) \
+@HAVE_NAUTILUS_TRUE@	test-icons$(EXEEXT)
 @HAVE_INTROSPECTION_TRUE@am__append_1 = Totem-1.0.gir
 subdir = src
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -190,6 +192,13 @@ libtotem_player_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(libtotem_player_la_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
 PROGRAMS = $(bin_PROGRAMS) $(noinst_PROGRAMS)
+am_test_icons_OBJECTS = test_icons-test-icons.$(OBJEXT) \
+	test_icons-icon-helpers.$(OBJEXT)
+test_icons_OBJECTS = $(am_test_icons_OBJECTS)
+test_icons_DEPENDENCIES = $(am__DEPENDENCIES_1)
+test_icons_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(test_icons_CFLAGS) \
+	$(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 am__test_properties_page_SOURCES_DIST = totem-properties-main.c \
 	totem-properties-view.c totem-properties-view.h \
 	test-properties-page.c
@@ -269,13 +278,13 @@ am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
 SOURCES = $(libtotem_properties_page_la_SOURCES) \
 	$(libtotem_la_SOURCES) $(libtotem_player_la_SOURCES) \
-	$(test_properties_page_SOURCES) $(totem_SOURCES) \
-	$(totem_audio_preview_SOURCES) \
+	$(test_icons_SOURCES) $(test_properties_page_SOURCES) \
+	$(totem_SOURCES) $(totem_audio_preview_SOURCES) \
 	$(totem_video_thumbnailer_SOURCES)
 DIST_SOURCES = $(am__libtotem_properties_page_la_SOURCES_DIST) \
 	$(libtotem_la_SOURCES) $(libtotem_player_la_SOURCES) \
-	$(am__test_properties_page_SOURCES_DIST) $(totem_SOURCES) \
-	$(totem_audio_preview_SOURCES) \
+	$(test_icons_SOURCES) $(am__test_properties_page_SOURCES_DIST) \
+	$(totem_SOURCES) $(totem_audio_preview_SOURCES) \
 	$(totem_video_thumbnailer_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive cscopelist-recursive \
 	ctags-recursive dvi-recursive html-recursive info-recursive \
@@ -383,8 +392,6 @@ BACKEND_TEST_LIBS = @BACKEND_TEST_LIBS@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
-CHAPTERS_CFLAGS = @CHAPTERS_CFLAGS@
-CHAPTERS_LIBS = @CHAPTERS_LIBS@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
 CXX = @CXX@
@@ -471,6 +478,7 @@ LIPO = @LIPO@
 LIRC_LIBS = @LIRC_LIBS@
 LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
+LT_SYS_LIBRARY_PATH = @LT_SYS_LIBRARY_PATH@
 MAINT = @MAINT@
 MAKEINFO = @MAKEINFO@
 MANIFEST_TOOL = @MANIFEST_TOOL@
@@ -832,6 +840,15 @@ INTROSPECTION_COMPILER_ARGS = --includedir=$(srcdir)
 @HAVE_INTROSPECTION_TRUE@typelibdir = $(libdir)/girepository-1.0
 @HAVE_INTROSPECTION_TRUE@typelib_DATA = $(INTROSPECTION_GIRS:.gir=.typelib)
 @HAVE_INTROSPECTION_TRUE@CLEANFILES = $(gir_DATA) $(typelib_DATA)
+test_icons_SOURCES = \
+	test-icons.c			\
+	icon-helpers.c icon-helpers.h
+
+test_icons_CFLAGS = \
+	$(PLAYER_CFLAGS)		\
+	$(AM_CFLAGS)
+
+test_icons_LDADD = $(PLAYER_LIBS)
 all: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 
@@ -1015,6 +1032,10 @@ clean-noinstPROGRAMS:
 	echo " rm -f" $$list; \
 	rm -f $$list
 
+test-icons$(EXEEXT): $(test_icons_OBJECTS) $(test_icons_DEPENDENCIES) $(EXTRA_test_icons_DEPENDENCIES) 
+	@rm -f test-icons$(EXEEXT)
+	$(AM_V_CCLD)$(test_icons_LINK) $(test_icons_OBJECTS) $(test_icons_LDADD) $(LIBS)
+
 test-properties-page$(EXEEXT): $(test_properties_page_OBJECTS) $(test_properties_page_DEPENDENCIES) $(EXTRA_test_properties_page_DEPENDENCIES) 
 	@rm -f test-properties-page$(EXEEXT)
 	$(AM_V_CCLD)$(test_properties_page_LINK) $(test_properties_page_OBJECTS) $(test_properties_page_LDADD) $(LIBS)
@@ -1058,6 +1079,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libtotem_player_la-totem-time-label.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libtotem_properties_page_la-totem-properties-main.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libtotem_properties_page_la-totem-properties-view.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_icons-icon-helpers.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_icons-test-icons.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_properties_page-test-properties-page.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_properties_page-totem-properties-main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test_properties_page-totem-properties-view.Po@am__quote@
@@ -1234,6 +1257,34 @@ libtotem_player_la-totem-time-label.lo: totem-time-label.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='totem-time-label.c' object='libtotem_player_la-totem-time-label.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libtotem_player_la_CPPFLAGS) $(CPPFLAGS) $(libtotem_player_la_CFLAGS) $(CFLAGS) -c -o libtotem_player_la-totem-time-label.lo `test -f 'totem-time-label.c' || echo '$(srcdir)/'`totem-time-label.c
+
+test_icons-test-icons.o: test-icons.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_icons_CFLAGS) $(CFLAGS) -MT test_icons-test-icons.o -MD -MP -MF $(DEPDIR)/test_icons-test-icons.Tpo -c -o test_icons-test-icons.o `test -f 'test-icons.c' || echo '$(srcdir)/'`test-icons.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/test_icons-test-icons.Tpo $(DEPDIR)/test_icons-test-icons.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='test-icons.c' object='test_icons-test-icons.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_icons_CFLAGS) $(CFLAGS) -c -o test_icons-test-icons.o `test -f 'test-icons.c' || echo '$(srcdir)/'`test-icons.c
+
+test_icons-test-icons.obj: test-icons.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_icons_CFLAGS) $(CFLAGS) -MT test_icons-test-icons.obj -MD -MP -MF $(DEPDIR)/test_icons-test-icons.Tpo -c -o test_icons-test-icons.obj `if test -f 'test-icons.c'; then $(CYGPATH_W) 'test-icons.c'; else $(CYGPATH_W) '$(srcdir)/test-icons.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/test_icons-test-icons.Tpo $(DEPDIR)/test_icons-test-icons.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='test-icons.c' object='test_icons-test-icons.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_icons_CFLAGS) $(CFLAGS) -c -o test_icons-test-icons.obj `if test -f 'test-icons.c'; then $(CYGPATH_W) 'test-icons.c'; else $(CYGPATH_W) '$(srcdir)/test-icons.c'; fi`
+
+test_icons-icon-helpers.o: icon-helpers.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_icons_CFLAGS) $(CFLAGS) -MT test_icons-icon-helpers.o -MD -MP -MF $(DEPDIR)/test_icons-icon-helpers.Tpo -c -o test_icons-icon-helpers.o `test -f 'icon-helpers.c' || echo '$(srcdir)/'`icon-helpers.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/test_icons-icon-helpers.Tpo $(DEPDIR)/test_icons-icon-helpers.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='icon-helpers.c' object='test_icons-icon-helpers.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_icons_CFLAGS) $(CFLAGS) -c -o test_icons-icon-helpers.o `test -f 'icon-helpers.c' || echo '$(srcdir)/'`icon-helpers.c
+
+test_icons-icon-helpers.obj: icon-helpers.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_icons_CFLAGS) $(CFLAGS) -MT test_icons-icon-helpers.obj -MD -MP -MF $(DEPDIR)/test_icons-icon-helpers.Tpo -c -o test_icons-icon-helpers.obj `if test -f 'icon-helpers.c'; then $(CYGPATH_W) 'icon-helpers.c'; else $(CYGPATH_W) '$(srcdir)/icon-helpers.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/test_icons-icon-helpers.Tpo $(DEPDIR)/test_icons-icon-helpers.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='icon-helpers.c' object='test_icons-icon-helpers.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test_icons_CFLAGS) $(CFLAGS) -c -o test_icons-icon-helpers.obj `if test -f 'icon-helpers.c'; then $(CYGPATH_W) 'icon-helpers.c'; else $(CYGPATH_W) '$(srcdir)/icon-helpers.c'; fi`
 
 test_properties_page-totem-properties-main.o: totem-properties-main.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(test_properties_page_CPPFLAGS) $(CPPFLAGS) $(test_properties_page_CFLAGS) $(CFLAGS) -MT test_properties_page-totem-properties-main.o -MD -MP -MF $(DEPDIR)/test_properties_page-totem-properties-main.Tpo -c -o test_properties_page-totem-properties-main.o `test -f 'totem-properties-main.c' || echo '$(srcdir)/'`totem-properties-main.c

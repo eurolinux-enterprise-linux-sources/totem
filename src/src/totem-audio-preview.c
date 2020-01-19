@@ -36,6 +36,7 @@
 #include <stdlib.h>
 #include <glib/gi18n.h>
 #include <gio/gio.h>
+#include <locale.h>
 
 #include "totem-gst-helpers.h"
 #include "totem-resources.h"
@@ -118,10 +119,8 @@ error_handler (GstBus *bus,
 	case GST_MESSAGE_RESET_TIME:
 	case GST_MESSAGE_STREAM_START:
 	case GST_MESSAGE_ANY:
-#if GST_CHECK_VERSION (1, 1, 3)
 	case GST_MESSAGE_NEED_CONTEXT:
 	case GST_MESSAGE_HAVE_CONTEXT:
-#endif
 	default:
 		/* Ignored */
 		;;
@@ -165,12 +164,13 @@ int main (int argc, char **argv)
 	GMainLoop *loop;
 	GstElement *play;
 
+	setlocale (LC_ALL, "");
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
 	g_set_application_name (_("Audio Preview"));
-	g_setenv("PULSE_PROP_application.icon_name", "totem", TRUE);
+	g_setenv("PULSE_PROP_application.icon_name", "org.gnome.Totem", TRUE);
 	g_setenv("PULSE_PROP_media.role", "music", TRUE);
 
 	context = g_option_context_new ("Plays audio passed on the standard input or the filename passed on the command-line");

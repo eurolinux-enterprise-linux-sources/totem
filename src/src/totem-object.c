@@ -180,7 +180,7 @@ totem_object_app_activate (GApplication *app)
 	/* Menubar */
 	totem->stack = GTK_WIDGET (gtk_builder_get_object (totem->xml, "tmw_main_stack"));
 
-	/* The sidebar */
+	/* The playlist widget */
 	playlist_widget_setup (totem);
 
 	/* The rest of the widgets */
@@ -257,7 +257,7 @@ totem_object_app_activate (GApplication *app)
 	optionstate.had_filenames = FALSE;
 
 	/* Set the logo at the last minute so we won't try to show it before a video */
-	bacon_video_widget_set_logo (totem->bvw, "totem");
+	bacon_video_widget_set_logo (totem->bvw, "org.gnome.Totem");
 
 	if (optionstate.fullscreen == FALSE)
 		g_application_unmark_busy (G_APPLICATION (totem));
@@ -622,7 +622,9 @@ totem_object_get_main_window (TotemObject *totem)
  * @totem: a #TotemObject
  * @id: the ID for the menu section to look up
  *
- * Return value: (transfer none): a #GMenu or %NULL on failure
+ * Get the #GMenu of the given @id from the main Totem #GtkBuilder file.
+ *
+ * Return value: (transfer none) (nullable): a #GMenu or %NULL on failure
  **/
 GMenu *
 totem_object_get_menu_section (TotemObject *totem,
@@ -975,42 +977,6 @@ void
 totem_object_set_current_subtitle (TotemObject *totem, const char *subtitle_uri)
 {
 	totem_playlist_set_current_subtitle (totem->playlist, subtitle_uri);
-}
-
-/**
- * totem_object_add_sidebar_page:
- * @totem: a #TotemObject
- * @page_id: a string used to identify the page
- * @title: the page's title
- * @main_widget: the main widget for the page
- *
- * Adds a sidebar page to Totem's sidebar with the given @page_id.
- * @main_widget is added into the page and shown automatically, while
- * @title is displayed as the page's title in the tab bar.
- **/
-void
-totem_object_add_sidebar_page (TotemObject *totem,
-			       const char *page_id,
-			       const char *title,
-			       GtkWidget *main_widget)
-{
-	g_warning ("totem_object_add_sidebar_page is obsolete");
-}
-
-/**
- * totem_object_remove_sidebar_page:
- * @totem: a #TotemObject
- * @page_id: a string used to identify the page
- *
- * Removes the page identified by @page_id from Totem's sidebar.
- * If @page_id doesn't exist in the sidebar, this function does
- * nothing.
- **/
-void
-totem_object_remove_sidebar_page (TotemObject *totem,
-			   const char *page_id)
-{
-	/* Empty */
 }
 
 void
@@ -1635,30 +1601,6 @@ totem_object_pause (TotemObject *totem)
 	}
 }
 
-static void
-update_toolbar_visibility (TotemObject *totem,
-			   gboolean     animate)
-{
-	gboolean visible;
-	guint duration;
-
-	if (totem->controls_visibility != TOTEM_CONTROLS_FULLSCREEN) {
-		visible = FALSE;
-		duration = 0;
-	} else {
-		g_object_get (G_OBJECT (totem->bvw), "reveal-controls", &visible, NULL);
-		duration = animate ? 250 : 0;
-	}
-
-	if (visible)
-		gtk_widget_show (totem->revealer);
-
-	/* We don't change the transition type, because it causes
-	 * a queue resize, and it might short-circuit the animation */
-	gtk_revealer_set_transition_duration (GTK_REVEALER (totem->revealer), duration);
-	gtk_revealer_set_reveal_child (GTK_REVEALER (totem->revealer), visible);
-}
-
 gboolean
 window_state_event_cb (GtkWidget           *window,
 		       GdkEventWindowState *event,
@@ -1682,7 +1624,8 @@ window_state_event_cb (GtkWidget           *window,
 		show_controls (totem, TRUE);
 	}
 
-	update_toolbar_visibility (totem, FALSE);
+	bacon_video_widget_set_fullscreen (totem->bvw,
+					   totem->controls_visibility == TOTEM_CONTROLS_FULLSCREEN);
 
 	action = g_action_map_lookup_action (G_ACTION_MAP (totem), "fullscreen");
 	g_simple_action_set_state (G_SIMPLE_ACTION (action),
@@ -2124,6 +2067,35 @@ totem_object_set_volume (TotemObject *totem, double volume)
 }
 
 /**
+ * totem_object_get_rate:
+ * @totem: a #TotemObject
+ *
+ * Gets the current playback rate, with `1.0` being the normal playback rate.
+ *
+ * Return value: the volume level
+ **/
+float
+totem_object_get_rate (TotemObject *totem)
+{
+	return bacon_video_widget_get_rate (totem->bvw);
+}
+
+/**
+ * totem_object_set_rate:
+ * @totem: a #TotemObject
+ * @rate: the new absolute playback rate
+ *
+ * Sets the playback rate, with `1.0` being the normal playback rate.
+ *
+ * Return value: %TRUE on success, %FALSE on failure.
+ **/
+gboolean
+totem_object_set_rate (TotemObject *totem, float rate)
+{
+	return bacon_video_widget_set_rate (totem->bvw, rate);
+}
+
+/**
  * totem_object_set_volume_relative:
  * @totem: a #TotemObject
  * @off_pct: the value by which to increase or decrease the volume
@@ -2188,6 +2160,27 @@ totem_object_show_help (TotemObject *totem)
 		totem_object_show_error (totem, _("Totem could not display the help contents."), error->message);
 		g_error_free (error);
 	}
+}
+
+void
+totem_object_show_keyboard_shortcuts (TotemObject *totem)
+{
+	GtkBuilder *builder;
+
+	if (totem->shortcuts_win) {
+		gtk_window_present (totem->shortcuts_win);
+		return;
+	}
+
+	builder = totem_interface_load ("shortcuts.ui", FALSE, NULL, NULL);
+	totem->shortcuts_win = GTK_WINDOW (gtk_builder_get_object (builder, "shortcuts-totem"));
+	gtk_window_set_transient_for (totem->shortcuts_win, GTK_WINDOW (totem->win));
+
+	g_signal_connect (totem->shortcuts_win, "destroy",
+			  G_CALLBACK (gtk_widget_destroyed), &totem->shortcuts_win);
+
+	gtk_widget_show (GTK_WIDGET (totem->shortcuts_win));
+	g_object_unref (builder);
 }
 
 /* This is called in the main thread */
@@ -2449,14 +2442,6 @@ update_fill (TotemObject *totem, gdouble level)
 		gtk_range_set_fill_level (GTK_RANGE (totem->seek), level * 65535.0f);
 		gtk_range_set_show_fill_level (GTK_RANGE (totem->seek), TRUE);
 	}
-}
-
-static void
-on_reveal_controls_changed (GObject     *gobject,
-			    GParamSpec  *pspec,
-			    TotemObject *totem)
-{
-	update_toolbar_visibility (totem, TRUE);
 }
 
 static void
@@ -3252,6 +3237,13 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 	case GDK_KEY_G:
 		totem_object_next_angle (totem);
 		break;
+	case GDK_KEY_H:
+	case GDK_KEY_h:
+		totem_object_show_keyboard_shortcuts (totem);
+		break;
+	case GDK_KEY_question:
+		totem_object_show_keyboard_shortcuts (totem);
+		break;
 	case GDK_KEY_M:
 	case GDK_KEY_m:
 		bacon_video_widget_dvd_event (totem->bvw, BVW_DVD_ROOT_MENU);
@@ -3293,6 +3285,13 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 	case GDK_KEY_Pause:
 	case GDK_KEY_AudioStop:
 		totem_object_pause (totem);
+		break;
+	case GDK_KEY_w:
+	case GDK_KEY_W:
+		if (mask == GDK_CONTROL_MASK)
+			totem_object_exit (totem);
+		else
+			retval = FALSE;
 		break;
 	case GDK_KEY_q:
 	case GDK_KEY_Q:
@@ -3395,8 +3394,6 @@ totem_object_handle_key_press (TotemObject *totem, GdkEventKey *event)
 			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (totem->gear_button),
 						      !gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (totem->gear_button)));
 		} else {
-			/* FIXME
-			 * The menu won't be correctly positioned */
 			gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (totem->fullscreen_gear_button),
 						      !gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (totem->fullscreen_gear_button)));
 		}
@@ -3513,6 +3510,8 @@ window_key_press_event_cb (GtkWidget *win, GdkEventKey *event, TotemObject *tote
 		case GDK_KEY_l:
 		case GDK_KEY_q:
 		case GDK_KEY_Q:
+		case GDK_KEY_w:
+		case GDK_KEY_W:
 		case GDK_KEY_Right:
 		case GDK_KEY_Left:
 		case GDK_KEY_plus:
@@ -3743,6 +3742,7 @@ totem_callback_connect (TotemObject *totem)
 	GtkBox *box;
 	GAction *gaction;
 	GMenuModel *menu;
+	GtkPopover *popover;
 
 	/* Menu items */
 	gaction = g_action_map_lookup_action (G_ACTION_MAP (totem), "repeat");
@@ -3790,6 +3790,9 @@ totem_callback_connect (TotemObject *totem)
 	item = g_object_get_data (totem->controls, "go_button");
 	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "gomenu");
 	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
+	popover = gtk_menu_button_get_popover (GTK_MENU_BUTTON (item));
+	gtk_popover_set_transitions_enabled (GTK_POPOVER (popover), FALSE);
+	gtk_widget_set_size_request (GTK_WIDGET (popover), 175, -1);
 	g_signal_connect (G_OBJECT (item), "toggled",
 			  G_CALLBACK (popup_menu_shown_cb), totem);
 	/* Cog wheel */
@@ -3797,9 +3800,10 @@ totem_callback_connect (TotemObject *totem)
 									  gtk_menu_button_new (),
 									  "open-menu-symbolic",
 									  GTK_PACK_END);
-	g_object_set (G_OBJECT (totem->gear_button), "use-popover", TRUE, NULL);
 	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "playermenu");
 	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
+	popover = gtk_menu_button_get_popover (GTK_MENU_BUTTON (item));
+	gtk_popover_set_transitions_enabled (GTK_POPOVER (popover), FALSE);
 	g_signal_connect (G_OBJECT (item), "toggled",
 			  G_CALLBACK (popup_menu_shown_cb), totem);
 
@@ -3808,7 +3812,6 @@ totem_callback_connect (TotemObject *totem)
 									 gtk_menu_button_new (),
 									 "list-add-symbolic",
 									 GTK_PACK_START);
-	g_object_set (G_OBJECT (totem->add_button), "use-popover", TRUE, NULL);
 	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "addmenu");
 	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
 	gtk_widget_show (item);
@@ -3920,24 +3923,13 @@ grilo_widget_setup (TotemObject *totem)
 }
 
 static void
-child_revealed_changed_cb (GObject      *object,
-			   GParamSpec   *pspec,
-			   gpointer      user_data)
-{
-	gboolean val;
-
-	g_object_get (object, "child-revealed", &val, NULL);
-	if (!val)
-		gtk_widget_hide (GTK_WIDGET (object));
-}
-
-static void
 add_fullscreen_toolbar (TotemObject *totem)
 {
-	GtkWidget *item;
+	GtkWidget *container, *item;
 	GMenuModel *menu;
 
-	totem->revealer = GTK_WIDGET (gtk_builder_get_object (totem->xml, "toolbar-revealer"));
+	container = GTK_WIDGET (bacon_video_widget_get_header_controls_object (totem->bvw));
+
 	totem->fullscreen_header = g_object_new (TOTEM_TYPE_MAIN_TOOLBAR,
 						 "show-search-button", FALSE,
 						 "show-select-button", FALSE,
@@ -3964,18 +3956,14 @@ add_fullscreen_toolbar (TotemObject *totem)
 						     gtk_menu_button_new (),
 						     "open-menu-symbolic",
 						     GTK_PACK_END);
-	g_object_set (G_OBJECT (item), "use-popover", TRUE, NULL);
 	menu = (GMenuModel *) gtk_builder_get_object (totem->xml, "playermenu");
 	gtk_menu_button_set_menu_model (GTK_MENU_BUTTON (item), menu);
 	g_signal_connect (G_OBJECT (item), "toggled",
 			  G_CALLBACK (popup_menu_shown_cb), totem);
 	totem->fullscreen_gear_button = item;
 
-	gtk_container_add (GTK_CONTAINER (totem->revealer), totem->fullscreen_header);
+	gtk_container_add (GTK_CONTAINER (container), totem->fullscreen_header);
 	gtk_widget_show_all (totem->fullscreen_header);
-
-	g_signal_connect (totem->revealer, "notify::child-revealed",
-			  G_CALLBACK (child_revealed_changed_cb), NULL);
 }
 
 void
@@ -3984,6 +3972,8 @@ video_widget_create (TotemObject *totem)
 	GError *err = NULL;
 	GtkContainer *container;
 	BaconVideoWidget **bvw;
+	GdkWindow *window;
+	gboolean fullscreen;
 
 	totem->bvw = BACON_VIDEO_WIDGET (bacon_video_widget_new (&err));
 
@@ -3993,6 +3983,10 @@ video_widget_create (TotemObject *totem)
 			g_error_free (err);
 	}
 
+	window = gtk_widget_get_window (totem->win);
+
+	fullscreen = window && ((gdk_window_get_state (window) & GDK_WINDOW_STATE_FULLSCREEN) != 0);
+	bacon_video_widget_set_fullscreen (totem->bvw, fullscreen);
 	totem->controls = bacon_video_widget_get_controls_object (totem->bvw);
 
 	g_signal_connect_after (G_OBJECT (totem->bvw),
@@ -4031,10 +4025,6 @@ video_widget_create (TotemObject *totem)
 			"error",
 			G_CALLBACK (on_error_event),
 			totem);
-	g_signal_connect (G_OBJECT (totem->bvw),
-			  "notify::reveal-controls",
-			  G_CALLBACK (on_reveal_controls_changed),
-			  totem);
 	g_signal_connect (G_OBJECT (totem->bvw),
 			  "seek-requested",
 			  G_CALLBACK (on_seek_requested_event),

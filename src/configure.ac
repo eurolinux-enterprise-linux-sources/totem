@@ -1,8 +1,8 @@
 AC_PREREQ[(2.64)]
 
 m4_define(totem_version_major, 3)
-m4_define(totem_version_minor, 14)
-m4_define(totem_version_micro, 3)
+m4_define(totem_version_minor, 22)
+m4_define(totem_version_micro, 1)
 
 # The version of the API exposed to plugins
 m4_define(totem_api_version_major, 1)
@@ -29,7 +29,7 @@ dnl Add the languages which your application supports to po/LINGUAS
 GETTEXT_PACKAGE=totem
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, ["$GETTEXT_PACKAGE"], [Define to the Gettext package name])
 AC_SUBST(GETTEXT_PACKAGE)
-IT_PROG_INTLTOOL([0.40.0])
+IT_PROG_INTLTOOL([0.50.1])
 
 # User Documentation
 YELP_HELP_INIT
@@ -53,15 +53,15 @@ AC_PATH_PROG([GLIB_MKENUMS],[glib-mkenums])
 # Requirements
 GLIB_REQS=2.35.0
 GIO_REQS=2.27.92
-GTK_REQS=3.11.5
+GTK_REQS=3.19.4
 TOTEM_PLPARSER_REQS=3.10.1
 VALA_REQS=0.14.1
 PEAS_REQS=1.1.0
 PYTHON_REQS=2.3
 PYGOBJECT_REQS=2.90.3
-GRILO_REQS=0.2.11
-GRILO_PLS_REQS=0.2.1
+GRILO_REQS=0.3.0
 LIBXML_REQS=2.6.0
+CAIRO_REQS=1.14.0
 
 # Used in the pkg-config file for plugins
 AC_SUBST(GLIB_REQS)
@@ -80,7 +80,7 @@ AC_SUBST(TOTEM_API_VERSION)
 AC_DEFINE_UNQUOTED(TOTEM_API_VERSION, ["$TOTEM_API_VERSION"], [Define to the Totem plugin API version])
 
 # The full list of plugins
-allowed_plugins="apple-trailers autoload-subtitles brasero-disc-recorder chapters dbusservice im-status gromit lirc media-player-keys ontop opensubtitles properties pythonconsole recent rotation save-file samplepython sample-vala screensaver screenshot skipto zeitgeist-dp vimeo"
+allowed_plugins="apple-trailers autoload-subtitles brasero-disc-recorder dbusservice im-status gromit lirc media-player-keys ontop opensubtitles properties pythonconsole recent rotation save-file samplepython sample-vala screensaver screenshot skipto zeitgeist-dp variable-rate vimeo"
 
 PLUGINDIR='${libdir}/totem/plugins'
 AC_SUBST(PLUGINDIR)
@@ -88,12 +88,12 @@ AC_SUBST(PLUGINDIR)
 dnl the two versions here implicate the gstreamer core and gst-plugins
 dnl release versions.
 GST_MAJORMINOR=1.0
-GST_REQS=1.3.1
-GST_PLUG_BASE_REQS=1.4.2
+GST_REQS=1.6.0
+GST_PLUG_BASE_REQS=1.6.0
 GSTPLUG_REQS=0.11.93
 CLUTTER_REQS=1.17.3
-CLUTTER_GST_REQS=1.5.5
-CLUTTER_GTK_REQS=1.5.5
+CLUTTER_GST_REQS=2.99.2
+CLUTTER_GTK_REQS=1.8.1
 
 dnl Check for the required GStreamer versions for missing plugins
 dnl installation, unless this has been disabled.
@@ -130,7 +130,7 @@ fi
 # Backend requirements
 # ================================================================
 
-BACKEND_MODULES="gstreamer-1.0 >= $GST_REQS gstreamer-base-1.0 >= $GST_REQS gstreamer-plugins-base-1.0 >= $GST_PLUG_BASE_REQS $MISSING_PLUGINS_MODULES gstreamer-tag-1.0 >= $GSTPLUG_REQS gstreamer-audio-1.0 gstreamer-video-1.0 clutter-1.0 >= $CLUTTER_REQS clutter-gst-2.0 >= $CLUTTER_GST_REQS clutter-gtk-1.0 cairo gsettings-desktop-schemas"
+BACKEND_MODULES="gstreamer-1.0 >= $GST_REQS gstreamer-base-1.0 >= $GST_REQS gstreamer-plugins-base-1.0 >= $GST_PLUG_BASE_REQS $MISSING_PLUGINS_MODULES gstreamer-tag-1.0 >= $GSTPLUG_REQS gstreamer-audio-1.0 gstreamer-video-1.0 clutter-1.0 >= $CLUTTER_REQS clutter-gst-3.0 >= $CLUTTER_GST_REQS clutter-gtk-1.0 cairo >= $CAIRO_REQS gsettings-desktop-schemas"
 
 PKG_CHECK_MODULES(BACKEND, $BACKEND_MODULES)
 PKG_CHECK_MODULES(BACKEND_TEST, $BACKEND_MODULES gtk+-3.0 >= $GTK_REQS)
@@ -235,7 +235,7 @@ AM_CONDITIONAL([ENABLE_PYTHON],[test "x$enable_python" = "xyes"])
 # Player requirements
 #================================================================
 
-PKG_CHECK_MODULES(PLAYER, $BACKEND_MODULES glib-2.0 >= $GLIB_REQS gio-2.0 >= $GIO_REQS gtk+-3.0 >= $GTK_REQS gdk-x11-3.0 >= $GTK_REQS gmodule-2.0 totem-plparser >= $TOTEM_PLPARSER_REQS libpeas-1.0 >= $PEAS_REQS libpeas-gtk-1.0 >= $PEAS_REQS $PYTHON_MODULES grilo-0.2 >= $GRILO_REQS grilo-pls-0.2 >= $GRILO_PLS_REQS gnome-desktop-3.0)
+PKG_CHECK_MODULES(PLAYER, $BACKEND_MODULES glib-2.0 >= $GLIB_REQS gio-2.0 >= $GIO_REQS gtk+-3.0 >= $GTK_REQS gdk-x11-3.0 >= $GTK_REQS gmodule-2.0 totem-plparser >= $TOTEM_PLPARSER_REQS libpeas-1.0 >= $PEAS_REQS libpeas-gtk-1.0 >= $PEAS_REQS $PYTHON_MODULES grilo-0.3 >= $GRILO_REQS grilo-pls-0.3 >= $GRILO_REQS gnome-desktop-3.0)
 PKG_CHECK_MODULES(LIBPLAYER, glib-2.0 >= $GLIB_REQS gio-2.0 >= $GIO_REQS gtk+-3.0 >= $GTK_REQS gdk-x11-3.0 >= $GTK_REQS clutter-gtk-1.0)
 PKG_CHECK_MODULES(HELPER, gstreamer-1.0 gstreamer-tag-1.0)
 PKG_CHECK_MODULES(TIME_HELPER, glib-2.0)
@@ -410,14 +410,6 @@ for plugin in ${used_plugins}; do
 				PKG_CHECK_MODULES(SAVE_FILE, gio-2.0 >= 2.26)
 			fi
 		;;
-		chapters)
-			PKG_CHECK_MODULES(CHAPTERS, libxml-2.0 >= $LIBXML_REQS gtk+-3.0 glib-2.0,
-				[BUILD_CHAPTERS=yes], [BUILD_CHAPTERS=no])
-			if test "${BUILD_CHAPTERS}" != "yes" ; then
-				plugin_error "you need gtk+-3.0, glib-2.0 >= 2.15.0 and libxml-2.0 >= 2.6.0 to use the chapters plugin"
-				add_plugin="0"
-			fi
-		;;
 		zeitgeist-dp)
 			if test "${with_vala}" != "yes" ; then
 				plugin_error_or_ignore "you need vala installed to use the zeitgeist-dp plugin"
@@ -561,7 +553,7 @@ src/plugins/gromit/Makefile
 src/plugins/lirc/Makefile
 src/plugins/media-player-keys/Makefile
 src/plugins/opensubtitles/Makefile
-src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in
+src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml
 src/plugins/properties/Makefile
 src/plugins/recent/Makefile
 src/plugins/rotation/Makefile
@@ -570,14 +562,14 @@ src/plugins/skipto/Makefile
 src/plugins/samplepython/Makefile
 src/plugins/sample-vala/Makefile
 src/plugins/pythonconsole/Makefile
-src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in
+src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml
 src/plugins/brasero-disc-recorder/Makefile
-src/plugins/chapters/Makefile
 src/plugins/zeitgeist-dp/Makefile
+src/plugins/variable-rate/Makefile
 src/plugins/vimeo/Makefile
 src/backend/Makefile
 data/Makefile
-data/org.gnome.totem.gschema.xml.in
+data/org.gnome.totem.gschema.xml
 data/org.gnome.Totem.desktop.in.in
 data/totem.pc
 data/appdata/Makefile
@@ -588,7 +580,7 @@ data/icons/24x24/Makefile
 data/icons/32x32/Makefile
 data/icons/48x48/Makefile
 data/icons/256x256/Makefile
-data/icons/scalable/Makefile
+data/icons/symbolic/Makefile
 po/Makefile.in
 help/Makefile
 docs/Makefile

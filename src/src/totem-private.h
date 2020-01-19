@@ -77,6 +77,7 @@ struct _TotemObject {
 	BaconVideoWidget *bvw;
 	GtkWidget *prefs;
 	GtkBuilder *prefs_xml;
+	GtkWindow *shortcuts_win;
 
 	GtkWidget *grilo;
 
@@ -86,7 +87,6 @@ struct _TotemObject {
 	BaconTimeLabel *time_rem_label;
 	GtkWidget *header;
 
-	GtkWidget *revealer;
 	GtkWidget *fullscreen_header;
 	GtkWidget *fullscreen_gear_button;
 
@@ -171,6 +171,7 @@ void	totem_object_open_location		(Totem *totem);
 void	totem_object_eject			(Totem *totem);
 void	totem_object_set_zoom			(Totem *totem, gboolean zoom);
 void	totem_object_show_help			(Totem *totem);
+void	totem_object_show_keyboard_shortcuts	(Totem *totem);
 void	totem_object_show_properties		(Totem *totem);
 void    totem_object_set_mrl			(TotemObject *totem,
 						 const char *mrl,

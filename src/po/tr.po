@@ -43,16 +43,18 @@
 # Erçin EKER <ercin.eker@linux.org.tr>, 2005,2007.
 # Onur Can ÇAKMAK <onur.cakmak@gmail.com>, 2006.
 # Baris Cicek <baris@teamforce.name.tr>, 2007, 2008, 2009.
-# Muhammet Kara <muhammetk@gmail.com>, 2011, 2013, 2014.
+# Yaşar Şentürk <yasarix@gmail.com>, 2015.
+# Muhammet Kara <muhammetk@gmail.com>, 2011, 2013, 2014, 2015.
+# Emin Tufan Çetin <etcetin@gmail.com>, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-12-04 11:47+0000\n"
-"PO-Revision-Date: 2014-12-04 22:01+0200\n"
-"Last-Translator: Muhammet Kara <muhammetk@gmail.com>\n"
+"POT-Creation-Date: 2016-08-17 11:08+0000\n"
+"PO-Revision-Date: 2016-09-12 16:23+0300\n"
+"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -60,110 +62,119 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Launchpad-Export-Date: 2012-08-31 06:01+0000\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"X-Generator: Gtranslator 2.91.7\n"
 
 #: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:1
+#: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:66
+#: ../src/totem.c:72 ../src/totem-grilo.c:1864 ../src/totem-object.c:3661
+msgid "Videos"
+msgstr "Videolar"
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:2
+#: ../data/org.gnome.Totem.desktop.in.in.in.h:2
+msgid "Play movies"
+msgstr "Filmleri oynat"
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:3
 msgid ""
 "Videos, also known as Totem, is the official movie player of the GNOME "
 "desktop environment. It features a searchable list of local videos, and "
 "DVDs, as well as local network video shares (using UPnP/DLNA) and video "
 "highlights from a number of web sites."
 msgstr ""
+"Totem olarak da bilinen Videolar programı, GNOME masaüstü ortamının resmi "
+"video oynatıcısıdır. İçinde arama yapılabilen ve yerel dosyaları, DVD'leri, "
+"yerel ağ üzerinden yapılan video paylaşımlarını (UPnP/DLNA kullanarak) ve "
+"çeşitli web sitelerinden video özetlerini içeren bir çalma listesi sunar."
 
-#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:2
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:4
 msgid ""
 "Totem comes with added functionality such as: subtitle downloader, and "
 "support for recording DVDs."
 msgstr ""
+"Totem, altyazı indirme aracı ve DVD kaydetme desteği gibi ek özelliklerle "
+"gelir."
 
-#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:3
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:5
 msgid "Video thumbnailer for the file manager"
-msgstr ""
+msgstr "Dosya yöneticisi için videodan küçük resim oluşturucu"
 
-#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:4
-#, fuzzy
-#| msgid "Properties"
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:6
 msgid "Files properties tab"
-msgstr "Özellikler"
-
-#: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:66
-#: ../src/totem.c:72 ../src/totem-grilo.c:1844 ../src/totem-object.c:3648
-msgid "Videos"
-msgstr "Videolar"
-
-#: ../data/org.gnome.Totem.desktop.in.in.in.h:2
-#, fuzzy
-#| msgid "Playing a movie"
-msgid "Play movies"
-msgstr "Film oynatılıyor"
+msgstr "Dosya özellikleri sekmesi"
 
 #: ../data/org.gnome.Totem.desktop.in.in.in.h:3
 msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
-msgstr ""
+msgstr "Video;Film;Klip;Dizi;Oynatıcı;DVD;TV;Disk;"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:1
+#: ../data/org.gnome.totem.gschema.xml.in.h:1
 msgid "The brightness of the video"
 msgstr "Videonun parlaklığı"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:2
+#: ../data/org.gnome.totem.gschema.xml.in.h:2
 msgid "The contrast of the video"
 msgstr "Videonun karşıtlığı"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:3
+#: ../data/org.gnome.totem.gschema.xml.in.h:3
 msgid "The hue of the video"
 msgstr "Videonun rengi"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:4
+#: ../data/org.gnome.totem.gschema.xml.in.h:4
 msgid "The saturation of the video"
 msgstr "Videonun renk doygunluğu"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:5
+#: ../data/org.gnome.totem.gschema.xml.in.h:5
 msgid "Repeat mode"
 msgstr "Tekrar modu"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:6
-#, fuzzy
+#: ../data/org.gnome.totem.gschema.xml.in.h:6
 msgid "Whether to disable deinterlacing for interlaced movies"
-msgstr "Örgülü taranmış (interlaced) filmler netleştirilsin (deinterlacing)"
+msgstr ""
+"Örgülü taranmış (interlaced) filmlerin netleştirilmesinin devre dışı "
+"bırakılması"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:7
+#: ../data/org.gnome.totem.gschema.xml.in.h:7
 msgid "Type of audio output to use"
 msgstr "Kullanılacak ses çıkış türü"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:8
+#: ../data/org.gnome.totem.gschema.xml.in.h:8
 msgid "Network buffering threshold"
 msgstr "Ağ önbellek eşiği"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:9
-#, fuzzy
+#: ../data/org.gnome.totem.gschema.xml.in.h:9
 msgid ""
 "Amount of data to buffer for network streams before starting to display the "
 "stream (in seconds)."
 msgstr ""
-"Ağ akışlarını göstermeden önce ağ akışları için ara belleğe alınacak veri "
-"miktarı (saniyede)."
+"Ağ akışlarını göstermeden önce ara belleğe alınacak veri miktarı (saniye "
+"cinsinden)."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:10
+#: ../data/org.gnome.totem.gschema.xml.in.h:10
 msgid "Subtitle font"
 msgstr "Altyazı yazıtipi"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:11
+#: ../data/org.gnome.totem.gschema.xml.in.h:11
 msgid "Pango font description for subtitle rendering."
 msgstr "Altyazı çizimi için Pango yazı tipi tanımlaması"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:12
+#: ../data/org.gnome.totem.gschema.xml.in.h:12
+msgctxt "subtitle-encoding"
+msgid "'UTF-8'"
+msgstr "'UTF-8'"
+
+#: ../data/org.gnome.totem.gschema.xml.in.h:13
 msgid "Subtitle encoding"
 msgstr "Altyazı kodlaması"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:13
+#: ../data/org.gnome.totem.gschema.xml.in.h:14
 msgid "Encoding character set for subtitle."
 msgstr "Altyazı için karakter kodlaması."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:14
+#: ../data/org.gnome.totem.gschema.xml.in.h:15
 msgid "Default location for the \"Open...\" dialogs"
 msgstr "\"Aç... \" iletişim pencereleri için öntanımlı konum"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:15
+#: ../data/org.gnome.totem.gschema.xml.in.h:16
 msgid ""
 "Default location for the \"Open...\" dialogs. Default is the current "
 "directory."
@@ -171,11 +182,11 @@ msgstr ""
 "\"Aç ...\" diyalogları için varsayılan konum. Varsayılan konum geçerli "
 "dizindir."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:16
+#: ../data/org.gnome.totem.gschema.xml.in.h:17
 msgid "Default location for the \"Take Screenshot\" dialogs"
 msgstr "\"Ekran Görüntüsünü Al\" pencereleri için öntanımlı konum"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:17
+#: ../data/org.gnome.totem.gschema.xml.in.h:18
 msgid ""
 "Default location for the \"Take Screenshot\" dialogs. Default is the "
 "Pictures directory."
@@ -183,51 +194,53 @@ msgstr ""
 "\"Ekran görüntüsü al\" iletişim pencereleri için öntanımlı konum. Öntanımlı "
 "konum Resimler dizinidir."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:18
+#: ../data/org.gnome.totem.gschema.xml.in.h:19
 msgid "Whether to disable the plugins in the user's home directory"
 msgstr ""
 "Kulanıcının ev dizinindeki eklentilerin etkisizleştirilip "
 "etkisizleştirilmeyeceğini belirler"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:19
+#: ../data/org.gnome.totem.gschema.xml.in.h:20
 msgid "Whether to disable the keyboard shortcuts"
 msgstr "Klavye kısayollarının devre dışı bırakılması"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:20
+#: ../data/org.gnome.totem.gschema.xml.in.h:21
 msgid "Whether to autoload text subtitle files when a movie is loaded"
 msgstr ""
 "Bir film yüklendiğinde metin altyazıların otomatik yüklenip yüklenmeyeceğini "
 "belirler"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:21
+#: ../data/org.gnome.totem.gschema.xml.in.h:22
 msgid "Whether to autoload external chapter files when a movie is loaded"
 msgstr ""
 "Film yüklendiğinde harici bölümlerin otomatik olarak yüklenip "
 "yüklenmeyeceğini belirler"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:22
+#: ../data/org.gnome.totem.gschema.xml.in.h:23
 msgid "Active plugins list"
 msgstr "Etkin eklentiler listesi"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:23
+#: ../data/org.gnome.totem.gschema.xml.in.h:24
 msgid ""
 "A list of the names of the plugins which are currently active (loaded and "
 "running)."
 msgstr ""
 "Şu anda etkin (yüklü ve çalışır durumda) olan eklenti adlarının bir listesi."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:24
+#: ../data/org.gnome.totem.gschema.xml.in.h:25
 msgid "Directories to show"
 msgstr "Gösterilecek dizinler"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:25
+#: ../data/org.gnome.totem.gschema.xml.in.h:26
 msgid "Directories to show in the browse interface, none by default"
 msgstr ""
+"Gözatma arayüzünde gösterilecek dizinler (öntanımlı olarak hiçbiri "
+"gösterilmez)"
 
-#: ../data/preferences.ui.h:1 ../src/backend/bacon-video-widget.c:5496
+#: ../data/preferences.ui.h:1 ../src/backend/bacon-video-widget.c:5550
 #: ../src/totem-properties-view.c:242
 msgid "Stereo"
-msgstr "Stereo"
+msgstr "Çiftli"
 
 #: ../data/preferences.ui.h:2
 msgid "4-channel"
@@ -254,7 +267,6 @@ msgid "Preferences"
 msgstr "Tercihler"
 
 #: ../data/preferences.ui.h:8
-#| msgid "Text Subtitles"
 msgid "External Subtitles"
 msgstr "Harici Altyazılar"
 
@@ -279,7 +291,6 @@ msgid "Load _chapter files when movie is loaded"
 msgstr "Film yüklendiğinde _bölüm dosyalarını yükle"
 
 #: ../data/preferences.ui.h:14
-#| msgid "Plugins..."
 msgid "Plugins"
 msgstr "Eklentiler"
 
@@ -292,9 +303,10 @@ msgid "General"
 msgstr "Genel"
 
 #. Tab label in the Preferences dialogue
-#: ../data/preferences.ui.h:18
-msgid "Display"
-msgstr "Görüntü"
+#: ../data/preferences.ui.h:18 ../data/properties.ui.h:9
+#: ../src/totem-properties-view.c:285
+msgid "Video"
+msgstr "Video"
 
 #: ../data/preferences.ui.h:19
 msgid "Disable _deinterlacing of interlaced videos"
@@ -327,14 +339,18 @@ msgid "Reset to _Defaults"
 msgstr "Ö_ntanımlı Değerlere Sıfırla"
 
 #: ../data/preferences.ui.h:26
+msgid "Display"
+msgstr "Görüntü"
+
+#: ../data/preferences.ui.h:27
 msgid "Audio Output"
 msgstr "Ses Çıkışı"
 
-#: ../data/preferences.ui.h:27
+#: ../data/preferences.ui.h:28
 msgid "_Audio output type:"
 msgstr "_Ses çıkış tipi:"
 
-#: ../data/preferences.ui.h:28 ../data/properties.ui.h:14
+#: ../data/preferences.ui.h:29 ../data/properties.ui.h:14
 #: ../src/totem-properties-view.c:283
 msgid "Audio"
 msgstr "Ses"
@@ -367,10 +383,6 @@ msgstr "Yorum:"
 msgid "Container:"
 msgstr "Taşıyıcı:"
 
-#: ../data/properties.ui.h:9 ../src/totem-properties-view.c:285
-msgid "Video"
-msgstr "Video"
-
 #: ../data/properties.ui.h:10
 msgid "Dimensions:"
 msgstr "Boyutlar:"
@@ -395,108 +407,271 @@ msgstr "Örnekleme hızı:"
 msgid "Channels:"
 msgstr "Kanallar:"
 
+#: ../data/shortcuts.ui.h:1
+#| msgid "General"
+msgctxt "shortcut window"
+msgid "General"
+msgstr "Genel"
+
+#: ../data/shortcuts.ui.h:2
+#| msgid "Preferences"
+msgctxt "shortcut window"
+msgid "Preferences"
+msgstr "Tercihler"
+
+#: ../data/shortcuts.ui.h:3
+#| msgid "Quit"
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Çık"
+
+#: ../data/shortcuts.ui.h:4
+#| msgid "Volume Up"
+msgctxt "shortcut window"
+msgid "Volume"
+msgstr "Ses"
+
+#: ../data/shortcuts.ui.h:5
+#| msgid "Increase volume"
+msgctxt "shortcut window"
+msgid "Increase volume"
+msgstr "Sesi arttır"
+
+#: ../data/shortcuts.ui.h:6
+#| msgid "Decrease volume"
+msgctxt "shortcut window"
+msgid "Decrease volume"
+msgstr "Sesi azalt"
+
+#: ../data/shortcuts.ui.h:7
+#| msgid "_View"
+msgctxt "shortcut window"
+msgid "View"
+msgstr "Görünüm"
+
+#: ../data/shortcuts.ui.h:8
+#| msgid "Toggle Fullscreen"
+msgctxt "shortcut window"
+msgid "Toggle fullscreen"
+msgstr "Tam ekran aç/kapa"
+
+#: ../data/shortcuts.ui.h:9
+#| msgid "Switch to fullscreen"
+msgctxt "shortcut window"
+msgid "Exit fullscreen"
+msgstr "Tam ekrandan çık"
+
+#: ../data/shortcuts.ui.h:10
+#| msgid "Zoom in"
+msgctxt "shortcut window"
+msgid "Zoom in"
+msgstr "Yakınlaş"
+
+#: ../data/shortcuts.ui.h:11
+#| msgid "Zoom out"
+msgctxt "shortcut window"
+msgid "Zoom out"
+msgstr "Uzaklaş"
+
+#: ../data/shortcuts.ui.h:12
+#| msgid "Playback"
+msgctxt "shortcut window"
+msgid "Playback"
+msgstr "Kayıttan oynatma"
+
+#: ../data/shortcuts.ui.h:13
+#| msgid "Play/Pause"
+msgctxt "shortcut window"
+msgid "Play/Pause"
+msgstr "Oynat/Beklet"
+
+#: ../data/shortcuts.ui.h:14
+#| msgid "Previous chapter or movie"
+msgctxt "shortcut window"
+msgid "Previous video or chapter"
+msgstr "Önceki video veya bölüm"
+
+#: ../data/shortcuts.ui.h:15
+#| msgid "Name for new chapter:"
+msgctxt "shortcut window"
+msgid "Next video or chapter"
+msgstr "Sonraki video veya bölüm"
+
+#: ../data/shortcuts.ui.h:16
+#| msgid "Skip To"
+msgctxt "shortcut window"
+msgid "Skip"
+msgstr "Atla"
+
+#: ../data/shortcuts.ui.h:17
+msgctxt "shortcut window"
+msgid "Go back 15 seconds"
+msgstr "15 saniye geri git"
+
+#: ../data/shortcuts.ui.h:18
+#| msgid "0 seconds"
+msgctxt "shortcut window"
+msgid "Go forward 60 seconds"
+msgstr "60 saniye ileri git"
+
+#: ../data/shortcuts.ui.h:19
+#| msgid "0 seconds"
+msgctxt "shortcut window"
+msgid "Go back 5 seconds"
+msgstr "5 saniye geri git"
+
+#: ../data/shortcuts.ui.h:20
+#| msgid "%d frame per second"
+#| msgid_plural "%d frames per second"
+msgctxt "shortcut window"
+msgid "Go forward 15 seconds"
+msgstr "15 saniye ileri git"
+
+#: ../data/shortcuts.ui.h:21
+msgctxt "shortcut window"
+msgid "Go back 3 minutes"
+msgstr "3 dakika geri git"
+
+#: ../data/shortcuts.ui.h:22
+msgctxt "shortcut window"
+msgid "Go forward 10 minutes"
+msgstr "10 dakika ileri git"
+
+#: ../data/shortcuts.ui.h:23
+#| msgid "_Skip To…"
+msgctxt "shortcut window"
+msgid "Skip to…"
+msgstr "Şuraya atla…"
+
+#: ../data/shortcuts.ui.h:24
+msgctxt "shortcut window"
+msgid "DVD menu navigation"
+msgstr "DVD menü gezinimi"
+
+#: ../data/shortcuts.ui.h:25
+msgctxt "shortcut window"
+msgid "Navigate up"
+msgstr "Yukarı git"
+
+#: ../data/shortcuts.ui.h:26
+msgctxt "shortcut window"
+msgid "Navigate down"
+msgstr "Aşağı git"
+
+#: ../data/shortcuts.ui.h:27
+msgctxt "shortcut window"
+msgid "Navigate left"
+msgstr "Sola git"
+
+#: ../data/shortcuts.ui.h:28
+msgctxt "shortcut window"
+msgid "Navigate right"
+msgstr "Sağa git"
+
 #: ../data/totem.ui.h:1
 msgid "Prefere_nces"
 msgstr "Terci_hler"
 
 #: ../data/totem.ui.h:2
+msgid "_Keyboard Shortcuts"
+msgstr "_Klavye Kısayolları"
+
+#: ../data/totem.ui.h:3
 msgid "_Help"
 msgstr "_Yardım"
 
-#: ../data/totem.ui.h:3
+#: ../data/totem.ui.h:4
 msgid "_Quit"
 msgstr "Çı_kış"
 
-#: ../data/totem.ui.h:4
-msgid "Add _Local Video…"
-msgstr ""
-
 #: ../data/totem.ui.h:5
-msgid "Add _Web Video…"
-msgstr ""
+msgid "Add _Local Video…"
+msgstr "_Yerel Video Ekle…"
 
 #: ../data/totem.ui.h:6
+msgid "Add _Web Video…"
+msgstr "_Web Videosu Ekle…"
+
+#: ../data/totem.ui.h:7
 msgid "_Aspect Ratio"
 msgstr "_Görüntü Oranı"
 
-#: ../data/totem.ui.h:7
+#: ../data/totem.ui.h:8
 msgctxt "Aspect ratio"
 msgid "Auto"
 msgstr "Otomatik"
 
-#: ../data/totem.ui.h:8
-#| msgid "Square"
+#: ../data/totem.ui.h:9
 msgctxt "Aspect ratio"
 msgid "Square"
 msgstr "Kare"
 
-#: ../data/totem.ui.h:9
-#| msgid "4:3 (TV)"
+#: ../data/totem.ui.h:10
 msgctxt "Aspect ratio"
 msgid "4∶3 (TV)"
 msgstr "4:3 (TV)"
 
-#: ../data/totem.ui.h:10
-#| msgid "16:9 (Widescreen)"
+#: ../data/totem.ui.h:11
 msgctxt "Aspect ratio"
 msgid "16∶9 (Widescreen)"
 msgstr "16:9 (Genişekran)"
 
-#: ../data/totem.ui.h:11
-#| msgid "2.11:1 (DVB)"
+#: ../data/totem.ui.h:12
 msgctxt "Aspect ratio"
 msgid "2.11∶1 (DVB)"
 msgstr "2.11:1 (DVB)"
 
-#: ../data/totem.ui.h:12
+#: ../data/totem.ui.h:13
 msgid "Zoom In"
 msgstr "Yakınlaş"
 
-#: ../data/totem.ui.h:13
+#: ../data/totem.ui.h:14
 msgid "Switch An_gles"
 msgstr "A_çı değiştir"
 
-#: ../data/totem.ui.h:14
+#: ../data/totem.ui.h:15
 msgid "_Languages"
 msgstr "_Diller"
 
-#: ../data/totem.ui.h:15
+#: ../data/totem.ui.h:16
 msgid "S_ubtitles"
 msgstr "Al_tyazılar"
 
-#: ../data/totem.ui.h:16
-#| msgid "Select Text Subtitles"
+#: ../data/totem.ui.h:17
 msgid "_Select Text Subtitles…"
 msgstr "Metin Altyazılarını _Seçin…"
 
-#: ../data/totem.ui.h:17
+#: ../data/totem.ui.h:18
 msgid "_Eject"
 msgstr "Çı_kar"
 
-#: ../data/totem.ui.h:18
-#| msgid "_Repeat Mode"
+#: ../data/totem.ui.h:19
 msgid "_Repeat"
 msgstr "_Tekrarla"
 
-#: ../data/totem.ui.h:19
+#: ../data/totem.ui.h:20
 msgid "_DVD Menu"
 msgstr "DV_D Menüsü"
 
-#: ../data/totem.ui.h:20
+#: ../data/totem.ui.h:21
 msgid "_Title Menu"
 msgstr "_Başlık Menüsü"
 
-#: ../data/totem.ui.h:21
+#: ../data/totem.ui.h:22
 msgid "A_udio Menu"
 msgstr "Ses _Menüsü"
 
-#: ../data/totem.ui.h:22
+#: ../data/totem.ui.h:23
 msgid "_Angle Menu"
 msgstr "_Açı Menüsü"
 
-#: ../data/totem.ui.h:23
+#: ../data/totem.ui.h:24
 msgid "_Chapter Menu"
 msgstr "Bölüm _Menüsü"
+
+#: ../data/totem.ui.h:25
+msgid "Speed"
+msgstr "Hız"
 
 #: ../data/uri.ui.h:1
 msgid "Enter the _address of the file you would like to open:"
@@ -505,69 +680,58 @@ msgstr "Açmak istediğiniz dosyanın _adresini giriniz:"
 #. translators: Unknown remaining time
 #: ../src/backend/bacon-time-label.c:113
 msgid "--:--"
-msgstr ""
+msgstr "--:--"
 
-#: ../src/backend/bacon-video-widget.c:1921
+#: ../src/backend/bacon-video-widget.c:1959
 msgid "Password requested for RTSP server"
 msgstr "RTSP sunucusu için parola isteniyor"
 
-#: ../src/backend/bacon-video-widget.c:3292
+#: ../src/backend/bacon-video-widget.c:3320
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Ses Parçası #%d"
 
-#: ../src/backend/bacon-video-widget.c:3296
+#: ../src/backend/bacon-video-widget.c:3322
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Altyazı #%d"
 
-#: ../src/backend/bacon-video-widget.c:3752
+#: ../src/backend/bacon-video-widget.c:3806
 msgid "The server you are trying to connect to is not known."
-msgstr ""
+msgstr "Bağlanmaya çalıştığınız sunucu bilinmiyor."
 
-#: ../src/backend/bacon-video-widget.c:3755
+#: ../src/backend/bacon-video-widget.c:3809
 msgid "The connection to this server was refused."
-msgstr ""
+msgstr "Bu sunucuya bağlantı reddedildi."
 
-#: ../src/backend/bacon-video-widget.c:3758
-#| msgid "The movie could not be recorded."
+#: ../src/backend/bacon-video-widget.c:3812
 msgid "The specified movie could not be found."
 msgstr "Belirtilen film bulunamadı."
 
-#: ../src/backend/bacon-video-widget.c:3765
+#: ../src/backend/bacon-video-widget.c:3819
 msgid "The server refused access to this file or stream."
-msgstr ""
+msgstr "Sunucu bu dosya veya akışa erişimi reddetti."
 
-#: ../src/backend/bacon-video-widget.c:3771
+#: ../src/backend/bacon-video-widget.c:3825
 msgid "Authentication is required to access this file or stream."
-msgstr ""
+msgstr "Bu dosya veya akışa erişmek için kimlik doğrulama gerekir."
 
-#: ../src/backend/bacon-video-widget.c:3778
-#| msgid "Totem was not able to play this disc."
+#: ../src/backend/bacon-video-widget.c:3832
 msgid "You are not allowed to open this file."
 msgstr "Bu dosyayı açmanıza izin verilmiyor."
 
-#: ../src/backend/bacon-video-widget.c:3783
-#| msgid "File is not a valid .desktop file"
+#: ../src/backend/bacon-video-widget.c:3837
 msgid "This location is not a valid one."
 msgstr "Bu, geçerli bir konum değil."
 
-#: ../src/backend/bacon-video-widget.c:3791
-#| msgid "The movie could not be recorded."
+#: ../src/backend/bacon-video-widget.c:3845
 msgid "The movie could not be read."
 msgstr "Film okunamadı."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget.c:3814
-#: ../src/backend/bacon-video-widget.c:3822
-#, fuzzy, c-format
-#| msgid ""
-#| "The playback of this movie requires a %s plugin which is not installed."
-#| msgid_plural ""
-#| "The playback of this movie requires the following decoders which are not "
-#| "installed:\n"
-#| "\n"
-#| "%s"
+#: ../src/backend/bacon-video-widget.c:3868
+#: ../src/backend/bacon-video-widget.c:3876
+#, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
 "The playback of this movie requires the following plugins which are not "
@@ -575,47 +739,67 @@ msgid_plural ""
 "\n"
 "%s"
 msgstr[0] ""
-"Bu filmin oynatılması için, kurulu olmayan şu eklentiler gerekmektedir:\n"
+"Bu filmin oynatılması için, kurulu olmayan şu eklenti(ler) gerekmektedir:\n"
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget.c:3834
+#: ../src/backend/bacon-video-widget.c:3888
 msgid ""
 "This stream cannot be played. It's possible that a firewall is blocking it."
-msgstr ""
+msgstr "Bu akış oynatılamaz. Bir güvenlik duvarı engelliyor olabilir."
 
-#: ../src/backend/bacon-video-widget.c:3837
+#: ../src/backend/bacon-video-widget.c:3891
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
 msgstr ""
+"Bir ses veya görüntü akışı, kod çözücü eksikliği nedeniyle çalıştırılamıyor. "
+"Bazı film türlerini oynatabilmek için daha fazla eklenti yüklemeniz "
+"gerekebilir."
 
-#: ../src/backend/bacon-video-widget.c:3848
-#, fuzzy
-#| msgid ""
-#| "Cannot play this file over the network. Try downloading it to disk first."
+#: ../src/backend/bacon-video-widget.c:3902
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
 msgstr "Bu dosya ağ üzerinden oynatılamıyor. Önce diskinize indirmeyi deneyin."
 
-#: ../src/backend/bacon-video-widget.c:5492 ../src/totem-properties-view.c:238
+#: ../src/backend/bacon-video-widget.c:5546 ../src/totem-properties-view.c:238
 msgid "Surround"
 msgstr "Surround"
 
-#: ../src/backend/bacon-video-widget.c:5494 ../src/totem-properties-view.c:240
+#: ../src/backend/bacon-video-widget.c:5548 ../src/totem-properties-view.c:240
 msgid "Mono"
 msgstr "Mono"
 
-#: ../src/backend/bacon-video-widget.c:5781
+#: ../src/backend/bacon-video-widget.c:5835
 msgid "Media contains no supported video streams."
 msgstr "Ortamda desteklenen akışkan video bulunmuyor."
 
-#: ../src/backend/bacon-video-widget.c:5939
+#: ../src/backend/bacon-video-widget.c:6046
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
 msgstr ""
+"Gerekli bazı eklentiler bulunamıyor. Programın doğru bir şekilde "
+"yüklendiğinden emin olun."
+
+#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:348
+msgid "Unable to play the file"
+msgstr "Dosya yürütülemedi"
+
+#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:351
+#, c-format
+msgid "%s is required to play the file, but is not installed."
+msgid_plural "%s are required to play the file, but are not installed."
+msgstr[0] "Dosyayı yürütmek için gereken %s kurulu değil."
+
+#. TRANSLATORS: this is a button to launch a codec installer.
+#. * %s will be replaced with the software installer's name, e.g.
+#. * 'Software' in case of gnome-software.
+#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:359
+#, c-format
+msgid "_Find in %s"
+msgstr "%s'de _Bul"
 
 #. hour:minutes:seconds
 #. Translators: This is a time format, like "-9:05:02" for 9
@@ -638,8 +822,6 @@ msgstr "%d:%02d:%02d"
 #.
 #: ../src/gst/totem-time-helpers.c:71
 #, c-format
-#| msgctxt "long time format"
-#| msgid "%d:%02d:%02d"
 msgctxt "long time format"
 msgid "-%d:%02d:%02d"
 msgstr "-%d:%02d:%02d"
@@ -652,8 +834,6 @@ msgstr "-%d:%02d:%02d"
 #.
 #: ../src/gst/totem-time-helpers.c:82
 #, c-format
-#| msgctxt "short time format"
-#| msgid "%d:%02d"
 msgctxt "short time format"
 msgid "-%d:%02d"
 msgstr "-%d:%02d"
@@ -771,15 +951,12 @@ msgid_plural "%d frames per second"
 msgstr[0] "saniyede %d çerçeve"
 
 #: ../src/grilo.ui.h:1
-#| msgid "Select a folder"
 msgid "Select All"
 msgstr "Tümünü Seç"
 
 #: ../src/grilo.ui.h:2
-#, fuzzy
-#| msgid "Select a folder"
 msgid "Select None"
-msgstr "Bir klasör seç"
+msgstr "Tümünün Seçimini Kaldır"
 
 #: ../src/totem-audio-preview.c:172
 msgid "Audio Preview"
@@ -793,32 +970,31 @@ msgstr "Güvenli iş parçacığı kütüphaneleri ilklendirilemiyor."
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Kurulumunuzu kontrol edin. Totem şimdi çıkıyor."
 
-#: ../src/totem-grilo.c:282
+#: ../src/totem-grilo.c:285
 #, c-format
 msgid "Season %d Episode %d"
-msgstr ""
+msgstr "%d. Sezon %d. Bölüm"
 
 #. translators: The first item is the show name, for example:
 #. * Boardwalk Empire (Season 1 Episode 1)
-#: ../src/totem-grilo.c:319
+#: ../src/totem-grilo.c:322
 #, c-format
 msgid "%s (Season %d Episode %d)"
-msgstr ""
+msgstr "%s (%d. Sezon %d. Bölüm)"
 
-#: ../src/totem-grilo.c:669
+#: ../src/totem-grilo.c:677
 msgid "Browse Error"
 msgstr "Gözatma Hatası"
 
-#: ../src/totem-grilo.c:806
+#: ../src/totem-grilo.c:818
 msgid "Search Error"
 msgstr "Arama Hatası"
 
-#: ../src/totem-grilo.c:1257
+#: ../src/totem-grilo.c:1272
 msgid "Local"
-msgstr ""
+msgstr "Yerel"
 
-#: ../src/totem-grilo.c:1853
-#| msgid "Channels:"
+#: ../src/totem-grilo.c:1873
 msgid "Channels"
 msgstr "Kanallar"
 
@@ -838,20 +1014,18 @@ msgstr "Totem'in düzgün kurulduğundan emin olun."
 
 #: ../src/totem-main-toolbar.c:130 ../src/totemmaintoolbar.ui.h:5
 msgid "Click on items to select them"
-msgstr ""
+msgstr "Seçmek için ögelere tıklayın"
 
-#: ../src/totem-main-toolbar.c:137
+#: ../src/totem-main-toolbar.c:136
 #, c-format
-#| msgid "%d second"
-#| msgid_plural "%d seconds"
 msgid "%d selected"
 msgid_plural "%d selected"
 msgstr[0] "%d seçildi"
 
-#: ../src/totem-main-toolbar.c:159
+#: ../src/totem-main-toolbar.c:157
 #, c-format
 msgid "Results for “%s”"
-msgstr ""
+msgstr "“%s” için sonuçlar"
 
 #: ../src/totemmaintoolbar.ui.h:1
 msgid "Back"
@@ -870,75 +1044,71 @@ msgid "Search"
 msgstr "Ara"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../src/totem-menu.c:419
+#: ../src/totem-menu.c:435
 msgid "None"
 msgstr "Hiçbiri"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../src/totem-menu.c:423
+#: ../src/totem-menu.c:439
 msgctxt "Language"
 msgid "Auto"
 msgstr "Otomatik"
 
-#: ../src/totem-object.c:1415 ../src/totem-options.c:51
+#: ../src/totem-object.c:1386 ../src/totem-options.c:51
 msgid "Pause"
 msgstr "Beklet"
 
-#: ../src/totem-object.c:1420 ../src/totem-object.c:1430
-#: ../src/totem-options.c:50 ../src/totemselectiontoolbar.ui.h:2
+#: ../src/totem-object.c:1391 ../src/totem-object.c:1401
+#: ../src/totem-options.c:50 ../src/totemselectiontoolbar.ui.h:3
 msgid "Play"
 msgstr "Oynat"
 
-#: ../src/totem-object.c:1497 ../src/totem-object.c:1524
-#: ../src/totem-object.c:2039
+#: ../src/totem-object.c:1468 ../src/totem-object.c:1495
+#: ../src/totem-object.c:1987
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Totem '%s'i oynatamadı."
 
-#: ../src/totem-object.c:2181
+#: ../src/totem-object.c:2158
 msgid "Totem could not display the help contents."
 msgstr "Totem yardım içeriğini gösteremiyor."
 
-#: ../src/totem-object.c:2421
+#: ../src/totem-object.c:2419
 msgid "An error occurred"
 msgstr "Bir hata oluştu"
 
-#: ../src/totem-object.c:3745
+#: ../src/totem-object.c:3759
 msgid "Previous Chapter/Movie"
 msgstr "Önceki Bölüm/Film"
 
-#: ../src/totem-object.c:3751
+#: ../src/totem-object.c:3765
 msgid "Play / Pause"
 msgstr "Oynat / Beklet"
 
-#: ../src/totem-object.c:3757
+#: ../src/totem-object.c:3771
 msgid "Next Chapter/Movie"
 msgstr "Sonraki Bölüm/Film"
 
-#: ../src/totem-object.c:3977
+#: ../src/totem-object.c:3980
 msgid "Totem could not startup."
 msgstr "Totem başlatılamadı."
 
-#: ../src/totem-object.c:3977
+#: ../src/totem-object.c:3980
 msgid "No reason."
 msgstr "Sebep yok."
 
 #: ../src/totem-open-location.c:183
 msgid "Add Web Video"
-msgstr ""
+msgstr "Web Videosu Ekle"
 
 #: ../src/totem-open-location.c:185 ../src/totem-uri.c:399
-#: ../src/totem-uri.c:460 ../src/plugins/chapters/totem-chapters.c:961
-#: ../src/plugins/chapters/totem-edit-chapter.c:98
-#: ../src/plugins/screenshot/totem-gallery.c:97
+#: ../src/totem-uri.c:460 ../src/plugins/screenshot/totem-gallery.c:98
 #: ../src/plugins/screenshot/totem-gallery-progress.c:103
-#: ../src/plugins/skipto/totem-skipto.c:198
-#| msgid "Cancel"
+#: ../src/plugins/skipto/totem-skipto.c:221
 msgid "_Cancel"
 msgstr "_İptal"
 
 #: ../src/totem-open-location.c:186 ../src/totem-uri.c:461
-#: ../src/plugins/chapters/totem-edit-chapter.c:99
 msgid "_Add"
 msgstr "_Ekle"
 
@@ -998,7 +1168,7 @@ msgstr "Gözat"
 msgid "Movies to play"
 msgstr "Oynatılacak film"
 
-#: ../src/totem-options.c:99
+#: ../src/totem-options.c:100
 msgid "Can't enqueue and replace at the same time"
 msgstr "Kuyruğa ekleme ve yer değiştirme aynı anda yapılamaz"
 
@@ -1009,7 +1179,7 @@ msgstr "Kuyruğa ekleme ve yer değiştirme aynı anda yapılamaz"
 msgid "Title %d"
 msgstr "Başlık %d"
 
-#: ../src/totem-playlist.c:1001
+#: ../src/totem-playlist.c:992
 #, c-format
 msgid "The playlist '%s' could not be parsed. It might be damaged."
 msgstr "Çalma listesi '%s' ayrıştırılamıyor, hasarlı olabilir."
@@ -1072,18 +1242,20 @@ msgid "N/A"
 msgstr "N/A"
 
 #: ../src/totemselectiontoolbar.ui.h:1
-#, fuzzy
-#| msgid "Add to Playlist"
 msgid "Add to Favourites"
-msgstr "Çalma Listesine Ekle"
+msgstr "Sık Kullanılanlara Ekle"
 
-#: ../src/totemselectiontoolbar.ui.h:3
-#, fuzzy
-#| msgid "Shuff_le Mode"
-msgid "Shuffle"
-msgstr "Ras_gele kip"
+#: ../src/totemselectiontoolbar.ui.h:2
+#| msgid "Play"
+msgctxt "button"
+msgid "Play"
+msgstr "Oynat"
 
 #: ../src/totemselectiontoolbar.ui.h:4
+msgid "Shuffle"
+msgstr "Rasgele"
+
+#: ../src/totemselectiontoolbar.ui.h:5
 msgid "Delete"
 msgstr "Sil"
 
@@ -1240,7 +1412,7 @@ msgstr "%s / %s"
 msgid "Seek to %s / %s"
 msgstr "%s / %s'e atla"
 
-#: ../src/totem-uri.c:329 ../src/plugins/chapters/totem-chapters.c:982
+#: ../src/totem-uri.c:329
 msgid "All files"
 msgstr "Tüm dosyalar"
 
@@ -1256,20 +1428,18 @@ msgstr "Altyazı dosyaları"
 msgid "Select Text Subtitles"
 msgstr "Metin Altyazılarını Seçin"
 
-#: ../src/totem-uri.c:400 ../src/plugins/chapters/totem-chapters.c:962
+#: ../src/totem-uri.c:400
 msgid "_Open"
 msgstr "_Aç"
 
 #: ../src/totem-uri.c:457
-#, fuzzy
-#| msgid "Videos"
 msgid "Add Videos"
-msgstr "Videolar"
+msgstr "Video Ekle"
 
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:785
+#: ../src/totem-video-thumbnailer.c:789
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1280,37 +1450,33 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:786
+#: ../src/totem-video-thumbnailer.c:790
 msgid "Filename"
 msgstr "Dosya İsmi"
 
-#: ../src/totem-video-thumbnailer.c:788
+#: ../src/totem-video-thumbnailer.c:792
 msgid "Resolution"
 msgstr "Çözünürlük"
 
-#: ../src/totem-video-thumbnailer.c:791
+#: ../src/totem-video-thumbnailer.c:795
 msgid "Duration"
 msgstr "Süre"
 
 #: ../src/plugins/apple-trailers/apple-trailers.plugin.in.h:1
 msgid "Apple Trailers"
-msgstr ""
+msgstr "Apple Trailers"
 
 #: ../src/plugins/apple-trailers/apple-trailers.plugin.in.h:2
 msgid "Sets the user agent for the Apple Trailers site"
-msgstr ""
+msgstr "Apple Trailers sitesi için tarayıcı kimliğini ayarlar"
 
 #: ../src/plugins/autoload-subtitles/autoload-subtitles.plugin.in.h:1
-#, fuzzy
-#| msgid "Download Movie Subtitles"
 msgid "Autoload Subtitles"
-msgstr "Film Altyazılarını İndir"
+msgstr "Altyazıları Otomatik Yükle"
 
 #: ../src/plugins/autoload-subtitles/autoload-subtitles.plugin.in.h:2
-#, fuzzy
-#| msgid "Downloading the subtitles…"
 msgid "Autoloads text subtitles"
-msgstr "Altyazılar indiriliyor..."
+msgstr "Altyazıları otomatik yükler"
 
 #: ../src/plugins/brasero-disc-recorder/brasero-disc-recorder.plugin.in.h:1
 msgid "Video Disc Recorder"
@@ -1336,186 +1502,34 @@ msgid "Unable to write a project."
 msgstr "Proje yazılamıyor."
 
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:394
-#, fuzzy
-#| msgid "_Create Video Disc..."
 msgid "_Create Video Disc…"
-msgstr "Video Disk _Oluştur..."
+msgstr "Video Disk _Oluştur…"
 
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:395
-#, fuzzy
-#| msgid "Copy Vide_o DVD..."
 msgid "Copy Vide_o DVD…"
-msgstr "_Video DVD'yi Kopyala..."
+msgstr "_Video DVD'yi Kopyala…"
 
 #: ../src/plugins/brasero-disc-recorder/totem-disc-recorder.c:396
-#, fuzzy
-#| msgid "Copy (S)VCD..."
 msgid "Copy (S)VCD…"
-msgstr "(S)VCD Kopyala..."
-
-#: ../src/plugins/chapters/chapters-edit.ui.h:1
-msgid "Name for new chapter:"
-msgstr "Yeni bölümün adı:"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:1
-msgid "_Remove Chapter"
-msgstr "Bölümü Kaldı_r"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:2
-msgid "Remove the chapter from the list"
-msgstr "Bölümü listeden kaldır"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:3
-msgid "_Go to Chapter"
-msgstr "Bölüme _Git"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:4
-msgid "Go to the chapter in the movie"
-msgstr "Filmdeki bölüme git"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:5
-#| msgid "Add Chapter"
-msgid "Add Chapter…"
-msgstr "Bölüm Ekle…"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:6
-msgid "Remove Chapter"
-msgstr "Bölümü Kaldır"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:7
-msgid "Go to Chapter"
-msgstr "Bölüme Git"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:8
-msgid "Save Changes"
-msgstr "Değişiklikleri Kaydet"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:9
-msgid "No chapter data"
-msgstr "Bölüm verisi yok"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:10
-#| msgid "Load Chapters..."
-msgid "Load Chapters…"
-msgstr "Bölümleri Yükle…"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:11
-msgid "Load chapters from an external CMML file"
-msgstr "Bölümleri harici bir CMML dosyasından yükle"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:12
-msgid "Add New Chapters"
-msgstr "Yeni Bölüm Ekle"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:13
-msgid "Create a new chapter list for the movie"
-msgstr "Film için yeni bir bölüm listesi oluştur"
-
-#: ../src/plugins/chapters/chapters.plugin.in.h:1
-#: ../src/plugins/chapters/totem-chapters.c:1122
-msgid "Chapters"
-msgstr "Bölümler"
-
-#: ../src/plugins/chapters/chapters.plugin.in.h:2
-#| msgid "Support chapter markers in movies."
-msgid "Support chapter markers in movies"
-msgstr "Filmlerde bölüm işaretçilerini destekle"
-
-#: ../src/plugins/chapters/totem-chapters.c:56
-#, c-format
-msgid ""
-"<b>Title: </b>%s\n"
-"<b>Start time: </b>%s"
-msgstr ""
-"<b>Başlık: </b>%s\n"
-"<b>Başlama zamanı: </b>%s"
-
-#: ../src/plugins/chapters/totem-chapters.c:324
-msgid "Error while reading file with chapters"
-msgstr "Bölümlü dosya okunurken hata oluştu"
-
-#: ../src/plugins/chapters/totem-chapters.c:542
-msgid "Chapter with the same time already exists"
-msgstr "Aynı zamanlı bir bölüm zaten mevcut"
-
-#: ../src/plugins/chapters/totem-chapters.c:543
-msgid "Try another name or remove an existing chapter."
-msgstr "Başka bir ad deneyin ya da varolan bir bölümü kaldırın."
-
-#: ../src/plugins/chapters/totem-chapters.c:702
-msgid "Error while writing file with chapters"
-msgstr "Dosyayı bölümlerle yazarken hata"
-
-#: ../src/plugins/chapters/totem-chapters.c:826
-msgid "Error occurred while saving chapters"
-msgstr "Bölümler kaydedilirken hata oluştu"
-
-#: ../src/plugins/chapters/totem-chapters.c:827
-msgid ""
-"Please check you have permission to write to the folder containing the movie."
-msgstr ""
-"Lütfen filmin bulunduğu klasöre yazma izniniz olup olmadığını kontrol edin."
-
-#: ../src/plugins/chapters/totem-chapters.c:960
-msgid "Open Chapter File"
-msgstr "Bölüm Dosyasını Aç"
-
-#: ../src/plugins/chapters/totem-chapters.c:979
-msgid "Supported files"
-msgstr "Desteklenen dosyalar"
-
-#: ../src/plugins/chapters/totem-chapters.c:1076
-msgid "Chapter Screenshot"
-msgstr "Bölüm Ekran Görüntüsü"
-
-#: ../src/plugins/chapters/totem-chapters.c:1087
-msgid "Chapter Title"
-msgstr "Bölüm Başlığı"
-
-#: ../src/plugins/chapters/totem-chapters.c:1167
-msgid "Save changes to chapter list before closing?"
-msgstr "Kapatmadan önce bölüm listesindeki değişiklikler kaydedilsin mi?"
-
-#. Translators: close Totem without saving changes to the chapter list of the current movie.
-#: ../src/plugins/chapters/totem-chapters.c:1172
-msgid "Close without Saving"
-msgstr "Kaydetmeden Kapat"
-
-#. Translators: save changes to the chapter list of the current movie before closing Totem.
-#: ../src/plugins/chapters/totem-chapters.c:1174
-msgid "Save"
-msgstr "Kaydet"
-
-#: ../src/plugins/chapters/totem-chapters.c:1177
-msgid "If you don't save, changes to the chapter list will be lost."
-msgstr ""
-"Eğer kaydetmezseniz, bölüm listesinde yaptığınız değişiklikler kaybolacak."
-
-#: ../src/plugins/chapters/totem-edit-chapter.c:95
-msgid "Add Chapter"
-msgstr "Bölüm Ekle"
+msgstr "(S)VCD Kopyala…"
 
 #: ../src/plugins/dbusservice/dbusservice.plugin.in.h:1
 msgid "MPRIS D-Bus Interface"
-msgstr ""
+msgstr "MPRIS D-Bus Arayüzü"
 
 #: ../src/plugins/dbusservice/dbusservice.plugin.in.h:2
-#, fuzzy
-#| msgid ""
-#| "Plugin for sending notifications of currently playing movies to the D-Bus "
-#| "subsystem."
 msgid ""
 "Send notifications of currently-playing videos and allow remote control "
 "using MPRIS."
 msgstr ""
-"Oynatılmakta olan filmlerin bildirimlerini D-Bus alt sistemine göndermek "
-"için bir eklenti."
+"MPRIS üzerinden oynatılmakta olan filmlerin bildirimlerini gönder ve uzaktan "
+"kumandaya izin ver."
 
 #: ../src/plugins/dbusservice/dbusservice.py:208
 #: ../src/plugins/dbusservice/dbusservice.py:236
 #, python-format
 msgid "The MediaPlayer2 object does not implement the ‘%s’ interface"
-msgstr ""
+msgstr "MediaPlayer2 nesnesi ‘%s’ arayüzünü kullanmıyor"
 
 #: ../src/plugins/dbusservice/dbusservice.py:218
 #, python-format
@@ -1526,6 +1540,7 @@ msgstr "‘%s’ özelliği yazılabilir değil."
 #, python-format
 msgid "Unknown property ‘%s’ requested of a MediaPlayer 2 object"
 msgstr ""
+"Bir MediaPlayer 2 nesnesi için bilinmeyen bir ‘%s’ özelliği talep edildi"
 
 #: ../src/plugins/gromit/gromit.plugin.in.h:1
 msgid "Gromit Annotations"
@@ -1540,7 +1555,6 @@ msgid "The gromit binary was not found."
 msgstr "Gromit ikili dosyası bulunamadı."
 
 #: ../src/plugins/im-status/totem-im-status.plugin.in.h:1
-#| msgid "Instant Messenger status"
 msgid "Instant Messenger Status"
 msgstr "Anında Mesajlaşma Programı Durumu"
 
@@ -1566,13 +1580,12 @@ msgid "Couldn't read lirc configuration."
 msgstr "lirc yapılandırması okunamadı."
 
 #: ../src/plugins/media-player-keys/media-player-keys.plugin.in.h:1
-#| msgid "Movie Player"
 msgid "Media Player Keys"
 msgstr "Ortam Oynatıcı Anahtarları"
 
 #: ../src/plugins/media-player-keys/media-player-keys.plugin.in.h:2
 msgid "Support additional media player keys"
-msgstr ""
+msgstr "Ek ortam oynatıcı tuşlarını destekle"
 
 #: ../src/plugins/ontop/ontop.plugin.in.h:1
 msgid "Always On Top"
@@ -1587,58 +1600,56 @@ msgid "Subtitle Downloader"
 msgstr "Altyazı İndirici"
 
 #: ../src/plugins/opensubtitles/opensubtitles.plugin.in.h:2
-#, fuzzy
-#| msgid "Look for subtitles for the currently playing movie."
 msgid "Look for subtitles for the currently playing movie"
-msgstr "Şu an da çalmakta film için altyazılar arayın."
+msgstr "Şu anda oynatılan film için altyazılar ara"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:42
+#: ../src/plugins/opensubtitles/opensubtitles.py:46
 msgid "Brazilian Portuguese"
 msgstr "Brezilya Portekizcesi"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:178
+#: ../src/plugins/opensubtitles/opensubtitles.py:182
 msgid "Searching for subtitles…"
 msgstr "Altyazılar aranıyor..."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:226
-#: ../src/plugins/opensubtitles/opensubtitles.py:607
+#: ../src/plugins/opensubtitles/opensubtitles.py:230
+#: ../src/plugins/opensubtitles/opensubtitles.py:612
 msgid "Downloading the subtitles…"
 msgstr "Altyazılar indiriliyor..."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:291
+#: ../src/plugins/opensubtitles/opensubtitles.py:295
 msgid "Could not contact the OpenSubtitles website"
 msgstr "OpenSubtitles web sitesine bağlanılamadı"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:324
-#: ../src/plugins/opensubtitles/opensubtitles.py:342
+#: ../src/plugins/opensubtitles/opensubtitles.py:328
+#: ../src/plugins/opensubtitles/opensubtitles.py:346
 msgid "Could not contact the OpenSubtitles website."
 msgstr "OpenSubtitles web sitesine ulaşılamadı."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:330
+#: ../src/plugins/opensubtitles/opensubtitles.py:334
 msgid "No results found."
 msgstr "Hiçbir sonuç bulunamadı."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:472
+#: ../src/plugins/opensubtitles/opensubtitles.py:477
 msgid "Subtitles"
 msgstr "Altyazılar"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: ../src/plugins/opensubtitles/opensubtitles.py:478
+#: ../src/plugins/opensubtitles/opensubtitles.py:483
 msgid "Format"
 msgstr "Biçim"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: ../src/plugins/opensubtitles/opensubtitles.py:483
+#: ../src/plugins/opensubtitles/opensubtitles.py:488
 msgid "Rating"
 msgstr "Sıralama"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:524
+#: ../src/plugins/opensubtitles/opensubtitles.py:529
 msgid "_Download Movie Subtitles…"
 msgstr "Film Altyazılarını _İndir..."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:564
+#: ../src/plugins/opensubtitles/opensubtitles.py:569
 msgid "Searching subtitles…"
 msgstr "Altyazılar aranıyor..."
 
@@ -1654,24 +1665,21 @@ msgstr "Altyazı _dili:"
 msgid "_Play with Subtitle"
 msgstr "Altyazı ile _Oynat"
 
-#: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.in.h:1
+#: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.h:1
 msgid "Subtitle language"
 msgstr "Altyazı dili"
 
-#: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.in.h:2
+#: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.h:2
 msgid "The language to search for subtitles for movies in."
 msgstr "Filmlerde altyazı aramasında kullanılacak dil."
 
 #: ../src/plugins/properties/movie-properties.plugin.in.h:1
-#| msgid "Properties"
 msgid "Movie Properties"
 msgstr "Film Özellikleri"
 
 #: ../src/plugins/properties/movie-properties.plugin.in.h:2
-#, fuzzy
-#| msgid "Show or hide the sidebar"
 msgid "Adds movie properties menu item"
-msgstr "Yan çubuğu göster ya da gizle"
+msgstr "Film özellikleri menü ögesini ekler"
 
 #: ../src/plugins/properties/totem-movie-properties.c:261
 msgid "Properties"
@@ -1681,11 +1689,11 @@ msgstr "Özellikler"
 msgid "_Properties"
 msgstr "Ö_zellikler"
 
-#: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.in.h:1
+#: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.h:1
 msgid "rpdb2 password"
 msgstr "rpdb2 parolası"
 
-#: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.in.h:2
+#: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.h:2
 msgid ""
 "A password to protect the rpdb2 server for debugging Totem from unauthorized "
 "remote access. If this is empty, a default of 'totem' will be used."
@@ -1698,7 +1706,6 @@ msgid "Python Console"
 msgstr "Python Konsolu"
 
 #: ../src/plugins/pythonconsole/pythonconsole.plugin.in.h:2
-#| msgid "Interactive Python console."
 msgid "Interactive Python console"
 msgstr "Etkileşimli Python konsolu"
 
@@ -1712,9 +1719,9 @@ msgstr "Python Hata Ayıklayıcı"
 
 #. pylint: disable-msg=E1101
 #: ../src/plugins/pythonconsole/pythonconsole.py:90
-#, fuzzy, python-format
+#, python-format
 msgid "You can access the Totem.Object through 'totem_object' :\\n%s"
-msgstr "Totem'e  'totem_object' :\\n%s üzerinden erişebilirsiniz"
+msgstr "Totem.Object'e, 'totem_object' üzerinden erişebilirsiniz :\\n%s"
 
 #: ../src/plugins/pythonconsole/pythonconsole.py:94
 msgid "Totem Python Console"
@@ -1732,40 +1739,34 @@ msgstr ""
 "öntanımlı ('totem') parolasını kullanacaktır."
 
 #: ../src/plugins/recent/recent.plugin.in.h:1
-#, fuzzy
-#| msgid "Video files"
 msgid "Recent files"
-msgstr "Video dosyaları"
+msgstr "Son dosyalar"
 
 #: ../src/plugins/recent/recent.plugin.in.h:2
 msgid "Adds files that have been played to recent files"
-msgstr ""
+msgstr "Oynatılan dosyaları son dosyalar listesine ekler"
 
 #: ../src/plugins/rotation/rotation.plugin.in.h:1
 msgid "Rotation Plugin"
 msgstr "Döndürme Eklentisi"
 
 #: ../src/plugins/rotation/rotation.plugin.in.h:2
-#, fuzzy
-#| msgid "Allows videos to be rotated if they're in the wrong orientation."
 msgid "Allows videos to be rotated if they are in the wrong orientation"
-msgstr "Eğer yanlış yönelimdeyseler videolar döndürülür."
+msgstr "Eğer yanlış yönelimdeyseler videoları döndürmeyi sağlar"
 
 #: ../src/plugins/rotation/totem-rotation-plugin.vala:52
 msgid "_Rotate ↷"
-msgstr ""
+msgstr "_Döndür ↷"
 
 #: ../src/plugins/rotation/totem-rotation-plugin.vala:56
 msgid "Rotate ↶"
-msgstr ""
+msgstr "Döndür ↶"
 
 #: ../src/plugins/save-file/save-file.plugin.in.h:1
-#| msgid "Save a Copy"
 msgid "Save Copy"
 msgstr "Bir Kopya Kaydet"
 
 #: ../src/plugins/save-file/save-file.plugin.in.h:2
-#| msgid "Copy the currently playing video DVD"
 msgid "Save a copy of the currently playing movie"
 msgstr "Şu anda oynatılan filmin bir kopyasını kaydet"
 
@@ -1777,17 +1778,15 @@ msgstr "Film"
 
 #: ../src/plugins/save-file/totem-save-file.c:366
 msgid "Make Available Offline"
-msgstr ""
+msgstr "Çevirimdışı Kullanıma Hazırla"
 
 #: ../src/plugins/screensaver/screensaver.plugin.in.h:1
 msgid "Screen Saver"
-msgstr ""
+msgstr "Ekran Koruyucu"
 
 #: ../src/plugins/screensaver/screensaver.plugin.in.h:2
-#, fuzzy
-#| msgid "Disable screensaver when playing "
 msgid "Deactivates the screen saver when a movie is playing"
-msgstr "Oynatma sırasında ekran koruyucuyu devre dışı bırak "
+msgstr "Bir film oynatılırken ekran koruyucuyu devre dışı bırakır"
 
 #: ../src/plugins/screensaver/totem-screensaver.c:79
 msgid "Playing a movie"
@@ -1808,55 +1807,47 @@ msgstr "Ekran görüntüleri sayısı:"
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if the entire screen is taken
 #: ../src/plugins/screenshot/screenshot-filename-builder.c:147
-#, fuzzy, c-format
-#| msgid "Screenshot.png"
+#, c-format
 msgid "Screenshot from %s.png"
-msgstr "EkranGoruntusu.png"
+msgstr "EkranGörüntüsü - %s.png"
 
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if the entire screen is
 #. * taken
 #: ../src/plugins/screenshot/screenshot-filename-builder.c:154
-#, fuzzy, c-format
-#| msgid "Screenshot-%s-%d.png"
+#, c-format
 msgid "Screenshot from %s - %d.png"
-msgstr "EkranGörüntüsü-%s-%d.png"
+msgstr "EkranGörüntüsü - %s - %d.png"
 
 #: ../src/plugins/screenshot/screenshot.plugin.in.h:1
-#, fuzzy
-#| msgid "Screenshot.png"
 msgid "Screenshot"
-msgstr "EkranGoruntusu.png"
+msgstr "Ekran Görüntüsü"
 
 #: ../src/plugins/screenshot/screenshot.plugin.in.h:2
 msgid "Allows screenshots and galleries to be taken of videos"
-msgstr ""
+msgstr "Videoların ekran görüntülerinin alınmasını sağlar"
 
-#: ../src/plugins/screenshot/totem-gallery.c:91
+#: ../src/plugins/screenshot/totem-gallery.c:92
 msgid "Save Gallery"
 msgstr "Galeriyi Kaydet"
 
-#: ../src/plugins/screenshot/totem-gallery.c:98
-#, fuzzy
-#| msgid "Save"
+#: ../src/plugins/screenshot/totem-gallery.c:99
 msgid "_Save"
-msgstr "Kaydet"
+msgstr "_Kaydet"
 
 #. Translators: The first argument is the movie title. The second
 #. * argument is a number which is used to prevent overwriting files.
 #. * Just translate "Gallery", and not the ".jpg". Example:
 #. * "Galerie-%s-%d.jpg".
-#: ../src/plugins/screenshot/totem-gallery.c:115
+#: ../src/plugins/screenshot/totem-gallery.c:116
 #, c-format
 msgid "Gallery-%s-%d.jpg"
 msgstr "Galeri-%s-%d.jpg"
 
 #. Set up the window
 #: ../src/plugins/screenshot/totem-gallery-progress.c:101
-#, fuzzy
-#| msgid "Creating Gallery..."
 msgid "Creating Gallery…"
-msgstr "Galeri Oluşturuluyor..."
+msgstr "Galeri Oluşturuluyor…"
 
 #. Set the progress label
 #: ../src/plugins/screenshot/totem-gallery-progress.c:107
@@ -1874,25 +1865,21 @@ msgid "This is not supposed to happen; please file a bug report."
 msgstr "Bunun gerçekleşmemesi gerekiyordu, lütfen bir hata raporu oluşturun."
 
 #: ../src/plugins/screenshot/totem-screenshot-plugin.c:339
-#, fuzzy
-#| msgid "Take _Screenshot..."
 msgid "Take _Screenshot"
-msgstr "Ekran _Görüntüsü Al..."
+msgstr "Ekran _Görüntüsü Al"
 
 #: ../src/plugins/screenshot/totem-screenshot-plugin.c:345
-#, fuzzy
-#| msgid "Create Screenshot _Gallery..."
 msgid "Create Screenshot _Gallery…"
-msgstr "Ekran _Görüntüsü Galerisi Oluştur..."
+msgstr "Ekran _Görüntüsü Galerisi Oluştur…"
 
 #: ../src/plugins/skipto/skipto.plugin.in.h:1
-#: ../src/plugins/skipto/totem-skipto.c:196
+#: ../src/plugins/skipto/totem-skipto.c:219
 msgid "Skip To"
 msgstr "Atla"
 
 #: ../src/plugins/skipto/skipto.plugin.in.h:2
 msgid "Provides the \"Skip to\" dialog"
-msgstr ""
+msgstr "\"Atla\" iletişim penceresini sunar"
 
 #: ../src/plugins/skipto/skipto.ui.h:1
 msgid "_Skip to:"
@@ -1900,7 +1887,7 @@ msgstr "_Atla:"
 
 #. Update the "seconds" label so that it always has the correct singular/plural form
 #. Translators: label for the seconds selector in the "Skip to" dialogue
-#: ../src/plugins/skipto/totem-skipto.c:159
+#: ../src/plugins/skipto/totem-skipto.c:176
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "saniye"
@@ -1909,40 +1896,181 @@ msgstr[0] "saniye"
 #. Translators: you should translate this string to a number (written in digits) which corresponds to the longer character length of the
 #. * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
 #. * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398
-#: ../src/plugins/skipto/totem-skipto.c:189
+#: ../src/plugins/skipto/totem-skipto.c:213
 msgctxt "Skip To label length"
 msgid "7"
 msgstr "6"
 
-#: ../src/plugins/skipto/totem-skipto.c:199
-#, fuzzy
-#| msgid "Skip To"
+#: ../src/plugins/skipto/totem-skipto.c:222
 msgid "_Skip To"
-msgstr "Atla"
+msgstr "_Atla"
 
 #: ../src/plugins/skipto/totem-skipto-plugin.c:206
-#, fuzzy
-#| msgid "Skip To"
 msgid "_Skip To…"
-msgstr "Atla"
+msgstr "_Atla…"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:63
+msgctxt "playback rate"
+msgid "× 0.75"
+msgstr "× 0.75"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:64
+#| msgid "Normal"
+msgctxt "playback rate"
+msgid "Normal"
+msgstr "Normal"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:65
+msgctxt "playback rate"
+msgid "× 1.1"
+msgstr "× 1.1"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:66
+msgctxt "playback rate"
+msgid "× 1.25"
+msgstr "× 1.25"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:67
+msgctxt "playback rate"
+msgid "× 1.5"
+msgstr "× 1.5"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:68
+msgctxt "playback rate"
+msgid "× 1.75"
+msgstr "× 1.75"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:76
+#, c-format
+#| msgid "Genre: %s"
+msgid "Speed: %s"
+msgstr "Hız: %s"
+
+#: ../src/plugins/variable-rate/variable-rate.plugin.in.h:1
+msgid "Variable Rate"
+msgstr "Değişken Oran"
+
+#: ../src/plugins/variable-rate/variable-rate.plugin.in.h:2
+msgid "Provides the variable rate menu item"
+msgstr "Değişken oran menü ögesini sağlar"
 
 #: ../src/plugins/vimeo/vimeo.plugin.in.h:1
 msgid "Vimeo"
-msgstr ""
+msgstr "Vimeo"
 
 #: ../src/plugins/vimeo/vimeo.plugin.in.h:2
 msgid "Sets the user agent for the Vimeo site"
-msgstr ""
+msgstr "Vimeo sitesi için tarayıcı kimliğini ayarlar"
 
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:1
-#, fuzzy
-#| msgid "Configure Plugins"
 msgid "Zeitgeist Plugin"
-msgstr "Eklentileri Yapılandır"
+msgstr "Zeitgeist Eklentisi"
 
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:2
 msgid "A plugin sending events to Zeitgeist"
-msgstr ""
+msgstr "Olayları Zeitgeist'e gönderen bir eklenti"
+
+#~ msgid "_Remove Chapter"
+#~ msgstr "Bölümü Kaldı_r"
+
+#~ msgid "Remove the chapter from the list"
+#~ msgstr "Bölümü listeden kaldır"
+
+#~ msgid "_Go to Chapter"
+#~ msgstr "Bölüme _Git"
+
+#~ msgid "Go to the chapter in the movie"
+#~ msgstr "Filmdeki bölüme git"
+
+#~ msgid "Add Chapter…"
+#~ msgstr "Bölüm Ekle…"
+
+#~ msgid "Remove Chapter"
+#~ msgstr "Bölümü Kaldır"
+
+#~ msgid "Go to Chapter"
+#~ msgstr "Bölüme Git"
+
+#~ msgid "Save Changes"
+#~ msgstr "Değişiklikleri Kaydet"
+
+#~ msgid "No chapter data"
+#~ msgstr "Bölüm verisi yok"
+
+#~ msgid "Load Chapters…"
+#~ msgstr "Bölümleri Yükle…"
+
+#~ msgid "Load chapters from an external CMML file"
+#~ msgstr "Bölümleri harici bir CMML dosyasından yükle"
+
+#~ msgid "Add New Chapters"
+#~ msgstr "Yeni Bölüm Ekle"
+
+#~ msgid "Create a new chapter list for the movie"
+#~ msgstr "Film için yeni bir bölüm listesi oluştur"
+
+#~ msgid "Chapters"
+#~ msgstr "Bölümler"
+
+#~ msgid "Support chapter markers in movies"
+#~ msgstr "Filmlerde bölüm işaretçilerini destekle"
+
+#~ msgid ""
+#~ "<b>Title: </b>%s\n"
+#~ "<b>Start time: </b>%s"
+#~ msgstr ""
+#~ "<b>Başlık: </b>%s\n"
+#~ "<b>Başlama zamanı: </b>%s"
+
+#~ msgid "Error while reading file with chapters"
+#~ msgstr "Bölümlü dosya okunurken hata oluştu"
+
+#~ msgid "Chapter with the same time already exists"
+#~ msgstr "Aynı zamanlı bir bölüm zaten mevcut"
+
+#~ msgid "Try another name or remove an existing chapter."
+#~ msgstr "Başka bir ad deneyin ya da varolan bir bölümü kaldırın."
+
+#~ msgid "Error while writing file with chapters"
+#~ msgstr "Dosyayı bölümlerle yazarken hata"
+
+#~ msgid "Error occurred while saving chapters"
+#~ msgstr "Bölümler kaydedilirken hata oluştu"
+
+#~ msgid ""
+#~ "Please check you have permission to write to the folder containing the "
+#~ "movie."
+#~ msgstr ""
+#~ "Lütfen filmin bulunduğu klasöre yazma izniniz olup olmadığını kontrol "
+#~ "edin."
+
+#~ msgid "Open Chapter File"
+#~ msgstr "Bölüm Dosyasını Aç"
+
+#~ msgid "Supported files"
+#~ msgstr "Desteklenen dosyalar"
+
+#~ msgid "Chapter Screenshot"
+#~ msgstr "Bölüm Ekran Görüntüsü"
+
+#~ msgid "Chapter Title"
+#~ msgstr "Bölüm Başlığı"
+
+#~ msgid "Save changes to chapter list before closing?"
+#~ msgstr "Kapatmadan önce bölüm listesindeki değişiklikler kaydedilsin mi?"
+
+#~ msgid "Close without Saving"
+#~ msgstr "Kaydetmeden Kapat"
+
+#~ msgid "Save"
+#~ msgstr "Kaydet"
+
+#~ msgid "If you don't save, changes to the chapter list will be lost."
+#~ msgstr ""
+#~ "Eğer kaydetmezseniz, bölüm listesinde yaptığınız değişiklikler kaybolacak."
+
+#~ msgid "Add Chapter"
+#~ msgstr "Bölüm Ekle"
 
 #~ msgid "Stopped"
 #~ msgstr "Durduruldu"
@@ -2042,9 +2170,6 @@ msgstr ""
 #~ msgid "Move Down"
 #~ msgstr "Aşağı Taşı"
 
-#~ msgid "Normal"
-#~ msgstr "Normal"
-
 #~ msgid "Large"
 #~ msgstr "Büyük"
 
@@ -2053,9 +2178,6 @@ msgstr ""
 
 #~ msgid "Totem Preferences"
 #~ msgstr "Totem Özellikler"
-
-#~ msgid "Playback"
-#~ msgstr "Oynat"
 
 #~| msgid "Disable screensaver when playing "
 #~ msgid "Disable screensaver when playing"
@@ -2116,9 +2238,6 @@ msgstr ""
 #~ msgid "Configure plugins to extend the application"
 #~ msgstr "Uygulamaya ek işlevler katmak için eklentileri yapılandır"
 
-#~ msgid "_View"
-#~ msgstr "_Görünüm"
-
 #~ msgid "Fit Window to Movie"
 #~ msgstr "Pencereyi Filme Uydur"
 
@@ -2152,23 +2271,14 @@ msgstr ""
 #~ msgid "_Previous Chapter/Movie"
 #~ msgstr "_Önceki Bölüm/Film"
 
-#~ msgid "Previous chapter or movie"
-#~ msgstr "Önceki bölüm veya film"
-
 #~ msgid "_Sound"
 #~ msgstr "_Ses"
 
 #~ msgid "Volume _Up"
 #~ msgstr "Sesi _Yükselt"
 
-#~ msgid "Increase volume"
-#~ msgstr "Sesi arttır"
-
 #~ msgid "Volume _Down"
 #~ msgstr "Sesi _Düşür"
-
-#~ msgid "Decrease volume"
-#~ msgstr "Sesi azalt"
 
 #~ msgid "_Contents"
 #~ msgstr "İçinde_kiler"
@@ -2208,9 +2318,6 @@ msgstr ""
 #~| msgid "Sets 2.11:1 (DVB) aspect ratio"
 #~ msgid "Sets 2.11∶1 (DVB) aspect ratio"
 #~ msgstr "Görüntü oranını 2.11:1 (DVB) olarak ayarlar"
-
-#~ msgid "Zoom in"
-#~ msgstr "Yakınlaş"
 
 #~ msgid "Skip _Forward"
 #~ msgstr "İleri doğr_u atla"
@@ -2412,7 +2519,7 @@ msgstr ""
 #~ msgstr "Konumu Kopyala"
 
 #~ msgid "Browse"
-#~ msgstr "Gözat"
+#~ msgstr "Gözat"
 
 #~ msgid "Download movie subtitles from OpenSubtitles"
 #~ msgstr "OpenSubtitles'dan film altyazıları indirin"
@@ -2476,9 +2583,6 @@ msgstr ""
 
 #~ msgid "Configure the application"
 #~ msgstr "Uygulamayı yapılandır"
-
-#~ msgid "Switch to fullscreen"
-#~ msgstr "Tam ekrana geç"
 
 #~ msgid "_Resize 1:2"
 #~ msgstr "1:2'ye _Boyutlandır"
@@ -2761,9 +2865,6 @@ msgstr ""
 #~ "Ses çıkışı bulunamadı. Çokluortam Sistemleri Seçicisinden başka bir ses "
 #~ "çıkışı seçebilir veya ek GStreamer eklentileri kurabilirsiniz."
 
-#~ msgid "Failed to parse CMML file"
-#~ msgstr "CMML dosyası ayrıştırılamadı"
-
 #~ msgid "The URI ‘%s’ is not supported."
 #~ msgstr "‘%s’ URI adresi desteklenmiyor."
 
@@ -2924,9 +3025,6 @@ msgstr ""
 #~ msgid "Browser Plugin using %s"
 #~ msgstr "Tarayıcı eklentisi %s'i kullanıyor"
 
-#~ msgid "Zoom out"
-#~ msgstr "Uzaklaş"
-
 #~ msgid "Set the window icon to the thumbnail of the playing movie"
 #~ msgstr "Pencere simgesini oynayan filmin küçük resmi yap"
 
@@ -3041,9 +3139,6 @@ msgstr ""
 
 #~ msgid "%x"
 #~ msgstr "%x"
-
-#~ msgid "Genre: %s"
-#~ msgstr "Tür: %s"
 
 #~ msgid "Released on: %s"
 #~ msgstr "Çıkış tarihi: %s"

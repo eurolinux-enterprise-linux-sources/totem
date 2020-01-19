@@ -6,64 +6,103 @@
 # Justina Klingaitė <justina.klingaite@gmail.com>, 2005.
 # Gintautas Miliauskas <gintas@akl.lt>, 2007, 2008, 2009.
 # Marius Gedminas <marius@gedmin.as>, 2007.
-# Aurimas Černius <aurisc4@gmail.com>, 2010, 2013.
-# Žygimantas Beručka <zygis@gnome.org>, 2004-2007, 2013, 2014.
+# Žygimantas Beručka <zygis@gnome.org>, 2004-2007, 2013, 2014, 2015.
+# Aurimas Černius <aurisc4@gmail.com>, 2010, 2013, 2015, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: lt\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=totem&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-07-25 10:43+0000\n"
-"PO-Revision-Date: 2014-07-25 23:51+0300\n"
-"Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
-"Language-Team: Lithuanian\n"
+"POT-Creation-Date: 2016-06-01 15:41+0000\n"
+"PO-Revision-Date: 2016-07-24 17:21+0300\n"
+"Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
+"Language-Team: Lietuvių <gnome-lt@lists.akl.lt>\n"
 "Language: lt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
 "%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"X-Generator: Gtranslator 2.91.7\n"
 "X-Project-Style: gnome\n"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:1
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:1
+#: ../data/org.gnome.Totem.desktop.in.in.in.h:1 ../src/totem.c:66
+#: ../src/totem.c:72 ../src/totem-grilo.c:1864 ../src/totem-object.c:3661
+msgid "Videos"
+msgstr "Vaizdo įrašai"
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:2
+#: ../data/org.gnome.Totem.desktop.in.in.in.h:2
+msgid "Play movies"
+msgstr "Žiūrėti filmus"
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:3
+msgid ""
+"Videos, also known as Totem, is the official movie player of the GNOME "
+"desktop environment. It features a searchable list of local videos, and "
+"DVDs, as well as local network video shares (using UPnP/DLNA) and video "
+"highlights from a number of web sites."
+msgstr ""
+"Videoįrašai, dar žinoma kaip Totem, yra oficialus GNOME darbalaukio aplinkos "
+"filmų grotuvas. Jis turi ieškomą vietinių vaizdo įrašų bei DVD sąrašą, taip "
+"pat įrašų viešinius tinkle (naudojant UPnP/DLNA) bei daugelio tinklalapių "
+"santraukas."
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:4
+msgid ""
+"Totem comes with added functionality such as: subtitle downloader, and "
+"support for recording DVDs."
+msgstr ""
+"Totem taip pat turi papildomo funkcionalumo, tokio kaip subtitrų "
+"parsiuntimas, tiesioginės televizijos žiūrėjimas bei DVD įrašymas."
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:5
+msgid "Video thumbnailer for the file manager"
+msgstr "Vaizdo įrašų miniatiūrų kūrėjas failų tvarkytuvei"
+
+#: ../data/appdata/org.gnome.Totem.appdata.xml.in.h:6
+msgid "Files properties tab"
+msgstr "Failų savybių kortelė"
+
+#: ../data/org.gnome.Totem.desktop.in.in.in.h:3
+msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
+msgstr "Vaizdo įrašas;Filmas;Klipas;Serialas;Grotuvas;DVD;TV;Diskas;"
+
+#: ../data/org.gnome.totem.gschema.xml.in.h:1
 msgid "The brightness of the video"
 msgstr "Vaizdo šviesumas"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:2
+#: ../data/org.gnome.totem.gschema.xml.in.h:2
 msgid "The contrast of the video"
 msgstr "Vaizdo kontrastas"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:3
+#: ../data/org.gnome.totem.gschema.xml.in.h:3
 msgid "The hue of the video"
 msgstr "Vaizdo atspalvis"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:4
+#: ../data/org.gnome.totem.gschema.xml.in.h:4
 msgid "The saturation of the video"
 msgstr "Vaizdo spalvų sotumas"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:5
+#: ../data/org.gnome.totem.gschema.xml.in.h:5
 msgid "Repeat mode"
 msgstr "Kartojimo veiksena"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:6
+#: ../data/org.gnome.totem.gschema.xml.in.h:6
 msgid "Whether to disable deinterlacing for interlaced movies"
 msgstr "Ar išjungti išlyginimą pakaitiniams (interlaced) filmams"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:7
-msgid "Whether to enable debug for the playback engine"
-msgstr "Ar įjungti rodymo posistemės derinimą"
-
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:8
+#: ../data/org.gnome.totem.gschema.xml.in.h:7
 msgid "Type of audio output to use"
 msgstr "Garso išvesties tipas"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:9
+#: ../data/org.gnome.totem.gschema.xml.in.h:8
 msgid "Network buffering threshold"
 msgstr "Tinklo buferizavimo riba"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:10
+#: ../data/org.gnome.totem.gschema.xml.in.h:9
 msgid ""
 "Amount of data to buffer for network streams before starting to display the "
 "stream (in seconds)."
@@ -71,37 +110,42 @@ msgstr ""
 "Buferizuojamų tinklo srauto duomenų kiekis prieš pradedant rodyti srautą "
 "(sekundėmis)."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:11
+#: ../data/org.gnome.totem.gschema.xml.in.h:10
 msgid "Subtitle font"
 msgstr "Subtitrų šriftas"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:12
+#: ../data/org.gnome.totem.gschema.xml.in.h:11
 msgid "Pango font description for subtitle rendering."
 msgstr "Pango šrifto aprašymas subtitrų vaizdavimui."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:13
+#: ../data/org.gnome.totem.gschema.xml.in.h:12
+msgctxt "subtitle-encoding"
+msgid "'UTF-8'"
+msgstr "'UTF-8'"
+
+#: ../data/org.gnome.totem.gschema.xml.in.h:13
 msgid "Subtitle encoding"
 msgstr "Subtitrų koduotė"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:14
+#: ../data/org.gnome.totem.gschema.xml.in.h:14
 msgid "Encoding character set for subtitle."
 msgstr "Subtitrų simbolių rinkinio koduotė."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:15
+#: ../data/org.gnome.totem.gschema.xml.in.h:15
 msgid "Default location for the \"Open...\" dialogs"
 msgstr "Numatytoji „Atverti...“ dialogų vieta"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:16
+#: ../data/org.gnome.totem.gschema.xml.in.h:16
 msgid ""
 "Default location for the \"Open...\" dialogs. Default is the current "
 "directory."
 msgstr "Numatytoji dialogų „Atverti...“ vieta. Standartinė – esamas aplankas."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:17
+#: ../data/org.gnome.totem.gschema.xml.in.h:17
 msgid "Default location for the \"Take Screenshot\" dialogs"
 msgstr "Numatytoji dialogų „Padaryti nuotrauką“ vieta"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:18
+#: ../data/org.gnome.totem.gschema.xml.in.h:18
 msgid ""
 "Default location for the \"Take Screenshot\" dialogs. Default is the "
 "Pictures directory."
@@ -109,41 +153,41 @@ msgstr ""
 "Numatytoji dialogų „Padaryti nuotrauką“ vieta. Standartinė – aplankas "
 "„Paveikslėliai“."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:19
+#: ../data/org.gnome.totem.gschema.xml.in.h:19
 msgid "Whether to disable the plugins in the user's home directory"
 msgstr "Ar išjungti įskiepius, esančis naudotojo namų aplanke"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:20
+#: ../data/org.gnome.totem.gschema.xml.in.h:20
 msgid "Whether to disable the keyboard shortcuts"
 msgstr "Ar išjungti klaviatūros greituosius klavišus"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:21
+#: ../data/org.gnome.totem.gschema.xml.in.h:21
 msgid "Whether to autoload text subtitle files when a movie is loaded"
 msgstr "Ar automatiškai įkelti titrus įkėlus filmą"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:22
+#: ../data/org.gnome.totem.gschema.xml.in.h:22
 msgid "Whether to autoload external chapter files when a movie is loaded"
 msgstr "Ar automatiškai įkelti išorinius takelius įkėlus filmą"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:23
+#: ../data/org.gnome.totem.gschema.xml.in.h:23
 msgid "Active plugins list"
 msgstr "Suaktyvintų įskiepių sąrašas"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:24
+#: ../data/org.gnome.totem.gschema.xml.in.h:24
 msgid ""
 "A list of the names of the plugins which are currently active (loaded and "
 "running)."
 msgstr "Suaktyvintų (įkeltų ir veikiančių) įskiepių pavadinimų sąrašas."
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:25
+#: ../data/org.gnome.totem.gschema.xml.in.h:25
 msgid "Directories to show"
 msgstr "Rodomi aplankai"
 
-#: ../data/org.gnome.totem.gschema.xml.in.in.h:26
+#: ../data/org.gnome.totem.gschema.xml.in.h:26
 msgid "Directories to show in the browse interface, none by default"
 msgstr "Naršyklės sąsajoje rodomi aplankai, nenumatyta jokių"
 
-#: ../data/preferences.ui.h:1 ../src/backend/bacon-video-widget.c:5480
+#: ../data/preferences.ui.h:1 ../src/backend/bacon-video-widget.c:5550
 #: ../src/totem-properties-view.c:242
 msgid "Stereo"
 msgstr "Stereo"
@@ -170,10 +214,9 @@ msgstr "AC3 Passthrough"
 
 #: ../data/preferences.ui.h:7
 msgid "Preferences"
-msgstr "Nustatymai"
+msgstr "Nuostatos"
 
 #: ../data/preferences.ui.h:8
-#| msgid "Text Subtitles"
 msgid "External Subtitles"
 msgstr "Išoriniai subtitrai"
 
@@ -210,9 +253,10 @@ msgid "General"
 msgstr "Bendrosios"
 
 #. Tab label in the Preferences dialogue
-#: ../data/preferences.ui.h:18
-msgid "Display"
-msgstr "Ekranas"
+#: ../data/preferences.ui.h:18 ../data/properties.ui.h:9
+#: ../src/totem-properties-view.c:285
+msgid "Video"
+msgstr "Vaizdas"
 
 #: ../data/preferences.ui.h:19
 msgid "Disable _deinterlacing of interlaced videos"
@@ -243,14 +287,18 @@ msgid "Reset to _Defaults"
 msgstr "Atkurti _numatytuosius"
 
 #: ../data/preferences.ui.h:26
+msgid "Display"
+msgstr "Ekranas"
+
+#: ../data/preferences.ui.h:27
 msgid "Audio Output"
 msgstr "Garso išvestis"
 
-#: ../data/preferences.ui.h:27
+#: ../data/preferences.ui.h:28
 msgid "_Audio output type:"
 msgstr "_Garso išvesties tipas:"
 
-#: ../data/preferences.ui.h:28 ../data/properties.ui.h:14
+#: ../data/preferences.ui.h:29 ../data/properties.ui.h:14
 #: ../src/totem-properties-view.c:283
 msgid "Audio"
 msgstr "Garsas"
@@ -283,10 +331,6 @@ msgstr "Komentaras:"
 msgid "Container:"
 msgstr "Konteineris:"
 
-#: ../data/properties.ui.h:9 ../src/totem-properties-view.c:285
-msgid "Video"
-msgstr "Vaizdas"
-
 #: ../data/properties.ui.h:10
 msgid "Dimensions:"
 msgstr "Matmenys:"
@@ -311,153 +355,252 @@ msgstr "Garso elementų dažnis:"
 msgid "Channels:"
 msgstr "Kanalai:"
 
-#: ../data/appdata/totem.appdata.xml.in.h:1
-#| msgid ""
-#| "Totem, also known as Videos, is the official movie player of the GNOME "
-#| "desktop environment. It features a playlist, a full-screen mode, seek and "
-#| "volume controls, as well as keyboard navigation."
-msgid ""
-"Videos, also known as Totem, is the official movie player of the GNOME "
-"desktop environment. It features a searchable list of local videos, and "
-"DVDs, as well as local network video shares (using UPnP/DLNA) and video "
-"highlights from a number of web sites."
-msgstr ""
-"Videoįrašai, dar žinoma kaip Totem, yra oficialus GNOME darbastalio aplinkos "
-"filmų grotuvas. Jis turi ieškomą vietinių vaizdo įrašų bei DVD sąrašą, taip "
-"pat įrašų viešinius tinkle (naudojant UPnP/DLNA) bei daugelio tinklapių "
-"santraukas."
+#: ../data/shortcuts.ui.h:1
+msgctxt "shortcut window"
+msgid "General"
+msgstr "Bendrosios"
 
-#: ../data/appdata/totem.appdata.xml.in.h:2
-#| msgid ""
-#| "Totem comes with added functionality such as: subtitle downloader, "
-#| "support to watch live TV and VCD recording."
-msgid ""
-"Totem comes with added functionality such as: subtitle downloader, and "
-"support for recording DVDs."
-msgstr ""
-"Totem taip pat turi papildomo funkcionalumo, tokio kaip subtitrų "
-"parsiuntimas, tiesioginės televizijos žiūrėjimas bei DVD įrašymas."
+#: ../data/shortcuts.ui.h:2
+msgctxt "shortcut window"
+msgid "Preferences"
+msgstr "Nuostatos"
 
-#: ../data/appdata/totem.appdata.xml.in.h:3
-msgid "Video thumbnailer for the file manager"
-msgstr "Vaizdo įrašų miniatiūrų kūrėjas failų tvarkyklei"
+#: ../data/shortcuts.ui.h:3
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Išeiti"
 
-#: ../data/appdata/totem.appdata.xml.in.h:4
-#| msgid "Nautilus properties tab"
-msgid "Files properties tab"
-msgstr "Failų savybių kortelė"
+#: ../data/shortcuts.ui.h:4
+msgctxt "shortcut window"
+msgid "Volume"
+msgstr "Garsumas"
 
-#: ../data/totem.desktop.in.in.in.h:1 ../src/totem.c:241 ../src/totem.c:247
-#: ../src/totem-object.c:3520 ../src/totem-grilo.c:1860
-msgid "Videos"
-msgstr "Vaizdo įrašai"
+#: ../data/shortcuts.ui.h:5
+msgctxt "shortcut window"
+msgid "Increase volume"
+msgstr "Pagarsinti"
 
-#: ../data/totem.desktop.in.in.in.h:2
-msgid "Play movies"
-msgstr "Žiūrėti filmus"
+#: ../data/shortcuts.ui.h:6
+msgctxt "shortcut window"
+msgid "Decrease volume"
+msgstr "Tildyti"
 
-#: ../data/totem.desktop.in.in.in.h:3
-msgid "Video;Movie;Film;Clip;Series;Player;DVD;TV;Disc;"
-msgstr "Vaizdo įrašas;Filmas;Klipas;Serialas;Grotuvas;DVD;TV;Diskas;"
+#: ../data/shortcuts.ui.h:7
+msgctxt "shortcut window"
+msgid "View"
+msgstr "Rodinys"
+
+#: ../data/shortcuts.ui.h:8
+msgctxt "shortcut window"
+msgid "Toggle fullscreen"
+msgstr "Perjungti viso ekrano veikseną"
+
+#: ../data/shortcuts.ui.h:9
+msgctxt "shortcut window"
+msgid "Exit fullscreen"
+msgstr "Išeiti iš viso ekrano"
+
+#: ../data/shortcuts.ui.h:10
+msgctxt "shortcut window"
+msgid "Zoom in"
+msgstr "Didinti"
+
+#: ../data/shortcuts.ui.h:11
+msgctxt "shortcut window"
+msgid "Zoom out"
+msgstr "Mažinti"
+
+#: ../data/shortcuts.ui.h:12
+msgctxt "shortcut window"
+msgid "Playback"
+msgstr "Grojimas"
+
+#: ../data/shortcuts.ui.h:13
+msgctxt "shortcut window"
+msgid "Play/Pause"
+msgstr "Groti arba pristabdyti"
+
+#: ../data/shortcuts.ui.h:14
+msgctxt "shortcut window"
+msgid "Previous video or chapter"
+msgstr "Ankstesnis vaizdo įrašas ar dalis"
+
+#: ../data/shortcuts.ui.h:15
+msgctxt "shortcut window"
+msgid "Next video or chapter"
+msgstr "Kitas vaizdo įrašas ar dalis"
+
+#: ../data/shortcuts.ui.h:16
+msgctxt "shortcut window"
+msgid "Skip"
+msgstr "Peršokti"
+
+#: ../data/shortcuts.ui.h:17
+msgctxt "shortcut window"
+msgid "Go back 15 seconds"
+msgstr "Grįžti 15 sekundžių atgal"
+
+#  0 seconds
+#: ../data/shortcuts.ui.h:18
+msgctxt "shortcut window"
+msgid "Go forward 60 seconds"
+msgstr "Pereiti 60 sekundžių pirmyn"
+
+#  0 seconds
+#: ../data/shortcuts.ui.h:19
+msgctxt "shortcut window"
+msgid "Go back 5 seconds"
+msgstr "Grįžti 5 sekundes atgal"
+
+#: ../data/shortcuts.ui.h:20
+msgctxt "shortcut window"
+msgid "Go forward 15 seconds"
+msgstr "Pereiti 15 sekundžių pirmyn"
+
+#: ../data/shortcuts.ui.h:21
+msgctxt "shortcut window"
+msgid "Go back 3 minutes"
+msgstr "Grįžti 3 minutes atgal"
+
+#: ../data/shortcuts.ui.h:22
+msgctxt "shortcut window"
+msgid "Go forward 10 minutes"
+msgstr "Pereiti 10 minučių pirmyn"
+
+#: ../data/shortcuts.ui.h:23
+msgctxt "shortcut window"
+msgid "Skip to…"
+msgstr "Peršokti iki…"
+
+#: ../data/shortcuts.ui.h:24
+msgctxt "shortcut window"
+msgid "DVD menu navigation"
+msgstr "DVD meniu naršymas"
+
+#: ../data/shortcuts.ui.h:25
+msgctxt "shortcut window"
+msgid "Navigate up"
+msgstr "Naršyti aukštyn"
+
+#: ../data/shortcuts.ui.h:26
+msgctxt "shortcut window"
+msgid "Navigate down"
+msgstr "Naršyti žemyn"
+
+#: ../data/shortcuts.ui.h:27
+msgctxt "shortcut window"
+msgid "Navigate left"
+msgstr "Naršyti kairėn"
+
+#: ../data/shortcuts.ui.h:28
+msgctxt "shortcut window"
+msgid "Navigate right"
+msgstr "Naršyti dešinėn"
 
 #: ../data/totem.ui.h:1
 msgid "Prefere_nces"
-msgstr "_Nustatymai"
+msgstr "_Nuostatos"
 
 #: ../data/totem.ui.h:2
+msgid "_Keyboard Shortcuts"
+msgstr "_Klaviatūros trumpiniai"
+
+#: ../data/totem.ui.h:3
 msgid "_Help"
 msgstr "_Žinynas"
 
-#: ../data/totem.ui.h:3
+#: ../data/totem.ui.h:4
 msgid "_Quit"
 msgstr "Iš_eiti"
 
-#: ../data/totem.ui.h:4
+#: ../data/totem.ui.h:5
 msgid "Add _Local Video…"
 msgstr "Pridėti _vietinį vaizdo įrašą…"
 
-#: ../data/totem.ui.h:5
+#: ../data/totem.ui.h:6
 msgid "Add _Web Video…"
 msgstr "Pridėti _internetinį vaizdo įrašą…"
 
-#: ../data/totem.ui.h:6
+#: ../data/totem.ui.h:7
 msgid "_Aspect Ratio"
 msgstr "V_aizdo proporcija"
 
-#: ../data/totem.ui.h:7
+#: ../data/totem.ui.h:8
 msgctxt "Aspect ratio"
 msgid "Auto"
 msgstr "Automatinis"
 
-#: ../data/totem.ui.h:8
+#: ../data/totem.ui.h:9
 msgctxt "Aspect ratio"
 msgid "Square"
 msgstr "Kvadratinis"
 
-#: ../data/totem.ui.h:9
-#| msgctxt "Aspect ratio"
-#| msgid "4:3 (TV)"
+#: ../data/totem.ui.h:10
 msgctxt "Aspect ratio"
 msgid "4∶3 (TV)"
 msgstr "4:3 (TV)"
 
-#: ../data/totem.ui.h:10
+#: ../data/totem.ui.h:11
 msgctxt "Aspect ratio"
 msgid "16∶9 (Widescreen)"
 msgstr "16:9 (plačiaekranis)"
 
-#: ../data/totem.ui.h:11
+#: ../data/totem.ui.h:12
 msgctxt "Aspect ratio"
 msgid "2.11∶1 (DVB)"
 msgstr "2.11:1 (DVB)"
 
-#: ../data/totem.ui.h:12
+#: ../data/totem.ui.h:13
 msgid "Zoom In"
 msgstr "Pritraukti"
 
-#: ../data/totem.ui.h:13
+#: ../data/totem.ui.h:14
 msgid "Switch An_gles"
 msgstr "Pakeisti kamp_us"
 
-#: ../data/totem.ui.h:14
+#: ../data/totem.ui.h:15
 msgid "_Languages"
 msgstr "Ka_lbos"
 
-#: ../data/totem.ui.h:15
+#: ../data/totem.ui.h:16
 msgid "S_ubtitles"
 msgstr "S_ubtitrai"
 
-#: ../data/totem.ui.h:16
+#: ../data/totem.ui.h:17
 msgid "_Select Text Subtitles…"
 msgstr "Pa_sirinkite titrus…"
 
-#: ../data/totem.ui.h:17
+#: ../data/totem.ui.h:18
 msgid "_Eject"
 msgstr "_Išstumti"
 
-#: ../data/totem.ui.h:18
+#: ../data/totem.ui.h:19
 msgid "_Repeat"
 msgstr "Ka_rtojimo veiksena"
 
-#: ../data/totem.ui.h:19
+#: ../data/totem.ui.h:20
 msgid "_DVD Menu"
 msgstr "_DVD meniu"
 
-#: ../data/totem.ui.h:20
+#: ../data/totem.ui.h:21
 msgid "_Title Menu"
 msgstr "_Pavadinimo meniu"
 
-#: ../data/totem.ui.h:21
+#: ../data/totem.ui.h:22
 msgid "A_udio Menu"
 msgstr "Garso meni_u"
 
-#: ../data/totem.ui.h:22
+#: ../data/totem.ui.h:23
 msgid "_Angle Menu"
 msgstr "K_ampo meniu"
 
-#: ../data/totem.ui.h:23
+#: ../data/totem.ui.h:24
 msgid "_Chapter Menu"
 msgstr "_Takelio meniu"
+
+#: ../data/totem.ui.h:25
+msgid "Speed"
+msgstr "Greitis"
 
 #: ../data/uri.ui.h:1
 msgid "Enter the _address of the file you would like to open:"
@@ -468,55 +611,55 @@ msgstr "Įveskite norimo atverti failo _adresą:"
 msgid "--:--"
 msgstr "--:--"
 
-#: ../src/backend/bacon-video-widget.c:1899
+#: ../src/backend/bacon-video-widget.c:1959
 msgid "Password requested for RTSP server"
 msgstr "RTSP serverio slaptažodis"
 
-#: ../src/backend/bacon-video-widget.c:3270
+#: ../src/backend/bacon-video-widget.c:3320
 #, c-format
 msgid "Audio Track #%d"
 msgstr "Audio takelis #%d"
 
-#: ../src/backend/bacon-video-widget.c:3274
+#: ../src/backend/bacon-video-widget.c:3322
 #, c-format
 msgid "Subtitle #%d"
 msgstr "Titrai #%d"
 
-#: ../src/backend/bacon-video-widget.c:3736
+#: ../src/backend/bacon-video-widget.c:3806
 msgid "The server you are trying to connect to is not known."
 msgstr "Serveris, prie kurio mėginate jungtis, nežinomas."
 
-#: ../src/backend/bacon-video-widget.c:3739
+#: ../src/backend/bacon-video-widget.c:3809
 msgid "The connection to this server was refused."
 msgstr "Neleista prisijungti prie šio serverio."
 
-#: ../src/backend/bacon-video-widget.c:3742
+#: ../src/backend/bacon-video-widget.c:3812
 msgid "The specified movie could not be found."
 msgstr "Nepavyko rasti nurodyto filmo."
 
-#: ../src/backend/bacon-video-widget.c:3749
+#: ../src/backend/bacon-video-widget.c:3819
 msgid "The server refused access to this file or stream."
 msgstr "Serveris neleido prieiti prie šio failo ar srauto."
 
-#: ../src/backend/bacon-video-widget.c:3755
+#: ../src/backend/bacon-video-widget.c:3825
 msgid "Authentication is required to access this file or stream."
 msgstr "Šiam failui ar srautui priteiti reikia patvirtinti tapatybę."
 
-#: ../src/backend/bacon-video-widget.c:3762
+#: ../src/backend/bacon-video-widget.c:3832
 msgid "You are not allowed to open this file."
 msgstr "Jums neleista atverti šio failo."
 
-#: ../src/backend/bacon-video-widget.c:3767
+#: ../src/backend/bacon-video-widget.c:3837
 msgid "This location is not a valid one."
 msgstr "Ši vieta nėra tinkama."
 
-#: ../src/backend/bacon-video-widget.c:3775
+#: ../src/backend/bacon-video-widget.c:3845
 msgid "The movie could not be read."
 msgstr "Filmo nepavyko perskaityti."
 
 #. should be exactly one missing thing (source or converter)
-#: ../src/backend/bacon-video-widget.c:3798
-#: ../src/backend/bacon-video-widget.c:3806
+#: ../src/backend/bacon-video-widget.c:3868
+#: ../src/backend/bacon-video-widget.c:3876
 #, c-format
 msgid "The playback of this movie requires a %s plugin which is not installed."
 msgid_plural ""
@@ -534,12 +677,12 @@ msgstr[2] ""
 "\n"
 "%s"
 
-#: ../src/backend/bacon-video-widget.c:3818
+#: ../src/backend/bacon-video-widget.c:3888
 msgid ""
 "This stream cannot be played. It's possible that a firewall is blocking it."
 msgstr "Šio srauto negalima groti. Gali būti, kad jį blokuoja ugniasienė."
 
-#: ../src/backend/bacon-video-widget.c:3821
+#: ../src/backend/bacon-video-widget.c:3891
 msgid ""
 "An audio or video stream is not handled due to missing codecs. You might "
 "need to install additional plugins to be able to play some types of movies"
@@ -547,7 +690,7 @@ msgstr ""
 "Garso ar vaizdo srautas nėra apdorojamas dėl trūkstamų kodekų. Gali reikėti "
 "įdiegti papildomus įskiepius, kad galėtumėt groti tam tikro tipo filmus"
 
-#: ../src/backend/bacon-video-widget.c:3832
+#: ../src/backend/bacon-video-widget.c:3902
 msgid ""
 "This file cannot be played over the network. Try downloading it locally "
 "first."
@@ -555,25 +698,45 @@ msgstr ""
 "Nepavyko groti šio failo per tinklą. Pabandykite pirma jį parsisiųsti į "
 "diską."
 
-#: ../src/backend/bacon-video-widget.c:5476 ../src/totem-properties-view.c:238
+#: ../src/backend/bacon-video-widget.c:5546 ../src/totem-properties-view.c:238
 msgid "Surround"
 msgstr "Apsupimas"
 
-#: ../src/backend/bacon-video-widget.c:5478 ../src/totem-properties-view.c:240
+#: ../src/backend/bacon-video-widget.c:5548 ../src/totem-properties-view.c:240
 msgid "Mono"
 msgstr "Mono"
 
-#: ../src/backend/bacon-video-widget.c:5765
+#: ../src/backend/bacon-video-widget.c:5835
 msgid "Media contains no supported video streams."
 msgstr "Laikmenoje nėra palaikomų vaizdo įrašų srautų."
 
-#: ../src/backend/bacon-video-widget.c:5923
+#: ../src/backend/bacon-video-widget.c:6046
 msgid ""
 "Some necessary plug-ins are missing. Make sure that the program is correctly "
 "installed."
 msgstr ""
 "Trūksta kai kurių reikiamų įskiepių. Įsitikinkite, kad programa teisingai "
 "įdiegta."
+
+#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:348
+msgid "Unable to play the file"
+msgstr "Nepavyko pagroti failo"
+
+#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:351
+#, c-format
+msgid "%s is required to play the file, but is not installed."
+msgid_plural "%s are required to play the file, but are not installed."
+msgstr[0] "Failui groti reikalingas %s, bet jis neįdiegtas."
+msgstr[1] "Failui groti reikalingi %s, bet jie neįdiegti."
+msgstr[2] "Failui groti reikalingi %s, bet jie neįdiegti."
+
+#. TRANSLATORS: this is a button to launch a codec installer.
+#. * %s will be replaced with the software installer's name, e.g.
+#. * 'Software' in case of gnome-software.
+#: ../src/backend/bacon-video-widget-gst-missing-plugins.c:359
+#, c-format
+msgid "_Find in %s"
+msgstr "_Rasti %s"
 
 #. hour:minutes:seconds
 #. Translators: This is a time format, like "-9:05:02" for 9
@@ -751,93 +914,153 @@ msgstr[0] "%d kadras per sekundę"
 msgstr[1] "%d kadrai per sekundę"
 msgstr[2] "%d kadrų per sekundę"
 
+#: ../src/grilo.ui.h:1
+msgid "Select All"
+msgstr "Pasirinkti viską"
+
+#: ../src/grilo.ui.h:2
+msgid "Select None"
+msgstr "Nepasirinkti nieko"
+
 #: ../src/totem-audio-preview.c:172
 msgid "Audio Preview"
 msgstr "Garso įrašo peržiūra"
 
-#: ../src/totem.c:242
+#: ../src/totem.c:67
 msgid "Could not initialize the thread-safe libraries."
 msgstr "Nepavyko inicializuoti saugių gijų bibliotekų."
 
-#: ../src/totem.c:242
+#: ../src/totem.c:67
 msgid "Verify your system installation. Totem will now exit."
 msgstr "Patikrinkite savo sistemos įdiegimą. Programa „Totem“ dabar užsidarys."
 
-#: ../src/totem-interface.c:180 ../src/totem-interface.c:223
+#: ../src/totem-grilo.c:285
+#, c-format
+msgid "Season %d Episode %d"
+msgstr "Sezonas %d, epizodas %d"
+
+#. translators: The first item is the show name, for example:
+#. * Boardwalk Empire (Season 1 Episode 1)
+#: ../src/totem-grilo.c:322
+#, c-format
+msgid "%s (Season %d Episode %d)"
+msgstr "%s (sezonas %d, epizodas %d)"
+
+#: ../src/totem-grilo.c:677
+msgid "Browse Error"
+msgstr "Naršymo klaida"
+
+#: ../src/totem-grilo.c:818
+msgid "Search Error"
+msgstr "Paieškos klaida"
+
+#: ../src/totem-grilo.c:1272
+msgid "Local"
+msgstr "Vietinis"
+
+#: ../src/totem-grilo.c:1873
+msgid "Channels"
+msgstr "Kanalai"
+
+#: ../src/totem-interface.c:179 ../src/totem-interface.c:222
 #, c-format
 msgid "Couldn't load the '%s' interface. %s"
 msgstr "Nepavyko įkelti „%s“ sąsajos. %s"
 
-#: ../src/totem-interface.c:180
+#: ../src/totem-interface.c:179
 msgid "The file does not exist."
 msgstr "Failas neegzistuoja."
 
-#: ../src/totem-interface.c:182 ../src/totem-interface.c:184
-#: ../src/totem-interface.c:225 ../src/totem-interface.c:227
+#: ../src/totem-interface.c:181 ../src/totem-interface.c:183
+#: ../src/totem-interface.c:224 ../src/totem-interface.c:226
 msgid "Make sure that Totem is properly installed."
 msgstr "Įsitikinkite, jog programa „Totem“ įdiegta tinkamai."
 
+#: ../src/totem-main-toolbar.c:130 ../src/totemmaintoolbar.ui.h:5
+msgid "Click on items to select them"
+msgstr "Spauskite ant elementų jiems pažymėti"
+
+#  Duration
+#: ../src/totem-main-toolbar.c:136
+#, c-format
+msgid "%d selected"
+msgid_plural "%d selected"
+msgstr[0] "%d pasirinktas"
+msgstr[1] "%d pasirinkti"
+msgstr[2] "%d pasirinktų"
+
+#: ../src/totem-main-toolbar.c:157
+#, c-format
+msgid "Results for “%s”"
+msgstr "„%s“ rezultatai"
+
+#: ../src/totemmaintoolbar.ui.h:1
+msgid "Back"
+msgstr "Atgal"
+
+#: ../src/totemmaintoolbar.ui.h:2
+msgid "Select"
+msgstr "Pasirinkti"
+
+#: ../src/totemmaintoolbar.ui.h:3
+msgid "Cancel"
+msgstr "Atsisakyti"
+
+#: ../src/totemmaintoolbar.ui.h:4
+msgid "Search"
+msgstr "Ieškoti"
+
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../src/totem-menu.c:391
+#: ../src/totem-menu.c:435
 msgid "None"
 msgstr "Nėra"
 
 #. Translators: an entry in the "Languages" menu, used to choose the audio language of a DVD
-#: ../src/totem-menu.c:395
+#: ../src/totem-menu.c:439
 msgctxt "Language"
 msgid "Auto"
 msgstr "Automatinis"
 
-#: ../src/totem-object.c:156
-#, c-format
-msgid ""
-"%s\n"
-"Run '%s --help' to see a full list of available command line options.\n"
-msgstr ""
-"%s\n"
-"Paleiskite „%s --help“, jei norite pamatyti pilną galimų komandinės\n"
-"eilutės parametrų sąrašą.\n"
-
-#: ../src/totem-object.c:1310 ../src/totem-options.c:52
+#: ../src/totem-object.c:1386 ../src/totem-options.c:51
 msgid "Pause"
 msgstr "Pristabdyti"
 
-#: ../src/totem-object.c:1315 ../src/totem-object.c:1325
-#: ../src/totem-options.c:51 ../src/totemselectiontoolbar.ui.h:2
+#: ../src/totem-object.c:1391 ../src/totem-object.c:1401
+#: ../src/totem-options.c:50 ../src/totemselectiontoolbar.ui.h:3
 msgid "Play"
-msgstr "Leisti"
+msgstr "Groti"
 
-#: ../src/totem-object.c:1392 ../src/totem-object.c:1419
-#: ../src/totem-object.c:1931
+#: ../src/totem-object.c:1468 ../src/totem-object.c:1495
+#: ../src/totem-object.c:1987
 #, c-format
 msgid "Totem could not play '%s'."
 msgstr "Programai „Totem“ nepavyko paleisti „%s“."
 
-#: ../src/totem-object.c:2073
+#: ../src/totem-object.c:2158
 msgid "Totem could not display the help contents."
 msgstr "Programai „Totem“ nepavyko parodyti žinyno."
 
-#: ../src/totem-object.c:2313
+#: ../src/totem-object.c:2419
 msgid "An error occurred"
 msgstr "Įvyko klaida"
 
-#: ../src/totem-object.c:3617
+#: ../src/totem-object.c:3759
 msgid "Previous Chapter/Movie"
 msgstr "Ankstesnis takelis arba filmas"
 
-#: ../src/totem-object.c:3623
+#: ../src/totem-object.c:3765
 msgid "Play / Pause"
-msgstr "Leisti arba pristabdyti"
+msgstr "Groti arba pristabdyti"
 
-#: ../src/totem-object.c:3629
+#: ../src/totem-object.c:3771
 msgid "Next Chapter/Movie"
 msgstr "Kitas takelis arba filmas"
 
-#: ../src/totem-object.c:3843
+#: ../src/totem-object.c:3980
 msgid "Totem could not startup."
 msgstr "Programos „Totem“ nepavyko paleisti."
 
-#: ../src/totem-object.c:3843
+#: ../src/totem-object.c:3980
 msgid "No reason."
 msgstr "Jokios priežasties."
 
@@ -846,84 +1069,73 @@ msgid "Add Web Video"
 msgstr "Pridėti internetinį vaizdo įrašą"
 
 #: ../src/totem-open-location.c:185 ../src/totem-uri.c:399
-#: ../src/totem-uri.c:460 ../src/plugins/chapters/totem-chapters.c:961
-#: ../src/plugins/chapters/totem-edit-chapter.c:98
-#: ../src/plugins/screenshot/totem-gallery.c:97
+#: ../src/totem-uri.c:460 ../src/plugins/screenshot/totem-gallery.c:97
 #: ../src/plugins/screenshot/totem-gallery-progress.c:103
-#: ../src/plugins/skipto/totem-skipto.c:198
+#: ../src/plugins/skipto/totem-skipto.c:221
 msgid "_Cancel"
 msgstr "_Atsisakyti"
 
 #: ../src/totem-open-location.c:186 ../src/totem-uri.c:461
-#: ../src/plugins/chapters/totem-edit-chapter.c:99
 msgid "_Add"
 msgstr "_Pridėti"
 
 #: ../src/totem-options.c:49
-msgid "Enable debug"
-msgstr "Įjungti derinimą"
-
-#: ../src/totem-options.c:50
 msgid "Play/Pause"
-msgstr "Leisti arba pristabdyti"
+msgstr "Groti arba pristabdyti"
 
-#: ../src/totem-options.c:53
+#: ../src/totem-options.c:52
 msgid "Next"
 msgstr "Kitas"
 
-#: ../src/totem-options.c:54
+#: ../src/totem-options.c:53
 msgid "Previous"
 msgstr "Ankstesnis"
 
-#: ../src/totem-options.c:55
+#: ../src/totem-options.c:54
 msgid "Seek Forwards"
 msgstr "Persukti pirmyn"
 
-#: ../src/totem-options.c:56
+#: ../src/totem-options.c:55
 msgid "Seek Backwards"
 msgstr "Persukti atgal"
 
-#: ../src/totem-options.c:57
+#: ../src/totem-options.c:56
 msgid "Volume Up"
 msgstr "Didinti garsumą"
 
-#: ../src/totem-options.c:58
+#: ../src/totem-options.c:57
 msgid "Volume Down"
 msgstr "Mažinti garsumą"
 
-#: ../src/totem-options.c:59
+#: ../src/totem-options.c:58
 msgid "Mute sound"
 msgstr "Nutildyti garsą"
 
-#: ../src/totem-options.c:60
+#: ../src/totem-options.c:59
 msgid "Toggle Fullscreen"
 msgstr "Perjungti viso ekrano veikseną"
 
-#: ../src/totem-options.c:61
+#: ../src/totem-options.c:60
 msgid "Quit"
 msgstr "Išeiti"
 
-#: ../src/totem-options.c:62
+#: ../src/totem-options.c:61
 msgid "Enqueue"
 msgstr "Pridėti"
 
-#: ../src/totem-options.c:63
+#: ../src/totem-options.c:62
 msgid "Replace"
 msgstr "Pakeisti"
 
-#: ../src/totem-options.c:64
+#: ../src/totem-options.c:63
 msgid "Seek"
 msgstr "Persukti"
 
-#: ../src/totem-options.c:66
+#: ../src/totem-options.c:65
 msgid "Movies to play"
 msgstr "Rodytini filmai"
 
-#: ../src/totem-options.c:76
-msgid "- Play movies and songs"
-msgstr "– Žiūrėti filmus ir klausytis muzikos"
-
-#: ../src/totem-options.c:123
+#: ../src/totem-options.c:100
 msgid "Can't enqueue and replace at the same time"
 msgstr "Negalima įdėti į eilę ir pakeisti tuo pačiu metu"
 
@@ -934,7 +1146,7 @@ msgstr "Negalima įdėti į eilę ir pakeisti tuo pačiu metu"
 msgid "Title %d"
 msgstr "%d įrašas"
 
-#: ../src/totem-playlist.c:1001
+#: ../src/totem-playlist.c:992
 #, c-format
 msgid "The playlist '%s' could not be parsed. It might be damaged."
 msgstr "Nepavyko perskaityti grojaraščio „%s“. Jis gali būti sugadintas."
@@ -1005,6 +1217,23 @@ msgstr "Nėra"
 msgctxt "Number of audio channels"
 msgid "N/A"
 msgstr "Nėra"
+
+#: ../src/totemselectiontoolbar.ui.h:1
+msgid "Add to Favourites"
+msgstr "Pridėti prie mėgiamiausių"
+
+#: ../src/totemselectiontoolbar.ui.h:2
+msgctxt "button"
+msgid "Play"
+msgstr "Rodyti"
+
+#: ../src/totemselectiontoolbar.ui.h:4
+msgid "Shuffle"
+msgstr "Maišyti"
+
+#: ../src/totemselectiontoolbar.ui.h:5
+msgid "Delete"
+msgstr "Ištrinti"
 
 #: ../src/totem-subtitle-encoding.c:156
 msgid "Current Locale"
@@ -1160,7 +1389,7 @@ msgstr "%s / %s"
 msgid "Seek to %s / %s"
 msgstr "Persukti į %s / %s"
 
-#: ../src/totem-uri.c:329 ../src/plugins/chapters/totem-chapters.c:982
+#: ../src/totem-uri.c:329
 msgid "All files"
 msgstr "Visi failai"
 
@@ -1176,7 +1405,7 @@ msgstr "Titrų failai"
 msgid "Select Text Subtitles"
 msgstr "Pasirinkite titrus"
 
-#: ../src/totem-uri.c:400 ../src/plugins/chapters/totem-chapters.c:962
+#: ../src/totem-uri.c:400
 msgid "_Open"
 msgstr "_Atverti"
 
@@ -1187,7 +1416,7 @@ msgstr "Pridėti vaizdo įrašus"
 #. Translators: The first string is "Filename" (as translated); the second is an actual filename.
 #. The third string is "Resolution" (as translated); the fourth and fifth are screenshot height and width, respectively.
 #. The sixth string is "Duration" (as translated); the seventh is the movie duration in words.
-#: ../src/totem-video-thumbnailer.c:785
+#: ../src/totem-video-thumbnailer.c:789
 #, c-format
 msgid ""
 "<b>%s</b>: %s\n"
@@ -1198,15 +1427,15 @@ msgstr ""
 "<b>%s</b>: %d×%d\n"
 "<b>%s</b>: %s"
 
-#: ../src/totem-video-thumbnailer.c:786
+#: ../src/totem-video-thumbnailer.c:790
 msgid "Filename"
 msgstr "Failo vardas"
 
-#: ../src/totem-video-thumbnailer.c:788
+#: ../src/totem-video-thumbnailer.c:792
 msgid "Resolution"
 msgstr "Raiška"
 
-#: ../src/totem-video-thumbnailer.c:791
+#: ../src/totem-video-thumbnailer.c:795
 msgid "Duration"
 msgstr "Trukmė"
 
@@ -1216,7 +1445,7 @@ msgstr "„Apple Trailers“"
 
 #: ../src/plugins/apple-trailers/apple-trailers.plugin.in.h:2
 msgid "Sets the user agent for the Apple Trailers site"
-msgstr "Nustato naudotojo agentą „Apple Trailers“ tinklapiui"
+msgstr "Nustato naudotojo agentą „Apple Trailers“ tinklalapiui"
 
 #: ../src/plugins/autoload-subtitles/autoload-subtitles.plugin.in.h:1
 msgid "Autoload Subtitles"
@@ -1261,143 +1490,6 @@ msgstr "Kopijuoti _vaizdo įrašų DVD…"
 msgid "Copy (S)VCD…"
 msgstr "Kopijuoti (S)VCD…"
 
-#: ../src/plugins/chapters/chapters-edit.ui.h:1
-msgid "Name for new chapter:"
-msgstr "Naujo skyriaus pavadinimas:"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:1
-msgid "_Remove Chapter"
-msgstr "Š_alinti skyrių"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:2
-msgid "Remove the chapter from the list"
-msgstr "Pašalinti skyrių iš sąrašo"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:3
-msgid "_Go to Chapter"
-msgstr "_Eiti į skyrių"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:4
-msgid "Go to the chapter in the movie"
-msgstr "Eiti į skyrių filme"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:5
-msgid "Add Chapter…"
-msgstr "Pridėti skyrių…"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:6
-msgid "Remove Chapter"
-msgstr "Pašalinti skyrių"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:7
-msgid "Go to Chapter"
-msgstr "Eiti į skyrių"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:8
-msgid "Save Changes"
-msgstr "Išsaugoti pakeitimus"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:9
-msgid "No chapter data"
-msgstr "Nėra skyrių duomenų"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:10
-msgid "Load Chapters…"
-msgstr "Įkelti skyrius…"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:11
-msgid "Load chapters from an external CMML file"
-msgstr "Įkelti skyrius iš išorinio CMML failo"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:12
-msgid "Add New Chapters"
-msgstr "Pridėti naujus skyrius"
-
-#: ../src/plugins/chapters/chapters-list.ui.h:13
-msgid "Create a new chapter list for the movie"
-msgstr "Sukurti skyrių sąrašą filmui"
-
-#: ../src/plugins/chapters/chapters.plugin.in.h:1
-#: ../src/plugins/chapters/totem-chapters.c:1122
-msgid "Chapters"
-msgstr "Takeliai"
-
-#: ../src/plugins/chapters/chapters.plugin.in.h:2
-msgid "Support chapter markers in movies"
-msgstr "Skyrių palaikymas filmuose"
-
-#: ../src/plugins/chapters/totem-chapters.c:56
-#, c-format
-msgid ""
-"<b>Title: </b>%s\n"
-"<b>Start time: </b>%s"
-msgstr ""
-"<b>Pavadinimas: </b>%s\n"
-"<b>Pradžios laikas: </b>%s"
-
-#: ../src/plugins/chapters/totem-chapters.c:324
-msgid "Error while reading file with chapters"
-msgstr "Klaida skaitant failą su takeliais"
-
-#: ../src/plugins/chapters/totem-chapters.c:542
-msgid "Chapter with the same time already exists"
-msgstr "Takelis tokiu pavadinimu jau yra"
-
-#: ../src/plugins/chapters/totem-chapters.c:543
-msgid "Try another name or remove an existing chapter."
-msgstr "Bandykite kitą pavadinimą arba pašalinkite skyrių."
-
-#: ../src/plugins/chapters/totem-chapters.c:702
-msgid "Error while writing file with chapters"
-msgstr "Klaida bandant įrašyti failą su takeliais"
-
-#: ../src/plugins/chapters/totem-chapters.c:826
-msgid "Error occurred while saving chapters"
-msgstr "Įvyko klaida išsaugant takelius"
-
-#: ../src/plugins/chapters/totem-chapters.c:827
-msgid ""
-"Please check you have permission to write to the folder containing the movie."
-msgstr "Įsitikinkite, kad turite teisę rašyti į aplanką, kuriame yra filmas."
-
-#: ../src/plugins/chapters/totem-chapters.c:960
-msgid "Open Chapter File"
-msgstr "Atverti skyrių failą"
-
-#: ../src/plugins/chapters/totem-chapters.c:979
-msgid "Supported files"
-msgstr "Palaikomi failai"
-
-#: ../src/plugins/chapters/totem-chapters.c:1076
-msgid "Chapter Screenshot"
-msgstr "Skyriaus kadras"
-
-#: ../src/plugins/chapters/totem-chapters.c:1087
-msgid "Chapter Title"
-msgstr "Skyriaus pavadinimas"
-
-#: ../src/plugins/chapters/totem-chapters.c:1167
-msgid "Save changes to chapter list before closing?"
-msgstr "Įrašyti skyrių sąrašo pakeitimus prieš uždarant?"
-
-#. Translators: close Totem without saving changes to the chapter list of the current movie.
-#: ../src/plugins/chapters/totem-chapters.c:1172
-msgid "Close without Saving"
-msgstr "Užverti neįrašant"
-
-#. Translators: save changes to the chapter list of the current movie before closing Totem.
-#: ../src/plugins/chapters/totem-chapters.c:1174
-msgid "Save"
-msgstr "Įrašyti"
-
-#: ../src/plugins/chapters/totem-chapters.c:1177
-msgid "If you don't save, changes to the chapter list will be lost."
-msgstr "Jei neįrašysite, skyrių sąrašo pakeitimai bus prarasti."
-
-#: ../src/plugins/chapters/totem-edit-chapter.c:95
-msgid "Add Chapter"
-msgstr "Pridėti skyrių"
-
 #: ../src/plugins/dbusservice/dbusservice.plugin.in.h:1
 msgid "MPRIS D-Bus Interface"
 msgstr "MPRIS D-Bus sąsaja"
@@ -1425,88 +1517,6 @@ msgstr "Savybė „%s“ nėra rašoma."
 #, python-format
 msgid "Unknown property ‘%s’ requested of a MediaPlayer 2 object"
 msgstr "Prašoma nežinoma MediaPlayer 2 objekto savybė „%s“"
-
-#: ../src/grilo.ui.h:1
-msgid "Select All"
-msgstr "Pasirinkti viską"
-
-#: ../src/grilo.ui.h:2
-msgid "Select None"
-msgstr "Nepasirinkti nieko"
-
-#: ../src/totem-grilo.c:278
-#, c-format
-msgid "Season %d Episode %d"
-msgstr "Sezonas %d, epizodas %d"
-
-#. translators: The first item is the show name, for example:
-#. * Boardwalk Empire (Season 1 Episode 1)
-#: ../src/totem-grilo.c:315
-#, c-format
-msgid "%s (Season %d Episode %d)"
-msgstr "%s (sezonas %d, epizodas %d)"
-
-#: ../src/totem-grilo.c:685
-msgid "Browse Error"
-msgstr "Naršymo klaida"
-
-#: ../src/totem-grilo.c:822
-msgid "Search Error"
-msgstr "Paieškos klaida"
-
-#: ../src/totem-grilo.c:1273
-msgid "Local"
-msgstr "Vietinis"
-
-#: ../src/totem-grilo.c:1869
-msgid "Channels"
-msgstr "Kanalai"
-
-#: ../src/totem-main-toolbar.c:130 ../src/totemmaintoolbar.ui.h:5
-msgid "Click on items to select them"
-msgstr "Spauskite ant elementų jiems pažymėti"
-
-#  Duration
-#: ../src/totem-main-toolbar.c:137
-#, c-format
-msgid "%d selected"
-msgid_plural "%d selected"
-msgstr[0] "%d pasirinktas"
-msgstr[1] "%d pasirinkti"
-msgstr[2] "%d pasirinktų"
-
-#: ../src/totem-main-toolbar.c:156
-#, c-format
-msgid "Results for “%s”"
-msgstr "„%s“ rezultatai"
-
-#: ../src/totemmaintoolbar.ui.h:1
-msgid "Back"
-msgstr "Atgal"
-
-#: ../src/totemmaintoolbar.ui.h:2
-msgid "Select"
-msgstr "Pasirinkti"
-
-#: ../src/totemmaintoolbar.ui.h:3
-msgid "Cancel"
-msgstr "Atsisakyti"
-
-#: ../src/totemmaintoolbar.ui.h:4
-msgid "Search"
-msgstr "Ieškoti"
-
-#: ../src/totemselectiontoolbar.ui.h:1
-msgid "Add to Favourites"
-msgstr "Pridėti prie mėgiamiausių"
-
-#: ../src/totemselectiontoolbar.ui.h:3
-msgid "Shuffle"
-msgstr "Maišyti"
-
-#: ../src/totemselectiontoolbar.ui.h:4
-msgid "Delete"
-msgstr "Ištrinti"
 
 #: ../src/plugins/gromit/gromit.plugin.in.h:1
 msgid "Gromit Annotations"
@@ -1571,53 +1581,53 @@ msgstr "Titrų parsiuntiklis"
 msgid "Look for subtitles for the currently playing movie"
 msgstr "Ieškoti subtitrų šiuo metu grojamam filmui"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:42
+#: ../src/plugins/opensubtitles/opensubtitles.py:46
 msgid "Brazilian Portuguese"
 msgstr "Portugalų (Brazilija)"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:178
+#: ../src/plugins/opensubtitles/opensubtitles.py:182
 msgid "Searching for subtitles…"
 msgstr "Ieškoma titrų..."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:226
-#: ../src/plugins/opensubtitles/opensubtitles.py:605
+#: ../src/plugins/opensubtitles/opensubtitles.py:230
+#: ../src/plugins/opensubtitles/opensubtitles.py:612
 msgid "Downloading the subtitles…"
 msgstr "Parsiunčiami titrai..."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:291
+#: ../src/plugins/opensubtitles/opensubtitles.py:295
 msgid "Could not contact the OpenSubtitles website"
 msgstr "Nepavyko prisijungti prie OpenSubtitles svetainės"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:324
-#: ../src/plugins/opensubtitles/opensubtitles.py:342
+#: ../src/plugins/opensubtitles/opensubtitles.py:328
+#: ../src/plugins/opensubtitles/opensubtitles.py:346
 msgid "Could not contact the OpenSubtitles website."
 msgstr "Nepavyko prisijungti prie OpenSubtitles svetainės."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:330
+#: ../src/plugins/opensubtitles/opensubtitles.py:334
 msgid "No results found."
 msgstr "Rezultatų nerasta."
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:472
+#: ../src/plugins/opensubtitles/opensubtitles.py:477
 msgid "Subtitles"
 msgstr "Titrai"
 
 #. translators comment:
 #. This is the file-type of the subtitle file detected
-#: ../src/plugins/opensubtitles/opensubtitles.py:478
+#: ../src/plugins/opensubtitles/opensubtitles.py:483
 msgid "Format"
 msgstr "Formatas"
 
 #. translators comment:
 #. This is a rating of the quality of the subtitle
-#: ../src/plugins/opensubtitles/opensubtitles.py:483
+#: ../src/plugins/opensubtitles/opensubtitles.py:488
 msgid "Rating"
 msgstr "Įvertinimas"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:522
+#: ../src/plugins/opensubtitles/opensubtitles.py:529
 msgid "_Download Movie Subtitles…"
 msgstr "_Atsiųsti filmo titrus…"
 
-#: ../src/plugins/opensubtitles/opensubtitles.py:562
+#: ../src/plugins/opensubtitles/opensubtitles.py:569
 msgid "Searching subtitles…"
 msgstr "Ieškoma titrų…"
 
@@ -1633,11 +1643,11 @@ msgstr "Titrų _kalba:"
 msgid "_Play with Subtitle"
 msgstr "_Rodyti su titrais"
 
-#: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.in.h:1
+#: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.h:1
 msgid "Subtitle language"
 msgstr "Titrų kalba"
 
-#: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.in.h:2
+#: ../src/plugins/opensubtitles/org.gnome.totem.plugins.opensubtitles.gschema.xml.in.h:2
 msgid "The language to search for subtitles for movies in."
 msgstr "Kalba, kuria ieškoti titrų filmams"
 
@@ -1657,11 +1667,11 @@ msgstr "Savybės"
 msgid "_Properties"
 msgstr "_Savybės"
 
-#: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.in.h:1
+#: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.h:1
 msgid "rpdb2 password"
 msgstr "rpdb2 slaptažodis"
 
-#: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.in.h:2
+#: ../src/plugins/pythonconsole/org.gnome.totem.plugins.pythonconsole.gschema.xml.in.h:2
 msgid ""
 "A password to protect the rpdb2 server for debugging Totem from unauthorized "
 "remote access. If this is empty, a default of 'totem' will be used."
@@ -1741,11 +1751,11 @@ msgstr "Įrašyti šiuo metu grojamo filmo kopiją"
 
 #. translators: Movie is the default saved movie filename,
 #. * without the suffix
-#: ../src/plugins/save-file/totem-save-file.c:147
+#: ../src/plugins/save-file/totem-save-file.c:158
 msgid "Movie"
 msgstr "Filmas"
 
-#: ../src/plugins/save-file/totem-save-file.c:355
+#: ../src/plugins/save-file/totem-save-file.c:366
 msgid "Make Available Offline"
 msgstr "Padaryti pasiekiamais atsijungus"
 
@@ -1842,7 +1852,7 @@ msgid "Create Screenshot _Gallery…"
 msgstr "Sukurti ekrano nuotraukų _galeriją…"
 
 #: ../src/plugins/skipto/skipto.plugin.in.h:1
-#: ../src/plugins/skipto/totem-skipto.c:196
+#: ../src/plugins/skipto/totem-skipto.c:219
 msgid "Skip To"
 msgstr "Peršokti iki"
 
@@ -1856,7 +1866,7 @@ msgstr "Per_sukti iki:"
 
 #. Update the "seconds" label so that it always has the correct singular/plural form
 #. Translators: label for the seconds selector in the "Skip to" dialogue
-#: ../src/plugins/skipto/totem-skipto.c:159
+#: ../src/plugins/skipto/totem-skipto.c:176
 msgid "second"
 msgid_plural "seconds"
 msgstr[0] "sekundė"
@@ -1867,12 +1877,12 @@ msgstr[2] "sekundžių"
 #. Translators: you should translate this string to a number (written in digits) which corresponds to the longer character length of the
 #. * translations for "second" and "seconds", as translated elsewhere in this file. For example, in English, "second" is 6 characters long and
 #. * "seconds" is 7 characters long, so this string should be translated to "7". See: bgo#639398
-#: ../src/plugins/skipto/totem-skipto.c:189
+#: ../src/plugins/skipto/totem-skipto.c:213
 msgctxt "Skip To label length"
 msgid "7"
 msgstr "7"
 
-#: ../src/plugins/skipto/totem-skipto.c:199
+#: ../src/plugins/skipto/totem-skipto.c:222
 msgid "_Skip To"
 msgstr "_Peršokti iki"
 
@@ -1880,13 +1890,57 @@ msgstr "_Peršokti iki"
 msgid "_Skip To…"
 msgstr "_Peršokti iki…"
 
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:63
+msgctxt "playback rate"
+msgid "× 0.75"
+msgstr "× 0.75"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:64
+#| msgid "Format"
+msgctxt "playback rate"
+msgid "Normal"
+msgstr "Įprastinis"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:65
+msgctxt "playback rate"
+msgid "× 1.1"
+msgstr "× 1.1"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:66
+msgctxt "playback rate"
+msgid "× 1.25"
+msgstr "× 1.25"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:67
+msgctxt "playback rate"
+msgid "× 1.5"
+msgstr "× 1.5"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:68
+msgctxt "playback rate"
+msgid "× 1.75"
+msgstr "× 1.75"
+
+#: ../src/plugins/variable-rate/totem-variable-rate-plugin.c:76
+#, c-format
+msgid "Speed: %s"
+msgstr "Greitis: %s"
+
+#: ../src/plugins/variable-rate/variable-rate.plugin.in.h:1
+msgid "Variable Rate"
+msgstr "Kintamas dažnis"
+
+#: ../src/plugins/variable-rate/variable-rate.plugin.in.h:2
+msgid "Provides the variable rate menu item"
+msgstr "Pateikia kintamojo dažnio meniu elementą"
+
 #: ../src/plugins/vimeo/vimeo.plugin.in.h:1
 msgid "Vimeo"
 msgstr "„Vimeo“ svetainė"
 
 #: ../src/plugins/vimeo/vimeo.plugin.in.h:2
 msgid "Sets the user agent for the Vimeo site"
-msgstr "Nustato naudotojo agentą „Vimeo“ tinklapiui"
+msgstr "Nustato naudotojo agentą „Vimeo“ tinklalapiui"
 
 #: ../src/plugins/zeitgeist-dp/zeitgeist-dp.plugin.in.h:1
 msgid "Zeitgeist Plugin"
@@ -1896,3 +1950,119 @@ msgstr "„Zeitgeist“ įskiepis"
 msgid "A plugin sending events to Zeitgeist"
 msgstr "Įskiepis, pranešantis apie įvykius „Zeitgeist“ sistemai"
 
+#~ msgid "_Remove Chapter"
+#~ msgstr "Š_alinti skyrių"
+
+#~ msgid "Remove the chapter from the list"
+#~ msgstr "Pašalinti skyrių iš sąrašo"
+
+#~ msgid "_Go to Chapter"
+#~ msgstr "_Eiti į skyrių"
+
+#~ msgid "Go to the chapter in the movie"
+#~ msgstr "Eiti į skyrių filme"
+
+#~ msgid "Add Chapter…"
+#~ msgstr "Pridėti skyrių…"
+
+#~ msgid "Remove Chapter"
+#~ msgstr "Pašalinti skyrių"
+
+#~ msgid "Go to Chapter"
+#~ msgstr "Eiti į skyrių"
+
+#~ msgid "Save Changes"
+#~ msgstr "Išsaugoti pakeitimus"
+
+#~ msgid "No chapter data"
+#~ msgstr "Nėra skyrių duomenų"
+
+#~ msgid "Load Chapters…"
+#~ msgstr "Įkelti skyrius…"
+
+#~ msgid "Load chapters from an external CMML file"
+#~ msgstr "Įkelti skyrius iš išorinio CMML failo"
+
+#~ msgid "Add New Chapters"
+#~ msgstr "Pridėti naujus skyrius"
+
+#~ msgid "Create a new chapter list for the movie"
+#~ msgstr "Sukurti skyrių sąrašą filmui"
+
+#~ msgid "Chapters"
+#~ msgstr "Takeliai"
+
+#~ msgid "Support chapter markers in movies"
+#~ msgstr "Skyrių palaikymas filmuose"
+
+#~ msgid ""
+#~ "<b>Title: </b>%s\n"
+#~ "<b>Start time: </b>%s"
+#~ msgstr ""
+#~ "<b>Pavadinimas: </b>%s\n"
+#~ "<b>Pradžios laikas: </b>%s"
+
+#~ msgid "Error while reading file with chapters"
+#~ msgstr "Klaida skaitant failą su takeliais"
+
+#~ msgid "Chapter with the same time already exists"
+#~ msgstr "Takelis tokiu pavadinimu jau yra"
+
+#~ msgid "Try another name or remove an existing chapter."
+#~ msgstr "Bandykite kitą pavadinimą arba pašalinkite skyrių."
+
+#~ msgid "Error while writing file with chapters"
+#~ msgstr "Klaida bandant įrašyti failą su takeliais"
+
+#~ msgid "Error occurred while saving chapters"
+#~ msgstr "Įvyko klaida išsaugant takelius"
+
+#~ msgid ""
+#~ "Please check you have permission to write to the folder containing the "
+#~ "movie."
+#~ msgstr ""
+#~ "Įsitikinkite, kad turite teisę rašyti į aplanką, kuriame yra filmas."
+
+#~ msgid "Open Chapter File"
+#~ msgstr "Atverti skyrių failą"
+
+#~ msgid "Supported files"
+#~ msgstr "Palaikomi failai"
+
+#~ msgid "Chapter Screenshot"
+#~ msgstr "Skyriaus kadras"
+
+#~ msgid "Chapter Title"
+#~ msgstr "Skyriaus pavadinimas"
+
+#~ msgid "Save changes to chapter list before closing?"
+#~ msgstr "Įrašyti skyrių sąrašo pakeitimus prieš uždarant?"
+
+#~ msgid "Close without Saving"
+#~ msgstr "Užverti neįrašant"
+
+#~ msgid "Save"
+#~ msgstr "Įrašyti"
+
+#~ msgid "If you don't save, changes to the chapter list will be lost."
+#~ msgstr "Jei neįrašysite, skyrių sąrašo pakeitimai bus prarasti."
+
+#~ msgid "Add Chapter"
+#~ msgstr "Pridėti skyrių"
+
+#~ msgid "Whether to enable debug for the playback engine"
+#~ msgstr "Ar įjungti rodymo posistemės derinimą"
+
+#~ msgid ""
+#~ "%s\n"
+#~ "Run '%s --help' to see a full list of available command line options.\n"
+#~ msgstr ""
+#~ "%s\n"
+#~ "Paleiskite „%s --help“, jei norite pamatyti pilną galimų komandinės\n"
+#~ "eilutės parametrų sąrašą.\n"
+
+#~ msgid "Enable debug"
+#~ msgstr "Įjungti derinimą"
+
+#~ msgid "- Play movies and songs"
+#~ msgstr "– Žiūrėti filmus ir klausytis muzikos"

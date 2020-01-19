@@ -52,7 +52,7 @@
 #define BROWSE_FLAGS          (GRL_RESOLVE_FAST_ONLY | GRL_RESOLVE_IDLE_RELAY)
 #define PAGE_SIZE             50
 #define SCROLL_GET_MORE_LIMIT 0.8
-#define MAX_DURATION          5
+#define MIN_DURATION          5
 
 /* casts are to shut gcc up */
 static const GtkTargetEntry target_table[] = {
@@ -67,6 +67,7 @@ struct _TotemGriloPrivate {
 	gboolean plugins_loaded;
 
 	GrlSource *local_metadata_src;
+	GrlSource *title_parsing_src;
 	GrlSource *metadata_store_src;
 	GrlSource *bookmarks_src;
 	gboolean fs_plugin_configured;
@@ -337,7 +338,7 @@ can_remove (GrlSource *source,
 		return CAN_REMOVE_TRUE;
 	if (!media)
 		goto fallback;
-	if (GRL_IS_MEDIA_BOX (media))
+	if (grl_media_is_container (media))
 		return CAN_REMOVE_FALSE;
 	url = grl_media_get_url (media);
 	if (!url)
@@ -383,7 +384,7 @@ get_thumbnail_cb (GObject *source_object,
 		if (thumb_data->media)
 			fallback_thumbnail = totem_grilo_get_video_icon ();
 		else
-			fallback_thumbnail = totem_grilo_get_box_icon ();
+			fallback_thumbnail = totem_grilo_get_channel_icon ();
 	}
 
 	gtk_tree_store_set (GTK_TREE_STORE (thumb_data->model),
@@ -578,7 +579,12 @@ add_local_metadata (TotemGrilo *self,
 	}
 
 	options = grl_operation_options_new (NULL);
-	grl_operation_options_set_flags (options, GRL_RESOLVE_NORMAL);
+	grl_operation_options_set_resolution_flags (options, GRL_RESOLVE_NORMAL);
+	grl_source_resolve_sync (self->priv->title_parsing_src,
+				 media,
+				 self->priv->metadata_keys,
+				 options,
+				 NULL);
 	grl_source_resolve_sync (self->priv->local_metadata_src,
 				 media,
 				 self->priv->metadata_keys,
@@ -688,13 +694,13 @@ browse_cb (GrlSource    *source,
 					    -1);
 		}
 
-		if (GRL_IS_MEDIA_IMAGE (media) ||
-		    GRL_IS_MEDIA_AUDIO (media)) {
+		if (grl_media_is_image (media) ||
+		    grl_media_is_audio (media)) {
 			/* This isn't supposed to happen as we filter for videos */
 			g_assert_not_reached ();
 		}
 
-		if (GRL_IS_MEDIA_BOX (media) && bud->ignore_boxes) {
+		if (grl_media_is_container (media) && bud->ignore_boxes) {
 			/* Ignore boxes for certain sources */
 		} else {
 			add_local_metadata (self, source, media);
@@ -734,7 +740,7 @@ browse (TotemGrilo   *self,
 	caps = grl_source_get_caps (source, GRL_OP_BROWSE);
 
 	default_options = grl_operation_options_new (NULL);
-	grl_operation_options_set_flags (default_options, BROWSE_FLAGS);
+	grl_operation_options_set_resolution_flags (default_options, BROWSE_FLAGS);
 	if (page >= 1) {
 		grl_operation_options_set_skip (default_options, (page - 1) * PAGE_SIZE);
 		grl_operation_options_set_count (default_options, PAGE_SIZE);
@@ -743,7 +749,7 @@ browse (TotemGrilo   *self,
 		grl_operation_options_set_type_filter (default_options, GRL_TYPE_FILTER_VIDEO);
 	if (grl_caps_is_key_range_filter (caps, GRL_METADATA_KEY_DURATION))
 		grl_operation_options_set_key_range_filter (default_options,
-							    GRL_METADATA_KEY_DURATION, MAX_DURATION, NULL,
+							    GRL_METADATA_KEY_DURATION, MIN_DURATION, NULL,
 							    NULL);
 
 	bud = g_slice_new0 (BrowseUserData);
@@ -815,8 +821,8 @@ search_cb (GrlSource    *source,
 	if (media != NULL) {
 		self->priv->search_remaining--;
 
-		if (GRL_IS_MEDIA_IMAGE (media) ||
-		    GRL_IS_MEDIA_AUDIO (media)) {
+		if (grl_media_is_image (media) ||
+		    grl_media_is_audio (media)) {
 			/* This isn't supposed to happen as we filter for videos */
 			g_assert_not_reached ();
 		}
@@ -843,12 +849,12 @@ get_search_options (TotemGrilo *self)
 	GrlOperationOptions *supported_options;
 
 	default_options = grl_operation_options_new (NULL);
-	grl_operation_options_set_flags (default_options, BROWSE_FLAGS);
+	grl_operation_options_set_resolution_flags (default_options, BROWSE_FLAGS);
 	grl_operation_options_set_skip (default_options, self->priv->search_page * PAGE_SIZE);
 	grl_operation_options_set_count (default_options, PAGE_SIZE);
 	grl_operation_options_set_type_filter (default_options, GRL_TYPE_FILTER_VIDEO);
 	grl_operation_options_set_key_range_filter (default_options,
-						    GRL_METADATA_KEY_DURATION, MAX_DURATION, NULL,
+						    GRL_METADATA_KEY_DURATION, MIN_DURATION, NULL,
 						    NULL);
 
 	/* And now remove all the unsupported filters and options */
@@ -1000,7 +1006,7 @@ browser_activated_cb (GdMainView  *view,
 	                    -1);
 
 	/* Activate an item */
-	if (content != NULL && GRL_IS_MEDIA_BOX (content) == FALSE) {
+	if (content != NULL && grl_media_is_container (content) == FALSE) {
 		play (self, source, content, TRUE);
 		goto free_data;
 	}
@@ -1268,7 +1274,9 @@ source_added_cb (GrlRegistry *registry,
 		name = grl_source_get_name (source);
 
 	/* Metadata */
-	if (g_str_equal (id, "grl-local-metadata"))
+	if (g_str_equal (id, "grl-video-title-parsing"))
+		self->priv->title_parsing_src = source;
+	else if (g_str_equal (id, "grl-local-metadata"))
 		self->priv->local_metadata_src = source;
 	else if (g_str_equal (id, "grl-metadata-store"))
 		self->priv->metadata_store_src = source;
@@ -1287,7 +1295,7 @@ source_added_cb (GrlRegistry *registry,
 		} else if (!source_is_browse_blacklisted (source)) {
 			const GdkPixbuf *icon;
 
-			icon = totem_grilo_get_box_icon ();
+			icon = totem_grilo_get_channel_icon ();
 
 			gtk_tree_store_insert_with_values (GTK_TREE_STORE (self->priv->browser_model),
 							   NULL, NULL, -1,
@@ -1425,7 +1433,7 @@ load_grilo_plugins (TotemGrilo *self)
 	g_signal_connect (registry, "source-removed",
 	                  G_CALLBACK (source_removed_cb), self);
 
-	if (grl_registry_load_all_plugins (registry, &error) == FALSE) {
+	if (grl_registry_load_all_plugins (registry, TRUE, &error) == FALSE) {
 		g_warning ("Failed to load grilo plugins: %s", error->message);
 		g_error_free (error);
 	}
@@ -1512,7 +1520,7 @@ get_more_browse_results_cb (GtkAdjustment *adjustment,
 		                    -1);
 		/* Skip non-boxes (they can not be browsed) */
 		if (container != NULL &&
-		    GRL_IS_MEDIA_BOX (container) == FALSE) {
+		    grl_media_is_container (container) == FALSE) {
 			goto free_elements;
 		}
 
@@ -1652,7 +1660,8 @@ selection_mode_requested (GdMainView  *view,
 
 	/* Don't allow selections when at the root of the
 	 * "Channels" view */
-	if (self->priv->browser_filter_model != NULL) {
+	if (self->priv->current_page == TOTEM_GRILO_PAGE_CHANNELS &&
+	    self->priv->browser_filter_model != NULL) {
 		g_object_get (self->priv->browser_filter_model,
 			      "virtual-root", &root,
 			      NULL);
@@ -1850,6 +1859,7 @@ setup_source_switcher (TotemGrilo *self)
 	GtkStyleContext *context;
 
 	self->priv->switcher = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+	gtk_box_set_homogeneous (GTK_BOX (self->priv->switcher), TRUE);
 
 	self->priv->recent = create_switcher_button (self, _("Videos"), "recent");
 	gtk_container_add (GTK_CONTAINER (self->priv->switcher), self->priv->recent);
@@ -2177,6 +2187,7 @@ setup_browse (TotemGrilo *self)
 {
 	GtkAdjustment *adj;
 	const char const * select_all_accels[] = { "<Primary>A", NULL };
+	const char const * select_none_accels[] = { "<Shift><Primary>A", NULL };
 
 	/* Search */
 	gtk_search_bar_connect_entry (GTK_SEARCH_BAR (self->priv->search_bar),
@@ -2206,6 +2217,7 @@ setup_browse (TotemGrilo *self)
 	g_signal_connect (G_OBJECT (self->priv->select_none_action), "activate",
 			  G_CALLBACK (select_none_action_cb), self);
 	g_action_map_add_action (G_ACTION_MAP (self->priv->totem), G_ACTION (self->priv->select_none_action));
+	gtk_application_set_accels_for_action (GTK_APPLICATION (self->priv->totem), "app.select-none", select_none_accels);
 	g_object_bind_property (self->priv->header, "select-mode",
 				self->priv->select_none_action, "enabled",
 				G_BINDING_SYNC_CREATE);
@@ -2416,7 +2428,7 @@ create_debug_window (TotemGrilo       *self,
 static void
 setup_ui (TotemGrilo *self)
 {
-	totem_grilo_setup_icons (self->priv->totem);
+	totem_grilo_setup_icons ();
 	setup_browse (self);
 
 	/* create_debug_window (self, self->priv->browser_model); */

@@ -221,8 +221,6 @@ BACKEND_TEST_LIBS = @BACKEND_TEST_LIBS@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
-CHAPTERS_CFLAGS = @CHAPTERS_CFLAGS@
-CHAPTERS_LIBS = @CHAPTERS_LIBS@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
 CXX = @CXX@
@@ -309,6 +307,7 @@ LIPO = @LIPO@
 LIRC_LIBS = @LIRC_LIBS@
 LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
+LT_SYS_LIBRARY_PATH = @LT_SYS_LIBRARY_PATH@
 MAINT = @MAINT@
 MAKEINFO = @MAKEINFO@
 MANIFEST_TOOL = @MANIFEST_TOOL@
@@ -458,7 +457,8 @@ bvw_test_CPPFLAGS = \
 
 bvw_test_CFLAGS = \
 	$(BACKEND_CFLAGS)	\
-	$(AM_CFLAGS)
+	$(AM_CFLAGS)		\
+	$(WARN_FLAGS)
 
 bvw_test_LDADD = \
 	libbaconvideowidget.la				\
@@ -495,7 +495,8 @@ libbaconvideowidget_la_CPPFLAGS = \
 
 libbaconvideowidget_la_CFLAGS = \
 	$(BACKEND_CFLAGS)	\
-	$(AM_CFLAGS)
+	$(AM_CFLAGS)		\
+	$(WARN_CFLAGS)
 
 libbaconvideowidget_la_LIBADD = \
 	$(top_builddir)/src/gst/libtotemgsthelpers.la		\

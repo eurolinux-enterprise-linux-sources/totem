@@ -4,7 +4,7 @@
 #include "bacon-video-widget.h"
 #include "bacon-video-widget-enums.h"
 
-/* enumerations from "./bacon-video-widget.h" */
+/* enumerations from "/home/hadess/Projects/jhbuild/totem-tmp/src/backend/bacon-video-widget.h" */
 GType
 bvw_error_get_type (void)
 {
